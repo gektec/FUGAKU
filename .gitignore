@@ -1,0 +1,23 @@
+# Ignore all class files
+*.class
+
+# Ignore maven target directory
+/PlatformerPlain/target/
+
+# Ignore IntelliJ IDEA project files
+/.idea/
+/PlatformerPlain/.idea/
+*.iml
+*.ipr
+
+# Ignore logs
+/logs
+*.log
+
+# Ignore temporary files
+tmp/
+*.tmp
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
