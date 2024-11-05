@@ -45,18 +45,20 @@ public class Move {
         return keys.getOrDefault(key, false);
     }
 
-    private void movePlayerX(int value) {
-        boolean movingRight = value > 0;
-        for (int i = 0; i < Math.abs(value); i++) {
+    private void movePlayerX(int speed) {
+        boolean movingRight = speed > 0;
+        for (int i = 0; i < Math.abs(speed); i++) {
             for (Node platform : platforms) {
                 if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
-                    if (movingRight) {
-                        if (player.getTranslateX() + 40 == platform.getTranslateX()) {
-                            return;
-                        }
-                    } else {
-                        if (player.getTranslateX() == platform.getTranslateX() + 60) {
-                            return;
+                    if (player.getTranslateY() >= platform.getTranslateY() - 39 && player.getTranslateY() <= platform.getTranslateY() + 59) {
+                        if (movingRight) {
+                            if (player.getTranslateX() + 40 == platform.getTranslateX()) {
+                                return;
+                            }
+                        } else {
+                            if (player.getTranslateX() == platform.getTranslateX() + 60) {
+                                return;
+                            }
                         }
                     }
                 }
@@ -65,9 +67,9 @@ public class Move {
         }
     }
 
-    private void movePlayerY(int value) {
-        boolean movingDown = value > 0;
-        for (int i = 0; i < Math.abs(value); i++) {
+    private void movePlayerY(int speed) {
+        boolean movingDown = speed > 0;
+        for (int i = 0; i < Math.abs(speed); i++) {
             for (Node platform : platforms) {
                 if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
                     if (movingDown) {
