@@ -1,9 +1,7 @@
-// src/com/example/platformerplain/Main.java
 package com.example.platformerplain;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -16,6 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main extends Application {
+    private static final int TILE_SIZE = 60;
+    private static final int PLAYER_SIZE = 40;
+    private static final int BACKGROUND_WIDTH = 1280;
+    private static final int BACKGROUND_HEIGHT = 720;
+    private static final int PLAYER_START_X = 0;
+    private static final int PLAYER_START_Y = 600;
+
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private ArrayList<Node> platforms = new ArrayList<>();
     private Pane appRoot = new Pane();
@@ -27,8 +32,8 @@ public class Main extends Application {
     private Move moveLogic;
 
     private void initContent() {
-        Rectangle bg = new Rectangle(1280, 720);
-        levelWidth = LevelData.Level1[0].length() * 60;
+        Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        levelWidth = LevelData.Level1[0].length() * TILE_SIZE;
 
         for (int i = 0; i < LevelData.Level1.length; i++) {
             String line = LevelData.Level1[i];
@@ -37,22 +42,21 @@ public class Main extends Application {
                     case '0':
                         break;
                     case '1':
-                        Node platform = createEntity(j * 60, i * 60, 60, 60, Color.GREEN);
+                        Node platform = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GREEN);
                         platforms.add(platform);
                         break;
                 }
             }
         }
-        player = createEntity(0, 600, 40, 40, Color.BLUE);
+        player = createEntity(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE, PLAYER_SIZE, Color.BLUE);
         player.translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
-            if (offset > 640 && offset < levelWidth - 640) {
-                gameRoot.setLayoutX(-(offset - 640));
+            if (offset > BACKGROUND_WIDTH / 2 && offset < levelWidth - BACKGROUND_WIDTH / 2) {
+                gameRoot.setLayoutX(-(offset - BACKGROUND_WIDTH / 2));
             }
         });
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
-        // Initialize the Move class instance
         moveLogic = new Move(player, platforms, levelWidth, keys);
     }
 
@@ -66,7 +70,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         initContent();
         Scene scene = new Scene(appRoot);
         scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
@@ -78,7 +82,7 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                moveLogic.update();
+                moveLogic.update();  // 使用新的移动逻辑类
             }
         };
         timer.start();
