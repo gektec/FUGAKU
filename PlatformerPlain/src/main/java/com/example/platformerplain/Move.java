@@ -79,6 +79,7 @@ public class Move {
                         }
                     } else {
                         if (player.getTranslateY() == platform.getTranslateY() + 60) {
+                            playerVelocity = playerVelocity.add(0,-(playerVelocity.getY()));
                             return;
                         }
                     }
