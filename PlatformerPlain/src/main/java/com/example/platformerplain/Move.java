@@ -11,17 +11,19 @@ import java.util.HashMap;
 public class Move {
     private Node player;
     private ArrayList<Node> platforms;
-    private Point2D playerVelocity;
+    private final int gravity = 1;
     private boolean canJump;
     private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
+    private final int maxFallSpeed = 20;
+    private Vector2D playerVelocity;
 
     public Move(Node player, ArrayList<Node> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.platforms = platforms;
         this.levelWidth = levelWidth;
         this.keys = keys;
-        this.playerVelocity = new Point2D(0, 0);
+        this.playerVelocity = new Vector2D(0, 0);
         this.canJump = true;
     }
 
@@ -35,8 +37,8 @@ public class Move {
         if (isPressed(KeyCode.D) && player.getTranslateX() + 40 <= levelWidth - 5) {
             movePlayerX(5);
         }
-        if (playerVelocity.getY() < 10) {
-            playerVelocity = playerVelocity.add(0, 1);
+        if (playerVelocity.getY() < maxFallSpeed) {
+            playerVelocity.add(0, gravity);
         }
         movePlayerY((int) playerVelocity.getY());
     }
@@ -75,11 +77,12 @@ public class Move {
                     if (movingDown) {
                         if (player.getTranslateY() + 40 == platform.getTranslateY()) {
                             canJump = true;
+                            playerVelocity.setY(0);
                             return;
                         }
                     } else {
                         if (player.getTranslateY() == platform.getTranslateY() + 60) {
-                            playerVelocity = playerVelocity.add(0,-(playerVelocity.getY()));
+                            playerVelocity.setY(0);
                             return;
                         }
                     }
@@ -91,7 +94,7 @@ public class Move {
 
     private void jumpPlayer() {
         if (canJump) {
-            playerVelocity = playerVelocity.add(0, -30);
+            playerVelocity.add(0, -20);
             canJump = false;
         }
     }

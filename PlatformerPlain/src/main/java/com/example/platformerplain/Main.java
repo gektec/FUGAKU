@@ -45,6 +45,10 @@ public class Main extends Application {
                         Node platform = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GREEN);
                         platforms.add(platform);
                         break;
+                    case '9':
+                        Node platform9 = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GOLD);
+                        platforms.add(platform9);
+                        break;
                 }
             }
         }
@@ -75,7 +79,7 @@ public class Main extends Application {
         Scene scene = new Scene(appRoot);
         scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
-        primaryStage.setTitle("Sample game");
+        primaryStage.setTitle("Platformer");
         primaryStage.setScene(scene);
         primaryStage.show();
 
