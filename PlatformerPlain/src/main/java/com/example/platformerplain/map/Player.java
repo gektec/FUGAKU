@@ -6,11 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Platform implements Entity {
+public class Player implements Entity {
     private Node node;
 
-    public Platform(int x, int y, int w, int h) { //todo: remove useless parameters & use Pane instead of Rectangle
-        node = new Rectangle(w, h, Color.GREEN);
+    public Player(int x, int y, int w, int h) {
+        node = new Rectangle(w, h, Color.BLUE);
         node.setTranslateX(x);
         node.setTranslateY(y);
     }
@@ -22,6 +22,6 @@ public class Platform implements Entity {
 
     @Override
     public EntityType getType() {
-        return EntityType.PLATFORM;
+        return EntityType.PLAYER;
     }
 }
