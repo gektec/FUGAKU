@@ -22,7 +22,7 @@ public class Main extends Application {
     private static final int PLAYER_START_Y = 600;
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private ArrayList<Node> platforms = new ArrayList<>();
+    private ArrayList<Node> entitymap = new ArrayList<>();
     private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
     private Pane uiRoot = new Pane();
@@ -43,11 +43,11 @@ public class Main extends Application {
                         break;
                     case '1':
                         Node platform = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GREEN);
-                        platforms.add(platform);
+                        entitymap.add(platform);
                         break;
                     case '9':
-                        Node platform9 = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GOLD);
-                        platforms.add(platform9);
+                        Node goal = createEntity(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, Color.GOLD);
+                        entitymap.add(goal);
                         break;
                 }
             }
@@ -61,7 +61,7 @@ public class Main extends Application {
         });
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
-        moveLogic = new Move(player, platforms, levelWidth, keys);
+        moveLogic = new Move(player, entitymap, levelWidth, keys);
     }
 
     private Node createEntity(int x, int y, int w, int h, Color color) {
@@ -79,7 +79,7 @@ public class Main extends Application {
         Scene scene = new Scene(appRoot);
         scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
-        primaryStage.setTitle("Platformer");
+        primaryStage.setTitle("PlatformerGame");
         primaryStage.setScene(scene);
         primaryStage.show();
 

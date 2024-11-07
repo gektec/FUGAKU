@@ -1,15 +1,15 @@
 package com.example.platformerplain;
 
-public class Vector2D {
+public class Coord2D {
     private int x;
     private int y;
 
-    public Vector2D(int x, int y) {
+    public Coord2D(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Vector2D() {
+    public Coord2D() {
         this.x = 0;
         this.y = 0;
     }

@@ -1,7 +1,6 @@
 // src/com/example/platformerplain/Move.java
 package com.example.platformerplain;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 
@@ -16,14 +15,14 @@ public class Move {
     private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
     private final int maxFallSpeed = 20;
-    private Vector2D playerVelocity;
+    private Coord2D playerVelocity;
 
     public Move(Node player, ArrayList<Node> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.platforms = platforms;
         this.levelWidth = levelWidth;
         this.keys = keys;
-        this.playerVelocity = new Vector2D(0, 0);
+        this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
     }
 
@@ -75,13 +74,13 @@ public class Move {
             for (Node platform : platforms) {
                 if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
                     if (movingDown) {
-                        if (player.getTranslateY() + 40 == platform.getTranslateY()) {
+                        if (player.getTranslateY() + 40 == platform.getTranslateY()) {//Touch ground
                             canJump = true;
                             playerVelocity.setY(0);
                             return;
                         }
                     } else {
-                        if (player.getTranslateY() == platform.getTranslateY() + 60) {
+                        if (player.getTranslateY() == platform.getTranslateY() + 60) {//Touch ceiling
                             playerVelocity.setY(0);
                             return;
                         }
