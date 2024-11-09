@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -40,21 +41,25 @@ public class Main extends Application {
     private Scene gameScene;
 
     private void initMenu(Stage primaryStage) {
-        Pane menuRoot = new Pane();
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        StackPane menuRoot = new StackPane();
+        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));  // 设置深灰色背景
 
         Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
         instructions.setFont(new Font(24));
-        instructions.setFill(Color.YELLOW);
-        instructions.setX(BACKGROUND_WIDTH / 2 - 300);
-        instructions.setY(BACKGROUND_HEIGHT / 2 - 100);
+        instructions.setFill(Color.LIGHTGRAY);  // 使用浅灰色字体以提高对比度
+        instructions.setTranslateY(-50);  // 上移文本位置
 
         Button startButton = new Button("Click to Play!");
-        startButton.setLayoutX(BACKGROUND_WIDTH / 2 - 50);
-        startButton.setLayoutY(BACKGROUND_HEIGHT / 2);
+        startButton.setFont(new Font(18));
+        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");  // 按钮颜色
         startButton.setOnAction(e -> primaryStage.setScene(gameScene));
 
+        // 布局元素
         menuRoot.getChildren().addAll(instructions, startButton);
+        StackPane.setAlignment(instructions, javafx.geometry.Pos.CENTER);
+        StackPane.setAlignment(startButton, javafx.geometry.Pos.CENTER);
+        startButton.setTranslateY(50);  // 下移按钮位置
+
         primaryStage.setScene(menuScene);
     }
 
@@ -110,7 +115,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        initMenu(primaryStage);  // 初始化菜单界面
+        initMenu(primaryStage);  // Initialize the menu interface
         initContent();
 
         primaryStage.setTitle("PlatformerGame");
