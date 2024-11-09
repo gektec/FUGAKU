@@ -7,6 +7,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -35,6 +36,27 @@ public class Main extends Application {
     private Entity player;
     private int levelWidth;
     private Move moveLogic;
+    private Scene menuScene;
+    private Scene gameScene;
+
+    private void initMenu(Stage primaryStage) {
+        Pane menuRoot = new Pane();
+        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+
+        Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
+        instructions.setFont(new Font(24));
+        instructions.setFill(Color.YELLOW);
+        instructions.setX(BACKGROUND_WIDTH / 2 - 300);
+        instructions.setY(BACKGROUND_HEIGHT / 2 - 100);
+
+        Button startButton = new Button("Click to Play!");
+        startButton.setLayoutX(BACKGROUND_WIDTH / 2 - 50);
+        startButton.setLayoutY(BACKGROUND_HEIGHT / 2);
+        startButton.setOnAction(e -> primaryStage.setScene(gameScene));
+
+        menuRoot.getChildren().addAll(instructions, startButton);
+        primaryStage.setScene(menuScene);
+    }
 
     private void initContent() {
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
@@ -80,28 +102,26 @@ public class Main extends Application {
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
         moveLogic = new Move(player, entitymap, levelWidth, keys);
-    }
 
-    private Entity createEntity(EntityType type, int x, int y, int w, int h) {
-        Entity entity = EntityFactory.createEntity(type, x, y, w, h);
-        gameRoot.getChildren().add(entity.node());
-        return entity;
+        gameScene = new Scene(appRoot);
+        gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
+        gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
     }
 
     @Override
     public void start(Stage primaryStage) {
+        initMenu(primaryStage);  // 初始化菜单界面
         initContent();
-        Scene scene = new Scene(appRoot);
-        scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
-        scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+
         primaryStage.setTitle("PlatformerGame");
-        primaryStage.setScene(scene);
         primaryStage.show();
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                moveLogic.update();  // 使用新的移动逻辑类
+                if (primaryStage.getScene() == gameScene) {
+                    moveLogic.update();  // 仅在游戏开始时调用更新逻辑
+                }
             }
         };
         timer.start();
@@ -109,5 +129,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private Entity createEntity(EntityType type, int x, int y, int w, int h) {
+        Entity entity = EntityFactory.createEntity(type, x, y, w, h);
+        gameRoot.getChildren().add(entity.node());
+        return entity;
     }
 }
