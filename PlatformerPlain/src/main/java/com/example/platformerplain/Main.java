@@ -48,7 +48,7 @@ public class Main extends Application {
         StackPane menuRoot = new StackPane();
 
         // Load the background image for the menu
-        Image backgroundImage = new Image("/Diagram/background.png");
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/background.png"));
         ImageView bgImageView = new ImageView(backgroundImage);
         bgImageView.setFitWidth(BACKGROUND_WIDTH);
         bgImageView.setFitHeight(BACKGROUND_HEIGHT);
@@ -70,7 +70,7 @@ public class Main extends Application {
         startButton.setTranslateY(50);
 
         // Set dark gray background
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));
+        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         primaryStage.setScene(menuScene);
     }
 
@@ -145,6 +145,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
         launch(args);
     }
 
