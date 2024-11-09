@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -16,6 +17,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,26 +46,34 @@ public class Main extends Application {
 
     private void initMenu(Stage primaryStage) {
         StackPane menuRoot = new StackPane();
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));  // Set dark gray background
+
+        // Load the background image for the menu
+        Image backgroundImage = new Image("/Diagram/background.png");
+        ImageView bgImageView = new ImageView(backgroundImage);
+        bgImageView.setFitWidth(BACKGROUND_WIDTH);
+        bgImageView.setFitHeight(BACKGROUND_HEIGHT);
+        bgImageView.setPreserveRatio(false);
 
         Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
         instructions.setFont(new Font(24));
-        instructions.setFill(Color.LIGHTGRAY);  // Use light gray font for better contrast
-        instructions.setTranslateY(-50);  // Move text position up
+        instructions.setFill(Color.LIGHTGRAY);
+        instructions.setTranslateY(-50);
 
         Button startButton = new Button("Click to Play!");
         startButton.setFont(new Font(18));
-        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");  // Button color
+        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
         startButton.setOnAction(e -> primaryStage.setScene(gameScene));
 
-        // Layout elements
-        menuRoot.getChildren().addAll(instructions, startButton);
+        menuRoot.getChildren().addAll(bgImageView, instructions, startButton);
         StackPane.setAlignment(instructions, javafx.geometry.Pos.CENTER);
         StackPane.setAlignment(startButton, javafx.geometry.Pos.CENTER);
-        startButton.setTranslateY(50);  // Move button position down
+        startButton.setTranslateY(50);
 
+        // Set dark gray background
+        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));
         primaryStage.setScene(menuScene);
     }
+
 
     private void initContent() {
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
