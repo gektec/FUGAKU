@@ -42,23 +42,23 @@ public class Main extends Application {
 
     private void initMenu(Stage primaryStage) {
         StackPane menuRoot = new StackPane();
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));  // 设置深灰色背景
+        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, Color.web("#2b2b2b"));  // Set dark gray background
 
         Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
         instructions.setFont(new Font(24));
-        instructions.setFill(Color.LIGHTGRAY);  // 使用浅灰色字体以提高对比度
-        instructions.setTranslateY(-50);  // 上移文本位置
+        instructions.setFill(Color.LIGHTGRAY);  // Use light gray font for better contrast
+        instructions.setTranslateY(-50);  // Move text position up
 
         Button startButton = new Button("Click to Play!");
         startButton.setFont(new Font(18));
-        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");  // 按钮颜色
+        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");  // Button color
         startButton.setOnAction(e -> primaryStage.setScene(gameScene));
 
-        // 布局元素
+        // Layout elements
         menuRoot.getChildren().addAll(instructions, startButton);
         StackPane.setAlignment(instructions, javafx.geometry.Pos.CENTER);
         StackPane.setAlignment(startButton, javafx.geometry.Pos.CENTER);
-        startButton.setTranslateY(50);  // 下移按钮位置
+        startButton.setTranslateY(50);  // Move button position down
 
         primaryStage.setScene(menuScene);
     }
@@ -115,7 +115,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        initMenu(primaryStage);  // Initialize the menu interface
+        initMenu(primaryStage);  // Initialize the menu screen
         initContent();
 
         primaryStage.setTitle("PlatformerGame");
@@ -125,7 +125,7 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 if (primaryStage.getScene() == gameScene) {
-                    moveLogic.update();  // 仅在游戏开始时调用更新逻辑
+                    moveLogic.update();  // Update logic runs only when the game has started
                 }
             }
         };
