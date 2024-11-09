@@ -4,10 +4,13 @@ import com.example.platformerplain.map.EntityFactory;
 import com.example.platformerplain.EntityType;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -19,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 
 import java.util.ArrayList;
@@ -43,6 +47,12 @@ public class Main extends Application {
     private Move moveLogic;
     private Scene menuScene;
     private Scene gameScene;
+
+    private Label framerateLabel = new Label();
+    private long lastTime = 0;
+    private int frameCount = 0;
+
+
 
     private void initMenu(Stage primaryStage) {
         StackPane menuRoot = new StackPane();
@@ -123,6 +133,13 @@ public class Main extends Application {
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+
+        // Add the framerateLabel to the uiRoot
+        framerateLabel.setTextFill(Color.WHITE);  // Set the text color to white
+        framerateLabel.setFont(new Font(18));  // Set the font size
+        framerateLabel.setTranslateX(10);  // Position X
+        framerateLabel.setTranslateY(10);  // Position Y
+        uiRoot.getChildren().add(framerateLabel);
     }
 
     @Override
@@ -133,16 +150,30 @@ public class Main extends Application {
         primaryStage.setTitle("PlatformerGame");
         primaryStage.show();
 
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (primaryStage.getScene() == gameScene) {
-                    moveLogic.update();  // Update logic runs only when the game has started
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
+            if (primaryStage.getScene() == gameScene) {
+                moveLogic.update();  // Update logic runs only when the game has started
+
+                // Update framerate
+                if (lastTime > 0) {
+                    frameCount++;
+                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
+                        framerateLabel.setText("FPS: " + frameCount);
+                        frameCount = 0;
+                        lastTime = System.nanoTime();
+                    }
+                } else {
+                    lastTime = System.nanoTime();
                 }
             }
-        };
-        timer.start();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
+
+
+
+
 
     public static void main(String[] args) {
 
