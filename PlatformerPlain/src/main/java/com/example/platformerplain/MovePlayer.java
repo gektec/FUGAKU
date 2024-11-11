@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class MovePlayer {
     private Entity player;
+    private ArrayList<Entity> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private final int gravity = 1;  // Gravity constant
     private boolean canJump;  // Flag indicating whether the player can jump
@@ -18,7 +19,7 @@ public class MovePlayer {
     private Main mainApp;  // Reference to the main application class
     private Move move;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
         this.levelWidth = levelWidth;
@@ -26,6 +27,7 @@ public class MovePlayer {
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
         this.enemies = enemies;
+        this.mainApp = main;
     }
 
     private boolean isPressed(KeyCode key) {
@@ -78,7 +80,7 @@ public class MovePlayer {
         for(Entity enemy : enemies) {
             if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
                 System.out.println("You lose!");
-                System.exit(0);
+                mainApp.switchToFail();
             }
         }
 

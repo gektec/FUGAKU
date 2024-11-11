@@ -69,6 +69,7 @@ public class Main extends Application {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             if (primaryStage.getScene() == gameScene) {
                 movePlayerLogic.update();  // Update logic runs only when the game has started
+                moveEnemyLogic.update();
 
                 // Update framerate
                 if (lastTime > 0) {
@@ -133,7 +134,7 @@ public class Main extends Application {
         });
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
-        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys);
+        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
 
         move = new Move(collidableMap);
 
