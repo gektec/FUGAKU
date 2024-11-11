@@ -7,12 +7,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -20,7 +17,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,45 +42,50 @@ public class Main extends Application {
     private MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
-    private Scene menuScene;
-    private Scene gameScene;
+    public Scene menuScene;
+    public Scene gameScene;
+    public Scene failScene;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
 
+    private SceneInitializer sceneInitializer;
 
+    @Override
+    public void start(Stage primaryStage) {
+        this.sceneInitializer = new SceneInitializer(this, primaryStage);
 
-    private void initMenu(Stage primaryStage) {
-        StackPane menuRoot = new StackPane();
+        initContent();  // Initialize the game scene
 
-        // Load the background image for the menu
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/background.png"));
-        ImageView bgImageView = new ImageView(backgroundImage);
-        bgImageView.setFitWidth(BACKGROUND_WIDTH);
-        bgImageView.setFitHeight(BACKGROUND_HEIGHT);
-        bgImageView.setPreserveRatio(false);
+        // Initialize all scenes
+        this.menuScene = sceneInitializer.initMenu();
+        this.failScene = sceneInitializer.initFailScreen();
 
-        Text instructions = new Text("Use 'W' to Jump, 'A' to MovePlayer Left, 'D' to MovePlayer Right");
-        instructions.setFont(new Font(24));
-        instructions.setFill(Color.LIGHTGRAY);
-        instructions.setTranslateY(-50);
-
-        Button startButton = new Button("Click to Play!");
-        startButton.setFont(new Font(18));
-        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
-        startButton.setOnAction(e -> primaryStage.setScene(gameScene));
-
-        menuRoot.getChildren().addAll(bgImageView, instructions, startButton);
-        StackPane.setAlignment(instructions, javafx.geometry.Pos.CENTER);
-        StackPane.setAlignment(startButton, javafx.geometry.Pos.CENTER);
-        startButton.setTranslateY(50);
-
-        // Set dark gray background
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        primaryStage.setTitle("PlatformerGame");
         primaryStage.setScene(menuScene);
-    }
+        primaryStage.show();
 
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
+            if (primaryStage.getScene() == gameScene) {
+                movePlayerLogic.update();  // Update logic runs only when the game has started
+
+                // Update framerate
+                if (lastTime > 0) {
+                    frameCount++;
+                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
+                        framerateLabel.setText("FPS: " + frameCount);
+                        frameCount = 0;
+                        lastTime = System.nanoTime();
+                    }
+                } else {
+                    lastTime = System.nanoTime();
+                }
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 
     private void initContent() {
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
@@ -94,7 +95,6 @@ public class Main extends Application {
         Text title = new Text("Try to get the goal");
         title.setFont(new Font(36));  // Set the font size
         title.setFill(Color.YELLOW);  // Set the text color to yellow
-        // Center the text horizontally by calculating its X position
         double textWidth = title.getLayoutBounds().getWidth();
         title.setX((BACKGROUND_WIDTH - textWidth) / 2);
         title.setY(40);  // Position Y for visibility at the top middle
@@ -149,42 +149,17 @@ public class Main extends Application {
         uiRoot.getChildren().add(framerateLabel);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        initMenu(primaryStage);  // Initialize the menu screen
-        initContent();
-
-        primaryStage.setTitle("PlatformerGame");
-        primaryStage.show();
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            if (primaryStage.getScene() == gameScene) {
-                movePlayerLogic.update();  // Update logic runs only when the game has started
-                moveEnemyLogic.update();
-
-                // Update framerate
-                if (lastTime > 0) {
-                    frameCount++;
-                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
-                        framerateLabel.setText("FPS: " + frameCount);
-                        frameCount = 0;
-                        lastTime = System.nanoTime();
-                    }
-                } else {
-                    lastTime = System.nanoTime();
-                }
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+    public void switchToMenu() {
+        // back to menu
+        ((Stage) appRoot.getScene().getWindow()).setScene(menuScene);
     }
 
-
-
-
+    public void switchToFail() {
+        // defeat
+        ((Stage) appRoot.getScene().getWindow()).setScene(failScene);
+    }
 
     public static void main(String[] args) {
-
         launch(args);
     }
 
