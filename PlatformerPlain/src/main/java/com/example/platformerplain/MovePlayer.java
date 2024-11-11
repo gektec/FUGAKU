@@ -10,11 +10,11 @@ import com.example.platformerplain.Move;
 public class MovePlayer {
     private Entity player;
     private ArrayList<Entity> entityMap;
-    private final int gravity = -1;
+    private final int gravity = 1;
     private boolean canJump;
     private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
-    private final int maxFallSpeed = -20;
+    private final int maxFallSpeed = 20;
     private final int resistance = 1;
     private Coord2D playerVelocity;
 
@@ -33,7 +33,7 @@ public class MovePlayer {
 
     public void update() {
         if (isPressed(KeyCode.W) && canJump) {
-            playerVelocity.add(0, 20);
+            playerVelocity.add(0, -20);
         }
         if (isPressed(KeyCode.A) && playerVelocity.getX() >= -10) {
             playerVelocity.add(-5, 0);  //max speed: -15
@@ -44,12 +44,15 @@ public class MovePlayer {
         else {
             playerVelocity.reduce(resistance, 0);
         }
-        if (playerVelocity.getY() > maxFallSpeed) {
+        if (playerVelocity.getY() < maxFallSpeed) {
             playerVelocity.add(0, gravity);
         }
         Move.movePlayerX(player, playerVelocity);
-        canJump = Move.movePlayerY(player, playerVelocity, canJump);
+
+        canJump = Move.movePlayerY(player, playerVelocity);
+
         checkGoalCollision();
+        checkDie();
     }
 
 
@@ -61,6 +64,13 @@ public class MovePlayer {
                 System.out.println("You win!");
                 System.exit(0);
             }
+        }
+    }
+
+    private void checkDie() {
+        if (player.node().getTranslateY() > 720) {
+            System.out.println("You lose!");
+            System.exit(0);
         }
     }
 }
