@@ -40,18 +40,18 @@ public class Move {
                 if (player.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
                     if (movingDown) {
                         if (player.node().getTranslateY() + 40 == platform.node().getTranslateY()) { // Touch ground
-                            canJump = true;
                             playerVelocity.setY(0);
+                            canJump = true;
                             return canJump;
                         }else canJump = false;
                     } else {
-                        canJump = false;
                         if (player.node().getTranslateY() == platform.node().getTranslateY() + 60) { // Touch ceiling
                             playerVelocity.setY(0);
                             return canJump;
                         }
                     }
                 }
+                else canJump = false;
             }
             player.node().setTranslateY(player.node().getTranslateY() + (movingDown ? 1 : -1));
         }
