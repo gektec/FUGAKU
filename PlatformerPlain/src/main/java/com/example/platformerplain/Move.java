@@ -1,109 +1,65 @@
 package com.example.platformerplain;
 
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Move {
-    private Entity player;
-    private ArrayList<Entity> entityMap;
-    private final int gravity = 1;
-    private boolean canJump;
-    private int levelWidth;
-    private HashMap<KeyCode, Boolean> keys;
-    private final int maxFallSpeed = 20;
-    private Coord2D playerVelocity;
+    private static ArrayList<Entity> entityMap;
 
-    public Move(Entity player, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
-        this.player = player;
-        this.entityMap = platforms;
-        this.levelWidth = levelWidth;
-        this.keys = keys;
-        this.playerVelocity = new Coord2D(0, 0);
-        this.canJump = true;
+    public Move(ArrayList<Entity> entityMap) {
+        Move.entityMap = entityMap;
+    }
+    public static int detectRelativeLocation(Entity player, Entity platform) {
+        Coord2D playerCoord = new Coord2D((int)player.node().getTranslateX() + (Main.PLAYER_SIZE/2), (int)player.node().getTranslateY() + (Main.PLAYER_SIZE/2));
+        Coord2D platformCoord = new Coord2D((int)platform.node().getTranslateX() + (Main.TILE_SIZE/2), (int)platform.node().getTranslateY() + (Main.TILE_SIZE/2));
+
+        int xDiff = playerCoord.getX() - platformCoord.getX();
+        int yDiff = playerCoord.getY() - platformCoord.getY();
+
+        if (yDiff < xDiff && yDiff < -xDiff) {
+            return 1;
+        } else if (yDiff > xDiff && yDiff > -xDiff) {
+            return 3;
+        } else if (xDiff < 0) {
+            return 2;
+        } else {
+            return 4;
+        }
+//            1
+//        2       4
+//            3
+
     }
 
-    public void update() {
-        if (isPressed(KeyCode.W) && player.node().getTranslateY() >= 5) {
-            jumpPlayer();
-        }
-        if (isPressed(KeyCode.A) && player.node().getTranslateX() >= 5) {
-            movePlayerX(-5);
-        }
-        if (isPressed(KeyCode.D) && player.node().getTranslateX() + 40 <= levelWidth - 5) {
-            movePlayerX(5);
-        }
-        if (playerVelocity.getY() < maxFallSpeed) {
-            playerVelocity.add(0, gravity);
-        }
-        movePlayerY((int) playerVelocity.getY());
-        checkGoalCollision();
-    }
-
-    private boolean isPressed(KeyCode key) {
-        return keys.getOrDefault(key, false);
-    }
-
-    private void movePlayerX(int speed) {
-        boolean movingRight = speed > 0;
-        for (int i = 0; i < Math.abs(speed); i++) {
+//todo: restrict max speed to avoid clipping through walls
+    public static boolean movePlayer(Entity player, Coord2D playerVelocity) {
+        boolean canJump = false;
+        int moveX = Math.abs(playerVelocity.getX());
+        int moveY = Math.abs(playerVelocity.getY());
+//        int movingDownUp = playerVelocity.getY() > 0 ? 1 : -1;
+//        int movingRightLeft = playerVelocity.getX() > 0 ? 1 : -1;
+        if (Math.max(moveX, moveY) > 0) {
+            player.node().setTranslateX(player.node().getTranslateX() + playerVelocity.getX());
+            player.node().setTranslateY(player.node().getTranslateY() + playerVelocity.getY());
             for (Entity platform : entityMap) {
                 if (player.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
-                    if (player.node().getTranslateY() >= platform.node().getTranslateY() - 39 && player.node().getTranslateY() <= platform.node().getTranslateY() + 59) {
-                        if (movingRight) {
-                            if (player.node().getTranslateX() + 40 == platform.node().getTranslateX()) {
-                                return;
-                            }
-                        } else {
-                            if (player.node().getTranslateX() == platform.node().getTranslateX() + 60) {
-                                return;
-                            }
-                        }
+                    int relativeLocation = detectRelativeLocation(player, platform);
+                    if (relativeLocation == 1) {
+                        player.node().setTranslateY(platform.node().getTranslateY() - Main.PLAYER_SIZE);
+                        playerVelocity.setY(0);
+                        canJump = true;
+                    } else if (relativeLocation == 2) {
+                        player.node().setTranslateX(platform.node().getTranslateX() - Main.PLAYER_SIZE);
+                        playerVelocity.setX(0);
+                    } else if (relativeLocation == 3) {
+                        player.node().setTranslateY(platform.node().getTranslateY() + Main.TILE_SIZE);
+                        playerVelocity.setY(0);
+                    } else if (relativeLocation == 4) {
+                        player.node().setTranslateX(platform.node().getTranslateX() + Main.TILE_SIZE);
+                        playerVelocity.setX(0);
                     }
                 }
             }
-            player.node().setTranslateX(player.node().getTranslateX() + (movingRight ? 1 : -1));
         }
-    }
-
-    private void movePlayerY(int speed) {
-        boolean movingDown = speed > 0;
-        for (int i = 0; i < Math.abs(speed); i++) {
-            for (Entity platform : entityMap) {
-                if (player.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
-                    if (movingDown) {
-                        if (player.node().getTranslateY() + 40 == platform.node().getTranslateY()) { // Touch ground
-                            canJump = true;
-                            playerVelocity.setY(0);
-                            return;
-                        }
-                    } else {
-                        if (player.node().getTranslateY() == platform.node().getTranslateY() + 60) { // Touch ceiling
-                            playerVelocity.setY(0);
-                            return;
-                        }
-                    }
-                }
-            }
-            player.node().setTranslateY(player.node().getTranslateY() + (movingDown ? 1 : -1));
-        }
-    }
-
-    private void jumpPlayer() {
-        if (canJump) {
-            playerVelocity.add(0, -20);
-            canJump = false;
-        }
-    }
-
-    private void checkGoalCollision() {
-        for (Entity entity : entityMap) {
-            if (entity.getType() == EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
-                System.out.println("You win!");
-                System.exit(0);
-            }
-        }
+        return canJump;
     }
 }

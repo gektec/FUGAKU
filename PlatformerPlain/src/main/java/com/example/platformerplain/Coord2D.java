@@ -39,4 +39,20 @@ public class Coord2D {
         this.x += dx;
         this.y += dy;
     }
+
+    public void reduce(int dx, int dy) {
+        dx = Math.abs(dx);
+        dy = Math.abs(dy);
+        if (x > 0) {
+            x = Math.max(0, x - dx);
+        } else {
+            x = Math.min(0, x + dx);
+        }
+
+        if (y > 0) {
+            y = Math.max(0, y - dy);
+        } else {
+            y = Math.min(0, y + dy);
+        }
+    }
 }
