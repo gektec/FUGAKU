@@ -25,10 +25,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main extends Application {
-    private static final int TILE_SIZE = 60;
-    private static final int PLAYER_SIZE = 40;
-    private static final int BACKGROUND_WIDTH = 1280;
-    private static final int BACKGROUND_HEIGHT = 720;
+    public static final int TILE_SIZE = 60;
+    public static final int PLAYER_SIZE = 40;
+    public static final int MAX_SPEED = TILE_SIZE / 2;
+    public static final int BACKGROUND_WIDTH = 1280;
+    public static final int BACKGROUND_HEIGHT = 720;
     private static final int PLAYER_START_X = 0;
     private static final int PLAYER_START_Y = 600;
 

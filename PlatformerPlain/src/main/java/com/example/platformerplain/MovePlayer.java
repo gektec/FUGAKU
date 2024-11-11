@@ -15,7 +15,7 @@ public class MovePlayer {
     private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
     private final int maxFallSpeed = 20;
-    private final int resistance = 1;
+    private final int resistance = 2;
     private Coord2D playerVelocity;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
@@ -47,9 +47,9 @@ public class MovePlayer {
         if (playerVelocity.getY() < maxFallSpeed) {
             playerVelocity.add(0, gravity);
         }
-        Move.movePlayerX(player, playerVelocity);
+        //Move.movePlayerX(player, playerVelocity);
 
-        canJump = Move.movePlayerY(player, playerVelocity);
+        canJump = Move.movePlayer(player, playerVelocity);
 
         checkGoalCollision();
         checkDie();
