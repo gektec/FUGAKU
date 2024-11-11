@@ -1,13 +1,10 @@
 package com.example.platformerplain;
 
 import com.example.platformerplain.map.EntityFactory;
-import com.example.platformerplain.EntityType;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -44,7 +40,8 @@ public class Main extends Application {
 
     private Entity player;
     private int levelWidth;
-    private Move moveLogic;
+    private MovePlayer movePlayerLogic;
+    private Move move;
     private Scene menuScene;
     private Scene gameScene;
 
@@ -64,7 +61,7 @@ public class Main extends Application {
         bgImageView.setFitHeight(BACKGROUND_HEIGHT);
         bgImageView.setPreserveRatio(false);
 
-        Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
+        Text instructions = new Text("Use 'W' to Jump, 'A' to MovePlayer Left, 'D' to MovePlayer Right");
         instructions.setFont(new Font(24));
         instructions.setFill(Color.LIGHTGRAY);
         instructions.setTranslateY(-50);
@@ -128,7 +125,8 @@ public class Main extends Application {
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
-        moveLogic = new Move(player, entitymap, levelWidth, keys);
+        movePlayerLogic = new MovePlayer(player, entitymap, levelWidth, keys);
+        move = new Move(entitymap);
 
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
@@ -152,7 +150,7 @@ public class Main extends Application {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             if (primaryStage.getScene() == gameScene) {
-                moveLogic.update();  // Update logic runs only when the game has started
+                movePlayerLogic.update();  // Update logic runs only when the game has started
 
                 // Update framerate
                 if (lastTime > 0) {
