@@ -5,8 +5,6 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.platformerplain.Move;
-
 public class MovePlayer {
     private Entity player;
     private ArrayList<Entity> entityMap;
@@ -17,14 +15,17 @@ public class MovePlayer {
     private final int maxFallSpeed = 20;
     private final int resistance = 2;
     private Coord2D playerVelocity;
+    private Main mainApp;  // Main instance
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    // 在构造函数中传递Main类实例
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys, Main mainApp) {
         this.player = player;
         this.entityMap = platforms;
         this.levelWidth = levelWidth;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
+        this.mainApp = mainApp;  // Main instance
     }
 
     private boolean isPressed(KeyCode key) {
@@ -47,7 +48,6 @@ public class MovePlayer {
         if (playerVelocity.getY() < maxFallSpeed) {
             playerVelocity.add(0, gravity);
         }
-        //Move.movePlayerX(player, playerVelocity);
 
         canJump = Move.movePlayer(player, playerVelocity);
 
@@ -55,14 +55,12 @@ public class MovePlayer {
         checkDie();
     }
 
-
-
-
     private void checkGoalCollision() {
         for (Entity entity : entityMap) {
             if (entity.getType() == EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
                 System.out.println("You win!");
-                System.exit(0);
+                // When the player hits the target, switch to the menu interface
+                mainApp.switchToMenu();
             }
         }
     }
@@ -70,7 +68,8 @@ public class MovePlayer {
     private void checkDie() {
         if (player.node().getTranslateY() > 720) {
             System.out.println("You lose!");
-            System.exit(0);
+            // When the player hits the target, switch to the fail interface
+            mainApp.switchToFail();
         }
     }
 }

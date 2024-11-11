@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,12 +44,11 @@ public class Main extends Application {
     private Move move;
     private Scene menuScene;
     private Scene gameScene;
+    private Scene failScene;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
-
-
 
     private void initMenu(Stage primaryStage) {
         StackPane menuRoot = new StackPane();
@@ -62,7 +60,7 @@ public class Main extends Application {
         bgImageView.setFitHeight(BACKGROUND_HEIGHT);
         bgImageView.setPreserveRatio(false);
 
-        Text instructions = new Text("Use 'W' to Jump, 'A' to MovePlayer Left, 'D' to MovePlayer Right");
+        Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
         instructions.setFont(new Font(24));
         instructions.setFill(Color.LIGHTGRAY);
         instructions.setTranslateY(-50);
@@ -82,7 +80,6 @@ public class Main extends Application {
         primaryStage.setScene(menuScene);
     }
 
-
     private void initContent() {
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         levelWidth = LevelData.Level1[0].length() * TILE_SIZE;
@@ -91,7 +88,6 @@ public class Main extends Application {
         Text title = new Text("Try to get the goal");
         title.setFont(new Font(36));  // Set the font size
         title.setFill(Color.YELLOW);  // Set the text color to yellow
-        // Center the text horizontally by calculating its X position
         double textWidth = title.getLayoutBounds().getWidth();
         title.setX((BACKGROUND_WIDTH - textWidth) / 2);
         title.setY(40);  // Position Y for visibility at the top middle
@@ -126,7 +122,8 @@ public class Main extends Application {
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
-        movePlayerLogic = new MovePlayer(player, entitymap, levelWidth, keys);
+        // 传递Main实例给MovePlayer
+        movePlayerLogic = new MovePlayer(player, entitymap, levelWidth, keys, this);
         move = new Move(entitymap);
 
         gameScene = new Scene(appRoot);
@@ -139,6 +136,44 @@ public class Main extends Application {
         framerateLabel.setTranslateX(10);  // Position X
         framerateLabel.setTranslateY(10);  // Position Y
         uiRoot.getChildren().add(framerateLabel);
+    }
+
+    private void initFailScreen(Stage primaryStage) {
+        StackPane failRoot = new StackPane();
+
+        // Load the background image for the fail screen
+        Image failBackgroundImage = new Image(getClass().getResourceAsStream("/images/defeat.png"));
+        ImageView failBgImageView = new ImageView(failBackgroundImage);
+        failBgImageView.setFitWidth(BACKGROUND_WIDTH);
+        failBgImageView.setFitHeight(BACKGROUND_HEIGHT);
+        failBgImageView.setPreserveRatio(false);
+
+        Text failText = new Text("You Failed!");
+        failText.setFont(new Font(36));
+        failText.setFill(Color.RED);
+        failText.setTranslateY(-50);
+
+        Button exitButton = new Button("Click to Exit");
+        exitButton.setFont(new Font(18));
+        exitButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
+        exitButton.setOnAction(e -> primaryStage.close());
+
+        failRoot.getChildren().addAll(failBgImageView, failText, exitButton);
+        StackPane.setAlignment(failText, javafx.geometry.Pos.CENTER);
+        StackPane.setAlignment(exitButton, javafx.geometry.Pos.CENTER);
+        exitButton.setTranslateY(50);
+
+        failScene = new Scene(failRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        primaryStage.setScene(failScene);
+    }
+    public void switchToMenu() {
+        // 切换回菜单界面
+        initMenu((Stage) appRoot.getScene().getWindow());
+    }
+
+    public void switchToFail() {
+        // defeat
+        initFailScreen((Stage) appRoot.getScene().getWindow());
     }
 
     @Override
@@ -170,12 +205,7 @@ public class Main extends Application {
         timeline.play();
     }
 
-
-
-
-
     public static void main(String[] args) {
-
         launch(args);
     }
 
