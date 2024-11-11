@@ -5,11 +5,10 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.platformerplain.Move;
-
 public class MovePlayer {
     private Entity player;
     private ArrayList<Entity> entityMap;
+    private ArrayList<Entity> enemies;
     private final int gravity = 1;
     private boolean canJump;
     private int levelWidth;
@@ -17,14 +16,16 @@ public class MovePlayer {
     private final int maxFallSpeed = 20;
     private final int resistance = 2;
     private Coord2D playerVelocity;
+    private Move move;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.entityMap = platforms;
         this.levelWidth = levelWidth;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
+        this.enemies = enemies;
     }
 
     private boolean isPressed(KeyCode key) {
@@ -49,7 +50,7 @@ public class MovePlayer {
         }
         //Move.movePlayerX(player, playerVelocity);
 
-        canJump = Move.movePlayer(player, playerVelocity);
+        canJump = Move.move(player, playerVelocity);
 
         checkGoalCollision();
         checkDie();
@@ -72,5 +73,12 @@ public class MovePlayer {
             System.out.println("You lose!");
             System.exit(0);
         }
+        for(Entity enemy : enemies) {
+            if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
+                System.out.println("You lose!");
+                System.exit(0);
+            }
+        }
+
     }
 }

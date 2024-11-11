@@ -1,5 +1,6 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.map.Enemy;
 import com.example.platformerplain.map.EntityFactory;
 
 import javafx.animation.KeyFrame;
@@ -34,7 +35,8 @@ public class Main extends Application {
     private static final int PLAYER_START_Y = 600;
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private ArrayList<Entity> entitymap = new ArrayList<>();
+    private ArrayList<Entity> collidableMap = new ArrayList<>();
+    private ArrayList<Entity> enemyMap = new ArrayList<>();
     private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
     private Pane uiRoot = new Pane();
@@ -42,6 +44,7 @@ public class Main extends Application {
     private Entity player;
     private int levelWidth;
     private MovePlayer movePlayerLogic;
+    private MoveEnemy moveEnemyLogic;
     private Move move;
     private Scene menuScene;
     private Scene gameScene;
@@ -106,11 +109,16 @@ public class Main extends Application {
                         break;
                     case '1':
                         Entity platform = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                        entitymap.add(platform);
+                        collidableMap.add(platform);
                         break;
-                    case '9':
+                    case 'G':
                         Entity goal = createEntity(EntityType.GOAL, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                        entitymap.add(goal);
+                        collidableMap.add(goal);
+                        break;
+                    case 'E':
+                        Entity enemy = createEntity(EntityType.ENEMY, j * TILE_SIZE, i * TILE_SIZE, PLAYER_SIZE, PLAYER_SIZE);
+                        moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
+                        enemyMap.add(enemy);
                         break;
                 }
             }
@@ -125,9 +133,9 @@ public class Main extends Application {
         });
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
+        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys);
 
-        movePlayerLogic = new MovePlayer(player, entitymap, levelWidth, keys);
-        move = new Move(entitymap);
+        move = new Move(collidableMap);
 
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
@@ -152,6 +160,7 @@ public class Main extends Application {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             if (primaryStage.getScene() == gameScene) {
                 movePlayerLogic.update();  // Update logic runs only when the game has started
+                moveEnemyLogic.update();
 
                 // Update framerate
                 if (lastTime > 0) {

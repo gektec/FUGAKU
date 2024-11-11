@@ -8,9 +8,9 @@ public class Move {
     public Move(ArrayList<Entity> entityMap) {
         Move.entityMap = entityMap;
     }
-    public static int detectRelativeLocation(Entity player, Entity platform) {
-        Coord2D playerCoord = new Coord2D((int)player.node().getTranslateX() + (Main.PLAYER_SIZE/2), (int)player.node().getTranslateY() + (Main.PLAYER_SIZE/2));
-        Coord2D platformCoord = new Coord2D((int)platform.node().getTranslateX() + (Main.TILE_SIZE/2), (int)platform.node().getTranslateY() + (Main.TILE_SIZE/2));
+    public static int detectRelativeLocation(Entity moveable, Entity collidable) {
+        Coord2D playerCoord = new Coord2D((int)moveable.node().getTranslateX() + (Main.PLAYER_SIZE/2), (int)moveable.node().getTranslateY() + (Main.PLAYER_SIZE/2));
+        Coord2D platformCoord = new Coord2D((int)collidable.node().getTranslateX() + (Main.TILE_SIZE/2), (int)collidable.node().getTranslateY() + (Main.TILE_SIZE/2));
 
         int xDiff = playerCoord.getX() - platformCoord.getX();
         int yDiff = playerCoord.getY() - platformCoord.getY();
@@ -31,31 +31,29 @@ public class Move {
     }
 
 //todo: restrict max speed to avoid clipping through walls
-    public static boolean movePlayer(Entity player, Coord2D playerVelocity) {
+    public static boolean move(Entity moveable, Coord2D velocity) {
         boolean canJump = false;
-        int moveX = Math.abs(playerVelocity.getX());
-        int moveY = Math.abs(playerVelocity.getY());
-//        int movingDownUp = playerVelocity.getY() > 0 ? 1 : -1;
-//        int movingRightLeft = playerVelocity.getX() > 0 ? 1 : -1;
+        int moveX = Math.abs(velocity.getX());
+        int moveY = Math.abs(velocity.getY());
         if (Math.max(moveX, moveY) > 0) {
-            player.node().setTranslateX(player.node().getTranslateX() + playerVelocity.getX());
-            player.node().setTranslateY(player.node().getTranslateY() + playerVelocity.getY());
+            moveable.node().setTranslateX(moveable.node().getTranslateX() + velocity.getX());
+            moveable.node().setTranslateY(moveable.node().getTranslateY() + velocity.getY());
             for (Entity platform : entityMap) {
-                if (player.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
-                    int relativeLocation = detectRelativeLocation(player, platform);
+                if (moveable.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
+                    int relativeLocation = detectRelativeLocation(moveable, platform);
                     if (relativeLocation == 1) {
-                        player.node().setTranslateY(platform.node().getTranslateY() - Main.PLAYER_SIZE);
-                        playerVelocity.setY(0);
+                        moveable.node().setTranslateY(platform.node().getTranslateY() - Main.PLAYER_SIZE);
+                        velocity.setY(0);
                         canJump = true;
                     } else if (relativeLocation == 2) {
-                        player.node().setTranslateX(platform.node().getTranslateX() - Main.PLAYER_SIZE);
-                        playerVelocity.setX(0);
+                        moveable.node().setTranslateX(platform.node().getTranslateX() - Main.PLAYER_SIZE);
+                        velocity.setX(0);
                     } else if (relativeLocation == 3) {
-                        player.node().setTranslateY(platform.node().getTranslateY() + Main.TILE_SIZE);
-                        playerVelocity.setY(0);
+                        moveable.node().setTranslateY(platform.node().getTranslateY() + Main.TILE_SIZE);
+                        velocity.setY(0);
                     } else if (relativeLocation == 4) {
-                        player.node().setTranslateX(platform.node().getTranslateX() + Main.TILE_SIZE);
-                        playerVelocity.setX(0);
+                        moveable.node().setTranslateX(platform.node().getTranslateX() + Main.TILE_SIZE);
+                        velocity.setX(0);
                     }
                 }
             }

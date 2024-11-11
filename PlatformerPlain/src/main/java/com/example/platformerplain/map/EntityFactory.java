@@ -14,6 +14,8 @@ public class EntityFactory {
                 return new Goal(x, y, w, h);
             case PLAYER:
                 return new Player(x, y, w, h);
+            case ENEMY:
+                return new Enemy(x, y, w, h);
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + type);
         }
