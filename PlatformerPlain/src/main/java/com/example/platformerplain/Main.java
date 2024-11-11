@@ -6,18 +6,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -42,42 +38,49 @@ public class Main extends Application {
     private int levelWidth;
     private MovePlayer movePlayerLogic;
     private Move move;
-    private Scene menuScene;
-    private Scene gameScene;
-    private Scene failScene;
+    public Scene menuScene;
+    public Scene gameScene;
+    public Scene failScene;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
 
-    private void initMenu(Stage primaryStage) {
-        StackPane menuRoot = new StackPane();
+    private SceneInitializer sceneInitializer;
 
-        // Load the background image for the menu
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/background.png"));
-        ImageView bgImageView = new ImageView(backgroundImage);
-        bgImageView.setFitWidth(BACKGROUND_WIDTH);
-        bgImageView.setFitHeight(BACKGROUND_HEIGHT);
-        bgImageView.setPreserveRatio(false);
+    @Override
+    public void start(Stage primaryStage) {
+        this.sceneInitializer = new SceneInitializer(this, primaryStage);
 
-        Text instructions = new Text("Use 'W' to Jump, 'A' to Move Left, 'D' to Move Right");
-        instructions.setFont(new Font(24));
-        instructions.setFill(Color.LIGHTGRAY);
-        instructions.setTranslateY(-50);
+        initContent();  // Initialize the game scene
 
-        Button startButton = new Button("Click to Play!");
-        startButton.setFont(new Font(18));
-        startButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
-        startButton.setOnAction(e -> primaryStage.setScene(gameScene));
+        // Initialize all scenes
+        this.menuScene = sceneInitializer.initMenu();
+        this.failScene = sceneInitializer.initFailScreen();
 
-        menuRoot.getChildren().addAll(bgImageView, instructions, startButton);
-        StackPane.setAlignment(instructions, javafx.geometry.Pos.CENTER);
-        StackPane.setAlignment(startButton, javafx.geometry.Pos.CENTER);
-        startButton.setTranslateY(50);
-
-        // Set dark gray background
-        menuScene = new Scene(menuRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        primaryStage.setTitle("PlatformerGame");
         primaryStage.setScene(menuScene);
+        primaryStage.show();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
+            if (primaryStage.getScene() == gameScene) {
+                movePlayerLogic.update();  // Update logic runs only when the game has started
+
+                // Update framerate
+                if (lastTime > 0) {
+                    frameCount++;
+                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
+                        framerateLabel.setText("FPS: " + frameCount);
+                        frameCount = 0;
+                        lastTime = System.nanoTime();
+                    }
+                } else {
+                    lastTime = System.nanoTime();
+                }
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     private void initContent() {
@@ -122,7 +125,7 @@ public class Main extends Application {
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
 
-        // 传递Main实例给MovePlayer
+        // deliver Main instance to MovePlayer
         movePlayerLogic = new MovePlayer(player, entitymap, levelWidth, keys, this);
         move = new Move(entitymap);
 
@@ -138,71 +141,14 @@ public class Main extends Application {
         uiRoot.getChildren().add(framerateLabel);
     }
 
-    private void initFailScreen(Stage primaryStage) {
-        StackPane failRoot = new StackPane();
-
-        // Load the background image for the fail screen
-        Image failBackgroundImage = new Image(getClass().getResourceAsStream("/images/defeat.png"));
-        ImageView failBgImageView = new ImageView(failBackgroundImage);
-        failBgImageView.setFitWidth(BACKGROUND_WIDTH);
-        failBgImageView.setFitHeight(BACKGROUND_HEIGHT);
-        failBgImageView.setPreserveRatio(false);
-
-        Text failText = new Text("You Failed!");
-        failText.setFont(new Font(36));
-        failText.setFill(Color.RED);
-        failText.setTranslateY(-50);
-
-        Button exitButton = new Button("Click to Exit");
-        exitButton.setFont(new Font(18));
-        exitButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
-        exitButton.setOnAction(e -> primaryStage.close());
-
-        failRoot.getChildren().addAll(failBgImageView, failText, exitButton);
-        StackPane.setAlignment(failText, javafx.geometry.Pos.CENTER);
-        StackPane.setAlignment(exitButton, javafx.geometry.Pos.CENTER);
-        exitButton.setTranslateY(50);
-
-        failScene = new Scene(failRoot, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-        primaryStage.setScene(failScene);
-    }
     public void switchToMenu() {
-        // 切换回菜单界面
-        initMenu((Stage) appRoot.getScene().getWindow());
+        // back to menu
+        ((Stage) appRoot.getScene().getWindow()).setScene(menuScene);
     }
 
     public void switchToFail() {
         // defeat
-        initFailScreen((Stage) appRoot.getScene().getWindow());
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        initMenu(primaryStage);  // Initialize the menu screen
-        initContent();
-
-        primaryStage.setTitle("PlatformerGame");
-        primaryStage.show();
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            if (primaryStage.getScene() == gameScene) {
-                movePlayerLogic.update();  // Update logic runs only when the game has started
-
-                // Update framerate
-                if (lastTime > 0) {
-                    frameCount++;
-                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
-                        framerateLabel.setText("FPS: " + frameCount);
-                        frameCount = 0;
-                        lastTime = System.nanoTime();
-                    }
-                } else {
-                    lastTime = System.nanoTime();
-                }
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        ((Stage) appRoot.getScene().getWindow()).setScene(failScene);
     }
 
     public static void main(String[] args) {
