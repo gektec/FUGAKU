@@ -19,6 +19,8 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 public class Main extends Application {
     public static final int TILE_SIZE = 60;
@@ -46,35 +48,37 @@ public class Main extends Application {
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
+    // Add a static instance to Main
+    private static Main instance;
+
 
     @Override
     public void start(Stage primaryStage) {
-        initContent();  // Initialize the game content and scene
+        instance = this;
 
-        primaryStage.setTitle("PlatformerGame");
-        primaryStage.setScene(gameScene);  // Use the gameScene directly
-        primaryStage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/start_screen.fxml"));
+            Parent startScreen = loader.load();
+            Scene startScene = new Scene(startScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            // Game logic that requires the scene, like framerate updating
-            movePlayerLogic.update();
-            moveEnemyLogic.update();
-
-            // Update framerate
-            if (lastTime > 0) {
-                frameCount++;
-                if (System.nanoTime() - lastTime >= 1_000_000_000) {
-                    framerateLabel.setText("FPS: " + frameCount);
-                    frameCount = 0;
-                    lastTime = System.nanoTime();
-                }
-            } else {
-                lastTime = System.nanoTime();
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+            primaryStage.setTitle("Platformer Game");
+            primaryStage.setScene(startScene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public void startGame() {
+        initContent();
+        Stage primaryStage = (Stage) appRoot.getScene().getWindow();
+        primaryStage.setScene(gameScene);
+    }
+
+    public static Main getInstance() {
+        return instance;
+    }
+
 
     private void initContent() {
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
