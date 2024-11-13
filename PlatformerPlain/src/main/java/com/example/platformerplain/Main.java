@@ -3,6 +3,7 @@ package com.example.platformerplain;
 import com.example.platformerplain.map.Enemy;
 import com.example.platformerplain.map.EntityFactory;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -50,6 +51,7 @@ public class Main extends Application {
     private int frameCount = 0;
     // Add a static instance to Main
     private static Main instance;
+    private AnimationTimer gameLoop;
 
 
     @Override
@@ -61,6 +63,10 @@ public class Main extends Application {
             Parent startScreen = loader.load();
             Scene startScene = new Scene(startScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 
+            // Pass the primaryStage to the StartScreenController
+            StartScreenController controller = loader.getController();
+            controller.setPrimaryStage(primaryStage);
+
             primaryStage.setTitle("Platformer Game");
             primaryStage.setScene(startScene);
             primaryStage.show();
@@ -69,10 +75,44 @@ public class Main extends Application {
         }
     }
 
-    public void startGame() {
+
+    public void startGame(Stage primaryStage) {
         initContent();
-        Stage primaryStage = (Stage) appRoot.getScene().getWindow();
         primaryStage.setScene(gameScene);
+
+        // Start the game loop
+        startGameLoop();
+    }
+
+    private void startGameLoop() {
+        gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
+        gameLoop.start();
+    }
+
+    private void update() {
+        movePlayerLogic.update();  // Update player logic
+        for (Entity enemy : enemyMap) {
+            if (moveEnemyLogic != null) {
+                moveEnemyLogic.update();  // Update enemy logic
+            }
+        }
+
+        updateFramerate();  // Update the frame rate display
+    }
+
+    private void updateFramerate() {
+        long currentTime = System.nanoTime();
+        if (currentTime - lastTime >= 1_000_000_000) {
+            framerateLabel.setText("FPS: " + frameCount);
+            frameCount = 0;
+            lastTime = currentTime;
+        }
+        frameCount++;
     }
 
     public static Main getInstance() {
@@ -81,6 +121,11 @@ public class Main extends Application {
 
 
     private void initContent() {
+        // Clear existing content
+        appRoot.getChildren().clear();
+        gameRoot.getChildren().clear();
+        uiRoot.getChildren().clear();
+
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         levelWidth = LevelData.Level1[0].length() * TILE_SIZE;
 
@@ -134,6 +179,8 @@ public class Main extends Application {
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+
+
 
         // Add the framerateLabel to the uiRoot
         framerateLabel.setTextFill(Color.WHITE);  // Set the text color to white
