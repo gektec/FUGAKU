@@ -43,12 +43,15 @@ public class Main extends Application {
     private Move move;
     private Scene gameScene;  // Ensure gameScene is declared and initialized
 
+    private static long startTime;
+
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
 
     @Override
     public void start(Stage primaryStage) {
+        startTime = System.currentTimeMillis();
         initContent();  // Initialize the game content and scene
 
         primaryStage.setTitle("PlatformerGame");
@@ -74,6 +77,8 @@ public class Main extends Application {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time taken: " + (endTime - startTime) + "ms");
     }
 
     private void initContent() {
@@ -96,16 +101,36 @@ public class Main extends Application {
                 switch (line.charAt(j)) {
                     case '0':
                         break;
-                    case '1':
-                        Entity platform = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    case 'L':
+                        Entity platformLeft = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 3);
+                        collidableMap.add(platformLeft);
+                        break;
+                    case 'M':
+                        Entity platform = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 4);
                         collidableMap.add(platform);
                         break;
+                    case 'R':
+                        Entity platformRight = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 5);
+                        collidableMap.add(platformRight);
+                        break;
+                    case'l':
+                        Entity platformLeftLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 13);
+                        collidableMap.add(platformLeftLow);
+                        break;
+                    case'm':
+                        Entity platformLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 14);
+                        collidableMap.add(platformLow);
+                        break;
+                    case'r':
+                        Entity platformRightLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 15);
+                        collidableMap.add(platformRightLow);
+                        break;
                     case 'G':
-                        Entity goal = createEntity(EntityType.GOAL, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                        Entity goal = createEntity(EntityType.GOAL, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE,50);
                         collidableMap.add(goal);
                         break;
                     case 'E':
-                        Entity enemy = createEntity(EntityType.ENEMY, j * TILE_SIZE, i * TILE_SIZE, PLAYER_SIZE, PLAYER_SIZE);
+                        Entity enemy = createEntity(EntityType.ENEMY, j * TILE_SIZE, i * TILE_SIZE, PLAYER_SIZE, PLAYER_SIZE,70);
                         moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
                         enemyMap.add(enemy);
                         break;
@@ -113,7 +138,7 @@ public class Main extends Application {
             }
         }
 
-        player = createEntity(EntityType.PLAYER, PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE, PLAYER_SIZE);
+        player = createEntity(EntityType.PLAYER, PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE, PLAYER_SIZE,0);
         player.node().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > BACKGROUND_WIDTH / 2 && offset < levelWidth - BACKGROUND_WIDTH / 2) {
@@ -143,8 +168,8 @@ public class Main extends Application {
         launch(args);
     }
 
-    private Entity createEntity(EntityType type, int x, int y, int w, int h) {
-        Entity entity = EntityFactory.createEntity(type, x, y, w, h);
+    private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
+        Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
         gameRoot.getChildren().add(entity.node());
         return entity;
     }
