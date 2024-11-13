@@ -53,13 +53,12 @@ public class Main extends Application {
     private int frameCount = 0;
     // Add a static instance to Main
     private static Main instance;
-    private AnimationTimer gameLoop;
 
 
     @Override
     public void start(Stage primaryStage) {
         startTime = System.currentTimeMillis();
-        initContent();  // Initialize the game content and scene
+        //initContent();  // Initialize the game content and scene
         instance = this;
 
         try {
@@ -88,14 +87,19 @@ public class Main extends Application {
         startGameLoop();
     }
 
+    private Timeline gameLoop;
+
     private void startGameLoop() {
-        gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                update();
-            }
-        };
-        gameLoop.start();
+        // 设置每帧的持续时间为约16.67毫秒，即1秒/60
+        KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
+            update();
+            updateFramerate();
+        });
+
+        // 创建时间线并添加帧
+        gameLoop = new Timeline(frame);
+        gameLoop.setCycleCount(Timeline.INDEFINITE); // 设置时间线为无限循环
+        gameLoop.play(); // 开始动画
     }
 
     private void update() {
@@ -105,8 +109,6 @@ public class Main extends Application {
                 moveEnemyLogic.update();  // Update enemy logic
             }
         }
-
-        updateFramerate();  // Update the frame rate display
     }
 
     private void updateFramerate() {
