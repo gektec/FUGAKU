@@ -34,6 +34,11 @@ public class MoveEnemy {
             velocity.add(0, gravity);
         }
 
+        if(canJump){
+            velocity.add(0, -20);
+            canJump = false;
+        }
+
         canJump = Move.move(enemy, velocity);
 
     }
