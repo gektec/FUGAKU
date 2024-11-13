@@ -66,7 +66,7 @@ public class MovePlayer {
             if (entity.getType() == EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
                 System.out.println("You win!");
                 // When the player reaches the goal, switch back to the menu scene
-                mainApp.switchToMenu();
+
             }
         }
     }
@@ -75,14 +75,14 @@ public class MovePlayer {
         if (player.node().getTranslateY() > 720) {
             System.out.println("You lose!");
             // When the player falls off the screen, switch to the fail scene
-            mainApp.switchToFail();
-        }
-        for(Entity enemy : enemies) {
-            if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
-                System.out.println("You lose!");
-                mainApp.switchToFail();
-            }
-        }
 
+            for (Entity enemy : enemies) {
+                if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
+                    System.out.println("You lose!");
+
+                }
+            }
+
+        }
     }
 }

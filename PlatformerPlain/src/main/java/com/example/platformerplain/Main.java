@@ -15,7 +15,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -42,46 +41,35 @@ public class Main extends Application {
     private MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
-    public Scene menuScene;
-    public Scene gameScene;
-    public Scene failScene;
+    private Scene gameScene;  // Ensure gameScene is declared and initialized
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
 
-    private SceneInitializer sceneInitializer;
-
     @Override
     public void start(Stage primaryStage) {
-        this.sceneInitializer = new SceneInitializer(this, primaryStage);
-
-        initContent();  // Initialize the game scene
-
-        // Initialize all scenes
-        this.menuScene = sceneInitializer.initMenu();
-        this.failScene = sceneInitializer.initFailScreen();
+        initContent();  // Initialize the game content and scene
 
         primaryStage.setTitle("PlatformerGame");
-        primaryStage.setScene(menuScene);
+        primaryStage.setScene(gameScene);  // Use the gameScene directly
         primaryStage.show();
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            if (primaryStage.getScene() == gameScene) {
-                movePlayerLogic.update();  // Update logic runs only when the game has started
-                moveEnemyLogic.update();
+            // Game logic that requires the scene, like framerate updating
+            movePlayerLogic.update();
+            moveEnemyLogic.update();
 
-                // Update framerate
-                if (lastTime > 0) {
-                    frameCount++;
-                    if (System.nanoTime() - lastTime >= 1_000_000_000) {
-                        framerateLabel.setText("FPS: " + frameCount);
-                        frameCount = 0;
-                        lastTime = System.nanoTime();
-                    }
-                } else {
+            // Update framerate
+            if (lastTime > 0) {
+                frameCount++;
+                if (System.nanoTime() - lastTime >= 1_000_000_000) {
+                    framerateLabel.setText("FPS: " + frameCount);
+                    frameCount = 0;
                     lastTime = System.nanoTime();
                 }
+            } else {
+                lastTime = System.nanoTime();
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -138,6 +126,7 @@ public class Main extends Application {
 
         move = new Move(collidableMap);
 
+        // Initialize the game scene with the appRoot
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
@@ -148,16 +137,6 @@ public class Main extends Application {
         framerateLabel.setTranslateX(10);  // Position X
         framerateLabel.setTranslateY(10);  // Position Y
         uiRoot.getChildren().add(framerateLabel);
-    }
-
-    public void switchToMenu() {
-        // back to menu
-        ((Stage) appRoot.getScene().getWindow()).setScene(menuScene);
-    }
-
-    public void switchToFail() {
-        // defeat
-        ((Stage) appRoot.getScene().getWindow()).setScene(failScene);
     }
 
     public static void main(String[] args) {
