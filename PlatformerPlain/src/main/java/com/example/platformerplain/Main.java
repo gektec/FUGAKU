@@ -3,6 +3,7 @@ package com.example.platformerplain;
 import com.example.platformerplain.map.Enemy;
 import com.example.platformerplain.map.EntityFactory;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -19,6 +20,8 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 public class Main extends Application {
     public static final int TILE_SIZE = 60;
@@ -48,40 +51,84 @@ public class Main extends Application {
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
+    // Add a static instance to Main
+    private static Main instance;
+    private AnimationTimer gameLoop;
+
 
     @Override
     public void start(Stage primaryStage) {
         startTime = System.currentTimeMillis();
         initContent();  // Initialize the game content and scene
+        instance = this;
 
-        primaryStage.setTitle("PlatformerGame");
-        primaryStage.setScene(gameScene);  // Use the gameScene directly
-        primaryStage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/start_screen.fxml"));
+            Parent startScreen = loader.load();
+            Scene startScene = new Scene(startScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            // Game logic that requires the scene, like framerate updating
-            movePlayerLogic.update();
-            moveEnemyLogic.update();
+            // Pass the primaryStage to the StartScreenController
+            StartScreenController controller = loader.getController();
+            controller.setPrimaryStage(primaryStage);
 
-            // Update framerate
-            if (lastTime > 0) {
-                frameCount++;
-                if (System.nanoTime() - lastTime >= 1_000_000_000) {
-                    framerateLabel.setText("FPS: " + frameCount);
-                    frameCount = 0;
-                    lastTime = System.nanoTime();
-                }
-            } else {
-                lastTime = System.nanoTime();
+            primaryStage.setTitle("Platformer Game");
+            primaryStage.setScene(startScene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void startGame(Stage primaryStage) {
+        initContent();
+        primaryStage.setScene(gameScene);
+
+        // Start the game loop
+        startGameLoop();
+    }
+
+    private void startGameLoop() {
+        gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
             }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime - startTime) + "ms");
+        };
+        gameLoop.start();
+    }
+
+    private void update() {
+        movePlayerLogic.update();  // Update player logic
+        for (Entity enemy : enemyMap) {
+            if (moveEnemyLogic != null) {
+                moveEnemyLogic.update();  // Update enemy logic
+            }
+        }
+
+        updateFramerate();  // Update the frame rate display
+    }
+
+    private void updateFramerate() {
+        long currentTime = System.nanoTime();
+        if (currentTime - lastTime >= 1_000_000_000) {
+            framerateLabel.setText("FPS: " + frameCount);
+            frameCount = 0;
+            lastTime = currentTime;
+        }
+        frameCount++;
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 
     private void initContent() {
+        // Clear existing content
+        appRoot.getChildren().clear();
+        gameRoot.getChildren().clear();
+        uiRoot.getChildren().clear();
+
         Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         levelWidth = LevelData.Level1[0].length() * TILE_SIZE;
 
