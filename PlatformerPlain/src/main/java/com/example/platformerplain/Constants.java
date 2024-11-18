@@ -15,6 +15,9 @@ public class Constants {
 
     public static final double DASH_DURATION = 0.2;
     public static final int DASH_SPEED = 36;
+    public static final double JUMP_DURATION = 0.1;
+
+    public static final int SLIDE_WALL_SPEED = 3;
 
     public enum EntityType {
         PLATFORM,

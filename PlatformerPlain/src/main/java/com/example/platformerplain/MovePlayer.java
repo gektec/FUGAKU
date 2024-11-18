@@ -21,6 +21,9 @@ public class MovePlayer {
     private boolean canJump;  // Flag indicating whether the player can jump
     private boolean canDash;
     private boolean isDashing;
+    private boolean isJumping;
+    private boolean isSliding;
+    private boolean slideJump;
     private int levelWidth;  // Width of the level
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
     private Coord2D playerVelocity; // Current velocity of the player
@@ -28,6 +31,7 @@ public class MovePlayer {
     private Move move;
     private Stage primaryStage;
     private Timeline dashCooldownTimer;
+    private Timeline jumpCooldownTimer;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
@@ -41,6 +45,10 @@ public class MovePlayer {
 
         dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> isDashing = false));
         dashCooldownTimer.setCycleCount(1);
+
+        jumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.JUMP_DURATION), event -> isJumping = false));
+        jumpCooldownTimer.setCycleCount(1);
+
     }
 
     private boolean isPressed(KeyCode key) {
@@ -50,15 +58,24 @@ public class MovePlayer {
     public void update() {
         int x=0,y=0;
         if(!isDashing){
-            if (isPressed(KeyCode.J) && canJump) {
+            if (isPressed(KeyCode.J) && canJump && !isJumping &&! isSliding) {
                 playerVelocity.add(0, -20);
+                jumpCooldownTimer.playFromStart();
+                canJump = false;
+                isJumping = true;
+            }
+            if(isPressed(KeyCode.J) && isSliding) {
+                playerVelocity.add(0, -20);
+                slideJump = true;
+                isSliding = false;
                 canJump = false;
             }
-            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -10) {
-                playerVelocity.add(-5, 0);  //max speed: -15
+            else slideJump = false;
+            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
+                playerVelocity.add(-4, 0);  //max speed: -12
             }
-            if (isPressed(KeyCode.D) && playerVelocity.getX() <= 10) {
-                playerVelocity.add(5, 0);
+            if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
+                playerVelocity.add(4, 0);
             }
 
             playerVelocity.reduce(RESISTANCE, 0);
@@ -74,7 +91,7 @@ public class MovePlayer {
                 playerVelocity.reduce(RESISTANCE,RESISTANCE);
         }
 
-        if (canDash &&! isDashing && isPressed(KeyCode.K)) {
+        if (canDash && !isDashing && isPressed(KeyCode.K)) {
             if(isPressed(KeyCode.A)) {
                 x-=Constants.DASH_SPEED;
             }
@@ -97,11 +114,12 @@ public class MovePlayer {
             dashCooldownTimer.playFromStart();
         }
 
-        MoveStatus moveStatus = new MoveStatus(canJump, canDash);
+        MoveStatus moveStatus = new MoveStatus(canJump, canDash, isPressed(KeyCode.A), isPressed(KeyCode.D), isSliding, slideJump);
         Move.move(player, playerVelocity, moveStatus);
 
         canJump = moveStatus.canJump;
         canDash = moveStatus.canDash;
+        isSliding = moveStatus.isSliding;
 
         checkGoalCollision();
         checkDie();
@@ -140,9 +158,17 @@ public class MovePlayer {
 class MoveStatus {
     public boolean canJump;
     public boolean canDash;
+    public boolean isAPressed;
+    public boolean isDPressed;
+    public boolean isSliding;
+    public boolean slideJump;
 
-    public MoveStatus(boolean canJump, boolean canDash) {
+    public MoveStatus(boolean canJump, boolean canDash, boolean isAPressed, boolean isDPressed, boolean isSliding, boolean slideJump) {
         this.canJump = canJump;
         this.canDash = canDash;
+        this.isAPressed = isAPressed;
+        this.isDPressed = isDPressed;
+        this.isSliding = isSliding;
+        this.slideJump = slideJump;
     }
 }
