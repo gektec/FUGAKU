@@ -1,5 +1,6 @@
-package com.example.platformerplain;
+package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

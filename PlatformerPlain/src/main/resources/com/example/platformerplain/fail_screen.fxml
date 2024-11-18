@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.BackgroundPosition?>
 <?import javafx.scene.layout.BackgroundSize?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20" fx:controller="com.example.platformerplain.Controller.StartScreenController" fx:id="root">
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20" fx:controller="com.example.platformerplain.Controller.FailScreenController" fx:id="root">
     <!--  VBox to design background -->
-    <Text text="Welcome to Platformer Game!" />
-    <Button fx:id="startButton" text="Start Game" onAction="#handleStartGame" />
+    <Text text="You fail!" />
+    <Button fx:id="ExitButton" text="Exit Game" onAction="#handleExitGame" />
 </VBox>
