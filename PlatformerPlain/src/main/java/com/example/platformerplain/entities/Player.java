@@ -5,8 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Player implements Entity {
+public class Player extends Entity {
     private Node node;
+    protected boolean isAnimated(){
+        return true;
+    };
 
     public Player(int x, int y, int w, int h) {
         node = new Rectangle(w, h, Color.BLUE);

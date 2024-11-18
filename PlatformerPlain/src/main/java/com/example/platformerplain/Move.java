@@ -17,7 +17,9 @@ public class Move {
         int xDiff = playerCoord.getX() - platformCoord.getX();
         int yDiff = playerCoord.getY() - platformCoord.getY();
 
-        if (yDiff < xDiff && yDiff < -xDiff) {
+        if (xDiff == yDiff || xDiff == -yDiff) {    //Diagonal collision
+            return -1;
+        } else if (yDiff < xDiff && yDiff < -xDiff) {
             return 1;
         } else if (yDiff > xDiff && yDiff > -xDiff) {
             return 3;
@@ -26,15 +28,14 @@ public class Move {
         } else {
             return 4;
         }
-//            1
-//        2       4
-//            3
+//             1
+//        2 PLATFORM 4
+//             3
 
     }
 
 //todo: restrict max speed to avoid clipping through walls
-    public static boolean move(Entity moveable, Coord2D velocity) {
-        boolean canJump = false;
+    public static void move(Entity moveable, Coord2D velocity, MoveStatus moveStatus) {
         int moveX = Math.abs(velocity.getX());
         int moveY = Math.abs(velocity.getY());
         if (Math.max(moveX, moveY) > 0) {
@@ -46,20 +47,42 @@ public class Move {
                     if (relativeLocation == 1) {
                         moveable.node().setTranslateY(platform.node().getTranslateY() - Constants.PLAYER_SIZE);
                         velocity.setY(0);
-                        canJump = true;
+                        moveStatus.canJump = true;
+                        moveStatus.canDash = true;
                     } else if (relativeLocation == 2) {
                         moveable.node().setTranslateX(platform.node().getTranslateX() - Constants.PLAYER_SIZE);
                         velocity.setX(0);
+                        if(moveStatus.isDPressed && moveStatus.slideJump) {
+                            velocity.setX(-25);
+                            moveable.node().setTranslateX(moveable.node().getTranslateX() - 25);
+                            moveStatus.slideJump = false;
+                            moveStatus.isSliding = false;
+                        }
+                        else if(moveStatus.isDPressed && velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                            moveStatus.isSliding = true;
+                            velocity.setY(Constants.SLIDE_WALL_SPEED);
+                        }
+                        else moveStatus.isSliding = false;
                     } else if (relativeLocation == 3) {
                         moveable.node().setTranslateY(platform.node().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
                     } else if (relativeLocation == 4) {
                         moveable.node().setTranslateX(platform.node().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
+                        if(moveStatus.isAPressed && moveStatus.slideJump) {
+                            velocity.setX(25);
+                            moveable.node().setTranslateX(moveable.node().getTranslateX() + 25);
+                            moveStatus.slideJump = false;
+                            moveStatus.isSliding = false;
+                        }
+                        else if(moveStatus.isAPressed && velocity.getY() > Constants.SLIDE_WALL_SPEED){
+                            moveStatus.isSliding = true;
+                            velocity.setY(Constants.SLIDE_WALL_SPEED);
+                        }
+                        else moveStatus.isSliding = false;
                     }
                 }
             }
         }
-        return canJump;
     }
 }
