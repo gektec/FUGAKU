@@ -8,8 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Platform implements Entity {
+public class Platform extends Entity {
     private Node node;
+
+    protected boolean isAnimated(){
+        return false;
+    };
 
     public Platform(int x, int y, int w, int h, int index) { //todo: remove useless parameters & use Pane instead of Rectangle
         Rectangle rect = new Rectangle(w, h, Color.GREEN);

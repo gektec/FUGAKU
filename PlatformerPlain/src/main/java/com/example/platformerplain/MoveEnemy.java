@@ -45,7 +45,9 @@ public class MoveEnemy {
             canJump = false;
         }
 
-        canJump = Move.move(enemy, velocity);
+        MoveStatus moveStatus = new MoveStatus(canJump, false);
+        Move.move(enemy, velocity, moveStatus);
+        canJump = moveStatus.canJump;
 
         leftEdgeSensor.setX(enemy.node().getTranslateX() - 5);
         leftEdgeSensor.setY(enemy.node().getTranslateY() - Constants.PLAYER_SIZE/2);

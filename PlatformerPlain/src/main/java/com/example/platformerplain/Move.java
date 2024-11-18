@@ -33,8 +33,7 @@ public class Move {
     }
 
 //todo: restrict max speed to avoid clipping through walls
-    public static boolean move(Entity moveable, Coord2D velocity) {
-        boolean canJump = false;
+    public static void move(Entity moveable, Coord2D velocity, MoveStatus moveStatus) {
         int moveX = Math.abs(velocity.getX());
         int moveY = Math.abs(velocity.getY());
         if (Math.max(moveX, moveY) > 0) {
@@ -46,7 +45,8 @@ public class Move {
                     if (relativeLocation == 1) {
                         moveable.node().setTranslateY(platform.node().getTranslateY() - Constants.PLAYER_SIZE);
                         velocity.setY(0);
-                        canJump = true;
+                        moveStatus.canJump = true;
+                        moveStatus.canDash = true;
                     } else if (relativeLocation == 2) {
                         moveable.node().setTranslateX(platform.node().getTranslateX() - Constants.PLAYER_SIZE);
                         velocity.setX(0);
@@ -60,6 +60,5 @@ public class Move {
                 }
             }
         }
-        return canJump;
     }
 }

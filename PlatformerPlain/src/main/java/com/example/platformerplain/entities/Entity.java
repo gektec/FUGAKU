@@ -1,9 +1,21 @@
 package com.example.platformerplain.entities;
 
 import com.example.platformerplain.Constants;
+import javafx.animation.Animation;
 import javafx.scene.Node;
 
-public interface Entity {
-    Node node();
-    Constants.EntityType getType();
+public abstract class Entity {
+
+    protected abstract boolean isAnimated();
+
+    public abstract Node node();
+
+    public abstract Constants.EntityType getType();
+
+//    public void update() {
+//        if(isAnimated()) {
+//            Animation.update();
+//        }
+//    }
+
 }
