@@ -6,6 +6,7 @@
 
 - player get accelerated when move butten pressed
 - player can slide and jump on the wall
+- player can dash in 8 directions
 
 ### multiple entities
 
