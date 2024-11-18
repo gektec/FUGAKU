@@ -4,5 +4,5 @@ import javafx.scene.Node;
 
 public interface Entity {
     Node node();
-    EntityType getType();
+    Constants.EntityType getType();
 }

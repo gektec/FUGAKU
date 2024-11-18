@@ -9,8 +9,8 @@ public class Move {
         Move.entityMap = entityMap;
     }
     public static int detectRelativeLocation(Entity moveable, Entity collidable) {
-        Coord2D playerCoord = new Coord2D((int)moveable.node().getTranslateX() + (Main.PLAYER_SIZE/2), (int)moveable.node().getTranslateY() + (Main.PLAYER_SIZE/2));
-        Coord2D platformCoord = new Coord2D((int)collidable.node().getTranslateX() + (Main.TILE_SIZE/2), (int)collidable.node().getTranslateY() + (Main.TILE_SIZE/2));
+        Coord2D playerCoord = new Coord2D((int)moveable.node().getTranslateX() + (Constants.PLAYER_SIZE/2), (int)moveable.node().getTranslateY() + (Constants.PLAYER_SIZE/2));
+        Coord2D platformCoord = new Coord2D((int)collidable.node().getTranslateX() + (Constants.TILE_SIZE/2), (int)collidable.node().getTranslateY() + (Constants.TILE_SIZE/2));
 
         int xDiff = playerCoord.getX() - platformCoord.getX();
         int yDiff = playerCoord.getY() - platformCoord.getY();
@@ -42,17 +42,17 @@ public class Move {
                 if (moveable.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
                     int relativeLocation = detectRelativeLocation(moveable, platform);
                     if (relativeLocation == 1) {
-                        moveable.node().setTranslateY(platform.node().getTranslateY() - Main.PLAYER_SIZE);
+                        moveable.node().setTranslateY(platform.node().getTranslateY() - Constants.PLAYER_SIZE);
                         velocity.setY(0);
                         canJump = true;
                     } else if (relativeLocation == 2) {
-                        moveable.node().setTranslateX(platform.node().getTranslateX() - Main.PLAYER_SIZE);
+                        moveable.node().setTranslateX(platform.node().getTranslateX() - Constants.PLAYER_SIZE);
                         velocity.setX(0);
                     } else if (relativeLocation == 3) {
-                        moveable.node().setTranslateY(platform.node().getTranslateY() + Main.TILE_SIZE);
+                        moveable.node().setTranslateY(platform.node().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
                     } else if (relativeLocation == 4) {
-                        moveable.node().setTranslateX(platform.node().getTranslateX() + Main.TILE_SIZE);
+                        moveable.node().setTranslateX(platform.node().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
                     }
                 }

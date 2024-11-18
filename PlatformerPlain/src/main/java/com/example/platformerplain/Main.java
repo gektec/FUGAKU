@@ -24,13 +24,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 public class Main extends Application {
-    public static final int TILE_SIZE = 60;
-    public static final int PLAYER_SIZE = 40;
-    public static final int MAX_SPEED = TILE_SIZE / 2;
-    public static final int BACKGROUND_WIDTH = 1280;
-    public static final int BACKGROUND_HEIGHT = 720;
-    private static final int PLAYER_START_X = 0;
-    private static final int PLAYER_START_Y = 600;
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private ArrayList<Entity> collidableMap = new ArrayList<>();
@@ -68,7 +61,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/start_screen.fxml"));
             Parent startScreen = loader.load();
-            Scene startScene = new Scene(startScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+            Scene startScene = new Scene(startScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
 
             // Pass the primaryStage to the StartScreenController
             StartScreenController controller = loader.getController();
@@ -100,7 +93,7 @@ public class Main extends Application {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/fail_screen.fxml"));
             Parent exitScreen = loader.load();
-            Scene exitScene = new Scene(exitScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+            Scene exitScene = new Scene(exitScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
 
             FailScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
@@ -165,15 +158,15 @@ public class Main extends Application {
         gameRoot.getChildren().clear();
         uiRoot.getChildren().clear();
 
-        Rectangle bg = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-        levelWidth = LevelData.Level1[0].length() * TILE_SIZE;
+        Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+        levelWidth = LevelData.Level1[0].length() * Constants.TILE_SIZE;
 
         // Create a text element for the title
         Text title = new Text("Try to get the goal");
         title.setFont(new Font(36));  // Set the font size
         title.setFill(Color.YELLOW);  // Set the text color to yellow
         double textWidth = title.getLayoutBounds().getWidth();
-        title.setX((BACKGROUND_WIDTH - textWidth) / 2);
+        title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
         title.setY(40);  // Position Y for visibility at the top middle
 
         uiRoot.getChildren().add(title);
@@ -185,35 +178,35 @@ public class Main extends Application {
                     case '0':
                         break;
                     case 'L':
-                        Entity platformLeft = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 3);
+                        Entity platformLeft = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 3);
                         collidableMap.add(platformLeft);
                         break;
                     case 'M':
-                        Entity platform = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 4);
+                        Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 4);
                         collidableMap.add(platform);
                         break;
                     case 'R':
-                        Entity platformRight = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 5);
+                        Entity platformRight = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 5);
                         collidableMap.add(platformRight);
                         break;
                     case'l':
-                        Entity platformLeftLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 13);
+                        Entity platformLeftLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 13);
                         collidableMap.add(platformLeftLow);
                         break;
                     case'm':
-                        Entity platformLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 14);
+                        Entity platformLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 14);
                         collidableMap.add(platformLow);
                         break;
                     case'r':
-                        Entity platformRightLow = createEntity(EntityType.PLATFORM, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, 15);
+                        Entity platformRightLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 15);
                         collidableMap.add(platformRightLow);
                         break;
                     case 'G':
-                        Entity goal = createEntity(EntityType.GOAL, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE,50);
+                        Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE,50);
                         collidableMap.add(goal);
                         break;
                     case 'E':
-                        Entity enemy = createEntity(EntityType.ENEMY, j * TILE_SIZE, i * TILE_SIZE, PLAYER_SIZE, PLAYER_SIZE,70);
+                        Entity enemy = createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE,70);
                         moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
                         enemyMap.add(enemy);
                         break;
@@ -221,11 +214,11 @@ public class Main extends Application {
             }
         }
 
-        player = createEntity(EntityType.PLAYER, PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE, PLAYER_SIZE,0);
+        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE,0);
         player.node().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
-            if (offset > BACKGROUND_WIDTH / 2 && offset < levelWidth - BACKGROUND_WIDTH / 2) {
-                gameRoot.setLayoutX(-(offset - BACKGROUND_WIDTH / 2));
+            if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
+                gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
             }
         });
 
@@ -251,7 +244,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
+    private Entity createEntity(Constants.EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
         gameRoot.getChildren().add(entity.node());
         return entity;

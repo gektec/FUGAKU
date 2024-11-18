@@ -6,6 +6,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
+import static com.example.platformerplain.Constants.RESISTANCE;
+
 public class MovePlayer {
     private Entity player;
     private ArrayList<Entity> enemies;
@@ -14,8 +17,6 @@ public class MovePlayer {
     private boolean canJump;  // Flag indicating whether the player can jump
     private int levelWidth;  // Width of the level
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
-    private final int maxFallSpeed = 20;  // Maximum falling speed
-    private final int resistance = 2;  // Horizontal resistance
     private Coord2D playerVelocity; // Current velocity of the player
     private Main mainApp;  // Reference to the main application class
     private Move move;
@@ -47,9 +48,9 @@ public class MovePlayer {
             playerVelocity.add(5, 0);
         }
         else {
-            playerVelocity.reduce(resistance, 0);
+            playerVelocity.reduce(RESISTANCE, 0);
         }
-        if (playerVelocity.getY() < maxFallSpeed) {
+        if (playerVelocity.getY() < MAX_FALL_SPEED) {
             playerVelocity.add(0, gravity);
         }
         //Move.movePlayerX(player, playerVelocity);
@@ -65,7 +66,7 @@ public class MovePlayer {
 
     private void checkGoalCollision() {
         for (Entity entity : entityMap) {
-            if (entity.getType() == EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
+            if (entity.getType() == Constants.EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
                 System.out.println("You win!");
                 // When the player reaches the goal, switch back to the menu scene
 

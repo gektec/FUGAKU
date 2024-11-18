@@ -1,12 +1,11 @@
 package com.example.platformerplain.map;
+import com.example.platformerplain.Constants;
 import com.example.platformerplain.Entity;
 
-import com.example.platformerplain.EntityType;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,7 +16,6 @@ public class Platform implements Entity {
         Rectangle rect = new Rectangle(w, h, Color.GREEN);
         rect.setTranslateX(x);
         rect.setTranslateY(y);
-
         Image sprite = CutSpriteSheet.getSpriteByIndex(index);
         rect.setFill(ImageScaler.nearestNeighborScale(sprite));
         this.node = rect;
@@ -29,7 +27,7 @@ public class Platform implements Entity {
     }
 
     @Override
-    public EntityType getType() {
-        return EntityType.PLATFORM;
+    public Constants.EntityType getType() {
+        return Constants.EntityType.PLATFORM;
     }
 }

@@ -1,9 +1,14 @@
 package com.example.platformerplain;
 
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
+import static com.example.platformerplain.Constants.RESISTANCE;
 
 public class MoveEnemy {
     private Entity enemy;
@@ -12,8 +17,6 @@ public class MoveEnemy {
     private boolean canJump;
     private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
-    private final int maxFallSpeed = 20;
-    private final int resistance = 2;
     private Coord2D velocity;
 
 
@@ -25,12 +28,14 @@ public class MoveEnemy {
         this.velocity = new Coord2D(0, 0);
         this.canJump = true;
     }
+//todo
+    Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
 
     public void update() {
 
-        velocity.reduce(resistance, 0);
+        velocity.reduce(RESISTANCE, 0);
 
-        if (velocity.getY() < maxFallSpeed) {
+        if (velocity.getY() < MAX_FALL_SPEED) {
             velocity.add(0, gravity);
         }
 
@@ -40,6 +45,9 @@ public class MoveEnemy {
         }
 
         canJump = Move.move(enemy, velocity);
+
+        leftEdgeSensor.setX(enemy.node().getTranslateX() - 5);
+        leftEdgeSensor.setY(enemy.node().getTranslateY() - Constants.PLAYER_SIZE/2);
 
     }
 }

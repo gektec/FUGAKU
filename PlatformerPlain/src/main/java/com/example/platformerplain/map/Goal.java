@@ -1,7 +1,7 @@
 package com.example.platformerplain.map;
+import com.example.platformerplain.Constants;
 import com.example.platformerplain.Entity;
 
-import com.example.platformerplain.EntityType;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -21,7 +21,7 @@ public class Goal implements Entity {
     }
 
     @Override
-    public EntityType getType() {
-        return EntityType.GOAL;
+    public Constants.EntityType getType() {
+        return Constants.EntityType.GOAL;
     }
 }
