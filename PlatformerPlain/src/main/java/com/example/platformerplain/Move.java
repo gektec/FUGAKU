@@ -1,5 +1,7 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.entities.Entity;
+
 import java.util.ArrayList;
 
 public class Move {

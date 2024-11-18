@@ -10,4 +10,6 @@ module com.example.platformerplain {
     opens com.example.platformerplain.texture to javafx.fxml;
     exports com.example.platformerplain.Controller;
     opens com.example.platformerplain.Controller to javafx.fxml;
+    exports com.example.platformerplain.entities;
+    opens com.example.platformerplain.entities to javafx.fxml;
 }

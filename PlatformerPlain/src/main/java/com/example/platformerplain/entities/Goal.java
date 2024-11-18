@@ -1,6 +1,5 @@
-package com.example.platformerplain.map;
+package com.example.platformerplain.entities;
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Entity;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;

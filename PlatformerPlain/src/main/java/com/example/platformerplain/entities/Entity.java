@@ -1,5 +1,6 @@
-package com.example.platformerplain;
+package com.example.platformerplain.entities;
 
+import com.example.platformerplain.Constants;
 import javafx.scene.Node;
 
 public interface Entity {

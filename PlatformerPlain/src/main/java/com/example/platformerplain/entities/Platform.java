@@ -1,6 +1,5 @@
-package com.example.platformerplain.map;
+package com.example.platformerplain.entities;
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Entity;
 
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;

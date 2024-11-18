@@ -2,7 +2,8 @@ package com.example.platformerplain;
 
 import com.example.platformerplain.Controller.FailScreenController;
 import com.example.platformerplain.Controller.StartScreenController;
-import com.example.platformerplain.map.EntityFactory;
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityFactory;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,5 +1,6 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.entities.Entity;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
