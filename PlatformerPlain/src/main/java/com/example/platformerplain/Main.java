@@ -1,9 +1,9 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.map.Enemy;
+import com.example.platformerplain.Controller.FailScreenController;
+import com.example.platformerplain.Controller.StartScreenController;
 import com.example.platformerplain.map.EntityFactory;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -45,6 +45,7 @@ public class Main extends Application {
     private MoveEnemy moveEnemyLogic;
     private Move move;
     private Scene gameScene;  // Ensure gameScene is declared and initialized
+    private Scene exitScene;  // Ensure exitScene is declared and initialized
 
     private static long startTime;
 
@@ -53,10 +54,13 @@ public class Main extends Application {
     private int frameCount = 0;
     // Add a static instance to Main
     private static Main instance;
+    private Stage primaryStage;
 
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
         startTime = System.currentTimeMillis();
         //initContent();  // Initialize the game content and scene
         instance = this;
@@ -86,6 +90,36 @@ public class Main extends Application {
         // Start the game loop
         startGameLoop();
     }
+
+    public void exitGame() {  // Remove the Stage parameter
+        try {
+            if (primaryStage == null) {  // Use the class level primaryStage field
+                System.err.println("Primary stage is null!");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/fail_screen.fxml"));
+            Parent exitScreen = loader.load();
+            Scene exitScene = new Scene(exitScreen, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+
+            FailScreenController controller = loader.getController();
+            controller.setPrimaryStage(primaryStage);
+
+            primaryStage.setTitle("EXIT AND TRY AGAIN!");
+            primaryStage.setScene(exitScene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopGameLoop() {
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
+    }
+
+
 
     private Timeline gameLoop;
 

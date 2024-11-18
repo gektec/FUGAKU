@@ -1,6 +1,7 @@
 package com.example.platformerplain;
 
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class MovePlayer {
     private Coord2D playerVelocity; // Current velocity of the player
     private Main mainApp;  // Reference to the main application class
     private Move move;
+    private Stage primaryStage;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
@@ -72,17 +74,19 @@ public class MovePlayer {
     }
 
     private void checkDie() {
-        if (player.node().getTranslateY() > 720) {
-            System.out.println("You lose!");
-            // When the player falls off the screen, switch to the fail scene
+        boolean isPlayerDead = player.node().getTranslateY() > 720;
 
-            for (Entity enemy : enemies) {
-                if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
-                    System.out.println("You lose!");
-
-                }
+        for (Entity enemy : enemies) {
+            if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
+                isPlayerDead = true;
             }
+        }
 
+        if (isPlayerDead) {
+            System.out.println("You lose!");
+            Main.getInstance().stopGameLoop();  // Stop game loop on player death
+            Main.getInstance().exitGame();
         }
     }
+
 }
