@@ -21,9 +21,9 @@ public class MovePlayer {
     private boolean canJump;  // Flag indicating whether the player can jump
     private boolean canDash;
     private boolean isDashing;
-    private boolean isJumping;
     private boolean isSliding;
     private boolean slideJump;
+    private boolean isSlideJumping;
     private int levelWidth;  // Width of the level
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
     private Coord2D playerVelocity; // Current velocity of the player
@@ -31,7 +31,8 @@ public class MovePlayer {
     private Move move;
     private Stage primaryStage;
     private Timeline dashCooldownTimer;
-    private Timeline jumpCooldownTimer;
+    private Timeline slideJumpCooldownTimer;
+    private boolean haveJKeyReleased;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
@@ -46,8 +47,9 @@ public class MovePlayer {
         dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> isDashing = false));
         dashCooldownTimer.setCycleCount(1);
 
-        jumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.JUMP_DURATION), event -> isJumping = false));
-        jumpCooldownTimer.setCycleCount(1);
+
+        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> isSlideJumping = false));
+        slideJumpCooldownTimer.setCycleCount(1);
 
     }
 
@@ -57,33 +59,39 @@ public class MovePlayer {
 
     public void update() {
         int x=0,y=0;
-        if(!isDashing){
-            if (isPressed(KeyCode.J) && canJump && !isJumping &&! isSliding) {
-                playerVelocity.add(0, -20);
-                jumpCooldownTimer.playFromStart();
-                canJump = false;
-                isJumping = true;
-            }
-            if(isPressed(KeyCode.J) && isSliding) {
-                playerVelocity.add(0, -20);
-                slideJump = true;
-                isSliding = false;
-                canJump = false;
-            }
-            else slideJump = false;
-            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
-                playerVelocity.add(-4, 0);  //max speed: -12
-            }
-            if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
-                playerVelocity.add(4, 0);
-            }
 
+        if(!isPressed(KeyCode.J)) {
+            haveJKeyReleased = true;
+        }
+
+        if(!isDashing) {
+            if(!isSlideJumping) {
+                if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && !isSliding) {
+                    playerVelocity.setY(-20);
+                    canJump = false;
+                    haveJKeyReleased = false;
+                }
+                if (isPressed(KeyCode.J) && haveJKeyReleased && isSliding) {
+                    playerVelocity.setY(-10);
+                    slideJumpCooldownTimer.playFromStart();
+                    slideJump = true;
+                    isSliding = false;
+                    canJump = false;
+                    isSlideJumping = true;
+                    haveJKeyReleased = false;
+                } else slideJump = false;
+                if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
+                    playerVelocity.add(-4, 0);  //max speed: -12
+                }
+                if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
+                    playerVelocity.add(4, 0);
+                }
+            }
             playerVelocity.reduce(RESISTANCE, 0);
             if (playerVelocity.getY() < MAX_FALL_SPEED) {
                 playerVelocity.add(0, gravity);
             }
         }
-
         else {
             if(playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
                 playerVelocity.reduce((int) RESISTANCE/2,(int) RESISTANCE/2);

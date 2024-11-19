@@ -38,6 +38,7 @@ public class Move {
     public static void move(Entity moveable, Coord2D velocity, MoveStatus moveStatus) {
         int moveX = Math.abs(velocity.getX());
         int moveY = Math.abs(velocity.getY());
+        moveStatus.canJump = false;
         if (Math.max(moveX, moveY) > 0) {
             moveable.node().setTranslateX(moveable.node().getTranslateX() + velocity.getX());
             moveable.node().setTranslateY(moveable.node().getTranslateY() + velocity.getY());
@@ -53,8 +54,8 @@ public class Move {
                         moveable.node().setTranslateX(platform.node().getTranslateX() - Constants.PLAYER_SIZE);
                         velocity.setX(0);
                         if(moveStatus.isDPressed && moveStatus.slideJump) {
-                            velocity.setX(-25);
-                            moveable.node().setTranslateX(moveable.node().getTranslateX() - 25);
+                            velocity.setX(-Constants.SLIDE_JUMP_SPEED);
+                            moveable.node().setTranslateX(moveable.node().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                             moveStatus.slideJump = false;
                             moveStatus.isSliding = false;
                         }
@@ -70,8 +71,8 @@ public class Move {
                         moveable.node().setTranslateX(platform.node().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
                         if(moveStatus.isAPressed && moveStatus.slideJump) {
-                            velocity.setX(25);
-                            moveable.node().setTranslateX(moveable.node().getTranslateX() + 25);
+                            velocity.setX(Constants.SLIDE_JUMP_SPEED);
+                            moveable.node().setTranslateX(moveable.node().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                             moveStatus.slideJump = false;
                             moveStatus.isSliding = false;
                         }
