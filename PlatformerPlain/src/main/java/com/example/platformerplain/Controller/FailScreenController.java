@@ -12,6 +12,10 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.net.URISyntaxException;
 
 public class FailScreenController {
 
@@ -22,15 +26,16 @@ public class FailScreenController {
     private Button startButton;
 
     private Stage primaryStage;
+    private MediaPlayer mediaPlayer; // 添加 MediaPlayer
 
     // Set the primaryStage
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    // Initialize method for loading the background image
+    // Initialize method for loading the background image and playing the fail sound
     @FXML
-    private void initialize() {
+    private void initialize() throws URISyntaxException {
         // Load background image
         Image backgroundImage = new Image(getClass().getResourceAsStream("/images/defeat.png"));
 
@@ -43,6 +48,14 @@ public class FailScreenController {
 
         // Set the VBox background
         root.setBackground(new Background(background));
+
+        // Load the fail sound
+        String failSoundFile = "/sounds/defeat.mp3"; // 确保路径正确
+        Media failSound = new Media(getClass().getResource(failSoundFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(failSound);
+
+        // 播放失败声音
+        mediaPlayer.play(); // 在初始化时播放音效
     }
 
     // Handle the start game button click event
