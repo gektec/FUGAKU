@@ -11,6 +11,10 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.net.URISyntaxException;
 
 public class StartScreenController {
 
@@ -21,15 +25,16 @@ public class StartScreenController {
     private Button startButton;
 
     private Stage primaryStage;
+    private MediaPlayer mediaPlayer; // 添加 MediaPlayer
 
     // Set the primaryStage
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    // Initialize method for loading the background image
+    // Initialize method for loading the background image and playing the background music
     @FXML
-    private void initialize() {
+    private void initialize() throws URISyntaxException {
         // Load background image
         Image backgroundImage = new Image(getClass().getResourceAsStream("/images/background.png"));
 
@@ -42,6 +47,15 @@ public class StartScreenController {
 
         // Set the VBox background
         root.setBackground(new Background(background));
+
+        // Load the background music
+        String backgroundMusicFile = "/sounds/victory.mp3"; // 确保路径正确
+        Media backgroundMusic = new Media(getClass().getResource(backgroundMusicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(backgroundMusic);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // 设置为无限循环
+
+        // 播放背景音乐
+        mediaPlayer.play();
     }
 
     // Handle the start game button click event
