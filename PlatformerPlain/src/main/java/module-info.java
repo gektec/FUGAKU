@@ -3,6 +3,7 @@ module com.example.platformerplain {
     requires javafx.fxml;
     requires java.logging;
     requires java.desktop;
+    requires javafx.media;
 
 
     opens com.example.platformerplain to javafx.fxml;
