@@ -5,6 +5,9 @@ import com.example.platformerplain.Controller.StartScreenController;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
 
+import com.example.platformerplain.move.Move;
+import com.example.platformerplain.move.MoveEnemy;
+import com.example.platformerplain.move.MovePlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

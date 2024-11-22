@@ -1,4 +1,4 @@
-package com.example.platformerplain;
+package com.example.platformerplain.move;
 
 public class Coord2D {
     private int x;
