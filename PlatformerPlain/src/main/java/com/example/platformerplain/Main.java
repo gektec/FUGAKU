@@ -186,24 +186,21 @@ public class Main extends Application {
                         collidableMap.add(platformLeft);
                         break;
                     case 'M':
-                        Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 4);
+                        int adjacencyCode = 0;
+                        if (i > 0 && LevelData.Level1[i - 1].charAt(j) == 'M') {
+                            adjacencyCode += 1;
+                        }
+                        if (j < line.length() - 1 && LevelData.Level1[i].charAt(j + 1) == 'M') {
+                            adjacencyCode += 2;
+                        }
+                        if (i < LevelData.Level1.length - 1 && LevelData.Level1[i + 1].charAt(j) == 'M') {
+                            adjacencyCode += 4;
+                        }
+                        if (j > 0 && LevelData.Level1[i].charAt(j - 1) == 'M') {
+                            adjacencyCode += 8;
+                        }
+                        Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         collidableMap.add(platform);
-                        break;
-                    case 'R':
-                        Entity platformRight = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 5);
-                        collidableMap.add(platformRight);
-                        break;
-                    case'l':
-                        Entity platformLeftLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 13);
-                        collidableMap.add(platformLeftLow);
-                        break;
-                    case'm':
-                        Entity platformLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 14);
-                        collidableMap.add(platformLow);
-                        break;
-                    case'r':
-                        Entity platformRightLow = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 15);
-                        collidableMap.add(platformRightLow);
                         break;
                     case 'G':
                         Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE,50);

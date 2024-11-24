@@ -68,14 +68,13 @@ public class MovePlayer {
         if(!canJump && !canSlideJump){
             haveJKeyReleased = false;
         }
-        if(playerState == MoveState.DASHING){
+        if(playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING){
             if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
                 playerVelocity.reduce((int) RESISTANCE / 2, (int) RESISTANCE / 2);
             else
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
         }
         else{
-            if (playerState != MoveState.SLIDE_JUMPING) {
                 // Jump
                 if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && playerState == MoveState.DEFAULT) {
                     playerVelocity.setY(-20);
@@ -112,13 +111,15 @@ public class MovePlayer {
                     if (isPressed(KeyCode.S)) {
                         y += Constants.DASH_SPEED;
                     }
-                    if (x != 0 && y != 0)
-                        playerVelocity.set((int) (x / 1.6), (int) (y / 1.6));
-                    else
-                        playerVelocity.set(x, y);
-                    canDash = false;
-                    playerState = MoveState.DASHING;
-                    dashCooldownTimer.playFromStart();
+                    if (x != 0 || y != 0) {
+                        if (x != 0 && y != 0)
+                            playerVelocity.set((int) (x / 1.6), (int) (y / 1.6));
+                        else
+                            playerVelocity.set(x, y);
+                        canDash = false;
+                        playerState = MoveState.DASHING;
+                        dashCooldownTimer.playFromStart();
+                    }
                 }
                 //Resistance
                 playerVelocity.reduce(RESISTANCE, 0);
@@ -126,7 +127,6 @@ public class MovePlayer {
             // apply gravity when not dashing
             if (playerVelocity.getY() < MAX_FALL_SPEED) {
                 playerVelocity.add(0, gravity);
-            }
         }
 
 

@@ -19,8 +19,8 @@ public class Platform extends Entity {
         Rectangle rect = new Rectangle(w, h, Color.GREEN);
         rect.setTranslateX(x);
         rect.setTranslateY(y);
-        //Image sprite = CutSpriteSheet.getSpriteByIndex(index);
-        //rect.setFill(ImageScaler.nearestNeighborScale(sprite));
+        Image sprite = CutSpriteSheet.getSprite(Constants.getSpritePosition(index)[0], Constants.getSpritePosition(index)[1]);
+        rect.setFill(ImageScaler.nearestNeighborScale(sprite));
         this.node = rect;
 
     }

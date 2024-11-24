@@ -1,6 +1,12 @@
 package com.example.platformerplain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
+    private Constants() {
+        throw new AssertionError("Cannot instantiate Constants class");
+    }
 
     public static final int TILE_SIZE = 60;
     public static final int PLAYER_SIZE = 40;
@@ -27,10 +33,34 @@ public class Constants {
         ENEMY
     }
 
+    private static final Map<Integer, int[]> adjacencyCodeToSprite;
 
 
-    private Constants() {
-        throw new AssertionError("Cannot instantiate Constants class");
+    static {
+        adjacencyCodeToSprite = new HashMap<>();
+        // Populating the map with adjacencyCode as keys and sprite row/column as values
+        // Example entries (these are illustrative and should be adjusted according to your actual sprite sheet)
+        adjacencyCodeToSprite.put(0, new int[]{3, 3}); // No adjacency
+        adjacencyCodeToSprite.put(1, new int[]{3, 2}); // Up
+        adjacencyCodeToSprite.put(2, new int[]{0, 3}); // Right
+        adjacencyCodeToSprite.put(3, new int[]{0, 2}); // Up + Right
+        adjacencyCodeToSprite.put(4, new int[]{3, 0}); // Down
+        adjacencyCodeToSprite.put(5, new int[]{3, 1}); // Up + Down
+        adjacencyCodeToSprite.put(6, new int[]{0, 0}); // Right + Down
+        adjacencyCodeToSprite.put(7, new int[]{0, 1}); // Up + Right + Down
+        adjacencyCodeToSprite.put(8, new int[]{2, 3}); // Left
+        adjacencyCodeToSprite.put(9, new int[]{2, 2}); // Up + Left
+        adjacencyCodeToSprite.put(10, new int[]{1, 3}); // Right + Left
+        adjacencyCodeToSprite.put(11, new int[]{1, 2}); // Up + Right + Left
+        adjacencyCodeToSprite.put(12, new int[]{2, 0}); // Down + Left
+        adjacencyCodeToSprite.put(13, new int[]{2, 1}); // Up + Down + Left
+        adjacencyCodeToSprite.put(14, new int[]{1, 0}); // Right + Down + Left
+        adjacencyCodeToSprite.put(15, new int[]{1, 1}); // All sides (Up + Right + Down + Left)
+
+    }
+
+    public static int[] getSpritePosition(int adjacencyCode) {
+        return adjacencyCodeToSprite.get(adjacencyCode);
     }
 
 }
