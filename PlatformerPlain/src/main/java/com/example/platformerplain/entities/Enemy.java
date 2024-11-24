@@ -1,26 +1,62 @@
 package com.example.platformerplain.entities;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+
 public class Enemy extends Entity {
-    private Node node;
+    private Node rectangle;
+    Image[] frames;
+    private Canvas canvas;
+    private GraphicsContext gc;
+
 
     protected boolean isAnimated(){
         return true;
     };
 
     public Enemy(int x, int y, int w, int h) {
-        node = new Rectangle(w, h, Color.RED);
-        node.setTranslateX(x);
-        node.setTranslateY(y);
+        rectangle = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
+        rectangle.setTranslateX(x);
+        rectangle.setTranslateY(y);
+
+        frames = Constants.GHOST_IDLE[0];
+        animation.setFrames(frames);
+        animation.setDelay(10);
+
+        canvas = new Canvas(96,96);
+        gc = canvas.getGraphicsContext2D();
+        canvas.setTranslateX(rectangle.getTranslateX());
+        canvas.setTranslateY(rectangle.getTranslateY());
+    }
+
+
+    @Override
+    public void update() {
+        // Update and draw
+        animation.update();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        Image sprite = animation.getImage();
+        if (sprite != null) {
+            sprite = ImageScaler.nearestNeighborScale(sprite);
+            gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
+        }
     }
 
     @Override
     public Node node() {
-        return node;
+        return canvas;
+    }
+
+    @Override
+    public Node hitBox() {
+        return rectangle;
     }
 
     @Override

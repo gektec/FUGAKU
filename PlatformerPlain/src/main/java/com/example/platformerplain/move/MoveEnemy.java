@@ -1,5 +1,6 @@
-package com.example.platformerplain;
+package com.example.platformerplain.move;
 
+import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.Entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -16,21 +17,23 @@ public class MoveEnemy {
     private ArrayList<Entity> entityMap;
     private final int gravity = 1;  //todo: inherit from move
     private boolean canJump;
-    private int levelWidth;
+    //private int levelWidth;
     private HashMap<KeyCode, Boolean> keys;
     private Coord2D velocity;
+    private MoveState enemyState;
 
 
     public MoveEnemy(Entity enemy, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.enemy = enemy;
         this.entityMap = platforms;
-        this.levelWidth = levelWidth;
+        //this.levelWidth = levelWidth;
         this.keys = keys;
         this.velocity = new Coord2D(0, 0);
         this.canJump = true;
+        this.enemyState = MoveState.DEFAULT;
     }
 //todo
-    Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
+    //Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
 
     public void update() {
 
@@ -44,13 +47,12 @@ public class MoveEnemy {
             velocity.add(0, -20);
             canJump = false;
         }
-
-        MoveStatus moveStatus = new MoveStatus(canJump, false, false, false, false, false);
+        MoveStatus moveStatus = new MoveStatus(enemyState, false, false, false);
         Move.move(enemy, velocity, moveStatus);
         canJump = moveStatus.canJump;
 
-        leftEdgeSensor.setX(enemy.node().getTranslateX() - 5);
-        leftEdgeSensor.setY(enemy.node().getTranslateY() - Constants.PLAYER_SIZE/2);
+//        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
+//        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
 
     }
 }

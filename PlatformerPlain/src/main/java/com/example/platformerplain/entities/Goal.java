@@ -19,6 +19,11 @@ public class Goal extends Entity {
     }
 
     @Override
+    public Node hitBox() {
+        return node;
+    }
+
+    @Override
     public Node node() {
         return node;
     }
