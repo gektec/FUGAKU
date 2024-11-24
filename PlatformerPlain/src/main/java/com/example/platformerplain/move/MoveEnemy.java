@@ -1,6 +1,7 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
 public class MoveEnemy {
-    private Entity enemy;
+    private Enemy enemy;
     private ArrayList<Entity> entityMap;
     private final int gravity = 1;  //todo: inherit from move
     private boolean canJump;
@@ -23,7 +24,7 @@ public class MoveEnemy {
     private MoveState enemyState;
 
 
-    public MoveEnemy(Entity enemy, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.enemy = enemy;
         this.entityMap = platforms;
         //this.levelWidth = levelWidth;
@@ -36,6 +37,10 @@ public class MoveEnemy {
     //Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
 
     public void update() {
+
+        if (enemy.isDead) {
+            return;
+        }
 
         velocity.reduce(RESISTANCE, 0);
 

@@ -14,6 +14,7 @@ public abstract class Entity {
 
     protected Animation animation;
 
+
     public Entity(){
         if(isAnimated()){
             animation = new Animation();
@@ -32,4 +33,5 @@ public abstract class Entity {
     public Node hitBox() {
         return this.hitBox();
     }
+
 }

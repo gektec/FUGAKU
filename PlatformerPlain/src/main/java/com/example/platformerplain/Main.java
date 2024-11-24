@@ -1,6 +1,7 @@
 package com.example.platformerplain;
 
 import com.example.platformerplain.ScreenManager.ScreenManager;
+import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
 
@@ -23,12 +24,14 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main extends Application {
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private ArrayList<Entity> collidableMap = new ArrayList<>();
-    private ArrayList<Entity> enemyMap = new ArrayList<>();
+    private ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private List<Entity> toRemove = new ArrayList<>();
     private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
     private Pane uiRoot = new Pane();
@@ -90,6 +93,8 @@ public class Main extends Application {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             update();
             updateFramerate();
+            enemyMap.removeAll(toRemove);
+            collidableMap.removeAll(toRemove);
         });
 
         // 创建时间线并添加帧
@@ -138,11 +143,11 @@ public class Main extends Application {
                         collidableMap.add(platform);
                         break;
                     case 'G':
-                        Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE,50);
+                        Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
                         collidableMap.add(goal);
                         break;
                     case 'E':
-                        Entity enemy = createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE,70);
+                        Enemy enemy = (Enemy) createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
                         moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
                         enemyMap.add(enemy);
                         break;
@@ -150,13 +155,14 @@ public class Main extends Application {
             }
         }
 
-        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE,0);
+        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
         player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
             }
         });
+
 
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
         movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
@@ -174,12 +180,17 @@ public class Main extends Application {
         uiRoot.getChildren().add(framerateLabel);
     }
 
+    public void removeEnemy(Enemy enemy) {
+        toRemove.add(enemy);
+        gameRoot.getChildren().remove(enemy.node());
+    }
+
     private void update() {
         movePlayerLogic.update();
-        for (Entity enemy : enemyMap) {
-            if (moveEnemyLogic != null) {
-                moveEnemyLogic.update();
-                enemy.update();
+        if (enemyMap != null) {
+            for (Enemy enemy : enemyMap) {
+                    moveEnemyLogic.update();
+                    enemy.update();
             }
         }
     }

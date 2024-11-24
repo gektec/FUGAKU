@@ -2,6 +2,7 @@ package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +17,7 @@ import static com.example.platformerplain.Constants.RESISTANCE;
 
 public class MovePlayer {
     private Entity player;
-    private ArrayList<Entity> enemies;
+    private ArrayList<Enemy> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private final int gravity = 1;  // Gravity constant
     private boolean canJump;  // Flag indicating whether the player can jump
@@ -34,7 +35,7 @@ public class MovePlayer {
     private Timeline slideJumpCooldownTimer;
     private boolean haveJKeyReleased;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Entity> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
         //this.levelWidth = levelWidth;
@@ -157,9 +158,14 @@ public class MovePlayer {
     private void checkDie() {
         boolean isPlayerDead = player.hitBox().getTranslateY() > 720;
 
-        for (Entity enemy : enemies) {
+        for (Enemy enemy : enemies) {
             if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent())) {
-                isPlayerDead = true;
+                if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY()+10) {
+                    ((Enemy) enemy).isDead = true;
+                    playerVelocity.add(0,-20);
+                    System.out.println("enemy killed");
+                }
+                else isPlayerDead = true;
             }
         }
 

@@ -43,6 +43,7 @@ public class Constants {
     public static final int SCALE_FACTOR = 5;
 
     public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
+    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48);
 
 
     public static WritableImage[][] load(String s, int w, int h) {

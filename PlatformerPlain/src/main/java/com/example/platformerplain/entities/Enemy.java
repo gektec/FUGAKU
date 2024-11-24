@@ -1,6 +1,8 @@
 package com.example.platformerplain.entities;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.Main;
+import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -10,12 +12,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
+
 public class Enemy extends Entity {
     private Node rectangle;
     Image[] frames;
     private Canvas canvas;
     private GraphicsContext gc;
-
+    public boolean isDead;
+    boolean deathAnimationSet = false;
 
     protected boolean isAnimated(){
         return true;
@@ -39,6 +43,16 @@ public class Enemy extends Entity {
 
     @Override
     public void update() {
+        if(isDead && !deathAnimationSet){
+            frames = Constants.GHOST_DEATH[0];
+            animation.setFrames(frames);
+            animation.setDelay(10);
+            deathAnimationSet = true;
+        }
+        if(isDead && animation.hasPlayedOnce()){
+            removeFromGame();
+        }
+
         // Update and draw
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -47,6 +61,10 @@ public class Enemy extends Entity {
             sprite = ImageScaler.nearestNeighborScale(sprite);
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
+    }
+
+    public void removeFromGame() {
+        Main.getInstance().removeEnemy(this);
     }
 
     @Override
