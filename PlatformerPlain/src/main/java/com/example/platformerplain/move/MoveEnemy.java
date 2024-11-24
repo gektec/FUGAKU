@@ -33,7 +33,7 @@ public class MoveEnemy {
         this.enemyState = MoveState.DEFAULT;
     }
 //todo
-    Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
+    //Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
 
     public void update() {
 
@@ -51,8 +51,8 @@ public class MoveEnemy {
         Move.move(enemy, velocity, moveStatus);
         canJump = moveStatus.canJump;
 
-        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
-        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.PLAYER_SIZE/2);
+//        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
+//        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
 
     }
 }

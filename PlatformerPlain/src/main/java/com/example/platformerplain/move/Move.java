@@ -92,5 +92,7 @@ public class Move {
                 moveStatus.moveState = MoveState.DEFAULT;
             }
         }
+        moveable.node().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.node().getBoundsInParent().getWidth() / 2);
+        moveable.node().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.node().getBoundsInParent().getHeight() / 2);
     }
 }

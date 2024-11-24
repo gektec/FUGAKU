@@ -16,6 +16,7 @@ public class Constants {
 
     public static final int TILE_SIZE = 60;
     public static final int PLAYER_SIZE = 40;
+    public static final int ENEMY_SIZE = 20;
     public static final int BACKGROUND_WIDTH = 1280;
     public static final int BACKGROUND_HEIGHT = 720;
     public static final int PLAYER_START_X = 0;
@@ -38,6 +39,8 @@ public class Constants {
         PLAYER,
         ENEMY
     }
+
+    public static final int SCALE_FACTOR = 5;
 
     public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
 
