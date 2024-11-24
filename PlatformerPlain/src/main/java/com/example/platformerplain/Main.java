@@ -4,6 +4,9 @@ import com.example.platformerplain.ScreenManager.ScreenManager;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
 
+import com.example.platformerplain.move.Move;
+import com.example.platformerplain.move.MoveEnemy;
+import com.example.platformerplain.move.MovePlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -117,10 +120,6 @@ public class Main extends Application {
                 switch (line.charAt(j)) {
                     case '0':
                         break;
-                    case 'L':
-                        Entity platformLeft = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 3);
-                        collidableMap.add(platformLeft);
-                        break;
                     case 'M':
                         int adjacencyCode = 0;
                         if (i > 0 && LevelData.Level1[i - 1].charAt(j) == 'M') {
@@ -180,6 +179,7 @@ public class Main extends Application {
         for (Entity enemy : enemyMap) {
             if (moveEnemyLogic != null) {
                 moveEnemyLogic.update();
+                enemy.update();
             }
         }
     }

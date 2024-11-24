@@ -36,23 +36,17 @@ public class Enemy extends Entity {
         canvas.setTranslateY(rectangle.getTranslateY());
     }
 
-    public void draw() {
-        // Clear the previous frame
+
+    @Override
+    public void update() {
+        // Update and draw
+        animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Get the current image from the animation
         Image sprite = animation.getImage();
-
-        // Draw the image at the position of the Rectangle (represented by node)
         if (sprite != null) {
             sprite = ImageScaler.nearestNeighborScale(sprite);
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
-    }
-
-    @Override
-    public void update() {
-        animation.update();
     }
 
     @Override
