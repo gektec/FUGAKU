@@ -1,7 +1,7 @@
 package com.example.platformerplain.entities;
 
 import com.example.platformerplain.Constants;
-import javafx.animation.Animation;
+import com.example.platformerplain.texture.Animation;
 import javafx.scene.Node;
 
 public abstract class Entity {
@@ -12,10 +12,24 @@ public abstract class Entity {
 
     public abstract Constants.EntityType getType();
 
-//    public void update() {
-//        if(isAnimated()) {
-//            Animation.update();
-//        }
-//    }
+    protected Animation animation;
 
+    public Entity(){
+        if(isAnimated()){
+            animation = new Animation();
+        }
+    }
+
+    public void update() {
+        animation.update();
+    }
+
+    public void draw() {
+
+    }
+
+
+    public Node hitBox() {
+        return this.hitBox();
+    }
 }

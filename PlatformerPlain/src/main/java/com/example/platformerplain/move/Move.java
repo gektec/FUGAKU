@@ -13,8 +13,8 @@ public class Move {
     }
 
     public static int detectRelativeLocation(Entity moveable, Entity collidable) {
-        Coord2D playerCoord = new Coord2D((int) moveable.node().getTranslateX() + (Constants.PLAYER_SIZE / 2), (int) moveable.node().getTranslateY() + (Constants.PLAYER_SIZE / 2));
-        Coord2D platformCoord = new Coord2D((int) collidable.node().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.node().getTranslateY() + (Constants.TILE_SIZE / 2));
+        Coord2D playerCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (Constants.PLAYER_SIZE / 2), (int) moveable.hitBox().getTranslateY() + (Constants.PLAYER_SIZE / 2));
+        Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
 
         int xDiff = playerCoord.getX() - platformCoord.getX();
         int yDiff = playerCoord.getY() - platformCoord.getY();
@@ -42,24 +42,24 @@ public class Move {
         boolean isTouchingWall = false;
         moveStatus.canJump = false;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
-            moveable.node().setTranslateX(moveable.node().getTranslateX() + velocity.getX());
-            moveable.node().setTranslateY(moveable.node().getTranslateY() + velocity.getY());
+            moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
+            moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
             for (Entity platform : entityMap) {
-                if (moveable.node().getBoundsInParent().intersects(platform.node().getBoundsInParent())) {
+                if (moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())) {
                     int relativeLocation = detectRelativeLocation(moveable, platform);
                     if (relativeLocation == 1) {
                         isTouchingGround = true;
-                        moveable.node().setTranslateY(platform.node().getTranslateY() - Constants.PLAYER_SIZE);
+                        moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - Constants.PLAYER_SIZE);
                         velocity.setY(0);
                         moveStatus.canJump = true;
                         moveStatus.canDash = true;
                     } else if (relativeLocation == 2) {
                         isTouchingWall = true;
-                        moveable.node().setTranslateX(platform.node().getTranslateX() - Constants.PLAYER_SIZE);
+                        moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - Constants.PLAYER_SIZE);
                         velocity.setX(0);
                         if (moveStatus.moveState == MoveState.SLIDE_JUMPING) {
                             velocity.setX(-Constants.SLIDE_JUMP_SPEED);
-                            moveable.node().setTranslateX(moveable.node().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
+                            moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                             }
                         else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
                             moveStatus.moveState = MoveState.SLIDING;
@@ -67,17 +67,17 @@ public class Move {
                         }
                     } else if (relativeLocation == 4) {
                         isTouchingWall = true;
-                        moveable.node().setTranslateX(platform.node().getTranslateX() + Constants.TILE_SIZE);
+                        moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
                         if (moveStatus.moveState == MoveState.SLIDE_JUMPING) {
                             velocity.setX(Constants.SLIDE_JUMP_SPEED);
-                            moveable.node().setTranslateX(moveable.node().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
+                            moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
                             moveStatus.moveState = MoveState.SLIDING;
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 3) {
-                        moveable.node().setTranslateY(platform.node().getTranslateY() + Constants.TILE_SIZE);
+                        moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
                         moveStatus.moveState = MoveState.DEFAULT;
 

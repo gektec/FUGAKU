@@ -138,6 +138,8 @@ public class Main extends Application {
         for (Entity enemy : enemyMap) {
             if (moveEnemyLogic != null) {
                 moveEnemyLogic.update();  // Update enemy logic
+                enemy.update();
+                enemy.draw();
             }
         }
     }
@@ -216,7 +218,7 @@ public class Main extends Application {
         }
 
         player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE,0);
-        player.node().translateXProperty().addListener((obs, old, newValue) -> {
+        player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));

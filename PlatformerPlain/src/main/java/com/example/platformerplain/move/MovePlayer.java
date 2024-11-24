@@ -146,7 +146,7 @@ public class MovePlayer {
 
     private void checkGoalCollision() {
         for (Entity entity : entityMap) {
-            if (entity.getType() == Constants.EntityType.GOAL && player.node().getBoundsInParent().intersects(entity.node().getBoundsInParent())) {
+            if (entity.getType() == Constants.EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
                 // When the player reaches the goal, switch back to the menu scene
 
@@ -155,10 +155,10 @@ public class MovePlayer {
     }
 
     private void checkDie() {
-        boolean isPlayerDead = player.node().getTranslateY() > 720;
+        boolean isPlayerDead = player.hitBox().getTranslateY() > 720;
 
         for (Entity enemy : enemies) {
-            if (player.node().getBoundsInParent().intersects(enemy.node().getBoundsInParent())) {
+            if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent())) {
                 isPlayerDead = true;
             }
         }

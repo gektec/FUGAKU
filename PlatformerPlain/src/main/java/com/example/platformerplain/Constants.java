@@ -1,7 +1,13 @@
 package com.example.platformerplain;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
+
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Constants {
     private Constants() {
@@ -32,6 +38,34 @@ public class Constants {
         PLAYER,
         ENEMY
     }
+
+    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
+
+
+    public static WritableImage[][] load(String s, int w, int h) {
+        WritableImage[][] ret;
+        try {
+            InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
+            Image spritesheet = new Image(inputStream);
+            int width = (int) (spritesheet.getWidth() / w);
+            int height = (int) (spritesheet.getHeight() / h);
+            ret = new WritableImage[height][width];
+
+            PixelReader pixelReader = spritesheet.getPixelReader();
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    ret[i][j] = new WritableImage(pixelReader, j * w, i * h, w, h);
+                }
+            }
+            return ret;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading graphics.");
+            System.exit(0);
+        }
+        return null;
+    }
+
 
     private static final Map<Integer, int[]> adjacencyCodeToSprite;
 
