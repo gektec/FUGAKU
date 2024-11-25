@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class StartScreenController {
@@ -67,7 +68,13 @@ public class StartScreenController {
     // Handle the start game button click event
     @FXML
     void handleStartGame() {
-        // Call the startGame method of the Main class, passing the primaryStage
-        Main.getInstance().startGame(primaryStage);
+
+        if (primaryStage != null) {
+
+            Main.getInstance().startGame(primaryStage);
+
+        } else {
+            System.err.println("Primary stage is not set.");
+        }
     }
 }
