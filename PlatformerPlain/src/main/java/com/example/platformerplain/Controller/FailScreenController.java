@@ -2,6 +2,7 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.Screen.StartScreen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,25 +80,24 @@ public class FailScreenController {
 
     @FXML
     private void handleMenu() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/start_screen.fxml"));
-            Parent startScreen = loader.load();
-            Scene startScene = new Scene(startScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
-            Stage currentStage = (Stage) root.getScene().getWindow();
-            currentStage.setScene(startScene);
+        // 创建 StartScreen 实例并传递主舞台
+        StartScreen startScreen = new StartScreen();
+        startScreen.show(primaryStage);  // 传递 currentStage
 
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-            }
+        // 释放媒体播放器的资源
+        releaseMediaPlayer();
 
-        } catch (IOException e) {
-            System.err.println("Error loading MenuScreen.fxml: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("An unexpected error occurred: " + e.getMessage());
-            e.printStackTrace();
+    }
+
+
+    private void releaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose(); // release memory
+            mediaPlayer = null;
         }
     }
+
 
 
 }
