@@ -14,6 +14,10 @@ public class EntityFactory {
                 return new Player(x, y, w, h);
             case ENEMY:
                 return new Enemy(x, y, w, h);
+            case SPIKE:
+                return new Spike();
+            case LADDER:
+                return new Ladder(x, y, w, h, index);
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + type);
         }

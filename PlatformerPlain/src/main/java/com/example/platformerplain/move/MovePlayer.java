@@ -5,6 +5,7 @@ import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.Ladder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
@@ -17,9 +18,11 @@ import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
 public class MovePlayer {
+    private static final int MAX_CLIMB_SPEED = 6;
     private Entity player;
     private ArrayList<Enemy> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
+    private ArrayList<Ladder> ladders;
     private boolean canJump;  // Flag indicating whether the player can jump
     private boolean canDash;
     private boolean canSlideJump;
@@ -36,7 +39,7 @@ public class MovePlayer {
     private boolean haveJKeyReleased = true;
     private boolean isPlayerDead = false;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder>ladders , int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
         //this.levelWidth = levelWidth;
@@ -44,6 +47,7 @@ public class MovePlayer {
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
         this.enemies = enemies;
+        this.ladders = ladders;
         //this.mainApp = main;
         this.playerState = MoveState.DEFAULT;
 
@@ -70,6 +74,7 @@ public class MovePlayer {
         if (!canJump && !canSlideJump) {
             haveJKeyReleased = false;
         }
+
         if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
             if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
                 playerVelocity.reduce((int) RESISTANCE / 2, (int) RESISTANCE / 2);
@@ -128,6 +133,19 @@ public class MovePlayer {
         // apply gravity when not dashing
         if (playerVelocity.getY() < MAX_FALL_SPEED) {
             playerVelocity.add(0, Constants.GRAVITY);
+        }
+
+        for (Ladder ladder : ladders) {
+            if (player.hitBox().getBoundsInParent().intersects(ladder.hitBox().getBoundsInParent())) {
+                if (isPressed(KeyCode.W)&& playerVelocity.getY() >= -MAX_CLIMB_SPEED) {
+                    playerVelocity.add(0, -4);
+                    break;
+                }
+                if (isPressed(KeyCode.S) && playerVelocity.getY() <= MAX_CLIMB_SPEED) {
+                    playerVelocity.add(0, 4);
+                    break;
+                }
+            }
         }
 
 

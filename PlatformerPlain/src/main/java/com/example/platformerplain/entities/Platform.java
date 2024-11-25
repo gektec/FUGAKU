@@ -29,7 +29,7 @@ public class Platform extends Entity {
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(rectangle.getTranslateX());
         canvas.setTranslateY(rectangle.getTranslateY());
-        Image sprite = CutSpriteSheet.getSprite(Constants.getSpritePosition(index)[0], Constants.getSpritePosition(index)[1]);
+        Image sprite = CutSpriteSheet.getSprite(Constants.EntityType.PLATFORM,Constants.getPlatformPosition(index)[0], Constants.getPlatformPosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -45,7 +45,7 @@ public class Platform extends Entity {
 
     @Override
     public Node hitBox() {
-        return node;
+        return hitBox;
     }
 
     @Override
