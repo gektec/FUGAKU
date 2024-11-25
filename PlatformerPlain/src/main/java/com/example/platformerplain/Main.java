@@ -1,6 +1,11 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.ScreenManager.ScreenManager;
+import com.example.platformerplain.Screen.FailScreen;
+import com.example.platformerplain.Screen.ScreenManager;
+import com.example.platformerplain.Screen.StartScreen;
+import com.example.platformerplain.entities.Enemy;
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityFactory;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -75,12 +80,11 @@ public class Main extends Application {
         startTime = System.currentTimeMillis();
         instance = this;
 
-        screenManager = new ScreenManager(primaryStage);
-        screenManager.showStartScreen();
+        // Initialize ScreenManager
+        screenManager = ScreenManager.getInstance(primaryStage);
 
-        primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
-        primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
-        primaryStage.setResizable(false);
+        // Show the start screen
+        screenManager.showScreen(new StartScreen());
     }
 
     public void startGame(Stage primaryStage) {
@@ -294,7 +298,7 @@ public class Main extends Application {
     }
 
     public void exitGame() {
-        screenManager.showFailScreen();
+        screenManager.showScreen(new FailScreen());
     }
 
     public static Main getInstance() {
