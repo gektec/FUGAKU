@@ -6,10 +6,10 @@ import com.example.platformerplain.entities.Entity;
 import java.util.ArrayList;
 
 public class Move {
-    private static ArrayList<Entity> entityMap;
+    private static ArrayList<Entity> collidableMap;
 
-    public Move(ArrayList<Entity> entityMap) {
-        Move.entityMap = entityMap;
+    public Move(ArrayList<Entity> collidableMap) {
+        Move.collidableMap = collidableMap;
     }
 
     public static int detectRelativeLocation(Entity moveable, Entity collidable) {
@@ -44,7 +44,7 @@ public class Move {
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
-            for (Entity platform : entityMap) {
+            for (Entity platform : collidableMap) {
                 if (moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())) {
                     int relativeLocation = detectRelativeLocation(moveable, platform);
                     if (relativeLocation == 1) {

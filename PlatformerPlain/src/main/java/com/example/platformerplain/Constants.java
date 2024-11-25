@@ -36,16 +36,22 @@ public class Constants {
         PLATFORM,
         GOAL,
         PLAYER,
-        ENEMY
+        SPIKE, ENEMY
     }
 
     public static final int SCALE_FACTOR = 5;
+
+    public static final Image BACKGROUND_SKY = load("/images/backgrounds/Sky.png");
+    public static final Image BACKGROUND_CLOUD_1 = load("/images/backgrounds/Cloud 1.png");
+    public static final Image BACKGROUND_CLOUD_2 = load("/images/backgrounds/Cloud 2.png");
+    public static final Image BACKGROUND_CLOUD_3 = load("/images/backgrounds/Cloud 3.png");
+    public static final Image BACKGROUND_MOON = load("/images/backgrounds/Moon.png");
 
     public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
     public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48);
 
 
-    public static WritableImage[][] load(String s, int w, int h) {
+    public static Image[][] load(String s, int w, int h) {
         WritableImage[][] ret;
         try {
             InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
@@ -61,6 +67,20 @@ public class Constants {
                 }
             }
             return ret;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading graphics.");
+            System.exit(0);
+        }
+        return null;
+    }
+
+    //Overload
+    public static Image load(String s) {
+        try {
+            InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
+            Image image = new Image(inputStream);
+            return image;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading graphics.");

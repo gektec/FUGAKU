@@ -1,22 +1,22 @@
 package com.example.platformerplain;
 
 import com.example.platformerplain.ScreenManager.ScreenManager;
-import com.example.platformerplain.entities.Enemy;
-import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.entities.EntityFactory;
 
+import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
+import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,10 +31,15 @@ public class Main extends Application {
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private static ArrayList<Entity> collidableMap = new ArrayList<>();
     private static ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static ArrayList<Goal> goalMap = new ArrayList<>();
+    private static ArrayList<Spike> spikeMap = new ArrayList<>();
+    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
+
     private List<Entity> toRemove = new ArrayList<>();
     private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
     private Pane uiRoot = new Pane();
+    private Pane backgroundRoot = new Pane();
 
     private Entity player;
     private static int levelWidth = -1;
@@ -72,6 +77,10 @@ public class Main extends Application {
 
         screenManager = new ScreenManager(primaryStage);
         screenManager.showStartScreen();
+
+        primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
+        primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
+        primaryStage.setResizable(false);
     }
 
     public void startGame(Stage primaryStage) {
@@ -80,6 +89,7 @@ public class Main extends Application {
         startLevel();
         primaryStage.setScene(gameScene);
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        //todo: set background layout
         startGameLoop();
     }
 
@@ -117,7 +127,10 @@ public class Main extends Application {
     }
 
     private void initContent() {
-
+        framerateLabel.setTextFill(Color.WHITE);
+        framerateLabel.setFont(new Font(18));
+        framerateLabel.setTranslateX(10);
+        framerateLabel.setTranslateY(10);
     }
 
     private void startLevel() {
@@ -126,10 +139,37 @@ public class Main extends Application {
         enemyMap.clear();
         toRemove.clear();
 
-
         appRoot = new Pane();
         gameRoot = new Pane();
         uiRoot = new Pane();
+        backgroundRoot = new Pane();
+
+        Image background0 = Constants.BACKGROUND_SKY;
+        ImageView backgroundImageView0 = new ImageView(background0);
+        backgroundImageView0.setFitWidth(Constants.BACKGROUND_WIDTH);
+        backgroundImageView0.setFitHeight(Constants.BACKGROUND_HEIGHT);
+
+        Image background1 = Constants.BACKGROUND_CLOUD_1;
+        ImageView backgroundImageView1 = new ImageView(ImageScaler.nearestNeighborScale(background1));
+        backgroundImageView1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundImageView1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+
+        Image background2 = Constants.BACKGROUND_CLOUD_2;
+        ImageView backgroundImageView2 = new ImageView(ImageScaler.nearestNeighborScale(background2));
+        backgroundImageView2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundImageView2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+
+        Image background3 = Constants.BACKGROUND_CLOUD_3;
+        ImageView backgroundImageView3 = new ImageView(ImageScaler.nearestNeighborScale(background3));
+        backgroundImageView3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundImageView3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+
+        Image background4 = Constants.BACKGROUND_MOON;
+        ImageView backgroundImageView4 = new ImageView(ImageScaler.nearestNeighborScale(background4));
+        backgroundImageView4.setFitWidth(Constants.BACKGROUND_WIDTH);
+        backgroundImageView4.setFitHeight(Constants.BACKGROUND_HEIGHT);
+
+        backgroundRoot.getChildren().addAll(backgroundImageView0, backgroundImageView3, backgroundImageView4, backgroundImageView2, backgroundImageView1);
 
         levelWidth = LevelData.getLevelInformation.getLevelWidth();
         levelHeight = LevelData.getLevelInformation.getLevelHeight();
@@ -180,6 +220,10 @@ public class Main extends Application {
                         Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         collidableMap.add(platform);
                         break;
+                    case 'S':
+                        Entity spike = createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
+                        collidableMap.add(spike);
+                        break;
                     case 'G':
                         Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
                         collidableMap.add(goal);
@@ -197,6 +241,11 @@ public class Main extends Application {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
+                backgroundImageView1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2); // Layer 1 moves at half speed
+                backgroundImageView2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3); // Layer 2 moves at 30% speed
+                backgroundImageView3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4); // Layer 2 moves at 30% speed
+                backgroundImageView4.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05)+600 ); // Layer 2 moves at 30% speed
+
             }
         });
         player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
@@ -205,11 +254,14 @@ public class Main extends Application {
             //System.out.println(offsetY);
             if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 && offsetY > Constants.BACKGROUND_HEIGHT / 4) {
                 gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
+                backgroundImageView1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50); // Layer 1 moves at half speed
+                backgroundImageView2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50); // Layer 2 moves at 30% speed
+                backgroundImageView3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50); // Layer 2 moves at 30% speed
+                backgroundImageView4.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50); // Layer 2 moves at 30% speed
             }
         });
 
-        Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
-        appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
+        appRoot.getChildren().addAll(backgroundRoot, gameRoot, uiRoot);
 
         move = new Move(collidableMap);
 
@@ -217,10 +269,6 @@ public class Main extends Application {
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
 
-        framerateLabel.setTextFill(Color.WHITE);
-        framerateLabel.setFont(new Font(18));
-        framerateLabel.setTranslateX(10);
-        framerateLabel.setTranslateY(10);
         uiRoot.getChildren().add(framerateLabel);
     }
 
