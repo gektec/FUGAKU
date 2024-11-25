@@ -7,37 +7,38 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Color;
 
-import static com.example.platformerplain.Constants.SCALE_FACTOR;
-
 public class ImageScaler {
 
-    public static Image nearestNeighborScale(Image inputImage) {
+    public static Image nearestNeighborScale(Image inputImage, int scale) {
 
+        if(scale>1) {
 
-        int inputWidth = (int) inputImage.getWidth();
-        int inputHeight = (int) inputImage.getHeight();
+            int inputWidth = (int) inputImage.getWidth();
+            int inputHeight = (int) inputImage.getHeight();
 
-        int outputWidth = (int) (inputWidth * SCALE_FACTOR);
-        int outputHeight = (int) (inputHeight * SCALE_FACTOR);
+            int outputWidth = (int) (inputWidth * scale);
+            int outputHeight = (int) (inputHeight * scale);
 
-        WritableImage outputImage = new WritableImage(outputWidth, outputHeight);
-        PixelReader pixelReader = inputImage.getPixelReader();
-        PixelWriter pixelWriter = outputImage.getPixelWriter();
+            WritableImage outputImage = new WritableImage(outputWidth, outputHeight);
+            PixelReader pixelReader = inputImage.getPixelReader();
+            PixelWriter pixelWriter = outputImage.getPixelWriter();
 
-        for (int y = 0; y < outputHeight; y++) {
-            for (int x = 0; x < outputWidth; x++) {
-                // Calculate the nearest neighbor's coordinates in the input image
-                int nearestX = (int) (x / SCALE_FACTOR);
-                int nearestY = (int) (y / SCALE_FACTOR);
+            for (int y = 0; y < outputHeight; y++) {
+                for (int x = 0; x < outputWidth; x++) {
+                    // Calculate the nearest neighbor's coordinates in the input image
+                    int nearestX = (int) (x / scale);
+                    int nearestY = (int) (y / scale);
 
-                // Get the color of the nearest neighbor
-                Color color = pixelReader.getColor(nearestX, nearestY);
+                    // Get the color of the nearest neighbor
+                    Color color = pixelReader.getColor(nearestX, nearestY);
 
-                // Set the color to the output image's pixel
-                pixelWriter.setColor(x, y, color);
+                    // Set the color to the output image's pixel
+                    pixelWriter.setColor(x, y, color);
+                }
             }
-        }
 
-        return outputImage;
+            return outputImage;
+        }
+        return inputImage;
     }
 }

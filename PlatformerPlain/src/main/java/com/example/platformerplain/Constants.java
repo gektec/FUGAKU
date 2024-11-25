@@ -1,5 +1,6 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
@@ -36,31 +37,51 @@ public class Constants {
         PLATFORM,
         GOAL,
         PLAYER,
-        ENEMY
+        SPIKE, ENEMY
     }
 
     public static final int SCALE_FACTOR = 5;
 
-    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
-    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48);
+    public static final Image BACKGROUND_SKY = load("/images/backgrounds/Sky.png");
+    public static final Image BACKGROUND_CLOUD_1 = load("/images/backgrounds/Cloud 1.png");
+    public static final Image BACKGROUND_CLOUD_2 = load("/images/backgrounds/Cloud 2.png");
+    public static final Image BACKGROUND_CLOUD_3 = load("/images/backgrounds/Cloud 3.png");
+    public static final Image BACKGROUND_MOON = load("/images/backgrounds/Moon.png");
+
+    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
+    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
 
 
-    public static WritableImage[][] load(String s, int w, int h) {
-        WritableImage[][] ret;
+    public static Image[][] load(String s, int w, int h, int scale) {
+        Image[][] ret;
         try {
             InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
             Image spritesheet = new Image(inputStream);
             int width = (int) (spritesheet.getWidth() / w);
             int height = (int) (spritesheet.getHeight() / h);
-            ret = new WritableImage[height][width];
+            ret = new Image[height][width];
 
             PixelReader pixelReader = spritesheet.getPixelReader();
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    ret[i][j] = new WritableImage(pixelReader, j * w, i * h, w, h);
+                    ret[i][j] = ImageScaler.nearestNeighborScale( (new WritableImage(pixelReader, j * w, i * h, w, h)), scale);
                 }
             }
             return ret;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading graphics.");
+            System.exit(0);
+        }
+        return null;
+    }
+
+    //Overload
+    public static Image load(String s) {
+        try {
+            InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
+            Image image = new Image(inputStream);
+            return image;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading graphics.");

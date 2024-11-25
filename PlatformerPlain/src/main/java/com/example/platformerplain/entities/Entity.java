@@ -29,6 +29,8 @@ public abstract class Entity {
 
     }
 
+    public abstract int size();
+
 
     public Node hitBox() {
         return this.hitBox();

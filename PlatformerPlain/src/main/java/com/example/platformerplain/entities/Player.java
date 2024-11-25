@@ -18,6 +18,11 @@ public class Player extends Entity {
     }
 
     @Override
+    public int size() {
+        return Constants.PLAYER_SIZE;
+    }
+
+    @Override
     public Node hitBox() {
         return node;
     }

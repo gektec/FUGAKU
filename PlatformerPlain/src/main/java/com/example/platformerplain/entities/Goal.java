@@ -19,6 +19,11 @@ public class Goal extends Entity {
     }
 
     @Override
+    public int size() {
+        return Constants.TILE_SIZE;
+    }
+
+    @Override
     public Node hitBox() {
         return node;
     }

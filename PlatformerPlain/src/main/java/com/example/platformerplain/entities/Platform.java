@@ -30,13 +30,19 @@ public class Platform extends Entity {
         canvas.setTranslateX(rectangle.getTranslateX());
         canvas.setTranslateY(rectangle.getTranslateY());
         Image sprite = CutSpriteSheet.getSprite(Constants.getSpritePosition(index)[0], Constants.getSpritePosition(index)[1]);
-        sprite = ImageScaler.nearestNeighborScale(sprite);
+        sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
         this.node = canvas;
         this.hitBox = rectangle;
 
     }
+
+    @Override
+    public int size() {
+        return Constants.TILE_SIZE;
+    }
+
     @Override
     public Node hitBox() {
         return node;

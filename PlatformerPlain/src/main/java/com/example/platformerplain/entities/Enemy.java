@@ -60,7 +60,7 @@ public class Enemy extends Entity {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             Image sprite = animation.getImage();
             if (sprite != null) {
-                sprite = ImageScaler.nearestNeighborScale(sprite);
+                //sprite = ImageScaler.nearestNeighborScale(sprite);
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
             moveEnemyLogic.update();
@@ -69,6 +69,11 @@ public class Enemy extends Entity {
 
     public void removeFromGame() {
         Main.getInstance().removeEnemy(this);
+    }
+
+    @Override
+    public int size() {
+        return Constants.ENEMY_SIZE;
     }
 
     @Override
