@@ -1,6 +1,7 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
@@ -33,7 +34,8 @@ public class MovePlayer {
 //    private Stage primaryStage;
     private Timeline dashCooldownTimer;
     private Timeline slideJumpCooldownTimer;
-    private boolean haveJKeyReleased;
+    private boolean haveJKeyReleased = true;
+    private boolean isPlayerDead = false;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
@@ -66,68 +68,67 @@ public class MovePlayer {
         if (!isPressed(KeyCode.J)) {
             haveJKeyReleased = true;
         }
-        if(!canJump && !canSlideJump){
+        if (!canJump && !canSlideJump) {
             haveJKeyReleased = false;
         }
-        if(playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING){
+        if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
             if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
                 playerVelocity.reduce((int) RESISTANCE / 2, (int) RESISTANCE / 2);
             else
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
-        }
-        else{
-                // Jump
-                if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && playerState == MoveState.DEFAULT) {
-                    playerVelocity.setY(-20);
-                    canJump = false;
-                    haveJKeyReleased = false;
-                }
-                // Slide jump
-                else if (isPressed(KeyCode.J) && haveJKeyReleased && canSlideJump) {
-                    playerVelocity.setY(-10);
-                    canJump = false;
-                    haveJKeyReleased = false;
-                    playerState = MoveState.SLIDE_JUMPING;
-                    slideJumpCooldownTimer.playFromStart();
-                }
-                // Move left and right
-                if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
-                    playerVelocity.add(-4, 0);  //max speed: -12
-                }
-                if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
-                    playerVelocity.add(4, 0);
-                }
-
-                // Dash
-                if (canDash && isPressed(KeyCode.K)) {
-                    if (isPressed(KeyCode.A)) {
-                        x -= Constants.DASH_SPEED;
-                    }
-                    if (isPressed(KeyCode.D)) {
-                        x += Constants.DASH_SPEED;
-                    }
-                    if (isPressed(KeyCode.W)) {
-                        y -= Constants.DASH_SPEED;
-                    }
-                    if (isPressed(KeyCode.S)) {
-                        y += Constants.DASH_SPEED;
-                    }
-                    if (x != 0 || y != 0) {
-                        if (x != 0 && y != 0)
-                            playerVelocity.set((int) (x / 1.6), (int) (y / 1.6));
-                        else
-                            playerVelocity.set(x, y);
-                        canDash = false;
-                        playerState = MoveState.DASHING;
-                        dashCooldownTimer.playFromStart();
-                    }
-                }
-                //Resistance
-                playerVelocity.reduce(RESISTANCE, 0);
+        } else {
+            // Jump
+            if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && playerState == MoveState.DEFAULT) {
+                playerVelocity.setY(-20);
+                canJump = false;
+                haveJKeyReleased = false;
             }
-            // apply gravity when not dashing
-            if (playerVelocity.getY() < MAX_FALL_SPEED) {
-                playerVelocity.add(0, gravity);
+            // Slide jump
+            else if (isPressed(KeyCode.J) && haveJKeyReleased && canSlideJump) {
+                playerVelocity.setY(-10);
+                canJump = false;
+                haveJKeyReleased = false;
+                playerState = MoveState.SLIDE_JUMPING;
+                slideJumpCooldownTimer.playFromStart();
+            }
+            // Move left and right
+            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
+                playerVelocity.add(-4, 0);  //max speed: -12
+            }
+            if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
+                playerVelocity.add(4, 0);
+            }
+
+            // Dash
+            if (canDash && isPressed(KeyCode.K)) {
+                if (isPressed(KeyCode.A)) {
+                    x -= Constants.DASH_SPEED;
+                }
+                if (isPressed(KeyCode.D)) {
+                    x += Constants.DASH_SPEED;
+                }
+                if (isPressed(KeyCode.W)) {
+                    y -= Constants.DASH_SPEED;
+                }
+                if (isPressed(KeyCode.S)) {
+                    y += Constants.DASH_SPEED;
+                }
+                if (x != 0 || y != 0) {
+                    if (x != 0 && y != 0)
+                        playerVelocity.set((int) (x / 1.6), (int) (y / 1.6));
+                    else
+                        playerVelocity.set(x, y);
+                    canDash = false;
+                    playerState = MoveState.DASHING;
+                    dashCooldownTimer.playFromStart();
+                }
+            }
+            //Resistance
+            playerVelocity.reduce(RESISTANCE, 0);
+        }
+        // apply gravity when not dashing
+        if (playerVelocity.getY() < MAX_FALL_SPEED) {
+            playerVelocity.add(0, gravity);
         }
 
 
@@ -140,6 +141,10 @@ public class MovePlayer {
         canSlideJump = moveStatus.canSlideJump;
 
         checkGoalCollision();
+
+        checkEnemy();
+
+        checkFall();
 
         checkDie();
     }
@@ -155,20 +160,25 @@ public class MovePlayer {
         }
     }
 
-    private void checkDie() {
-        boolean isPlayerDead = player.hitBox().getTranslateY() > 720;
+    private void checkFall() {
+        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.Level1.length + 50;
+    }
+
+    private void checkEnemy() {
 
         for (Enemy enemy : enemies) {
             if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent())) {
-                if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY()+10) {
+                if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY() + 10) {
                     ((Enemy) enemy).isDead = true;
-                    playerVelocity.add(0,-20);
+                    playerVelocity.add(0, -20);
+                    //test
                     System.out.println("enemy killed");
-                }
-                else isPlayerDead = true;
+                } else isPlayerDead = true;
             }
         }
+    }
 
+    private void checkDie() {
         if (isPlayerDead) {
             System.out.println("You lose!");
             Main.getInstance().stopGameLoop();  // Stop game loop on player death
@@ -176,4 +186,5 @@ public class MovePlayer {
         }
     }
 }
+
 

@@ -51,15 +51,15 @@ public class Enemy extends Entity {
         }
         if(isDead && animation.hasPlayedOnce()){
             removeFromGame();
-        }
-
-        // Update and draw
-        animation.update();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage();
-        if (sprite != null) {
-            sprite = ImageScaler.nearestNeighborScale(sprite);
-            gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
+        } else {
+            // Update and draw
+            animation.update();
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            Image sprite = animation.getImage();
+            if (sprite != null) {
+                sprite = ImageScaler.nearestNeighborScale(sprite);
+                gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
+            }
         }
     }
 

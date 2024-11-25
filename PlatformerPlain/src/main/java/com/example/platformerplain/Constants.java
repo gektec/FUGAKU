@@ -19,8 +19,6 @@ public class Constants {
     public static final int ENEMY_SIZE = 20;
     public static final int BACKGROUND_WIDTH = 1280;
     public static final int BACKGROUND_HEIGHT = 720;
-    public static final int PLAYER_START_X = 0;
-    public static final int PLAYER_START_Y = 600;
 
     public static final int MAX_SPEED = TILE_SIZE / 2;
     public static final int MAX_FALL_SPEED = 20;  // Maximum falling speed

@@ -37,7 +37,8 @@ public class Main extends Application {
     private Pane uiRoot = new Pane();
 
     private Entity player;
-    private int levelWidth;
+    private int levelWidth = LevelData.Level1[0].length() * Constants.TILE_SIZE;
+    private int levelHeight = LevelData.Level1.length * Constants.TILE_SIZE;
     private MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
@@ -69,6 +70,7 @@ public class Main extends Application {
     public void startGame(Stage primaryStage) {
         initContent();
         primaryStage.setScene(gameScene);
+        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
 
         // Start the game loop
         startGameLoop();
@@ -109,7 +111,6 @@ public class Main extends Application {
         uiRoot.getChildren().clear();
 
         Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
-        levelWidth = LevelData.Level1[0].length() * Constants.TILE_SIZE;
 
         Text title = new Text("Try to get the goal");
         title.setFont(new Font(36));
@@ -124,6 +125,9 @@ public class Main extends Application {
             for (int j = 0; j < line.length(); j++) {
                 switch (line.charAt(j)) {
                     case '0':
+                        break;
+                    case 'P':
+                        player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
                         break;
                     case 'M':
                         int adjacencyCode = 0;
@@ -155,16 +159,23 @@ public class Main extends Application {
             }
         }
 
-        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
         player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
             }
         });
+        player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
+            int offsetY = newValue.intValue();
+            //test
+            //System.out.println(offsetY);
+            if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 &&  offsetY > Constants.BACKGROUND_HEIGHT / 4) {
+                gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
+            }
+        });
 
 
-        appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
+            appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
         movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
 
         move = new Move(collidableMap);
