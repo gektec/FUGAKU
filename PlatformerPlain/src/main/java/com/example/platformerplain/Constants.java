@@ -37,7 +37,7 @@ public class Constants {
         PLATFORM,
         GOAL,
         PLAYER,
-        SPIKE, ENEMY
+        SPIKE, LADDER, ENEMY
     }
 
     public static final int SCALE_FACTOR = 5;
@@ -117,7 +117,7 @@ public class Constants {
 
     }
 
-    public static int[] getSpritePosition(int adjacencyCode) {
+    public static int[] getPlatformPosition(int adjacencyCode) {
         return adjacencyCodeToSprite.get(adjacencyCode);
     }
 

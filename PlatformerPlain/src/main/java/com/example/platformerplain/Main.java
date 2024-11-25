@@ -85,6 +85,10 @@ public class Main extends Application {
 
         // Show the start screen
         screenManager.showScreen(new StartScreen());
+
+        primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
+        primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
+        primaryStage.setResizable(false);
     }
 
     public void startGame(Stage primaryStage) {
@@ -198,6 +202,7 @@ public class Main extends Application {
             uiRoot.getChildren().add(title);
         }
 
+        int adjacencyCode = 0;
         for (int i = 0; i < LevelData.Levels[currentLevel].length; i++) {
             String line = LevelData.Levels[currentLevel][i];
             for (int j = 0; j < line.length(); j++) {
@@ -206,10 +211,10 @@ public class Main extends Application {
                         break;
                     case 'P':
                         player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
-                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
+                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap ,levelWidth, keys, this);
                         break;
                     case 'M':
-                        int adjacencyCode = 0;
+                        adjacencyCode = 0;
                         if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'M') {
                             adjacencyCode += 1;
                         }
@@ -228,6 +233,17 @@ public class Main extends Application {
                     case 'S':
                         Entity spike = createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
                         collidableMap.add(spike);
+                        break;
+                    case 'H':
+                        if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'H' && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
+                            adjacencyCode = (int)(Math.random() * 2) + 1; // 1 or 2
+                        }
+                        else if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
+                            adjacencyCode = 0;
+                        }
+                        else adjacencyCode = 3;
+                        Ladder ladder = (Ladder) createEntity(Constants.EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        ladderMap.add(ladder);
                         break;
                     case 'G':
                         Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);

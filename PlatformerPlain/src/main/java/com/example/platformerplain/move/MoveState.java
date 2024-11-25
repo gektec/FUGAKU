@@ -5,5 +5,4 @@ enum MoveState {
     SLIDING,
     SLIDE_JUMPING,
     DASHING,
-    LADDERING
 }
