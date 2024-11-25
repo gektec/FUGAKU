@@ -1,8 +1,14 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Constants;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.Screen.StartScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
@@ -15,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class FailScreenController {
@@ -23,8 +30,7 @@ public class FailScreenController {
     private VBox root;  // VBox in the FXML file
 
     @FXML
-    private Button startButton;
-
+    private Button MenuButton;
     private Stage primaryStage;
     private MediaPlayer mediaPlayer; // 添加 MediaPlayer
 
@@ -56,12 +62,12 @@ public class FailScreenController {
         root.setBackground(new Background(background));
 
         // Load the fail sound
-        String failSoundFile = "/sounds/defeat.mp3"; // 确保路径正确
+        String failSoundFile = "/sounds/defeat.mp3"; // Make sure the path is correct
         Media failSound = new Media(getClass().getResource(failSoundFile).toURI().toString());
         mediaPlayer = new MediaPlayer(failSound);
 
         // 播放失败声音
-        mediaPlayer.play(); // 在初始化时播放音效
+        mediaPlayer.play(); // Play sound effects on initialization
     }
 
     // Handle the start game button click event
@@ -71,5 +77,27 @@ public class FailScreenController {
         Platform.exit();
         System.exit(0);
     }
+
+    @FXML
+    private void handleMenu() {
+        // 创建 StartScreen 实例并传递主舞台
+        StartScreen startScreen = new StartScreen();
+        startScreen.show(primaryStage);  // 传递 currentStage
+
+        // 释放媒体播放器的资源
+        releaseMediaPlayer();
+
+    }
+
+
+    private void releaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose(); // release memory
+            mediaPlayer = null;
+        }
+    }
+
+
 
 }

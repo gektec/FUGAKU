@@ -1,11 +1,4 @@
 package com.example.platformerplain.Screen;
-
-import com.example.platformerplain.Constants; // Import the Constants class
-import com.example.platformerplain.Controller.FailScreenController;
-import com.example.platformerplain.Controller.StartScreenController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ScreenManager {
