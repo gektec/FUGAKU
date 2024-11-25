@@ -40,11 +40,17 @@ public class FailScreenController {
         Image backgroundImage = new Image(getClass().getResourceAsStream("/images/defeat.png"));
 
         // Create a BackgroundImage object, ensuring the image adapts proportionally to the VBox size
-        BackgroundImage background = new BackgroundImage(backgroundImage,
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
                 BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
                 BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
-                BackgroundPosition.CENTER,   // Center the image
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, false)); // Adaptive size
+                BackgroundPosition.CENTER,    // Center the image
+                new BackgroundSize(200, 150,  // Set custom width and height
+                        false,   // Do not stretch the width (set to true if you want to stretch)
+                        false,   // Do not stretch the height (set to true if you want to stretch)
+                        true,    // Preserve aspect ratio for the width
+                        true));  // Preserve aspect ratio for the height
+
 
         // Set the VBox background
         root.setBackground(new Background(background));
