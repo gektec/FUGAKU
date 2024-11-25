@@ -160,7 +160,8 @@ public class MovePlayer {
     }
 
     private void checkFall() {
-        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelWidth() + 50;
+        if(player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelHeight() + 50)
+            isPlayerDead = true;
     }
 
     private void checkEnemy() {

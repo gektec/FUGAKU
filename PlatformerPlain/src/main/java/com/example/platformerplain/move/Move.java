@@ -80,7 +80,6 @@ public class Move {
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
                         moveStatus.moveState = MoveState.DEFAULT;
-
                     }
                 }
             }
