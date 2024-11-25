@@ -1,6 +1,8 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.ScreenManager.ScreenManager;
+import com.example.platformerplain.Screen.FailScreen;
+import com.example.platformerplain.Screen.ScreenManager;
+import com.example.platformerplain.Screen.StartScreen;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
@@ -70,9 +72,11 @@ public class Main extends Application {
         startTime = System.currentTimeMillis();
         instance = this;
 
-        // Use the singleton method to obtain the ScreenManager instance
+        // Initialize ScreenManager
         screenManager = ScreenManager.getInstance(primaryStage);
-        screenManager.showStartScreen();
+
+        // Show the start screen
+        screenManager.showScreen(new StartScreen());
     }
 
     public void startGame(Stage primaryStage) {
@@ -244,7 +248,7 @@ public class Main extends Application {
     }
 
     public void exitGame() {
-        screenManager.showFailScreen();
+        screenManager.showScreen(new FailScreen());
     }
 
     public static Main getInstance() {
