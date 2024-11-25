@@ -150,23 +150,23 @@ public class Main extends Application {
         backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT);
 
         Image background1 = Constants.BACKGROUND_CLOUD_1;
-        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1));
+        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1,2));
         backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background2 = Constants.BACKGROUND_CLOUD_2;
-        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2));
+        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2,2));
         backgroundCloud2.setScaleX(-1);
         backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background3 = Constants.BACKGROUND_CLOUD_3;
-        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3));
+        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3,2));
         backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background4 = Constants.BACKGROUND_MOON;
-        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4));
+        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4,2));
         backgroundMoon.setFitWidth(Constants.BACKGROUND_WIDTH);
         backgroundMoon.setFitHeight(Constants.BACKGROUND_HEIGHT);
 

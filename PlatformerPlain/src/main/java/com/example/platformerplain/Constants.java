@@ -1,5 +1,6 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
@@ -47,23 +48,23 @@ public class Constants {
     public static final Image BACKGROUND_CLOUD_3 = load("/images/backgrounds/Cloud 3.png");
     public static final Image BACKGROUND_MOON = load("/images/backgrounds/Moon.png");
 
-    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48);
-    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48);
+    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
+    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
 
 
-    public static Image[][] load(String s, int w, int h) {
-        WritableImage[][] ret;
+    public static Image[][] load(String s, int w, int h, int scale) {
+        Image[][] ret;
         try {
             InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
             Image spritesheet = new Image(inputStream);
             int width = (int) (spritesheet.getWidth() / w);
             int height = (int) (spritesheet.getHeight() / h);
-            ret = new WritableImage[height][width];
+            ret = new Image[height][width];
 
             PixelReader pixelReader = spritesheet.getPixelReader();
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    ret[i][j] = new WritableImage(pixelReader, j * w, i * h, w, h);
+                    ret[i][j] = ImageScaler.nearestNeighborScale( (new WritableImage(pixelReader, j * w, i * h, w, h)), scale);
                 }
             }
             return ret;
