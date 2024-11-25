@@ -191,6 +191,7 @@ public class Main extends Application {
         uiRoot.getChildren().add(framerateLabel);
     }
 
+    //todo: delete this shit
     public void startLevel2() {
         // clear what already exist
         appRoot.getChildren().clear();
@@ -216,6 +217,8 @@ public class Main extends Application {
                 switch (line.charAt(j)) {
                     case '0':
                         break; // do nothing for air
+                    case'P':
+                        player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
                     case 'M':
                         int adjacencyCode = 0;
                         if (i > 0 && LevelData.Level2[i - 1].charAt(j) == 'M') {
@@ -246,11 +249,18 @@ public class Main extends Application {
             }
         }
 
-        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
         player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
+            }
+        });
+        player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
+            int offsetY = newValue.intValue();
+            //test
+            //System.out.println(offsetY);
+            if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 &&  offsetY > Constants.BACKGROUND_HEIGHT / 4) {
+                gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
             }
         });
 

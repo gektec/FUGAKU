@@ -154,7 +154,7 @@ public class MovePlayer {
         for (Entity entity : entityMap) {
             if (entity.getType() == Constants.EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
-                // When the player reaches the goal, switch back to the menu scene
+                Main.getInstance().startLevel2();
 
             }
         }
