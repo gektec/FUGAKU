@@ -49,6 +49,9 @@ public class Main extends Application {
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
+
+    private int currentLevel = 0;
+
     private static Main instance;
     private Stage primaryStage;
     private ScreenManager screenManager;  // ScreenManager instance
@@ -68,6 +71,7 @@ public class Main extends Application {
     }
 
     public void startGame(Stage primaryStage) {
+        currentLevel = 1;
         initContent();
         primaryStage.setScene(gameScene);
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
@@ -112,13 +116,15 @@ public class Main extends Application {
 
         Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
 
-        Text title = new Text("Try to get the goal");
-        title.setFont(new Font(36));
-        title.setFill(Color.YELLOW);
-        double textWidth = title.getLayoutBounds().getWidth();
-        title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
-        title.setY(40);
-        uiRoot.getChildren().add(title);
+        if(currentLevel == 1) {
+            Text title = new Text("Try to get the goal");
+            title.setFont(new Font(36));
+            title.setFill(Color.YELLOW);
+            double textWidth = title.getLayoutBounds().getWidth();
+            title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
+            title.setY(40);
+            uiRoot.getChildren().add(title);
+        }
 
         for (int i = 0; i < LevelData.Level1.length; i++) {
             String line = LevelData.Level1[i];
@@ -292,6 +298,10 @@ public class Main extends Application {
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         gameRoot.getChildren().remove(enemy.node());
+    }
+
+    public int getLevel(){
+        return currentLevel;
     }
 
     private void update() {
