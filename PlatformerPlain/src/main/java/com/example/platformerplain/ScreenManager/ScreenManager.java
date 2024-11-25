@@ -10,10 +10,20 @@ import javafx.stage.Stage;
 
 public class ScreenManager {
 
+    private static ScreenManager instance;  // for store singleton instance
     private Stage primaryStage;
 
-    public ScreenManager(Stage primaryStage) {
+    // Private Constructor
+    private ScreenManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    //Static method to obtain a singleton instance
+    public static ScreenManager getInstance(Stage primaryStage) {
+        if (instance == null) {
+            instance = new ScreenManager(primaryStage);
+        }
+        return instance;
     }
 
     public void showStartScreen() {
