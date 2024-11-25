@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER" spacing="20" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="com.example.platformerplain.Controller.StartScreenController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20" fx:controller="com.example.platformerplain.Controller.StartScreenController" fx:id="root" stylesheets="@styles.css">
     <!--  VBox to design background -->
     <Text text="Welcome to Platformer Game!" />
     <Button fx:id="startButton" onAction="#handleStartGame" prefHeight="23.0" prefWidth="82.0" text="Start Game" />
