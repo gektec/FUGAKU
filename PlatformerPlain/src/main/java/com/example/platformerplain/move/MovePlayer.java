@@ -155,13 +155,13 @@ public class MovePlayer {
             if (entity.getType() == Constants.EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
                 Main.getInstance().transitionToLevel2();
-
+                return;
             }
         }
     }
 
     private void checkFall() {
-        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.Level1.length + 50;
+        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.Levels[Main.getInstance().getLevel()].length + 50;
     }
 
     private void checkEnemy() {
