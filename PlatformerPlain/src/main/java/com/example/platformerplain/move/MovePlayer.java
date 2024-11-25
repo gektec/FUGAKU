@@ -140,12 +140,8 @@ public class MovePlayer {
         canSlideJump = moveStatus.canSlideJump;
 
         checkGoalCollision();
-
         checkEnemy();
-
         checkFall();
-
-        checkDie();
     }
 
 
@@ -160,29 +156,27 @@ public class MovePlayer {
     }
 
     private void checkFall() {
-        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelWidth() + 50;
+        if(player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelHeight() + 50)
+            Die();
     }
 
     private void checkEnemy() {
-
         for (Enemy enemy : enemies) {
             if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent())) {
                 if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY() + 10) {
-                    ((Enemy) enemy).isDead = true;
+                    enemy.isDead = true;
                     playerVelocity.add(0, -20);
                     //test
                     System.out.println("enemy killed");
-                } else isPlayerDead = true;
+                } else Die();
             }
         }
     }
 
-    private void checkDie() {
-        if (isPlayerDead) {
-            System.out.println("You lose!");
-            Main.getInstance().stopGameLoop();  // Stop game loop on player death
-            Main.getInstance().exitGame();
-        }
+    private void Die() {
+        System.out.println("You lose!");
+        Main.getInstance().stopGameLoop();  // Stop game loop on player death
+        Main.getInstance().exitGame();
     }
 }
 
