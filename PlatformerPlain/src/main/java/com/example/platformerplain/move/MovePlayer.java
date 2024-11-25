@@ -20,7 +20,6 @@ public class MovePlayer {
     private Entity player;
     private ArrayList<Enemy> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
-    private final int gravity = 1;  // Gravity constant
     private boolean canJump;  // Flag indicating whether the player can jump
     private boolean canDash;
     private boolean canSlideJump;
@@ -128,7 +127,7 @@ public class MovePlayer {
         }
         // apply gravity when not dashing
         if (playerVelocity.getY() < MAX_FALL_SPEED) {
-            playerVelocity.add(0, gravity);
+            playerVelocity.add(0, Constants.GRAVITY);
         }
 
 
@@ -161,7 +160,7 @@ public class MovePlayer {
     }
 
     private void checkFall() {
-        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.Levels[Main.getInstance().getLevel()].length + 50;
+        isPlayerDead = player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelWidth() + 50;
     }
 
     private void checkEnemy() {

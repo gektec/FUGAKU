@@ -29,16 +29,16 @@ import java.util.List;
 public class Main extends Application {
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private ArrayList<Entity> collidableMap = new ArrayList<>();
-    private ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static ArrayList<Entity> collidableMap = new ArrayList<>();
+    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
     private List<Entity> toRemove = new ArrayList<>();
     private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
     private Pane uiRoot = new Pane();
 
     private Entity player;
-    private int levelWidth = -1;
-    private int levelHeight = -1;
+    private static int levelWidth = -1;
+    private static int levelHeight = -1;
     private MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
@@ -50,7 +50,7 @@ public class Main extends Application {
     private long lastTime = 0;
     private int frameCount = 0;
 
-    private int currentLevel = 0;
+    static int currentLevel = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -97,6 +97,25 @@ public class Main extends Application {
         gameLoop.play();
     }
 
+    private void update() {
+        movePlayerLogic.update();
+        if (enemyMap != null) {
+            for (Enemy enemy : enemyMap) {
+                enemy.update();
+            }
+        }
+    }
+
+    private void updateFramerate() {
+        long currentTime = System.nanoTime();
+        if (currentTime - lastTime >= 1_000_000_000) {
+            framerateLabel.setText("FPS: " + frameCount);
+            frameCount = 0;
+            lastTime = currentTime;
+        }
+        frameCount++;
+    }
+
     private void initContent() {
 
     }
@@ -112,8 +131,8 @@ public class Main extends Application {
         gameRoot = new Pane();
         uiRoot = new Pane();
 
-        levelWidth = LevelData.Levels[currentLevel][0].length() * Constants.TILE_SIZE;
-        levelHeight = LevelData.Levels[currentLevel].length * Constants.TILE_SIZE;
+        levelWidth = LevelData.getLevelInformation.getLevelWidth();
+        levelHeight = LevelData.getLevelInformation.getLevelHeight();
 
 
         if (currentLevel == 1) {
@@ -142,6 +161,7 @@ public class Main extends Application {
                         break;
                     case 'P':
                         player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
+                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
                         break;
                     case 'M':
                         int adjacencyCode = 0;
@@ -166,7 +186,7 @@ public class Main extends Application {
                         break;
                     case 'E':
                         Enemy enemy = (Enemy) createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
-                        moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
+                        //moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
                         enemyMap.add(enemy);
                         break;
                 }
@@ -190,7 +210,6 @@ public class Main extends Application {
 
         Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
         appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
-        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
 
         move = new Move(collidableMap);
 
@@ -208,7 +227,6 @@ public class Main extends Application {
 
     public void transitionToLevel2() {
         stopGameLoop();
-
         currentLevel = 2;
         startLevel();
         primaryStage.setScene(gameScene);
@@ -232,34 +250,18 @@ public class Main extends Application {
         return instance;
     }
 
+    public static ArrayList<Entity> getCollidableMap() {
+        return collidableMap;
+    }
+
+    public static ArrayList<Enemy> getEnemyMap() {
+        return enemyMap;
+    }
+
 
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         gameRoot.getChildren().remove(enemy.node());
-    }
-
-    public int getLevel() {
-        return currentLevel;
-    }
-
-    private void update() {
-        movePlayerLogic.update();
-        if (enemyMap != null) {
-            for (Enemy enemy : enemyMap) {
-                moveEnemyLogic.update();
-                enemy.update();
-            }
-        }
-    }
-
-    private void updateFramerate() {
-        long currentTime = System.nanoTime();
-        if (currentTime - lastTime >= 1_000_000_000) {
-            framerateLabel.setText("FPS: " + frameCount);
-            frameCount = 0;
-            lastTime = currentTime;
-        }
-        frameCount++;
     }
 
 

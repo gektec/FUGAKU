@@ -16,19 +16,16 @@ import static com.example.platformerplain.Constants.RESISTANCE;
 public class MoveEnemy {
     private Enemy enemy;
     private ArrayList<Entity> entityMap;
-    private final int gravity = 1;  //todo: inherit from move
     private boolean canJump;
     //private int levelWidth;
-    private HashMap<KeyCode, Boolean> keys;
     private Coord2D velocity;
     private MoveState enemyState;
 
 
-    public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth) {
         this.enemy = enemy;
         this.entityMap = platforms;
         //this.levelWidth = levelWidth;
-        this.keys = keys;
         this.velocity = new Coord2D(0, 0);
         this.canJump = true;
         this.enemyState = MoveState.DEFAULT;
@@ -45,7 +42,7 @@ public class MoveEnemy {
         velocity.reduce(RESISTANCE, 0);
 
         if (velocity.getY() < MAX_FALL_SPEED) {
-            velocity.add(0, gravity);
+            velocity.add(0, Constants.GRAVITY);
         }
 
         if(canJump){

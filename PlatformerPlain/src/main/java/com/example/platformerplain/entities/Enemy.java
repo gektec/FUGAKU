@@ -1,6 +1,7 @@
 package com.example.platformerplain.entities;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.texture.ImageScaler;
@@ -20,6 +21,7 @@ public class Enemy extends Entity {
     private GraphicsContext gc;
     public boolean isDead;
     boolean deathAnimationSet = false;
+    private MoveEnemy moveEnemyLogic;
 
     protected boolean isAnimated(){
         return true;
@@ -29,6 +31,7 @@ public class Enemy extends Entity {
         rectangle = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
         rectangle.setTranslateX(x);
         rectangle.setTranslateY(y);
+        this.moveEnemyLogic = new MoveEnemy(this, Main.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
         frames = Constants.GHOST_IDLE[0];
         animation.setFrames(frames);
@@ -60,6 +63,7 @@ public class Enemy extends Entity {
                 sprite = ImageScaler.nearestNeighborScale(sprite);
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
+            moveEnemyLogic.update();
         }
     }
 
