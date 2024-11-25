@@ -191,6 +191,94 @@ public class Main extends Application {
         uiRoot.getChildren().add(framerateLabel);
     }
 
+    public void startLevel2() {
+        // clear what already exist
+        appRoot.getChildren().clear();
+        gameRoot.getChildren().clear();
+        uiRoot.getChildren().clear();
+
+        // background
+        Rectangle bg = new Rectangle(Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+        levelWidth = LevelData.Level2[0].length() * Constants.TILE_SIZE;
+
+        Text title = new Text("Level 2: New Challenges Await!");
+        title.setFont(new Font(36));
+        title.setFill(Color.YELLOW);
+        double textWidth = title.getLayoutBounds().getWidth();
+        title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
+        title.setY(40);
+        uiRoot.getChildren().add(title);
+
+        // load Level 2 map
+        for (int i = 0; i < LevelData.Level2.length; i++) {
+            String line = LevelData.Level2[i];
+            for (int j = 0; j < line.length(); j++) {
+                switch (line.charAt(j)) {
+                    case '0':
+                        break; // do nothing for air
+                    case 'M':
+                        int adjacencyCode = 0;
+                        if (i > 0 && LevelData.Level2[i - 1].charAt(j) == 'M') {
+                            adjacencyCode += 1;
+                        }
+                        if (j < line.length() - 1 && LevelData.Level2[i].charAt(j + 1) == 'M') {
+                            adjacencyCode += 2;
+                        }
+                        if (i < LevelData.Level2.length - 1 && LevelData.Level2[i + 1].charAt(j) == 'M') {
+                            adjacencyCode += 4;
+                        }
+                        if (j > 0 && LevelData.Level2[i].charAt(j - 1) == 'M') {
+                            adjacencyCode += 8;
+                        }
+                        Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        collidableMap.add(platform);
+                        break;
+                    case 'G':
+                        Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
+                        collidableMap.add(goal);
+                        break;
+                    case 'E':
+                        Enemy enemy = (Enemy) createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
+                        moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
+                        enemyMap.add(enemy);
+                        break;
+                }
+            }
+        }
+
+        player = createEntity(Constants.EntityType.PLAYER, Constants.PLAYER_START_X, Constants.PLAYER_START_Y, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
+        player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
+            int offset = newValue.intValue();
+            if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
+                gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
+            }
+        });
+
+        appRoot.getChildren().addAll(bg, gameRoot, uiRoot);
+        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, levelWidth, keys, this);
+
+        move = new Move(collidableMap);
+
+        gameScene = new Scene(appRoot);
+        gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
+        gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+
+        framerateLabel.setTextFill(Color.WHITE);
+        framerateLabel.setFont(new Font(18));
+        framerateLabel.setTranslateX(10);
+        framerateLabel.setTranslateY(10);
+        uiRoot.getChildren().add(framerateLabel);
+
+        // restart update logic
+        startGameLoop();
+    }
+
+    public void transitionToLevel2() {
+        stopGameLoop(); // stop game loop
+        startLevel2(); // start Level 2
+    }
+
+
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         gameRoot.getChildren().remove(enemy.node());
