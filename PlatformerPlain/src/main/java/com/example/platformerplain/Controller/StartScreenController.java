@@ -1,7 +1,9 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
@@ -76,5 +78,21 @@ public class StartScreenController {
         } else {
             System.err.println("Primary stage is not set.");
         }
+    }
+
+    @FXML
+    public void handleHelp() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText("How to Play");
+        alert.setContentText("Press 'A' to move left,\nPress 'D' to move right,\nPress 'J' to jump.");
+        alert.showAndWait();
+    }
+
+    @FXML
+    void handleExitGame() {
+        // Call Platform.exit() to close the application
+        Platform.exit();
+        System.exit(0);
     }
 }
