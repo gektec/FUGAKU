@@ -145,31 +145,32 @@ public class Main extends Application {
         backgroundRoot = new Pane();
 
         Image background0 = Constants.BACKGROUND_SKY;
-        ImageView backgroundImageView0 = new ImageView(background0);
-        backgroundImageView0.setFitWidth(Constants.BACKGROUND_WIDTH);
-        backgroundImageView0.setFitHeight(Constants.BACKGROUND_HEIGHT);
+        ImageView backgroundSky = new ImageView(background0);
+        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH);
+        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT);
 
         Image background1 = Constants.BACKGROUND_CLOUD_1;
-        ImageView backgroundImageView1 = new ImageView(ImageScaler.nearestNeighborScale(background1));
-        backgroundImageView1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundImageView1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1));
+        backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background2 = Constants.BACKGROUND_CLOUD_2;
-        ImageView backgroundImageView2 = new ImageView(ImageScaler.nearestNeighborScale(background2));
-        backgroundImageView2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundImageView2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2));
+        backgroundCloud2.setScaleX(-1);
+        backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background3 = Constants.BACKGROUND_CLOUD_3;
-        ImageView backgroundImageView3 = new ImageView(ImageScaler.nearestNeighborScale(background3));
-        backgroundImageView3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundImageView3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3));
+        backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
+        backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
         Image background4 = Constants.BACKGROUND_MOON;
-        ImageView backgroundImageView4 = new ImageView(ImageScaler.nearestNeighborScale(background4));
-        backgroundImageView4.setFitWidth(Constants.BACKGROUND_WIDTH);
-        backgroundImageView4.setFitHeight(Constants.BACKGROUND_HEIGHT);
+        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4));
+        backgroundMoon.setFitWidth(Constants.BACKGROUND_WIDTH);
+        backgroundMoon.setFitHeight(Constants.BACKGROUND_HEIGHT);
 
-        backgroundRoot.getChildren().addAll(backgroundImageView0, backgroundImageView3, backgroundImageView4, backgroundImageView2, backgroundImageView1);
+        backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
 
         levelWidth = LevelData.getLevelInformation.getLevelWidth();
         levelHeight = LevelData.getLevelInformation.getLevelHeight();
@@ -240,11 +241,13 @@ public class Main extends Application {
         player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
             if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
+
+                //todo: encapsulate this into a method
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
-                backgroundImageView1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2); // Layer 1 moves at half speed
-                backgroundImageView2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3); // Layer 2 moves at 30% speed
-                backgroundImageView3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4); // Layer 2 moves at 30% speed
-                backgroundImageView4.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05)+600 ); // Layer 2 moves at 30% speed
+                backgroundCloud1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4); // Layer 1 moves at half speed
+                backgroundCloud2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3); // Layer 2 moves at 30% speed
+                backgroundCloud3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2); // Layer 2 moves at 30% speed
+                backgroundMoon.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05)); // Layer 2 moves at 30% speed
 
             }
         });
@@ -254,10 +257,10 @@ public class Main extends Application {
             //System.out.println(offsetY);
             if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 && offsetY > Constants.BACKGROUND_HEIGHT / 4) {
                 gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
-                backgroundImageView1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50); // Layer 1 moves at half speed
-                backgroundImageView2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50); // Layer 2 moves at 30% speed
-                backgroundImageView3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50); // Layer 2 moves at 30% speed
-                backgroundImageView4.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50); // Layer 2 moves at 30% speed
+                backgroundCloud1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50); // Layer 1 moves at half speed
+                backgroundCloud2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50); // Layer 2 moves at 30% speed
+                backgroundCloud3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50); // Layer 2 moves at 30% speed
+                backgroundMoon.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50); // Layer 2 moves at 30% speed
             }
         });
 
