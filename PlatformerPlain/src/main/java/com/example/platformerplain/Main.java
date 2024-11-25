@@ -70,7 +70,8 @@ public class Main extends Application {
         startTime = System.currentTimeMillis();
         instance = this;
 
-        screenManager = new ScreenManager(primaryStage);
+        // Use the singleton method to obtain the ScreenManager instance
+        screenManager = ScreenManager.getInstance(primaryStage);
         screenManager.showStartScreen();
     }
 
