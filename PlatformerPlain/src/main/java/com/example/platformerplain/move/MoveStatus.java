@@ -1,6 +1,6 @@
 package com.example.platformerplain.move;
 
-class MoveStatus {
+public class MoveStatus {
     public MoveState moveState;
     public boolean canJump;
     public boolean canDash;

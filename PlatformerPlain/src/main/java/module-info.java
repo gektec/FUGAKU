@@ -16,4 +16,6 @@ module com.example.platformerplain {
     opens com.example.platformerplain.entities to javafx.fxml;
     exports com.example.platformerplain.move;
     opens com.example.platformerplain.move to javafx.fxml;
+    exports com.example.platformerplain.move.Command;
+    opens com.example.platformerplain.move.Command to javafx.fxml;
 }

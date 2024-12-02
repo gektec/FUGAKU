@@ -6,6 +6,10 @@ import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.Ladder;
+import com.example.platformerplain.move.Command.JumpCommand;
+import com.example.platformerplain.move.Command.MoveLeftCommand;
+import com.example.platformerplain.move.Command.MoveRightCommand;
+import com.example.platformerplain.move.Command.PlayCommand;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
@@ -28,37 +32,28 @@ public class MovePlayer {
     private boolean canSlideJump;
     private MoveState playerState;
 
-    //    private int levelWidth;  // Width of the level
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
     private Coord2D playerVelocity; // Current velocity of the player
-    //    private Main mainApp;  // Reference to the main application class
-//    private Move move;
-//    private Stage primaryStage;
     private Timeline dashCooldownTimer;
     private Timeline slideJumpCooldownTimer;
     private boolean haveJKeyReleased = true;
     private boolean isPlayerDead = false;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder>ladders , int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
-        //this.levelWidth = levelWidth;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
         this.enemies = enemies;
         this.ladders = ladders;
-        //this.mainApp = main;
         this.playerState = MoveState.DEFAULT;
-
 
         dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> playerState = MoveState.DEFAULT));
         dashCooldownTimer.setCycleCount(1);
 
-
         slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> playerState = MoveState.DEFAULT));
         slideJumpCooldownTimer.setCycleCount(1);
-
     }
 
     private boolean isPressed(KeyCode key) {
@@ -82,25 +77,31 @@ public class MovePlayer {
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
         } else {
             // Jump
+            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, canJump, canDash, canSlideJump));
+            // Slide jump
+            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, canDash, false));
+            // Move left and right commands
+            PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
+            PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
+
             if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && playerState == MoveState.DEFAULT) {
-                playerVelocity.setY(-20);
-                canJump = false;
+                jump.execute();
                 haveJKeyReleased = false;
             }
             // Slide jump
             else if (isPressed(KeyCode.J) && haveJKeyReleased && canSlideJump) {
-                playerVelocity.setY(-10);
-                canJump = false;
+                slideJump.execute();
                 haveJKeyReleased = false;
                 playerState = MoveState.SLIDE_JUMPING;
                 slideJumpCooldownTimer.playFromStart();
             }
-            // Move left and right
+            // Move left
             if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
-                playerVelocity.add(-4, 0);  //max speed: -12
+                moveLeft.execute();
             }
+            // Move right
             if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
-                playerVelocity.add(4, 0);
+                moveRight.execute();
             }
 
             // Dash
@@ -127,9 +128,10 @@ public class MovePlayer {
                     dashCooldownTimer.playFromStart();
                 }
             }
-            //Resistance
+            // Resistance
             playerVelocity.reduce(RESISTANCE, 0);
         }
+
         // apply gravity when not dashing
         if (playerVelocity.getY() < MAX_FALL_SPEED) {
             playerVelocity.add(0, Constants.GRAVITY);
@@ -137,7 +139,7 @@ public class MovePlayer {
 
         for (Ladder ladder : ladders) {
             if (player.hitBox().getBoundsInParent().intersects(ladder.hitBox().getBoundsInParent())) {
-                if (isPressed(KeyCode.W)&& playerVelocity.getY() >= -MAX_CLIMB_SPEED) {
+                if (isPressed(KeyCode.W) && playerVelocity.getY() >= -MAX_CLIMB_SPEED) {
                     playerVelocity.add(0, -4);
                     break;
                 }
@@ -147,7 +149,6 @@ public class MovePlayer {
                 }
             }
         }
-
 
         MoveStatus moveStatus = new MoveStatus(playerState, canJump, canDash, canSlideJump);
         Move.move(player, playerVelocity, moveStatus);
@@ -162,7 +163,6 @@ public class MovePlayer {
         checkFall();
     }
 
-
     private void checkGoalCollision() {
         for (Entity entity : entityMap) {
             if (entity.getType() == Constants.EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
@@ -174,7 +174,7 @@ public class MovePlayer {
     }
 
     private void checkFall() {
-        if(player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelHeight() + 50)
+        if (player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelHeight() + 50)
             Die();
     }
 
@@ -184,7 +184,7 @@ public class MovePlayer {
                 if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY() + 10) {
                     enemy.isDead = true;
                     playerVelocity.add(0, -20);
-                    //test
+                    // test
                     System.out.println("enemy killed");
                 } else Die();
             }
@@ -197,5 +197,3 @@ public class MovePlayer {
         Main.getInstance().exitGame();
     }
 }
-
-

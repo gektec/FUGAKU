@@ -59,10 +59,10 @@ public class StartScreenController {
         root.setBackground(new Background(background));
 
         // Load the background music
-        String backgroundMusicFile = "/sounds/victory.mp3"; // 确保路径正确
+        String backgroundMusicFile = "/sounds/victory.mp3"; // Make sure the path is correct
         Media backgroundMusic = new Media(getClass().getResource(backgroundMusicFile).toURI().toString());
         mediaPlayer = new MediaPlayer(backgroundMusic);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // 设置为无限循环
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Set to infinite loop
 
         // 播放背景音乐
         mediaPlayer.play();
