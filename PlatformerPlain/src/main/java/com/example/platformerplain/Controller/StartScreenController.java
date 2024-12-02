@@ -93,16 +93,25 @@ public class StartScreenController {
         helpTextArea.setText("Controls:\n" +
                 "Press 'A' to move left.\n" +
                 "Press 'D' to move right.\n" +
-                "Press 'J' to jump.\n\n" +
+                "Press 'J' to jump.\n" +
+                "Press 'K' to dash.\n" +
+                "Press 'W' to climb up the ladder.\n" +
+                "Press 'S' to climb down the ladder.\n\n" +
                 "Tips:\n" +
                 "1. Use 'J' to interact with objects.\n" +
-                "2. Avoid enemies!\n" +
-                "3. Get the goal as soon as possible!\n\n" +
-                "Good luck and have fun!");
+                "2. Avoid enemies to prevent damage.\n" +
+                "3. Defeat enemies by jumping on them (be careful!).\n" +
+                "4. Collect power-ups to enhance your abilities.\n" +
+                "5. Reach the goal as soon as possible to win!\n\n" +
+                "Special Moves:\n" +
+                "1. Slide Jump (Press 'J' while running): Use it for extra height!\n" +
+                "2. Dash (Press 'K' while moving): Quickly evade obstacles or rush forward.\n" +
+                "3. Mix and match moves for advanced strategies!\n\n" +
+                "Good luck and have fun! If you have any questions, feel free to ask!");
 
         helpTextArea.setEditable(false); // Make the text area non-editable
         helpTextArea.setWrapText(true); // Enable text wrapping
-        helpTextArea.setPrefSize(300, 200); // Set preferred size
+        helpTextArea.setPrefSize(400, 300); // Adjust preferred size for better readability
 
         // Add the text area to the dialog's content
         alert.getDialogPane().setContent(helpTextArea);
@@ -110,6 +119,7 @@ public class StartScreenController {
         // Show the dialog and wait for user action
         alert.showAndWait();
     }
+
 
 
     @FXML
