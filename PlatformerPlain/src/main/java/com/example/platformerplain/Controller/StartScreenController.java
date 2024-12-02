@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -82,12 +83,34 @@ public class StartScreenController {
 
     @FXML
     public void handleHelp() {
+        // Create a new Alert dialog
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Help");
         alert.setHeaderText("How to Play");
-        alert.setContentText("Press 'A' to move left,\nPress 'D' to move right,\nPress 'J' to jump.");
+
+        // Create a TextArea to display help content
+        TextArea helpTextArea = new TextArea();
+        helpTextArea.setText("Controls:\n" +
+                "Press 'A' to move left.\n" +
+                "Press 'D' to move right.\n" +
+                "Press 'J' to jump.\n\n" +
+                "Tips:\n" +
+                "1. Use 'J' to interact with objects.\n" +
+                "2. Avoid enemies!\n" +
+                "3. Get the goal as soon as possible!\n\n" +
+                "Good luck and have fun!");
+
+        helpTextArea.setEditable(false); // Make the text area non-editable
+        helpTextArea.setWrapText(true); // Enable text wrapping
+        helpTextArea.setPrefSize(300, 200); // Set preferred size
+
+        // Add the text area to the dialog's content
+        alert.getDialogPane().setContent(helpTextArea);
+
+        // Show the dialog and wait for user action
         alert.showAndWait();
     }
+
 
     @FXML
     void handleExitGame() {
