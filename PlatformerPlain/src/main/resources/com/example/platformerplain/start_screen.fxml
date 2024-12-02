@@ -4,10 +4,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20" fx:controller="com.example.platformerplain.Controller.StartScreenController" fx:id="root" stylesheets="@styles.css">
-    <!--  VBox to design background -->
+<VBox fx:id="root" alignment="CENTER" prefHeight="477.0" prefWidth="722.0" spacing="20" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="com.example.platformerplain.Controller.StartScreenController">
+    <!-- VBox to design background -->
     <Text text="Welcome to Platformer Game!" />
-    <Button fx:id="startButton" onAction="#handleStartGame" prefHeight="23.0" prefWidth="82.0" text="Start Game" />
-    <Button fx:id="helpButton" onAction="#handleHelp" prefHeight="23.0" prefWidth="82.0" text="Help" />
-    <Button fx:id="ExitButton" onAction="#handleExitGame" prefHeight="23.0" prefWidth="82.0" text="Exit Game" textAlignment="CENTER" />
+
+    <!-- Start Game Button -->
+    <Button fx:id="startButton" onAction="#handleStartGame" text="Start Game" />
+
+    <!-- Help Button -->
+    <Button fx:id="helpButton" onAction="#handleHelp" prefHeight="23.0" prefWidth="80.0" text="Help" />
+
+    <!-- Exit Game Button -->
+    <Button fx:id="exitButton" onAction="#handleExitGame" prefHeight="23.0" prefWidth="80.0" text="Exit Game" />
 </VBox>

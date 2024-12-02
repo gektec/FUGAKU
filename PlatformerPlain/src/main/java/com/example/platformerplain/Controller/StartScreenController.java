@@ -54,7 +54,6 @@ public class StartScreenController {
                         true,    // Preserve aspect ratio for the width
                         true));  // Preserve aspect ratio for the height
 
-
         // Set the VBox background
         root.setBackground(new Background(background));
 
@@ -66,16 +65,14 @@ public class StartScreenController {
 
         // 播放背景音乐
         mediaPlayer.play();
+
     }
 
     // Handle the start game button click event
     @FXML
     void handleStartGame() {
-
         if (primaryStage != null) {
-
             Main.getInstance().startGame(primaryStage);
-
         } else {
             System.err.println("Primary stage is not set.");
         }
@@ -119,8 +116,6 @@ public class StartScreenController {
         // Show the dialog and wait for user action
         alert.showAndWait();
     }
-
-
 
     @FXML
     void handleExitGame() {
