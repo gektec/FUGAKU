@@ -1,38 +1,26 @@
 package com.example.platformerplain.Controller;
 
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.Main;
-import com.example.platformerplain.Screen.StartScreen;
+import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class FailScreenController {
 
     @FXML
-    private VBox root;  // VBox in the FXML file
+    private GridPane root;  // VBox in the FXML file
 
     @FXML
     private Button MenuButton;
     private Stage primaryStage;
-    private MediaPlayer mediaPlayer; // 添加 MediaPlayer
+    private MediaPlayer mediaPlayer; // add MediaPlayer
 
     // Set the primaryStage
     public void setPrimaryStage(Stage primaryStage) {
@@ -43,7 +31,7 @@ public class FailScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         // Load background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/defeat.png"));
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/backgrounds/Defeat.png"));
 
         // Create a BackgroundImage object, ensuring the image adapts proportionally to the VBox size
         BackgroundImage background = new BackgroundImage(
@@ -66,7 +54,7 @@ public class FailScreenController {
         Media failSound = new Media(getClass().getResource(failSoundFile).toURI().toString());
         mediaPlayer = new MediaPlayer(failSound);
 
-        // 播放失败声音
+        // playing the fail sound
         mediaPlayer.play(); // Play sound effects on initialization
     }
 
@@ -80,11 +68,11 @@ public class FailScreenController {
 
     @FXML
     private void handleMenu() {
-        // 创建 StartScreen 实例并传递主舞台
-        StartScreen startScreen = new StartScreen();
-        startScreen.show(primaryStage);  // 传递 currentStage
+        // Create a StartScreen instance and pass the main stage
+        MenuScreen menuScreen = new MenuScreen();
+        menuScreen.show(primaryStage);  // 传递 currentStage
 
-        // 释放媒体播放器的资源
+        // Release media player resources
         releaseMediaPlayer();
 
     }

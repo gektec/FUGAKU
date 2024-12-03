@@ -17,10 +17,9 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class StartScreenController {
+public class MenuScreenController {
 
     @FXML
     private VBox root;  // VBox in the FXML file
@@ -40,7 +39,7 @@ public class StartScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         // Load background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/background.png"));
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/backgrounds/Menu.png"));
 
         // Create a BackgroundImage object, ensuring the image adapts proportionally to the VBox size
         BackgroundImage background = new BackgroundImage(
