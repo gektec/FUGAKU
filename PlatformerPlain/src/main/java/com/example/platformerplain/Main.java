@@ -2,7 +2,8 @@ package com.example.platformerplain;
 
 import com.example.platformerplain.Screen.FailScreen;
 import com.example.platformerplain.Screen.ScreenManager;
-import com.example.platformerplain.Screen.StartScreen;
+import com.example.platformerplain.Screen.MenuScreen;
+import com.example.platformerplain.Screen.TransitionScreen;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
@@ -84,7 +85,7 @@ public class Main extends Application {
         screenManager = ScreenManager.getInstance(primaryStage);
 
         // Show the start screen
-        screenManager.showScreen(new StartScreen());
+        screenManager.showScreen(new MenuScreen());
 
         primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
         primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
@@ -296,8 +297,14 @@ public class Main extends Application {
     }
 
 
-    public void transitionToLevel2() {
+    public void transitionToNextLevel() {
         stopGameLoop();
+        TransitionScreen transitionScreen = new TransitionScreen();
+        // Show transition interface
+        transitionScreen.show(primaryStage);
+    }
+
+    public void startNextLevel(){
         currentLevel = 2;
         startLevel();
         primaryStage.setScene(gameScene);

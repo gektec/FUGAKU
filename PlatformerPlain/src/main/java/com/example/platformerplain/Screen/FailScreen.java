@@ -12,7 +12,7 @@ public class FailScreen implements Screen {
     @Override
     public void show(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/fail_screen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Fail.fxml"));
             Parent failScreen = loader.load();
             Scene failScene = new Scene(failScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
 
