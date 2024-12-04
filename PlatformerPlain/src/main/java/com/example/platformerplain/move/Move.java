@@ -45,7 +45,8 @@ public class Move {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
             for (Entity platform : collidableMap) {
-                if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {
+                //Next line may not improve performance
+                //if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {
                     if (moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())) {
                         int relativeLocation = detectRelativeLocation(moveable, platform);
                         if (relativeLocation == 1) {
@@ -91,7 +92,7 @@ public class Move {
                     moveStatus.moveState = MoveState.DEFAULT;
                 }
             }
-        }
+        //}
         moveable.node().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.node().getBoundsInParent().getWidth() / 2);
         moveable.node().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.node().getBoundsInParent().getHeight() / 2);
     }

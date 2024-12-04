@@ -6,6 +6,7 @@ import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.Ladder;
+import com.example.platformerplain.entities.Spike;
 import com.example.platformerplain.move.Command.JumpCommand;
 import com.example.platformerplain.move.Command.MoveLeftCommand;
 import com.example.platformerplain.move.Command.MoveRightCommand;
@@ -39,7 +40,7 @@ public class MovePlayer {
     private boolean haveJKeyReleased = true;
     private boolean isPlayerDead = false;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikeMap, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
         this.keys = keys;

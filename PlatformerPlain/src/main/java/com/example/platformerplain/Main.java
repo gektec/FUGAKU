@@ -212,28 +212,12 @@ public class Main extends Application {
                         break;
                     case 'P':
                         player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
-                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap ,levelWidth, keys, this);
+                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
                         break;
                     case 'M':
-                        adjacencyCode = 0;
-                        if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'M') {
-                            adjacencyCode += 1;
-                        }
-                        if (j < line.length() - 1 && LevelData.Levels[currentLevel][i].charAt(j + 1) == 'M') {
-                            adjacencyCode += 2;
-                        }
-                        if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'M') {
-                            adjacencyCode += 4;
-                        }
-                        if (j > 0 && LevelData.Levels[currentLevel][i].charAt(j - 1) == 'M') {
-                            adjacencyCode += 8;
-                        }
+                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'M');
                         Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         collidableMap.add(platform);
-                        break;
-                    case 'S':
-                        Entity spike = createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
-                        collidableMap.add(spike);
                         break;
                     case 'H':
                         if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'H' && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
@@ -252,8 +236,17 @@ public class Main extends Application {
                         break;
                     case 'E':
                         Enemy enemy = (Enemy) createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
-                        //moveEnemyLogic = new MoveEnemy(enemy, collidableMap, levelWidth, keys);
                         enemyMap.add(enemy);
+                        break;
+                    case 's':
+                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'S');
+                        Spike spike = (Spike) createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        spikeMap.add(spike);
+                        break;
+                    case 'S':
+                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;
+                        Spike spikeBody = (Spike) createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        spikeMap.add(spikeBody);
                         break;
                 }
             }
@@ -294,6 +287,23 @@ public class Main extends Application {
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
 
         uiRoot.getChildren().add(framerateLabel);
+    }
+
+    private int calculateAdjacencyCode(String[] level, int i, int j, char target) {
+        int adjacencyCode = 0;
+        if (i > 0 && level[i - 1].charAt(j) == target) {
+            adjacencyCode += 1; // got a neighbor above
+        }
+        if (j < level[i].length() - 1 && level[i].charAt(j + 1) == target) {
+            adjacencyCode += 2; // got a neighbor to the right
+        }
+        if (i < level.length - 1 && level[i + 1].charAt(j) == target) {
+            adjacencyCode += 4; // got a neighbor below
+        }
+        if (j > 0 && level[i].charAt(j - 1) == target) {
+            adjacencyCode += 8; // got a neighbor to the left
+        }
+        return adjacencyCode;
     }
 
 

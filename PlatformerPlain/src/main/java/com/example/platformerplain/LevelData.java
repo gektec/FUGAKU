@@ -15,8 +15,8 @@ public class LevelData {
                     "M00ME00000H00000000000000M000M",
                     "M00MMM0000H00000000000000M000M",
                     "M0PM0000MMM000000000000000000M",
-                    "M000000000000MMM00000E0000000M",
-                    "00000MMM00000000000MMM000MM00G",
+                    "M000000000000MMM000s0E0000000M",
+                    "00000MMM00000000000SMM000MM00G",
                     "MMMMMMMM00MMMM000MMMMM00MMMMMM"
             },
             {
