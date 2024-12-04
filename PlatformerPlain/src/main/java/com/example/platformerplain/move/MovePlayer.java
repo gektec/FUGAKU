@@ -28,6 +28,7 @@ public class MovePlayer {
     private ArrayList<Enemy> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private ArrayList<Ladder> ladders;
+    private ArrayList<Spike> spikes;
     private boolean canJump;  // Flag indicating whether the player can jump
     private boolean canDash;
     private boolean canSlideJump;
@@ -40,13 +41,14 @@ public class MovePlayer {
     private boolean haveJKeyReleased = true;
     private boolean isPlayerDead = false;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikeMap, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
         this.entityMap = platforms;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
         this.canJump = true;
         this.enemies = enemies;
+        this.spikes = spikes;
         this.ladders = ladders;
         this.playerState = MoveState.DEFAULT;
 
@@ -161,6 +163,7 @@ public class MovePlayer {
 
         checkGoalCollision();
         checkEnemy();
+        checkSpike();
         checkFall();
     }
 
@@ -188,6 +191,17 @@ public class MovePlayer {
                     // test
                     System.out.println("enemy killed");
                 } else Die();
+            }
+        }
+    }
+
+    private void checkSpike(){
+        for (Spike spike : spikes) {
+            if(spike.hitBox() != null){
+                if (player.hitBox().getBoundsInParent().intersects(spike.hitBox().getBoundsInParent())) {
+                    spike.playerDead();
+                    Die();
+                }
             }
         }
     }
