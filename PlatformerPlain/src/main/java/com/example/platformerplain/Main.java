@@ -17,11 +17,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -68,6 +70,8 @@ public class Main extends Application {
     private ScreenManager screenManager;  // ScreenManager instance
 
     private Timeline gameLoop;
+    private Button pauseMenu = new Button();
+    private boolean isPaused = false;
 
 
     public static void main(String[] args) {
@@ -105,11 +109,11 @@ public class Main extends Application {
 
     private void startGameLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-        update();
-        updateFramerate();
-        enemyMap.removeAll(toRemove);
-        collidableMap.removeAll(toRemove);
-    });
+            update();
+            updateFramerate();
+            enemyMap.removeAll(toRemove);
+            collidableMap.removeAll(toRemove);
+        });
 
         gameLoop = new Timeline(frame);
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -140,6 +144,15 @@ public class Main extends Application {
         framerateLabel.setFont(new Font(18));
         framerateLabel.setTranslateX(10);
         framerateLabel.setTranslateY(10);
+
+        // Add a Pause Button
+        pauseMenu.setTextFill(Color.BLACK);
+        pauseMenu.setFont(new Font(18));
+        pauseMenu.setTranslateX(10); // Adjust position as needed
+        pauseMenu.setTranslateY(30);
+        pauseMenu.setText("Pause");
+
+        pauseMenu.setOnAction(event -> togglePauseMenu());
     }
 
     private void startLevel() {
@@ -293,9 +306,8 @@ public class Main extends Application {
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
 
-        uiRoot.getChildren().add(framerateLabel);
+        uiRoot.getChildren().addAll(framerateLabel, pauseMenu);
     }
-
 
     public void transitionToNextLevel() {
         stopGameLoop();
@@ -322,6 +334,20 @@ public class Main extends Application {
 
     public void exitGame() {
         screenManager.showScreen(new FailScreen());
+    }
+
+    private void togglePauseMenu() {
+        if (!isPaused) {
+            isPaused = true;
+            stopGameLoop(); // stop game loop
+        }else {
+            resumeGame();
+        }
+    }
+
+    private void resumeGame() {
+        isPaused = false;
+        startGameLoop();
     }
 
     public static Main getInstance() {

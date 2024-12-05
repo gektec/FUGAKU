@@ -69,7 +69,7 @@ public class TransitionScreenController {
     public void handleMenu() {
         // Create a StartScreen instance and pass the main stage
         MenuScreen menuScreen = new MenuScreen();
-        menuScreen.show(primaryStage);  // 传递 currentStage
+        menuScreen.show(primaryStage);  // deliver currentStage
 
         // Release media player resources
         releaseMediaPlayer();
