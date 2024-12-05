@@ -146,10 +146,13 @@ public class Main extends Application {
         framerateLabel.setTranslateY(10);
 
         // Add a Pause Button
-        pauseMenu.setTextFill(Color.WHITE);
+        pauseMenu.setTextFill(Color.BLACK);
         pauseMenu.setFont(new Font(18));
         pauseMenu.setTranslateX(10); // Adjust position as needed
         pauseMenu.setTranslateY(30);
+        pauseMenu.setText("Pause");
+
+        pauseMenu.setOnAction(event -> togglePauseMenu());
     }
 
     private void startLevel() {
@@ -331,6 +334,20 @@ public class Main extends Application {
 
     public void exitGame() {
         screenManager.showScreen(new FailScreen());
+    }
+
+    private void togglePauseMenu() {
+        if (!isPaused) {
+            isPaused = true;
+            stopGameLoop(); // stop game loop
+        }else {
+            resumeGame();
+        }
+    }
+
+    private void resumeGame() {
+        isPaused = false;
+        startGameLoop();
     }
 
     public static Main getInstance() {
