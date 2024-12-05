@@ -62,7 +62,7 @@ public class MenuScreenController {
         mediaPlayer = new MediaPlayer(backgroundMusic);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Set to infinite loop
 
-        // 播放背景音乐
+        // Play background music
         mediaPlayer.play();
 
     }
