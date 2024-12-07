@@ -319,12 +319,9 @@ public class Main extends Application {
         return adjacencyCode;
     }
 
-
     public void transitionToNextLevel() {
         stopGameLoop();
         TransitionScreen transitionScreen = new TransitionScreen();
-        // Show transition interface
-        transitionScreen.show(primaryStage);
     }
 
     public void startNextLevel(){
