@@ -321,7 +321,7 @@ public class Main extends Application {
 
     public void transitionToNextLevel() {
         stopGameLoop();
-        TransitionScreen transitionScreen = new TransitionScreen();
+        screenManager.showScreen(new TransitionScreen());
     }
 
     public void startNextLevel(){
