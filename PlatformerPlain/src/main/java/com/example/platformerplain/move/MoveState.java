@@ -1,6 +1,6 @@
 package com.example.platformerplain.move;
 
-enum MoveState {
+public enum MoveState {
     DEFAULT,
     SLIDING,
     SLIDE_JUMPING,

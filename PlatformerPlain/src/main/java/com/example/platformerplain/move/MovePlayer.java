@@ -29,9 +29,9 @@ public class MovePlayer {
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private ArrayList<Ladder> ladders;
     private ArrayList<Spike> spikes;
-    private boolean canJump;  // Flag indicating whether the player can jump
+    private boolean onGround;  // Flag indicating whether the player can jump
     private boolean canDash;
-    private boolean canSlideJump;
+    private boolean onWall;
     private MoveState playerState;
 
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
@@ -46,7 +46,7 @@ public class MovePlayer {
         this.entityMap = platforms;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
-        this.canJump = true;
+        this.onGround = true;
         this.enemies = enemies;
         this.spikes = spikes;
         this.ladders = ladders;
@@ -69,7 +69,7 @@ public class MovePlayer {
         if (!isPressed(KeyCode.J)) {
             haveJKeyReleased = true;
         }
-        if (!canJump && !canSlideJump) {
+        if (!onGround && !onWall) {
             haveJKeyReleased = false;
         }
 
@@ -80,19 +80,19 @@ public class MovePlayer {
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
         } else {
             // Jump
-            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, canJump, canDash, canSlideJump));
+            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, onGround, canDash, onWall));
             // Slide jump
             PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, canDash, false));
             // Move left and right commands
             PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
             PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
 
-            if (isPressed(KeyCode.J) && haveJKeyReleased && canJump && playerState == MoveState.DEFAULT) {
+            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState == MoveState.DEFAULT) {
                 jump.execute();
                 haveJKeyReleased = false;
             }
             // Slide jump
-            else if (isPressed(KeyCode.J) && haveJKeyReleased && canSlideJump) {
+            else if (isPressed(KeyCode.J) && haveJKeyReleased && onWall) {
                 slideJump.execute();
                 haveJKeyReleased = false;
                 playerState = MoveState.SLIDE_JUMPING;
@@ -153,13 +153,13 @@ public class MovePlayer {
             }
         }
 
-        MoveStatus moveStatus = new MoveStatus(playerState, canJump, canDash, canSlideJump);
+        MoveStatus moveStatus = new MoveStatus(playerState, onGround, canDash, onWall);
         Move.move(player, playerVelocity, moveStatus);
 
         playerState = moveStatus.moveState;
-        canJump = moveStatus.canJump;
+        onGround = moveStatus.canJump;
         canDash = moveStatus.canDash;
-        canSlideJump = moveStatus.canSlideJump;
+        onWall = moveStatus.canSlideJump;
 
         checkGoalCollision();
         checkEnemy();
@@ -210,5 +210,9 @@ public class MovePlayer {
         System.out.println("You lose!");
         Main.getInstance().stopGameLoop();  // Stop game loop on player death
         Main.getInstance().exitGame();
+    }
+
+    public MoveState getPlayerState() {
+        return playerState;
     }
 }

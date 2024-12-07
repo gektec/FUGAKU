@@ -51,13 +51,13 @@ public class Move {
                         int relativeLocation = detectRelativeLocation(moveable, platform);
                         if (relativeLocation == 1) {
                             isTouchingGround = true;
-                            moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - Constants.PLAYER_SIZE);
+                            moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                             velocity.setY(0);
                             moveStatus.canJump = true;
                             moveStatus.canDash = true;
                         } else if (relativeLocation == 2) {
                             isTouchingWall = true;
-                            moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - Constants.PLAYER_SIZE);
+                            moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
                             velocity.setX(0);
                             if (moveStatus.moveState == MoveState.SLIDE_JUMPING) {
                                 velocity.setX(-Constants.SLIDE_JUMP_SPEED);

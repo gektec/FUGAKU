@@ -51,7 +51,7 @@ public class Main extends Application {
     private Entity player;
     private static int levelWidth = -1;
     private static int levelHeight = -1;
-    private MovePlayer movePlayerLogic;
+    public MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
     private Scene gameScene;
@@ -121,7 +121,6 @@ public class Main extends Application {
 
     private void update() {
         player.update();
-        movePlayerLogic.update();
         if (enemyMap != null) {
             for (Enemy enemy : enemyMap) {
                 enemy.update();
