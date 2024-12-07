@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Platform extends Entity {
-    private Node node;
     private Node hitBox;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -33,7 +32,6 @@ public class Platform extends Entity {
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
-        this.node = canvas;
         this.hitBox = rectangle;
 
     }
@@ -50,7 +48,7 @@ public class Platform extends Entity {
 
     @Override
     public Node node() {
-        return node;
+        return canvas;
     }
 
     @Override

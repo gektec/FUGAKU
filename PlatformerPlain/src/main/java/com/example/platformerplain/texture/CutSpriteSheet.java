@@ -21,6 +21,8 @@ public class CutSpriteSheet {
     public static Image getSprite(Constants.EntityType type, int col, int row) {
         if (type == Constants.EntityType.PLATFORM)  spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ground_Tiles.png")));
         else if (type == Constants.EntityType.LADDER) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ladder.png")));
+        else if (type == Constants.EntityType.SPIKE) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Spikes.png")));
+        else throw new IllegalArgumentException("Unknown entity type: " + type);
         PixelReader reader = spriteSheet.getPixelReader();
         WritableImage sprite = new WritableImage(reader, col * spriteWidth, row * spriteHeight, spriteWidth, spriteHeight);
         return sprite;

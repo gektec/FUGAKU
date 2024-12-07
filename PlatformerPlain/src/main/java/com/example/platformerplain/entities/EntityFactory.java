@@ -15,7 +15,7 @@ public class EntityFactory {
             case ENEMY:
                 return new Enemy(x, y, w, h);
             case SPIKE:
-                return new Spike();
+                return new Spike(x, y, w, h, index);
             case LADDER:
                 return new Ladder(x, y, w, h, index);
             default:
