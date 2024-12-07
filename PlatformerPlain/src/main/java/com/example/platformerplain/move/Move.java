@@ -13,11 +13,11 @@ public class Move {
     }
 
     public static int detectRelativeLocation(Entity moveable, Entity collidable) {
-        Coord2D playerCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (Constants.PLAYER_SIZE / 2), (int) moveable.hitBox().getTranslateY() + (Constants.PLAYER_SIZE / 2));
+        Coord2D moveableCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (moveable.size()[0] / 2), (int) moveable.hitBox().getTranslateY() + (moveable.size()[1] / 2));
         Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
 
-        int xDiff = playerCoord.getX() - platformCoord.getX();
-        int yDiff = playerCoord.getY() - platformCoord.getY();
+        int xDiff = moveableCoord.getX() - platformCoord.getX();
+        int yDiff = moveableCoord.getY() - platformCoord.getY();
 
         if (xDiff == yDiff || xDiff == -yDiff) {    //Diagonal collision
             return -1;
@@ -93,7 +93,7 @@ public class Move {
                 }
             }
         //}
-        moveable.node().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.node().getBoundsInParent().getWidth() / 2);
-        moveable.node().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.node().getBoundsInParent().getHeight() / 2);
+        moveable.canvas().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.canvas().getBoundsInParent().getWidth() / 2);
+        moveable.canvas().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.canvas().getBoundsInParent().getHeight() / 2);
     }
 }

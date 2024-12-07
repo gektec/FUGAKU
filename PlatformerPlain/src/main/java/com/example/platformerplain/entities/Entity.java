@@ -8,7 +8,7 @@ public abstract class Entity {
 
     protected abstract boolean isAnimated();
 
-    public abstract Node node();
+    public abstract Node canvas();
 
     public abstract Constants.EntityType getType();
 
@@ -22,14 +22,13 @@ public abstract class Entity {
     }
 
     public void update() {
-        animation.update();
     }
 
     public void draw() {
 
     }
 
-    public abstract int size();
+    public abstract int[] size();
 
 
     public Node hitBox() {
