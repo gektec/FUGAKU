@@ -4,7 +4,6 @@ import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Enemy extends Entity {
-    private Node rectangle;
+    private Node hitBox;
     Image[] frames;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -28,9 +27,9 @@ public class Enemy extends Entity {
     };
 
     public Enemy(int x, int y, int w, int h) {
-        rectangle = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
-        rectangle.setTranslateX(x);
-        rectangle.setTranslateY(y);
+        hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
+        hitBox.setTranslateX(x);
+        hitBox.setTranslateY(y);
         this.moveEnemyLogic = new MoveEnemy(this, Main.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
         frames = Constants.GHOST_IDLE[0];
@@ -39,8 +38,8 @@ public class Enemy extends Entity {
 
         canvas = new Canvas(96,96);
         gc = canvas.getGraphicsContext2D();
-        canvas.setTranslateX(rectangle.getTranslateX());
-        canvas.setTranslateY(rectangle.getTranslateY());
+        canvas.setTranslateX(hitBox.getTranslateX());
+        canvas.setTranslateY(hitBox.getTranslateY());
     }
 
 
@@ -72,18 +71,18 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public int size() {
-        return Constants.ENEMY_SIZE;
+    public int[] size() {
+        return new int[]{Constants.ENEMY_SIZE, Constants.ENEMY_SIZE};
     }
 
     @Override
-    public Node node() {
+    public Node canvas() {
         return canvas;
     }
 
     @Override
     public Node hitBox() {
-        return rectangle;
+        return hitBox;
     }
 
     @Override

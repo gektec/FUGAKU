@@ -20,7 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -49,7 +48,7 @@ public class Main extends Application {
     private Entity player;
     private static int levelWidth = -1;
     private static int levelHeight = -1;
-    private MovePlayer movePlayerLogic;
+    public MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private Move move;
     private Scene gameScene;
@@ -118,7 +117,7 @@ public class Main extends Application {
     }
 
     private void update() {
-        movePlayerLogic.update();
+        player.update();
         if (enemyMap != null) {
             for (Enemy enemy : enemyMap) {
                 enemy.update();
@@ -221,7 +220,7 @@ public class Main extends Application {
                     case '0':
                         break;
                     case 'P':
-                        player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 0);
+                        player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, 0);
                         movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
                         break;
                     case 'M':
@@ -369,13 +368,13 @@ public class Main extends Application {
 
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
-        gameRoot.getChildren().remove(enemy.node());
+        gameRoot.getChildren().remove(enemy.canvas());
     }
 
 
     private Entity createEntity(Constants.EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
-        gameRoot.getChildren().add(entity.node());
+        gameRoot.getChildren().add(entity.canvas());
         return entity;
     }
 }

@@ -16,7 +16,9 @@ public class Constants {
     }
 
     public static final int TILE_SIZE = 60;
-    public static final int PLAYER_SIZE = 40;
+    public static final int PLAYER_SIZE = 30;
+    public static final int PLAYER_HEIGHT = 30;
+    public static final int PLAYER_WIDTH = 30;
     public static final int ENEMY_SIZE = 20;
     public static final int BACKGROUND_WIDTH = 1280;
     public static final int BACKGROUND_HEIGHT = 720;
@@ -50,6 +52,12 @@ public class Constants {
 
     public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
     public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
+
+    public static final Image[][] PLAYER_IDLE = load("/images/characters/player/Player_Idle.png", 96, 96, 3);
+    public static final Image[][] PLAYER_RUN = load("/images/characters/player/Player_Run.png", 96, 96, 3);
+    public static final Image[][] PLAYER_JUMP_START = load("/images/characters/player/Player_Jump_Start.png", 96, 96, 3);
+    public static final Image[][] PLAYER_JUMP_FALL = load("/images/characters/player/Player_Jump_Fall.png", 96, 96, 3);
+    public static final Image[][] PLAYER_SLIDING = load("/images/characters/player/Player_Wall_Slide.png", 96, 96, 3);
 
 
     public static Image[][] load(String s, int w, int h, int scale) {

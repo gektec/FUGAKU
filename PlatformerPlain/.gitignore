@@ -9,10 +9,22 @@
 *.iml
 *.ipr
 
-
+# Ignore log and temporary files
 *.log
 *.tmp
 
 # Ignore OS generated files
 .DS_Store
 Thumbs.db
+
+# Ignore compiled Java files
+*.jar
+*.war
+*.ear
+
+# Ignore Maven wrapper files
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Ignore bin directory
+/bin/

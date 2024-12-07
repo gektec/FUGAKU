@@ -19,8 +19,8 @@ public class Goal extends Entity {
     }
 
     @Override
-    public int size() {
-        return Constants.TILE_SIZE;
+    public int[] size() {
+        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Goal extends Entity {
     }
 
     @Override
-    public Node node() {
+    public Node canvas() {
         return node;
     }
 
