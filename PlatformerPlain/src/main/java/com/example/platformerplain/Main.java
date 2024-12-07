@@ -1,9 +1,6 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.Screen.FailScreen;
-import com.example.platformerplain.Screen.ScreenManager;
-import com.example.platformerplain.Screen.MenuScreen;
-import com.example.platformerplain.Screen.TransitionScreen;
+import com.example.platformerplain.Screen.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
@@ -348,12 +345,11 @@ public class Main extends Application {
         if (!isPaused) {
             isPaused = true;
             stopGameLoop(); // stop game loop
-        }else {
-            resumeGame();
+            ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
         }
     }
 
-    private void resumeGame() {
+    public void resumeGame() {
         isPaused = false;
         startGameLoop();
     }
