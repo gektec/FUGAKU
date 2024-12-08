@@ -2,6 +2,8 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.Screen.LevelSelectScreen;
+import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -70,12 +72,10 @@ public class MenuScreenController {
 
     // Handle the start game button click event
     @FXML
-    void handleStartGame() {
-        if (primaryStage != null) {
-            Main.getInstance().startGame(primaryStage);
-        } else {
-            System.err.println("Primary stage is not set.");
-        }
+    private void handleStartGame() {
+        // Create a StartScreen instance and pass the main stage
+        LevelSelectScreen selectScreen = new LevelSelectScreen();
+        selectScreen.show(primaryStage);  // deliver currentStage
     }
 
     @FXML

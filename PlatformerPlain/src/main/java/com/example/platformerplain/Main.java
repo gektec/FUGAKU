@@ -345,11 +345,8 @@ public class Main extends Application {
     }
 
     private void togglePauseMenu() {
-        if (!isPaused) {
-            isPaused = true;
             stopGameLoop(); // stop game loop
             ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
-        }
     }
 
     public void resumeGame() {
