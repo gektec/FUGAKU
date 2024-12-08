@@ -162,28 +162,28 @@ public class Main extends Application {
         uiRoot = new Pane();
         backgroundRoot = new Pane();
 
-        Image background0 = Constants.BACKGROUND_SKY;
+        Image background0 = Assets.BACKGROUND_SKY;
         ImageView backgroundSky = new ImageView(background0);
         backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH);
         backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT);
 
-        Image background1 = Constants.BACKGROUND_CLOUD_1;
+        Image background1 = Assets.BACKGROUND_CLOUD_1;
         ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1,2));
         backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
-        Image background2 = Constants.BACKGROUND_CLOUD_2;
+        Image background2 = Assets.BACKGROUND_CLOUD_2;
         ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2,2));
         backgroundCloud2.setScaleX(-1);
         backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
-        Image background3 = Constants.BACKGROUND_CLOUD_3;
+        Image background3 = Assets.BACKGROUND_CLOUD_3;
         ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3,2));
         backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
         backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
 
-        Image background4 = Constants.BACKGROUND_MOON;
+        Image background4 = Assets.BACKGROUND_MOON;
         ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4,2));
         backgroundMoon.setFitWidth(Constants.BACKGROUND_WIDTH);
         backgroundMoon.setFitHeight(Constants.BACKGROUND_HEIGHT);

@@ -53,6 +53,8 @@ public class Move {
                             isTouchingGround = true;
                             moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                             velocity.setY(0);
+                            if(velocity.getX() != 0) moveStatus.moveState = MoveState.RUNNING;
+                            else moveStatus.moveState = MoveState.IDLE;
                             moveStatus.canJump = true;
                             moveStatus.canDash = true;
                         } else if (relativeLocation == 2) {
@@ -80,16 +82,16 @@ public class Move {
                         } else if (relativeLocation == 3) {
                             moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                             velocity.setY(0);
-                            moveStatus.moveState = MoveState.DEFAULT;
+                            moveStatus.moveState = MoveState.IDLE;
                         }
                     }
                 }
                 moveStatus.canSlideJump = !isTouchingGround && isTouchingWall;
                 if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
-                    moveStatus.moveState = MoveState.DEFAULT;
+                    moveStatus.moveState = MoveState.IDLE;
                 }
                 if (isTouchingGround && isTouchingWall) {
-                    moveStatus.moveState = MoveState.DEFAULT;
+                    moveStatus.moveState = MoveState.IDLE;
                 }
             }
         //}

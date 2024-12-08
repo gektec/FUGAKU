@@ -1,5 +1,6 @@
 package com.example.platformerplain.entities;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
@@ -32,7 +33,7 @@ public class Enemy extends Entity {
         hitBox.setTranslateY(y);
         this.moveEnemyLogic = new MoveEnemy(this, Main.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
-        frames = Constants.GHOST_IDLE[0];
+        frames = Assets.GHOST_IDLE[0];
         animation.setFrames(frames);
         animation.setDelay(10);
 
@@ -46,7 +47,7 @@ public class Enemy extends Entity {
     @Override
     public void update() {
         if(isDead && !deathAnimationSet){
-            frames = Constants.GHOST_DEATH[0];
+            frames = Assets.GHOST_DEATH[0];
             animation.setFrames(frames);
             animation.setDelay(10);
             deathAnimationSet = true;

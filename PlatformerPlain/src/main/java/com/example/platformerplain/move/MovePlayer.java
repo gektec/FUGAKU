@@ -50,12 +50,12 @@ public class MovePlayer {
         this.enemies = enemies;
         this.spikes = spikes;
         this.ladders = ladders;
-        this.playerState = MoveState.DEFAULT;
+        this.playerState = MoveState.IDLE;
 
-        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> playerState = MoveState.DEFAULT));
+        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> playerState = MoveState.IDLE));
         dashCooldownTimer.setCycleCount(1);
 
-        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> playerState = MoveState.DEFAULT));
+        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> playerState = MoveState.IDLE));
         slideJumpCooldownTimer.setCycleCount(1);
     }
 
@@ -87,7 +87,7 @@ public class MovePlayer {
             PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
             PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
 
-            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState == MoveState.DEFAULT) {
+            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState == MoveState.IDLE) {
                 jump.execute();
                 haveJKeyReleased = false;
             }

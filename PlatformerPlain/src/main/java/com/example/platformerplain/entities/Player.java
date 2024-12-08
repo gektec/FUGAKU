@@ -1,4 +1,5 @@
 package com.example.platformerplain.entities;
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
 import com.example.platformerplain.move.MoveState;
@@ -19,14 +20,14 @@ public class Player extends Entity {
     Image[] frames;
     private Canvas canvas;
     private GraphicsContext gc;
-    private MoveState lastState = MoveState.DEFAULT;
+    private MoveState lastState = MoveState.IDLE;
 
     public Player(int x, int y, int w, int h) {
         hitBox = new Rectangle(w, h, Color.BLUE);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
 
-        frames = Constants.PLAYER_IDLE[0];
+        frames = Assets.PLAYER_IDLE[0];
         animation.setFrames(frames);
         animation.setDelay(10);
         canvas = new Canvas(192,192);
@@ -40,17 +41,17 @@ public class Player extends Entity {
         Main.getInstance().movePlayerLogic.update();
         canvas.setTranslateY(hitBox.getTranslateY()-130);
         switch (Main.getInstance().movePlayerLogic.getPlayerState()) {
-            case MoveState.DEFAULT:
-                if (lastState != MoveState.DEFAULT) {
-                    frames = Constants.PLAYER_IDLE[0];
+            case MoveState.IDLE:
+                if (lastState != MoveState.IDLE) {
+                    frames = Assets.PLAYER_IDLE[0];
                     animation.setFrames(frames);
                     animation.setDelay(10);
-                    lastState = MoveState.DEFAULT;
+                    lastState = MoveState.IDLE;
                 }
                 break;
             case MoveState.SLIDING:
                 if (lastState != MoveState.SLIDING) {
-                    frames = Constants.PLAYER_SLIDING[0];
+                    frames = Assets.PLAYER_SLIDING[0];
                     animation.setFrames(frames);
                     animation.setDelay(10);
                     lastState = MoveState.SLIDING;
