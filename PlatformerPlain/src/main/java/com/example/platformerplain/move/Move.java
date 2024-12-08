@@ -44,6 +44,8 @@ public class Move {
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
+            if (velocity.getX() > 0) moveStatus.moveLeft = false;
+            else if(velocity.getX() < 0) moveStatus.moveLeft = true;
             for (Entity platform : collidableMap) {
                 //Next line may not improve performance
                 //if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {

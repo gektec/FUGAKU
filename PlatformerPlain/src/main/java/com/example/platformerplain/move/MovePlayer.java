@@ -30,6 +30,7 @@ public class MovePlayer {
     private ArrayList<Ladder> ladders;
     private ArrayList<Spike> spikes;
     private boolean onGround;  // Flag indicating whether the player can jump
+    private boolean moveLeft;
     private boolean canDash;
     private boolean onWall;
     private MoveState playerState;
@@ -80,9 +81,9 @@ public class MovePlayer {
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
         } else {
             // Jump
-            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, onGround, canDash, onWall));
+            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall));
             // Slide jump
-            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, canDash, false));
+            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, canDash, false));
             // Move left and right commands
             PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
             PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
@@ -153,10 +154,11 @@ public class MovePlayer {
             }
         }
 
-        MoveStatus moveStatus = new MoveStatus(playerState, onGround, canDash, onWall);
+        MoveStatus moveStatus = new MoveStatus(playerState,moveLeft, onGround, canDash, onWall);
         Move.move(player, playerVelocity, moveStatus);
 
         playerState = moveStatus.moveState;
+        moveLeft = moveStatus.moveLeft;
         onGround = moveStatus.canJump;
         canDash = moveStatus.canDash;
         onWall = moveStatus.canSlideJump;
@@ -214,5 +216,9 @@ public class MovePlayer {
 
     public MoveState getPlayerState() {
         return playerState;
+    }
+
+    public MoveStatus getMoveStatus() {
+        return new MoveStatus(playerState, moveLeft, onGround, canDash, onWall);
     }
 }
