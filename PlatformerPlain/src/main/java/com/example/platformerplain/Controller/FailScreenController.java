@@ -1,5 +1,6 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Screen.FailScreen;
 import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ public class FailScreenController {
     private GridPane root;  // VBox in the FXML file
 
     @FXML
-    private Button MenuButton;
     private Stage primaryStage;
     private MediaPlayer mediaPlayer; // add MediaPlayer
 
