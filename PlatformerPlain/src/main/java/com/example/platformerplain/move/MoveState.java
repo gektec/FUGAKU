@@ -1,7 +1,10 @@
 package com.example.platformerplain.move;
 
 public enum MoveState {
-    DEFAULT,
+    IDLE,
+    RUNNING,
+    JUMPING,
+    FALLING,
     SLIDING,
     SLIDE_JUMPING,
     DASHING,

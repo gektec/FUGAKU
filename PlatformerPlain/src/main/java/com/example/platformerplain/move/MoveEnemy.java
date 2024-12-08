@@ -3,12 +3,8 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
@@ -28,7 +24,7 @@ public class MoveEnemy {
         //this.levelWidth = levelWidth;
         this.velocity = new Coord2D(0, 0);
         this.canJump = true;
-        this.enemyState = MoveState.DEFAULT;
+        this.enemyState = MoveState.IDLE;
     }
 //todo
     //Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);

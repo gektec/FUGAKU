@@ -1,5 +1,6 @@
 package com.example.platformerplain.entities;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
@@ -29,7 +30,7 @@ public class Spike extends Entity {
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(hitBox.getTranslateX());
         canvas.setTranslateY(hitBox.getTranslateY());
-        Image sprite = CutSpriteSheet.getSprite(Constants.EntityType.SPIKE,Constants.getSpikePosition(index)[0], Constants.getSpikePosition(index)[1]);
+        Image sprite = CutSpriteSheet.getSprite(Constants.EntityType.SPIKE, Assets.getSpikePosition(index)[0], Assets.getSpikePosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -39,7 +40,7 @@ public class Spike extends Entity {
     }
 
     public void playerDead(){
-        Image sprite = CutSpriteSheet.getSprite(Constants.EntityType.SPIKE,Constants.getSpikePosition(index)[0] - 4, Constants.getSpikePosition(index)[1]);
+        Image sprite = CutSpriteSheet.getSprite(Constants.EntityType.SPIKE, Assets.getSpikePosition(index)[0] - 4, Assets.getSpikePosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
