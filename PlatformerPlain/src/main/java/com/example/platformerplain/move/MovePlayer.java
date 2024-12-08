@@ -81,14 +81,14 @@ public class MovePlayer {
                 playerVelocity.reduce(RESISTANCE, RESISTANCE);
         } else {
             // Jump
-            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall));
+            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall, playerVelocity));
             // Slide jump
-            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, canDash, false));
+            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, canDash, false, playerVelocity));
             // Move left and right commands
             PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
             PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
 
-            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState == MoveState.IDLE) {
+            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState != MoveState.DASHING) {
                 jump.execute();
                 haveJKeyReleased = false;
             }
@@ -154,11 +154,11 @@ public class MovePlayer {
             }
         }
 
-        MoveStatus moveStatus = new MoveStatus(playerState,moveLeft, onGround, canDash, onWall);
-        Move.move(player, playerVelocity, moveStatus);
+        MoveStatus moveStatus = new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
+        Move.move(player, moveStatus);
 
         playerState = moveStatus.moveState;
-        moveLeft = moveStatus.moveLeft;
+        moveLeft = moveStatus.faceLeft;
         onGround = moveStatus.canJump;
         canDash = moveStatus.canDash;
         onWall = moveStatus.canSlideJump;
@@ -180,16 +180,17 @@ public class MovePlayer {
     }
 
     private void checkFall() {
-        if (player.hitBox().getTranslateY() > Constants.TILE_SIZE * LevelData.getLevelInformation.getLevelHeight() + 50)
+        //test
+        if (player.hitBox().getTranslateY() > LevelData.getLevelInformation.getLevelHeight() + 50)
             Die();
     }
 
     private void checkEnemy() {
         for (Enemy enemy : enemies) {
-            if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent())) {
-                if (player.hitBox().getTranslateY() + player.hitBox().getBoundsInParent().getHeight() <= enemy.hitBox().getTranslateY() + 10) {
+            if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent()) && !enemy.isDead) {
+                if (getMoveStatus().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
                     enemy.isDead = true;
-                    playerVelocity.add(0, -20);
+                    playerVelocity.set(0, -15);
                     // test
                     System.out.println("enemy killed");
                 } else Die();
@@ -219,6 +220,6 @@ public class MovePlayer {
     }
 
     public MoveStatus getMoveStatus() {
-        return new MoveStatus(playerState, moveLeft, onGround, canDash, onWall);
+        return new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
     }
 }

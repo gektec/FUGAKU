@@ -5,6 +5,7 @@ import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.move.MoveEnemy;
+import com.example.platformerplain.move.MoveStatus;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +21,7 @@ public class Enemy extends Entity {
     private Canvas canvas;
     private GraphicsContext gc;
     public boolean isDead;
-    boolean deathAnimationSet = false;
+    private boolean deathAnimationSet = false;
     private MoveEnemy moveEnemyLogic;
 
     protected boolean isAnimated(){
@@ -64,6 +65,7 @@ public class Enemy extends Entity {
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
             moveEnemyLogic.update();
+
         }
     }
 
@@ -89,5 +91,9 @@ public class Enemy extends Entity {
     @Override
     public Constants.EntityType getType() {
         return Constants.EntityType.ENEMY;
+    }
+
+    public MoveStatus getMoveStatus() {
+        return moveEnemyLogic.getMoveStatus();
     }
 }

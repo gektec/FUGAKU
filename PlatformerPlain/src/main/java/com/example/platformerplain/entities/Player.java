@@ -52,6 +52,8 @@ public class Player extends Entity {
                 }
                 break;
             case MoveState.SLIDING:
+                if(Main.getInstance().movePlayerLogic.getMoveStatus().faceLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
+                else canvas.setTranslateX(canvas.getTranslateX()-20);
                 if (lastState != MoveState.SLIDING) {
                     frames = Assets.PLAYER_SLIDING[0];
                     animation.setFrames(frames);
@@ -67,10 +69,26 @@ public class Player extends Entity {
                     lastState = MoveState.RUNNING;
                 }
                 break;
+            case MoveState.JUMPING:
+                if (lastState != MoveState.JUMPING) {
+                    frames = Assets.PLAYER_JUMP_START[0];
+                    animation.setFrames(frames);
+                    animation.setDelay(10);
+                    lastState = MoveState.JUMPING;
+                }
+                break;
+            case MoveState.FALLING:
+                if (lastState != MoveState.FALLING) {
+                    frames = Assets.PLAYER_JUMP_FALL[0];
+                    animation.setFrames(frames);
+                    animation.setDelay(10);
+                    lastState = MoveState.FALLING;
+                }
+                break;
         }
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage(Main.getInstance().movePlayerLogic.getMoveStatus().moveLeft);
+        Image sprite = animation.getImage(Main.getInstance().movePlayerLogic.getMoveStatus().faceLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }

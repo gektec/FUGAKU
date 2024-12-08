@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Move {
     private static ArrayList<Entity> collidableMap;
+    private static Coord2D velocity;
 
     public Move(ArrayList<Entity> collidableMap) {
         Move.collidableMap = collidableMap;
@@ -37,15 +38,16 @@ public class Move {
     }
 
     //todo: restrict max speed to avoid clipping through walls
-    public static void move(Entity moveable, Coord2D velocity, MoveStatus moveStatus) {
+    public static void move(Entity moveable, MoveStatus moveStatus) {
         boolean isTouchingGround = false;
         boolean isTouchingWall = false;
         moveStatus.canJump = false;
+        velocity = moveStatus.velocity;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
-            if (velocity.getX() > 0) moveStatus.moveLeft = false;
-            else if(velocity.getX() < 0) moveStatus.moveLeft = true;
+            if (velocity.getX() > 0) moveStatus.faceLeft = false;
+            else if(velocity.getX() < 0) moveStatus.faceLeft = true;
             for (Entity platform : collidableMap) {
                 //Next line may not improve performance
                 //if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {
@@ -67,6 +69,7 @@ public class Move {
                                 velocity.setX(-Constants.SLIDE_JUMP_SPEED);
                                 moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                             } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                                moveStatus.faceLeft = true;
                                 moveStatus.moveState = MoveState.SLIDING;
                                 velocity.setY(Constants.SLIDE_WALL_SPEED);
                             }
@@ -78,6 +81,7 @@ public class Move {
                                 velocity.setX(Constants.SLIDE_JUMP_SPEED);
                                 moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                             } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                                moveStatus.faceLeft = false;
                                 moveStatus.moveState = MoveState.SLIDING;
                                 velocity.setY(Constants.SLIDE_WALL_SPEED);
                             }
@@ -93,7 +97,15 @@ public class Move {
                     moveStatus.moveState = MoveState.IDLE;
                 }
                 if (isTouchingGround && isTouchingWall) {
-                    moveStatus.moveState = MoveState.IDLE;
+                    if (moveStatus.moveState == MoveState.SLIDING) {
+                        moveStatus.moveState = MoveState.IDLE;
+                    }
+                }
+                if (!isTouchingWall && velocity.getY() > 0) {
+                    moveStatus.moveState = MoveState.FALLING;
+                }
+                else if(!isTouchingWall && velocity.getY() < 0){
+                    moveStatus.moveState = MoveState.JUMPING;
                 }
             }
         //}

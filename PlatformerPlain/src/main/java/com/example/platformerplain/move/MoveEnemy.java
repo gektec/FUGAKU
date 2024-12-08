@@ -12,6 +12,7 @@ import static com.example.platformerplain.Constants.RESISTANCE;
 public class MoveEnemy {
     private Enemy enemy;
     private ArrayList<Entity> entityMap;
+    private boolean moveLeft;
     private boolean canJump;
     //private int levelWidth;
     private Coord2D velocity;
@@ -45,12 +46,16 @@ public class MoveEnemy {
             velocity.add(0, -20);
             canJump = false;
         }
-        MoveStatus moveStatus = new MoveStatus(enemyState, false,false, false, false);
-        Move.move(enemy, velocity, moveStatus);
+        MoveStatus moveStatus = new MoveStatus(enemyState, false,false, false, false, velocity);
+        Move.move(enemy, moveStatus);
+
+        moveLeft = moveStatus.faceLeft;
         canJump = moveStatus.canJump;
 
 //        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
 //        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
-
+    }
+    public MoveStatus getMoveStatus() {
+        return new MoveStatus(enemyState, moveLeft, canJump, false, false, velocity);
     }
 }
