@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Assets {
+
+    public static final Image MENU_BACKGROUND = load("/images/backgrounds/Background.png",320,180,5)[0][0];
+
     public static final Image BACKGROUND_SKY = load("/images/backgrounds/Sky.png");
     public static final Image BACKGROUND_CLOUD_1 = load("/images/backgrounds/Cloud 1.png");
     public static final Image BACKGROUND_CLOUD_2 = load("/images/backgrounds/Cloud 2.png");

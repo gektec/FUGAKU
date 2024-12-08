@@ -45,7 +45,7 @@ public class MoveEnemy {
             velocity.add(0, -20);
             canJump = false;
         }
-        MoveStatus moveStatus = new MoveStatus(enemyState, false, false, false);
+        MoveStatus moveStatus = new MoveStatus(enemyState, false,false, false, false);
         Move.move(enemy, velocity, moveStatus);
         canJump = moveStatus.canJump;
 

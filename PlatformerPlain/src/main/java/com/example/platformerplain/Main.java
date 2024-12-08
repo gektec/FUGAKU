@@ -13,6 +13,7 @@ import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -98,6 +99,9 @@ public class Main extends Application {
         startLevel();
         primaryStage.setScene(gameScene);
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        for (Node background : backgroundRoot.getChildren()) {
+            background.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        }
         //todo: set background layout
         startGameLoop();
     }
@@ -164,8 +168,8 @@ public class Main extends Application {
 
         Image background0 = Assets.BACKGROUND_SKY;
         ImageView backgroundSky = new ImageView(background0);
-        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH);
-        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT);
+        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH*5);
+        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT*5);
 
         Image background1 = Assets.BACKGROUND_CLOUD_1;
         ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1,2));

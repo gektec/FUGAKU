@@ -39,6 +39,8 @@ public class Player extends Entity {
     @Override
     public void update() {
         Main.getInstance().movePlayerLogic.update();
+        //test
+        System.out.println(Main.getInstance().movePlayerLogic.getPlayerState());
         canvas.setTranslateY(hitBox.getTranslateY()-130);
         switch (Main.getInstance().movePlayerLogic.getPlayerState()) {
             case MoveState.IDLE:
@@ -57,10 +59,18 @@ public class Player extends Entity {
                     lastState = MoveState.SLIDING;
                 }
                 break;
+            case MoveState.RUNNING:
+                if (lastState != MoveState.RUNNING) {
+                    frames = Assets.PLAYER_RUN[0];
+                    animation.setFrames(frames);
+                    animation.setDelay(10);
+                    lastState = MoveState.RUNNING;
+                }
+                break;
         }
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage();
+        Image sprite = animation.getImage(Main.getInstance().movePlayerLogic.getMoveStatus().moveLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }

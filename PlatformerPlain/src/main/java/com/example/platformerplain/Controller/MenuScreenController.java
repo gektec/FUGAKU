@@ -1,5 +1,6 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -39,7 +40,7 @@ public class MenuScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         // Load background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/backgrounds/Menu.png"));
+        Image backgroundImage = Assets.MENU_BACKGROUND;
 
         // Create a BackgroundImage object, ensuring the image adapts proportionally to the VBox size
         BackgroundImage background = new BackgroundImage(
