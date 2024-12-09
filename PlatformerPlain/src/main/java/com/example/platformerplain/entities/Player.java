@@ -65,7 +65,7 @@ public class Player extends Entity {
                 if (lastState != MoveState.RUNNING) {
                     frames = Assets.PLAYER_RUN[0];
                     animation.setFrames(frames);
-                    animation.setDelay(10);
+                    animation.setDelay(5);
                     lastState = MoveState.RUNNING;
                 }
                 break;
@@ -73,7 +73,7 @@ public class Player extends Entity {
                 if (lastState != MoveState.JUMPING) {
                     frames = Assets.PLAYER_JUMP_START[0];
                     animation.setFrames(frames);
-                    animation.setDelay(10);
+                    animation.setDelay(2);
                     lastState = MoveState.JUMPING;
                 }
                 break;
@@ -81,7 +81,7 @@ public class Player extends Entity {
                 if (lastState != MoveState.FALLING) {
                     frames = Assets.PLAYER_JUMP_FALL[0];
                     animation.setFrames(frames);
-                    animation.setDelay(10);
+                    animation.setDelay(5);
                     lastState = MoveState.FALLING;
                 }
                 break;

@@ -9,12 +9,16 @@ import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
+import com.example.platformerplain.move.MoveState;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -28,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,11 +59,23 @@ public class Main extends Application {
     private Move move;
     private Scene gameScene;
 
-    private static long startTime;
+    //Debug
+
+    private boolean isDebugMode = false;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
     private int frameCount = 0;
+
+    private Label moveStateLabel = new Label();
+
+    private Label playerSpeedLabel = new Label();
+
+    private LineChart<Number, Number> speedChart;
+    private XYChart.Series<Number, Number> speedSeries;
+    private int timeStep = 0;
+
+    //Main
 
     static int currentLevel = 0;
 
@@ -79,7 +96,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        startTime = System.currentTimeMillis();
         instance = this;
 
         // Initialize ScreenManager
@@ -91,6 +107,7 @@ public class Main extends Application {
         primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
         primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
         primaryStage.setResizable(false);
+
     }
 
     public void startGame(Stage primaryStage) {
@@ -110,7 +127,9 @@ public class Main extends Application {
     private void startGameLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             update();
-            updateFramerate();
+
+            if(isDebugMode) updateLables();
+
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
         });
@@ -129,6 +148,12 @@ public class Main extends Application {
         }
     }
 
+    private void updateLables() {
+        updateFramerate();
+        updatePlayerSpeed();
+        updateMoveState();
+    }
+
     private void updateFramerate() {
         long currentTime = System.nanoTime();
         if (currentTime - lastTime >= 1_000_000_000) {
@@ -139,16 +164,70 @@ public class Main extends Application {
         frameCount++;
     }
 
+    private void updateMoveState() {
+        MoveState moveState = movePlayerLogic.getMoveStatus().moveState;
+        moveStateLabel.setText("Move State: " + moveState);
+    }
+
+    private void updatePlayerSpeed() {
+        int[] speed = movePlayerLogic.getMoveStatus().velocity.get();
+        playerSpeedLabel.setText("Speed: " + Arrays.toString(speed));
+        speedSeries.getData().add(new XYChart.Data<>(timeStep++, Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1])));
+
+        // Keep only the last 50 data points
+        if (speedSeries.getData().size() > 50) {
+            speedSeries.getData().remove(0);
+        }
+
+        // Update x-axis bounds
+        NumberAxis xAxis = (NumberAxis) speedChart.getXAxis();
+        NumberAxis yAxis = (NumberAxis) speedChart.getYAxis();
+        xAxis.setAutoRanging(false);
+        yAxis.setAutoRanging(false);
+        xAxis.setLowerBound(timeStep - 50);
+        xAxis.setUpperBound(timeStep);
+        yAxis.setUpperBound(32);
+    }
+
     private void initContent() {
-        framerateLabel.setTextFill(Color.WHITE);
-        framerateLabel.setFont(new Font(18));
-        framerateLabel.setTranslateX(10);
-        framerateLabel.setTranslateY(10);
+
+        if(isDebugMode) {
+
+            framerateLabel.setTextFill(Color.WHITE);
+            framerateLabel.setFont(new Font(18));
+            framerateLabel.setTranslateX(10);
+            framerateLabel.setTranslateY(10);
+
+            playerSpeedLabel.setTextFill(Color.WHITE);
+            playerSpeedLabel.setFont(new Font(18));
+            playerSpeedLabel.setTranslateX(10);
+            playerSpeedLabel.setTranslateY(30);
+
+            moveStateLabel.setTextFill(Color.WHITE);
+            moveStateLabel.setFont(new Font(18));
+            moveStateLabel.setTranslateX(10);
+            moveStateLabel.setTranslateY(50);
+
+            NumberAxis xAxis = new NumberAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel("Time");
+            yAxis.setLabel("Speed");
+
+            speedChart = new LineChart<>(xAxis, yAxis);
+            speedChart.setTitle("Player Speed Over Time");
+            speedSeries = new XYChart.Series<>();
+            speedChart.getData().add(speedSeries);
+            speedChart.setTranslateX(10);
+            speedChart.setTranslateY(70);
+            speedChart.setPrefSize(400, 300);
+
+        }
+
 
         // Add a Pause Button
         pauseMenu.setTextFill(Color.BLACK);
         pauseMenu.setFont(new Font(18));
-        pauseMenu.setTranslateX(10); // Adjust position as needed
+        pauseMenu.setTranslateX(Constants.BACKGROUND_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
 
@@ -299,7 +378,13 @@ public class Main extends Application {
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
 
-        uiRoot.getChildren().addAll(framerateLabel, pauseMenu);
+        uiRoot.getChildren().add(pauseMenu);
+        if (isDebugMode) {
+            uiRoot.getChildren().add(framerateLabel);
+            uiRoot.getChildren().add(playerSpeedLabel);
+            uiRoot.getChildren().add(speedChart);
+            uiRoot.getChildren().add(moveStateLabel);
+        }
     }
 
     private int calculateAdjacencyCode(String[] level, int i, int j, char target) {
@@ -378,4 +463,13 @@ public class Main extends Application {
         gameRoot.getChildren().add(entity.canvas());
         return entity;
     }
+
+    public boolean getDebugMode() {
+        return isDebugMode;
+    }
+
+    public void setDebugMode(boolean b) {
+        isDebugMode = b;
+    }
+
 }

@@ -5,6 +5,7 @@ import com.example.platformerplain.Main;
 import com.example.platformerplain.Screen.LevelSelectScreen;
 import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class MenuScreenController {
     private VBox root;  // VBox in the FXML file
 
     @FXML
-    private Button startButton;
+    private Button debugButton;
 
     private Stage primaryStage;
     private MediaPlayer mediaPlayer; // 添加 MediaPlayer
@@ -67,6 +68,8 @@ public class MenuScreenController {
 
         // Play background music
         mediaPlayer.play();
+
+        updateDebugButtonText();
 
     }
 
@@ -122,5 +125,21 @@ public class MenuScreenController {
         // Call Platform.exit() to close the application
         Platform.exit();
         System.exit(0);
+    }
+
+    @FXML
+    public void handleDebugMode(ActionEvent actionEvent) {
+        Main mainInstance = Main.getInstance();
+        mainInstance.setDebugMode(!mainInstance.getDebugMode());
+        updateDebugButtonText();
+    }
+
+    @FXML
+    private void updateDebugButtonText() {
+        if (Main.getInstance().getDebugMode()) {
+            debugButton.setText("Debug Mode: ON");
+        } else {
+            debugButton.setText("Debug Mode: OFF");
+        }
     }
 }
