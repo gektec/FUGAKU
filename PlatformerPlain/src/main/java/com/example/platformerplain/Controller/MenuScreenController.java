@@ -30,7 +30,7 @@ public class MenuScreenController {
     public Button helpButton;
     public Button exitButton;
     private VBox root;  // VBox in the FXML file
-    private Button debugButton;
+    public Button debugButton;
     private Stage primaryStage;
 
     /**
@@ -49,24 +49,25 @@ public class MenuScreenController {
     private void initialize() throws URISyntaxException {
         //loadBackgroundImage();
         playBackgroundMusic();
+        updateDebugButtonText();
     }
 
     /**
      * Sets the background image of the root VBox.
      */
-//    private void loadBackgroundImage() {
-//        Image backgroundImage = Assets.MENU_BACKGROUND;
-//
-//        BackgroundImage background = new BackgroundImage(
-//                backgroundImage,
-//                BackgroundRepeat.NO_REPEAT,
-//                BackgroundRepeat.NO_REPEAT,
-//                BackgroundPosition.CENTER,
-//                new BackgroundSize(200, 150,
-//                        false, false, true, true));
-//
-//        root.setBackground(new Background(background));
-//    }
+    private void loadBackgroundImage() {
+        Image backgroundImage = Assets.MENU_BACKGROUND;
+
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(200, 150,
+                        false, false, true, true));
+
+        root.setBackground(new Background(background));
+    }
 
     /**
      * Loads and plays the background music indefinitely.

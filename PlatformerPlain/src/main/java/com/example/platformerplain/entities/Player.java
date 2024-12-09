@@ -39,8 +39,6 @@ public class Player extends Entity {
     @Override
     public void update() {
         Main.getInstance().movePlayerLogic.update();
-        //test
-        System.out.println(Main.getInstance().movePlayerLogic.getPlayerState());
         canvas.setTranslateY(hitBox.getTranslateY()-130);
         switch (Main.getInstance().movePlayerLogic.getPlayerState()) {
             case MoveState.IDLE:
