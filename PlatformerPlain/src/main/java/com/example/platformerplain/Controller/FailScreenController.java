@@ -43,6 +43,11 @@ public class FailScreenController {
      */
     @FXML
     private void initialize() throws URISyntaxException {
+        loadBackgroundImage();
+        playBackgroundMusic();
+    }
+
+    private void loadBackgroundImage() {
         // Load the background image
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Defeat.png")));
 
@@ -60,6 +65,13 @@ public class FailScreenController {
 
         // Apply the background to the GridPane
         root.setBackground(new Background(background));
+    }
+
+    /**
+     * Loads and plays the background music indefinitely.
+     * @throws URISyntaxException if there is an issue retrieving the URI of the music file
+     */
+    private void playBackgroundMusic() throws URISyntaxException {
 
         // Load the fail sound effect
         String failSoundFile = "/sounds/defeat.mp3"; // Verify the file path is correct
