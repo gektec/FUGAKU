@@ -12,6 +12,7 @@ import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.move.MoveState;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -476,4 +477,7 @@ public class Main extends Application {
         isDebugMode = b;
     }
 
+    public Pane getGameRoot() {
+        return gameRoot;
+    }
 }

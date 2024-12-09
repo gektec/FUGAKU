@@ -109,10 +109,10 @@ public class Move {
                         moveStatus.moveState = MoveState.IDLE;
                     }
                 }
-                if (!isTouchingWall && velocity.getY() > 0) {
+                if (!isTouchingWall && velocity.getY() > 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.JUMPING)) {
                     moveStatus.moveState = MoveState.FALLING;
                 }
-                else if(!isTouchingWall && velocity.getY() < 0){
+                else if(!isTouchingWall && velocity.getY() < 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.RUNNING)) {
                     moveStatus.moveState = MoveState.JUMPING;
                 }
             }

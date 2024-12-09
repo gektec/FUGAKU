@@ -134,11 +134,11 @@ public class MovePlayer {
             }
             // Resistance
             playerVelocity.reduce(RESISTANCE, 0);
-        }
 
-        // apply gravity when not dashing
-        if (playerVelocity.getY() < MAX_FALL_SPEED) {
-            playerVelocity.add(0, Constants.GRAVITY);
+            // apply gravity when not dashing
+            if (playerVelocity.getY() < MAX_FALL_SPEED) {
+                playerVelocity.add(0, Constants.GRAVITY);
+            }
         }
 
         for (Ladder ladder : ladders) {
