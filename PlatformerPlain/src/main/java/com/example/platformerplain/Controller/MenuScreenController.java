@@ -10,13 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -29,6 +24,7 @@ public class MenuScreenController {
     public Button startButton;
     public Button helpButton;
     public Button exitButton;
+    @FXML
     private VBox root;  // VBox in the FXML file
     public Button debugButton;
     private Stage primaryStage;
@@ -48,6 +44,7 @@ public class MenuScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         //loadBackgroundImage();
+        loadBackgroundImage();
         playBackgroundMusic();
         updateDebugButtonText();
     }
@@ -74,6 +71,7 @@ public class MenuScreenController {
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() throws URISyntaxException {
+
         String backgroundMusicFile = "/sounds/victory.mp3"; // Ensure this is the correct path
         Media backgroundMusic = new Media(Objects.requireNonNull(getClass().getResource(backgroundMusicFile)).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(backgroundMusic);
