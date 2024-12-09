@@ -7,8 +7,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the main menu screen of the game.
+ */
 public class MenuScreen implements Screen {
 
+    /**
+     * Loads and displays the main menu screen on the specified stage.
+     * @param primaryStage The stage to display the main menu screen on.
+     */
     @Override
     public void show(Stage primaryStage) {
         try {
