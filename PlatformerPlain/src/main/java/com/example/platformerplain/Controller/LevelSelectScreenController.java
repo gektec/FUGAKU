@@ -37,6 +37,10 @@ public class LevelSelectScreenController {
      */
     @FXML
     private void initialize() {
+        loadBackgroundImage();
+    }
+
+    private void loadBackgroundImage() {
         // Load the background image from resources
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Moon.png")));
 

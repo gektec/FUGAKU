@@ -44,6 +44,10 @@ public class TransitionScreenController {
      */
     @FXML
     private void initialize() throws URISyntaxException {
+        loadBackgroundImage();
+        playBackgroundMusic();
+    }
+    private void loadBackgroundImage() {
         // Load background image
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Victory.png")));
 
@@ -61,7 +65,9 @@ public class TransitionScreenController {
 
         // Set the GridPane background
         root.setBackground(new Background(background));
+    }
 
+    private void playBackgroundMusic() throws URISyntaxException {
         // Load the victory sound
         String victorySoundFile = "/sounds/victory.mp3"; // Ensure path correctness
         Media victorySound = new Media(Objects.requireNonNull(getClass().getResource(victorySoundFile)).toURI().toString());

@@ -15,10 +15,14 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.net.URISyntaxException;
 import java.util.Objects;
 
+/**
+ * This class serves as the controller for the Menu Screen in the game.
+ * It manages the initialization and configuration of UI components,
+ * including setting the background image and handling different buttons.
+ */
 public class MenuScreenController {
 
     public Button startButton;
@@ -71,7 +75,6 @@ public class MenuScreenController {
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() throws URISyntaxException {
-
         String backgroundMusicFile = "/sounds/victory.mp3"; // Ensure this is the correct path
         Media backgroundMusic = new Media(Objects.requireNonNull(getClass().getResource(backgroundMusicFile)).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(backgroundMusic);

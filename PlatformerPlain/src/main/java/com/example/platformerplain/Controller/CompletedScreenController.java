@@ -43,6 +43,11 @@ public class CompletedScreenController {
      */
     @FXML
     private void initialize() throws URISyntaxException {
+        loadBackgroundImage();
+        playBackgroundMusic();
+    }
+
+    private void loadBackgroundImage() {
         // Load the background image
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Completed.png")));
 
@@ -60,7 +65,9 @@ public class CompletedScreenController {
 
         // Apply the background to the GridPane
         root.setBackground(new Background(background));
+    }
 
+    private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
         String completedSoundFile = "/sounds/completed.mp3"; // Verify the file path is correct
         Media completedSound = new Media(Objects.requireNonNull(getClass().getResource(completedSoundFile)).toURI().toString());
