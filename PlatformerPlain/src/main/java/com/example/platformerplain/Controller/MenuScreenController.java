@@ -1,6 +1,7 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Assets;
+import com.example.platformerplain.Main;
 import com.example.platformerplain.Screen.LevelSelectScreen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class MenuScreenController {
 
@@ -29,6 +31,7 @@ public class MenuScreenController {
     public Button exitButton;
     private VBox root;  // VBox in the FXML file
     private Button debugButton;
+    private Stage primaryStage;
 
     /**
      * Assigns the primary stage to this controller.
@@ -44,26 +47,26 @@ public class MenuScreenController {
      */
     @FXML
     private void initialize() throws URISyntaxException {
-        loadBackgroundImage();
+        //loadBackgroundImage();
         playBackgroundMusic();
     }
 
     /**
      * Sets the background image of the root VBox.
      */
-    private void loadBackgroundImage() {
-        Image backgroundImage = Assets.MENU_BACKGROUND;
-
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(200, 150,
-                        false, false, true, true));
-
-        root.setBackground(new Background(background));
-    }
+//    private void loadBackgroundImage() {
+//        Image backgroundImage = Assets.MENU_BACKGROUND;
+//
+//        BackgroundImage background = new BackgroundImage(
+//                backgroundImage,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundPosition.CENTER,
+//                new BackgroundSize(200, 150,
+//                        false, false, true, true));
+//
+//        root.setBackground(new Background(background));
+//    }
 
     /**
      * Loads and plays the background music indefinitely.
