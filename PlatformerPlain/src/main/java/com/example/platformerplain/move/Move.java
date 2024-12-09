@@ -1,6 +1,8 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.LevelData;
+import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Entity;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class Move {
         //test
         int totalSize = moveable.size()[0] + collidable.size()[0];
 
-        if (xDiff > totalSize/2 - 6 || yDiff > totalSize/2 - 6) {
+        if (Math.abs(xDiff) > totalSize/2 - 5 && Math.abs(yDiff) > totalSize/2 - 5) {
             return -1;
         }
         //
@@ -51,6 +53,8 @@ public class Move {
         boolean isTouchingWall = false;
         moveStatus.canJump = false;
         velocity = moveStatus.velocity;
+        if((moveable.hitBox().getTranslateX() <= 0 && velocity.getX() < 0 ) || ( moveable.hitBox().getTranslateX() >= LevelData.getLevelInformation.getLevelWidth() - moveable.size()[0] && velocity.getX() > 0 ))
+            velocity.setX(0);
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
@@ -65,8 +69,10 @@ public class Move {
                             isTouchingGround = true;
                             moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                             velocity.setY(0);
-                            if(velocity.getX() != 0) moveStatus.moveState = MoveState.RUNNING;
-                            else moveStatus.moveState = MoveState.IDLE;
+                            if(moveStatus.moveState != MoveState.DASHING) {
+                                if(velocity.getX() != 0) moveStatus.moveState = MoveState.RUNNING;
+                                else moveStatus.moveState = MoveState.IDLE;
+                            }
                             moveStatus.canJump = true;
                             moveStatus.canDash = true;
                         } else if (relativeLocation == 2) {

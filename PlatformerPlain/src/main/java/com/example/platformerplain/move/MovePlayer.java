@@ -40,7 +40,7 @@ public class MovePlayer {
     private Timeline dashCooldownTimer;
     private Timeline slideJumpCooldownTimer;
     private boolean haveJKeyReleased = true;
-    private boolean isPlayerDead = false;
+    private boolean haveKKeyReleased = true;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
         this.player = player;
@@ -72,6 +72,9 @@ public class MovePlayer {
         }
         if (!onGround && !onWall) {
             haveJKeyReleased = false;
+        }
+        if (!isPressed(KeyCode.K)) {
+            haveKKeyReleased = true;
         }
 
         if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
@@ -109,7 +112,8 @@ public class MovePlayer {
             }
 
             // Dash
-            if (canDash && isPressed(KeyCode.K)) {
+            if (canDash && isPressed(KeyCode.K) && haveKKeyReleased) {
+                haveKKeyReleased = false;
                 if (isPressed(KeyCode.A)) {
                     x -= Constants.DASH_SPEED;
                 }

@@ -23,6 +23,7 @@ public class Assets {
     public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
     public static final Image[][] PLAYER_IDLE = load("/images/characters/player/Player_Idle.png", 96, 96, 3);
     public static final Image[][] PLAYER_RUN = load("/images/characters/player/Player_Run.png", 96, 96, 3);
+    public static final Image[][] PLAYER_DASH = load("/images/characters/player/Player_Dash.png", 96, 96, 3);
     public static final Image[][] PLAYER_JUMP_START = load("/images/characters/player/Player_Jump_Start.png", 96, 96, 3);
     public static final Image[][] PLAYER_JUMP_FALL = load("/images/characters/player/Player_Jump_Fall.png", 96, 96, 3);
     public static final Image[][] PLAYER_SLIDING = load("/images/characters/player/Player_Wall_Slide.png", 96, 96, 3);
