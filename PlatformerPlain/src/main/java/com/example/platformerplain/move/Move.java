@@ -20,6 +20,14 @@ public class Move {
         int xDiff = moveableCoord.getX() - platformCoord.getX();
         int yDiff = moveableCoord.getY() - platformCoord.getY();
 
+        //test
+        int totalSize = moveable.size()[0] + collidable.size()[0];
+
+        if (xDiff > totalSize/2 - 6 || yDiff > totalSize/2 - 6) {
+            return -1;
+        }
+        //
+
         if (xDiff == yDiff || xDiff == -yDiff) {    //Diagonal collision
             return -1;
         } else if (yDiff < xDiff && yDiff < -xDiff) {
