@@ -4,16 +4,59 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER" prefHeight="477.0" prefWidth="722.0" spacing="20" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.platformerplain.Controller.MenuScreenController">
-    <!-- VBox to design background -->
-    <Text text="Welcome to Platformer Game!" />
+<VBox
+        fx:id="root"
+        alignment="CENTER"
+        prefHeight="477.0"
+        prefWidth="722.0"
+        spacing="20"
+        xmlns="http://javafx.com/javafx/22"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.platformerplain.Controller.MenuScreenController">
 
-    <!-- Start Game Button -->
-    <Button fx:id="startButton" onAction="#handleStartGame" prefHeight="34.0" prefWidth="108.0" style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white;" text="Start Game" />
+    <!--
+        Text element serving as a title or welcome message
+        for the game, displayed at the center of the VBox.
+    -->
+    <Text text="Welcome to Platformed Game!" />
 
-    <!-- Help Button -->
-    <Button fx:id="helpButton" onAction="#handleHelp" prefHeight="34.0" prefWidth="108.0" style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white;" text="Help" />
+    <!--
+        Button to initiate the game. This button triggers the
+        `handleStartGame` method when clicked, starting the game.
+    -->
+    <Button
+            fx:id="startButton"
+            onAction="#handleStartGame"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white;"
+            text="Start Game"
+    />
 
-    <!-- Exit Game Button -->
-    <Button fx:id="exitButton" onAction="#handleExitGame" prefHeight="34.0" prefWidth="108.0" style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white;" text="Exit Game" />
+    <!--
+        Help Button providing access to game instructions or assistance.
+        It calls the `handleHelp` method when pressed.
+    -->
+    <Button
+            fx:id="helpButton"
+            onAction="#handleHelp"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white;"
+            text="Help"
+    />
+
+    <!--
+        Exit Game Button for closing the game application.
+        Activates the `handleExitGame` method upon clicking.
+    -->
+    <Button
+            fx:id="exitButton"
+            onAction="#handleExitGame"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white;"
+            text="Exit Game"
+    />
+
 </VBox>
