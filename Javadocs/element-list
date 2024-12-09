@@ -1,0 +1,8 @@
+module:com.example.platformerplain
+com.example.platformerplain
+com.example.platformerplain.Controller
+com.example.platformerplain.entities
+com.example.platformerplain.move
+com.example.platformerplain.move.Command
+com.example.platformerplain.Screen
+com.example.platformerplain.texture
