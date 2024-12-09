@@ -100,7 +100,6 @@ public class Player extends Entity {
                     animation.setFrames(frames);
                     animation.setDelay(3);
                     lastState = MoveState.DASHING;
-                    System.out.println(lastAfterimageFrame);
                 }
                 break;
         }
