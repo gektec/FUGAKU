@@ -7,7 +7,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class LevelSelectScreen implements Screen{
+/**
+ * This class represents the screen where players can select the level they want to play.
+ */
+public class LevelSelectScreen implements Screen {
+
+    /**
+     * Loads and displays the level selection screen on the specified stage.
+     * @param primaryStage The stage to display the level selection screen on.
+     */
     @Override
     public void show(Stage primaryStage) {
         try {

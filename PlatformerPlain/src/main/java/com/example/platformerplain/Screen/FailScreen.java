@@ -7,8 +7,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class represents the screen that is shown to players when they fail a level.
+ */
 public class FailScreen implements Screen {
 
+    /**
+     * Loads and displays the fail screen on the specified stage.
+     * @param primaryStage The stage to display the fail screen on.
+     */
     @Override
     public void show(Stage primaryStage) {
         try {

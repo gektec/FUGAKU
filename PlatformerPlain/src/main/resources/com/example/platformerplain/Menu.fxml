@@ -10,12 +10,43 @@
 
     <Button fx:id="debugButton" onAction="#handleDebugMode" prefHeight="36.0" prefWidth="240.0" style="-fx-font-size: 16; -fx-background-color: #ad2222; -fx-text-fill: white;" text="Debug Mode" />
 
-    <!-- Start Game Button -->
-    <Button fx:id="startButton" onAction="#handleStartGame" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white;" text="Start Game" />
+    <!--
+        Button to initiate the game. This button triggers the
+        `handleStartGame` method when clicked, starting the game.
+    -->
+    <Button
+            fx:id="startButton"
+            onAction="#handleStartGame"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white;"
+            text="Start Game"
+    />
 
-    <!-- Help Button -->
-    <Button fx:id="helpButton" onAction="#handleHelp" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white;" text="Help" />
+    <!--
+        Help Button providing access to game instructions or assistance.
+        It calls the `handleHelp` method when pressed.
+    -->
+    <Button
+            fx:id="helpButton"
+            onAction="#handleHelp"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white;"
+            text="Help"
+    />
 
-    <!-- Exit Game Button -->
-    <Button fx:id="exitButton" onAction="#handleExitGame" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 16; -fx-background-color: #686868; -fx-text-fill: white;" text="Exit Game" />
+    <!--
+        Exit Game Button for closing the game application.
+        Activates the `handleExitGame` method upon clicking.
+    -->
+    <Button
+            fx:id="exitButton"
+            onAction="#handleExitGame"
+            prefHeight="34.0"
+            prefWidth="108.0"
+            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white;"
+            text="Exit Game"
+    />
+
 </VBox>

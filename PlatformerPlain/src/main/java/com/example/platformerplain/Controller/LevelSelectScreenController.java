@@ -1,56 +1,65 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
-import com.example.platformerplain.Screen.LevelSelectScreen;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import java.util.Objects;
 
-import java.net.URISyntaxException;
+/**
+ * This class serves as the controller for the Level Select Screen in the game.
+ * It manages the initialization and configuration of UI components.
+ * including setting the background image and buttons to select a level.
+ */
 
 public class LevelSelectScreenController {
 
+    public Button FirstLevel;
+    public Button SecondLevel;
     @FXML
-    private GridPane root;  // VBox in the FXML file
+    private GridPane root;  // Root layout for the Level Select screen
 
     @FXML
-    private Stage primaryStage;
-    private MediaPlayer mediaPlayer; // add MediaPlayer
+    private Stage primaryStage;  // Reference to the main application stage
 
-    // Set the primaryStage
+    /**
+     * Sets the primary stage for this controller.
+     *@param primaryStage The main stage to be used by this controller
+     */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    // Initialize method for loading the background image and playing the fail sound
+    /**
+     * Initializes the Level Select screen by loading the background image.
+     */
     @FXML
-    private void initialize() throws URISyntaxException {
-        // Load background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/images/backgrounds/Moon.png"));
+    private void initialize() {
+        // Load the background image from resources
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Moon.png")));
 
-        // Create a BackgroundImage object, ensuring the image adapts proportionally to the VBox size
+        // Set up the BackgroundImage to fit the GridPane
         BackgroundImage background = new BackgroundImage(
                 backgroundImage,
-                BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
-                BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
-                BackgroundPosition.CENTER,    // Center the image
-                new BackgroundSize(200, 150,  // Set custom width and height
-                        false,   // Do not stretch the width (set to true if you want to stretch)
-                        false,   // Do not stretch the height (set to true if you want to stretch)
-                        true,    // Preserve aspect ratio for the width
-                        true));  // Preserve aspect ratio for the height
+                BackgroundRepeat.NO_REPEAT,  // Don't repeat the image
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(200, 150,  // Define custom dimensions
+                        false,   // Don't stretch width
+                        false,   // Don't stretch height
+                        true,    // Keep aspect ratio for width
+                        true));  // Keep aspect ratio for height
 
-
-        // Set the VBox background
+        // Apply the generated background to the GridPane
         root.setBackground(new Background(background));
     }
 
-    // Handle the start game button click event
+    /**
+     * Triggered when the button to start the first level is clicked.
+     * It starts the game if the primary stage is defined.
+     */
     @FXML
     void handleFirstLevel() {
         if (primaryStage != null) {
@@ -60,9 +69,13 @@ public class LevelSelectScreenController {
         }
     }
 
+    /**
+     * Triggered when the button to start the second level is clicked.
+     * It retrieves the main instance and begins transitioning to the next level.
+     */
     @FXML
     private void handleSecondLevel() {
-        // Get an instance of Main and call the transitioning method
+        // Get the main instance and initiate level transition
         Main main = Main.getInstance();
         if (main != null) {
             main.startNextLevel();
