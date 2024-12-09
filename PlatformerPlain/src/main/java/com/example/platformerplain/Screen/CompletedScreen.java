@@ -7,8 +7,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class represents the screen that is shown to the players when they have completed all levels of the game.
+ */
 public class CompletedScreen implements Screen {
 
+    /**
+     * Loads and displays the completion screen on the specified stage.
+     * @param primaryStage The stage to display the completion screen on.
+     */
     @Override
     public void show(Stage primaryStage) {
         try {
@@ -19,7 +26,7 @@ public class CompletedScreen implements Screen {
             CompletedScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            primaryStage.setTitle("Congratulation!");
+            primaryStage.setTitle("Congratulations!");
             primaryStage.setScene(completedScene);
             primaryStage.show();
         } catch (Exception e) {

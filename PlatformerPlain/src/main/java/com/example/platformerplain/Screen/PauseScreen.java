@@ -6,29 +6,29 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
 
+/**
+ * This class controls the pause screen, allowing the game to be paused and resumed.
+ */
 public class PauseScreen implements Screen {
+
+    /**
+     * Loads and displays the pause screen, adding it to the current scene graph.
+     * @param primaryStage The stage to which the pause screen should be added.
+     */
     @Override
     public void show(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Pause.fxml"));
             Parent pauseScreen = loader.load();
 
-            // set PauseScreenController
             PauseScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            // Add the pause interface to the root layout instead of replacing the entire scene
             Pane root = (Pane) primaryStage.getScene().getRoot();
             root.getChildren().add(pauseScreen);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void removePauseScreen(StackPane root) {
-        // 可以使用此方法在需要的时候移除暂停菜单
-        root.getChildren().removeIf(node -> node instanceof Parent);  // 这里可以根据需要指定具体类型
     }
 }
