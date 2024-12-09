@@ -19,6 +19,7 @@ public class Assets {
     public static final Image BACKGROUND_CLOUD_2 = load("/images/backgrounds/Cloud 2.png");
     public static final Image BACKGROUND_CLOUD_3 = load("/images/backgrounds/Cloud 3.png");
     public static final Image BACKGROUND_MOON = load("/images/backgrounds/Moon.png");
+    public static final Image DECORATION = load("/images/objects/Props.png");
     public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
     public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
     public static final Image[][] PLAYER_IDLE = load("/images/characters/player/Player_Idle.png", 96, 96, 3);

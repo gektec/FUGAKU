@@ -89,8 +89,8 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public Constants.EntityType getType() {
-        return Constants.EntityType.ENEMY;
+    public EntityType getType() {
+        return EntityType.ENEMY;
     }
 
     public MoveStatus getMoveStatus() {

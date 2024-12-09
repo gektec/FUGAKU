@@ -146,7 +146,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public Constants.EntityType getType() {
-        return Constants.EntityType.PLAYER;
+    public EntityType getType() {
+        return EntityType.PLAYER;
     }
 }

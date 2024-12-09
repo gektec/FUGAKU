@@ -5,7 +5,7 @@ public class LevelData {
             {},
             {
                     "M00M000000000MMMMMMMMMMMMM000M",
-                    "00000000000000000000000000000M",
+                    "00000000000000DDDDDDDDDD00000M",
                     "M00M000000000MMMMMMMMMMMMM000M",
                     "0000000000000000E0E0000000000M",
                     "M00M000000000MMMMMMMMMMMMM000M",
@@ -16,7 +16,7 @@ public class LevelData {
                     "M00MMM0000H00000000000000M000M",
                     "M0PM0000MMM000000000000000000M",
                     "M000000000000MMM000s0E0000000M",
-                    "00000MMM00000000000SMM000MM00G",
+                    "00DDDMMM00000000000SMM000MM00G",
                     "MMMMMMMM00MMMM000MMMMM00MMMMMM"
             },
             {
@@ -30,22 +30,21 @@ public class LevelData {
                     "00000000000M00000000000000M0M",
                     "000000000M000000MMMM00MM0000M",
                     "P0000000000M0E00000E00M00000M",
-                    "00000000M00M0000000000M0000GM",
+                    "00000000M00M000DDDD000M0000GM",
                     "MMMMMMM0MMMMMMMMMMMMMMMMMMMMM"
             }
     };
 
     public static class getLevelInformation {
-        static int currentLevel = Main.currentLevel;
-        public static int getLevelInformation() {
-            return currentLevel;
+        public static int getLevelNumber() {
+            return Main.currentLevel;
         }
         public static int getLevelWidth() {
-            return Levels[currentLevel][0].length() * Constants.TILE_SIZE;
+            return Levels[Main.currentLevel][0].length() * Constants.TILE_SIZE;
         }
 
         public static int getLevelHeight() {
-            return Levels[currentLevel].length * Constants.TILE_SIZE;
+            return Levels[Main.currentLevel].length * Constants.TILE_SIZE;
         }
     }
 }

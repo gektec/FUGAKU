@@ -1,12 +1,11 @@
 package com.example.platformerplain.texture;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.Assets;
+import com.example.platformerplain.entities.EntityType;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class CutSpriteSheet {
@@ -18,13 +17,14 @@ public class CutSpriteSheet {
     //private static final Map<Integer, Image> spriteCache = new HashMap<>();
 
 
-    public static Image getSprite(Constants.EntityType type, int col, int row) {
-        if (type == Constants.EntityType.PLATFORM)  spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ground_Tiles.png")));
-        else if (type == Constants.EntityType.LADDER) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ladder.png")));
-        else if (type == Constants.EntityType.SPIKE) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Spikes.png")));
+    public static Image getSprite(EntityType type, int row, int col) {
+        if (type == EntityType.PLATFORM)  spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ground_Tiles.png")));
+        else if (type == EntityType.LADDER) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Ladder.png")));
+        else if (type == EntityType.SPIKE) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tiles/Spikes.png")));
+        else if (type == EntityType.DECORATION) spriteSheet = Assets.DECORATION;
         else throw new IllegalArgumentException("Unknown entity type: " + type);
         PixelReader reader = spriteSheet.getPixelReader();
-        WritableImage sprite = new WritableImage(reader, col * spriteWidth, row * spriteHeight, spriteWidth, spriteHeight);
+        WritableImage sprite = new WritableImage(reader, row * spriteWidth, col * spriteHeight, spriteWidth, spriteHeight);
         return sprite;
     }
 

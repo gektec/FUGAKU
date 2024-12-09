@@ -25,12 +25,5 @@ public class Constants {
     public static final int SLIDE_WALL_SPEED = 2;
     public static final int SLIDE_JUMP_SPEED = 15;
 
-    public enum EntityType {
-        PLATFORM,
-        GOAL,
-        PLAYER,
-        SPIKE, LADDER, ENEMY
-    }
-
 
 }

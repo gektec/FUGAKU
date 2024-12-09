@@ -1,6 +1,7 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
@@ -167,15 +168,15 @@ public class MovePlayer {
         canDash = moveStatus.canDash;
         onWall = moveStatus.canSlideJump;
 
-        checkGoalCollision();
+        checkGoal();
         checkEnemy();
         checkSpike();
         checkFall();
     }
 
-    private void checkGoalCollision() {
+    private void checkGoal() {
         for (Entity entity : entityMap) {
-            if (entity.getType() == Constants.EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
+            if (entity.getType() == EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
                 Main.getInstance().transitionToNextLevel();
                 return;

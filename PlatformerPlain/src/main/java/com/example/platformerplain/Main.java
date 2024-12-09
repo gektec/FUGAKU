@@ -12,7 +12,6 @@ import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.move.MoveState;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.KeyFrame;
-import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -62,7 +61,7 @@ public class Main extends Application {
 
     //Debug
 
-    private boolean isDebugMode = false;
+    private boolean isDebugMode = true;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
@@ -116,11 +115,6 @@ public class Main extends Application {
         initContent();
         startLevel();
         primaryStage.setScene(gameScene);
-        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
-        for (Node background : backgroundRoot.getChildren()) {
-            background.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
-        }
-        //todo: set background layout
         startGameLoop();
     }
 
@@ -176,7 +170,7 @@ public class Main extends Application {
         speedSeries.getData().add(new XYChart.Data<>(timeStep++, Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1])));
 
         // Keep only the last 50 data points
-        if (speedSeries.getData().size() > 50) {
+        if (speedSeries.getData().size() > 60) {
             speedSeries.getData().remove(0);
         }
 
@@ -185,7 +179,7 @@ public class Main extends Application {
         NumberAxis yAxis = (NumberAxis) speedChart.getYAxis();
         xAxis.setAutoRanging(false);
         yAxis.setAutoRanging(false);
-        xAxis.setLowerBound(timeStep - 50);
+        xAxis.setLowerBound(timeStep - 60);
         xAxis.setUpperBound(timeStep);
         yAxis.setUpperBound(32);
     }
@@ -277,6 +271,12 @@ public class Main extends Application {
         levelWidth = LevelData.getLevelInformation.getLevelWidth();
         levelHeight = LevelData.getLevelInformation.getLevelHeight();
 
+        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        gameRoot.setLayoutX(0);
+        for (Node background : backgroundRoot.getChildren()) {
+            background.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        }
+
 
         if (currentLevel == 1) {
             Text title = new Text("Try to get the goal");
@@ -304,12 +304,12 @@ public class Main extends Application {
                     case '0':
                         break;
                     case 'P':
-                        player = createEntity(Constants.EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, 0);
+                        player = createEntity(EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, 0);
                         movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
                         break;
                     case 'M':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'M');
-                        Entity platform = createEntity(Constants.EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        Entity platform = createEntity(EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         collidableMap.add(platform);
                         break;
                     case 'H':
@@ -320,26 +320,29 @@ public class Main extends Application {
                             adjacencyCode = 0;
                         }
                         else adjacencyCode = 3;
-                        Ladder ladder = (Ladder) createEntity(Constants.EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        Ladder ladder = (Ladder) createEntity(EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         ladderMap.add(ladder);
                         break;
                     case 'G':
-                        Entity goal = createEntity(Constants.EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
+                        Entity goal = createEntity(EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
                         collidableMap.add(goal);
                         break;
                     case 'E':
-                        Enemy enemy = (Enemy) createEntity(Constants.EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
+                        Enemy enemy = (Enemy) createEntity(EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
                         enemyMap.add(enemy);
                         break;
                     case 's':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'S');
-                        Spike spike = (Spike) createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        Spike spike = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         spikeMap.add(spike);
                         break;
                     case 'S':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;
-                        Spike spikeBody = (Spike) createEntity(Constants.EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        Spike spikeBody = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE + 2, i * Constants.TILE_SIZE + 2, Constants.TILE_SIZE - 4, Constants.TILE_SIZE - 4, adjacencyCode);
                         spikeMap.add(spikeBody);
+                        break;
+                    case 'D':
+                        createEntity(EntityType.DECORATION, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
                         break;
                 }
             }
@@ -347,7 +350,7 @@ public class Main extends Application {
 
         player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
-            if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - Constants.BACKGROUND_WIDTH / 2) {
+            if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - (Constants.BACKGROUND_WIDTH - Constants.PLAYER_SIZE) / 2) {
 
                 //todo: encapsulate this into a method
                 gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
@@ -418,8 +421,6 @@ public class Main extends Application {
         currentLevel = 2;
         startLevel();
         primaryStage.setScene(gameScene);
-        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
-        gameRoot.setLayoutX(0);
         startGameLoop();
     }
 
@@ -463,9 +464,15 @@ public class Main extends Application {
     }
 
 
-    private Entity createEntity(Constants.EntityType type, int x, int y, int w, int h, int index) {
+    private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
-        gameRoot.getChildren().add(entity.canvas());
+        if (type == EntityType.DECORATION) {
+            if (isDebugMode) gameRoot.getChildren().add(0, entity.hitBox());
+            else gameRoot.getChildren().add(0, entity.canvas());
+        } else {
+            if (isDebugMode) gameRoot.getChildren().add(entity.hitBox());
+            else gameRoot.getChildren().add(entity.canvas());
+        }
         return entity;
     }
 
