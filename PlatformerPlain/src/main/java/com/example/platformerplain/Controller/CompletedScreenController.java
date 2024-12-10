@@ -75,10 +75,8 @@ public class CompletedScreenController {
     private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
 
-        mediaPlayer = COMPLETE_SOUND;
-
         // Play the sound effect upon initialization
-        mediaPlayer.play();
+        COMPLETE_SOUND.play();
     }
 
     // Method to set score

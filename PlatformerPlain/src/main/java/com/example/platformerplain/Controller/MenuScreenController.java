@@ -77,9 +77,9 @@ public class MenuScreenController {
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() {
-        MediaPlayer mediaPlayer = BACKGROUND_MUSIC;
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
-        mediaPlayer.play(); // Start playing the music
+        //MediaPlayer mediaPlayer = BACKGROUND_MUSIC;
+       // mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
+        //mediaPlayer.play(); // Start playing the music
     }
 
     /**

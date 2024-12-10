@@ -6,6 +6,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -32,9 +33,11 @@ public class Assets {
     public static final Image[][] PLAYER_JUMP_FALL = loadImage("/images/characters/player/Player_Jump_Fall.png", 96, 96, 3);
     public static final Image[][] PLAYER_SLIDING = loadImage("/images/characters/player/Player_Wall_Slide.png", 96, 96, 3);
 
-    public static final MediaPlayer COMPLETE_SOUND = loadSound("/sounds/complete.mp3");
-    public static final MediaPlayer VICTORY_SOUND = loadSound("/sounds/victory.mp3");
-    public static final MediaPlayer BACKGROUND_MUSIC = loadSound("/sounds/victory.mp3"); // todo: replace
+    public static final GameMediaPlayer COMPLETE_SOUND = new GameMediaPlayer("/sounds/completed.mp3");
+    public static final GameMediaPlayer VICTORY_SOUND = new GameMediaPlayer("/sounds/victory.mp3");
+    public static final GameMediaPlayer BACKGROUND_MUSIC = new GameMediaPlayer("/sounds/victory.mp3"); // todo: replace
+    public static final GameMediaPlayer JUMP_SFX = new GameMediaPlayer("/sounds/Jump.wav");
+    public static final GameMediaPlayer DASH_SFX = new GameMediaPlayer("/sounds/Dash.wav");
 
 
     private static final Map<Integer, int[]> adjacencyCodePlatform;
@@ -73,13 +76,42 @@ public class Assets {
         adjacencyCodeSpike.put(18, new int[]{5, 1}); // Peak is on right
     }
 
+    public static class GameMediaPlayer {
+        private MediaPlayer mediaPlayer;
 
-    public static MediaPlayer loadSound(String s) {
+        public GameMediaPlayer(String mediaFile) {
+            Media media = loadSound(mediaFile);
+            this.mediaPlayer = new MediaPlayer(media);
+        }
+
+        public void play() {
+            if (mediaPlayer.getStatus() != MediaPlayer.Status.STOPPED) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.play();
+        }
+
+        public void cycle() {
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.play();
+                }
+            });
+        }
+
+        public void stopCycle() {
+            mediaPlayer.setOnEndOfMedia(null); // Remove the looping behavior
+        }
+    }
+
+    public static Media loadSound(String s) {
         try {
             String mediaPath = Objects.requireNonNull(
                     Assets.class.getResource(s)
             ).toURI().toString();
-            return new MediaPlayer(new Media(mediaPath));
+            return new Media(mediaPath);
         } catch (URISyntaxException e) {
             System.err.println("Error loading sound file: " + e.getMessage());
             return null;

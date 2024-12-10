@@ -74,10 +74,7 @@ public class TransitionScreenController {
 
     private void playBackgroundMusic(){
         // Load the victory sound
-        mediaPlayer = VICTORY_SOUND;
-
-        // Play the victory sound on initialization
-        mediaPlayer.play();
+        VICTORY_SOUND.play();
     }
 
 
