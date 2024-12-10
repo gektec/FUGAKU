@@ -1,4 +1,5 @@
-package com.example.platformerplain.Screen;
+package com.example.platformerplain;
+import com.example.platformerplain.View.Screen;
 import javafx.stage.Stage;
 
 public class ScreenManager {

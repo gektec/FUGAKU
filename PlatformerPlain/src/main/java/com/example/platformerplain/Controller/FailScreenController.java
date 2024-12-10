@@ -1,9 +1,8 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
-import com.example.platformerplain.Screen.MenuScreen;
+import com.example.platformerplain.View.MenuScreen;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -52,7 +51,7 @@ public class FailScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Defeat.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Gameover.png")));
 
         // Create a BackgroundImage object, setting it to fit the GridPane appropriately
         BackgroundImage background = new BackgroundImage(

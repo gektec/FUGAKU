@@ -1,9 +1,8 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.Screen.*;
+import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.entities.EntityFactory;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -71,6 +70,8 @@ public class Main extends Application {
 
     private Label playerSpeedLabel = new Label();
 
+    private Label timeLabel = new Label();
+
     private LineChart<Number, Number> speedChart;
     private XYChart.Series<Number, Number> speedX;
     private XYChart.Series<Number, Number> speedY;
@@ -79,6 +80,7 @@ public class Main extends Application {
     //Main
 
     static int currentLevel = 0;
+    public static int currentScore = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -87,6 +89,10 @@ public class Main extends Application {
     private Timeline gameLoop;
     private Button pauseMenu = new Button();
     private boolean isPaused = false;
+
+    private long startTime = 0;  // To store the start time
+    private long elapsedTime = 0; // Used to store accumulated time
+    private long totalTime = 0; // Total time variable
 
 
     public static void main(String[] args) {
@@ -113,6 +119,7 @@ public class Main extends Application {
 
     public void startGame(Stage primaryStage) {
         currentLevel = 1;
+        isPaused = false;
         initContent();
         startLevel();
         primaryStage.setScene(gameScene);
@@ -123,8 +130,9 @@ public class Main extends Application {
     private void startGameLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             update();
-
+            updateTime();
             if(isDebugMode) updateLables();
+
 
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
@@ -159,6 +167,16 @@ public class Main extends Application {
         }
         frameCount++;
     }
+
+    private void updateTime(){
+        if (!isPaused) {
+            elapsedTime = System.currentTimeMillis() - startTime; // Calculate elapsed time
+            long seconds = (elapsedTime / 1000) % 60; // Calculate seconds
+            long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
+            timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // update Label
+        }
+    }
+
 
     private void updateMoveState() {
         MoveState moveState = movePlayerLogic.getMoveStatus().moveState;
@@ -223,6 +241,12 @@ public class Main extends Application {
             speedChart.setPrefSize(400, 300);
 
         }
+
+        // Add a Time Label
+        timeLabel.setTextFill(Color.WHITE);
+        timeLabel.setFont(new Font(18));
+        timeLabel.setTranslateX(10);
+        timeLabel.setTranslateY(10);
 
 
         // Add a Pause Button
@@ -352,17 +376,23 @@ public class Main extends Application {
 
         // UI Elements
         uiRoot.getChildren().add(pauseMenu);
+        uiRoot.getChildren().add(timeLabel);
         if (isDebugMode) {
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
             uiRoot.getChildren().add(moveStateLabel);
         }
+
+        startTime = System.currentTimeMillis(); // Recording start time
+        elapsedTime = 0; // Reset elapsed time
+
     }
 
 
     public void transitionToNextLevel() {
         stopGameLoop();
+        totalTime += elapsedTime; // Add to total time
         if(currentLevel == 1) {
             screenManager.showScreen(new TransitionScreen());
         }else{
@@ -371,6 +401,8 @@ public class Main extends Application {
     }
 
     public void startNextLevel(){
+        startTime = System.currentTimeMillis(); // Reset start time
+        elapsedTime = 0; // Reset elapsed time
         currentLevel = 2;
         startLevel();
         primaryStage.setScene(gameScene);
@@ -393,18 +425,30 @@ public class Main extends Application {
     }
 
     public void exitGame() {
+        totalTime = 0;
         screenManager.showScreen(new FailScreen());
     }
 
     private void togglePauseMenu() {
+        if(!isPaused) {
             stopGameLoop(); // stop game loop
             ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
+            isPaused = true;
+        }else {
+            resumeGame();
+        }
     }
 
     public void resumeGame() {
         isPaused = false;
+        startTime = System.currentTimeMillis() - elapsedTime;// Ensure time continuity
         startGameLoop();
     }
+
+    public int currentScore(){
+        return currentScore;
+    }
+
 
     public static Main getInstance() {
         return instance;
@@ -424,18 +468,6 @@ public class Main extends Application {
         gameRoot.getChildren().remove(enemy.canvas());
     }
 
-
-    private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
-        Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
-        if (type == EntityType.DECORATION) {
-            if (isDebugMode) gameRoot.getChildren().add(0, entity.hitBox());
-            else gameRoot.getChildren().add(0, entity.canvas());
-        } else {
-            if (isDebugMode) gameRoot.getChildren().add(entity.hitBox());
-            else gameRoot.getChildren().add(entity.canvas());
-        }
-        return entity;
-    }
 
     public boolean getDebugMode() {
         return isDebugMode;

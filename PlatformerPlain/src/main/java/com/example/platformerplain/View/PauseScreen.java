@@ -1,9 +1,8 @@
-package com.example.platformerplain.Screen;
+package com.example.platformerplain.View;
 
 import com.example.platformerplain.Controller.PauseScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 

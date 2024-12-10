@@ -1,4 +1,4 @@
-package com.example.platformerplain.Screen;
+package com.example.platformerplain.View;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.MenuScreenController;

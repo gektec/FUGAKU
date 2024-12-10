@@ -2,7 +2,7 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Main;
-import com.example.platformerplain.Screen.LevelSelectScreen;
+import com.example.platformerplain.View.LevelSelectScreen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
