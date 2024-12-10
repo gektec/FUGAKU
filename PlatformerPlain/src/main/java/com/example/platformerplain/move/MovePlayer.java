@@ -138,7 +138,8 @@ public class MovePlayer {
                 }
             }
             // Resistance
-            playerVelocity.reduce(RESISTANCE, 0);
+            //playerVelocity.reduce(RESISTANCE, 0);
+            playerVelocity.smoothReduce(0,0,RESISTANCE,0);
 
             // apply gravity when not dashing
             if (playerVelocity.getY() < MAX_FALL_SPEED) {

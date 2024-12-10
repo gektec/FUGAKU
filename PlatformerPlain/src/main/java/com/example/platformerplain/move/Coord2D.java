@@ -59,4 +59,10 @@ public class Coord2D {
             y = Math.min(0, y + dy);
         }
     }
+
+    public void smoothReduce(int ax, int ay){
+        double ratioX = (double) 
+        double ratioY = (double) dy / (ty * 2) + 0.5;
+        reduce((int) (ax * ratioX), (int) (ay * ratioY));
+    }
 }
