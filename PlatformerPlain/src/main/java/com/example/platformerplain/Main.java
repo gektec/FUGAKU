@@ -3,6 +3,7 @@ package com.example.platformerplain;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.Controller.TransitionScreenController;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -445,8 +446,10 @@ public class Main extends Application {
         startGameLoop();
     }
 
-    public int currentScore(){
-        return currentScore;
+    public void currentScore(long elapsedTime){
+        int maxScore = 1000;
+        int minTime = 1000;
+        currentScore = (int) (maxScore * (minTime / (double) elapsedTime));
     }
 
 
