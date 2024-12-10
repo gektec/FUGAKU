@@ -3,6 +3,8 @@ package com.example.platformerplain.move.Command;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.move.Coord2D;
 
+import static com.example.platformerplain.Constants.MAX_MOVE_SPEED;
+
 public class MoveRightCommand implements PlayCommand {
     private Entity player;
     private Coord2D velocity;
@@ -14,7 +16,7 @@ public class MoveRightCommand implements PlayCommand {
 
     @Override
     public void execute() {
-        velocity.add(4, 0);  // 每次执行向右移动4个单位
+        velocity.smoothAdd(2, 0, MAX_MOVE_SPEED, 0);
     }
 }
 

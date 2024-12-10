@@ -2,7 +2,6 @@ package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Entity;
 
 import java.util.ArrayList;
@@ -19,8 +18,8 @@ public class Move {
         Coord2D moveableCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (moveable.size()[0] / 2), (int) moveable.hitBox().getTranslateY() + (moveable.size()[1] / 2));
         Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
 
-        int xDiff = moveableCoord.getX() - platformCoord.getX();
-        int yDiff = moveableCoord.getY() - platformCoord.getY();
+        float xDiff = moveableCoord.getX() - platformCoord.getX();
+        float yDiff = moveableCoord.getY() - platformCoord.getY();
 
         //test
         int totalSize = moveable.size()[0] + collidable.size()[0];
