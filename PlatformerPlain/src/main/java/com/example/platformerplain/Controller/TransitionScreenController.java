@@ -24,6 +24,7 @@ public class TransitionScreenController {
     public Button MenuButton;
     public Button NextLevelButton;
     public Button ExitButton;
+    public Button RestartButton;
     @FXML
     private GridPane root;  // Root layout in the FXML file
     private Stage primaryStage;  // Main application stage
@@ -120,6 +121,17 @@ public class TransitionScreenController {
         Main main = Main.getInstance();
         if (main != null) {
             main.startNextLevel(); // Transition to the next level
+        }
+    }
+
+    /**
+     * Restarts the game when the "Restart" button is clicked.
+     */
+    @FXML
+    private void handleRestart() {
+        Main main = Main.getInstance();
+        if (main != null) {
+            main.restartLevel(); // Transition to the next level
         }
     }
 }

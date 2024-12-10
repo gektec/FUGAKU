@@ -3,6 +3,7 @@ package com.example.platformerplain.Controller;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ public class PauseScreenController {
     public Button ExitButton;
     public Button ResumeButton;
     public Button helpButton;
+    public Button RestartButton;
     @FXML
     private GridPane root;  // Root layout for the pause menu
     private Stage primaryStage;  // The main application stage
@@ -107,11 +109,21 @@ public class PauseScreenController {
 
     /**
      * Exits the game when the "Exit" button is clicked.
-     * This method terminates the JavaFX application and the JVM.
      */
     @FXML
     void handleExitGame() {
         Platform.exit(); // Exit the JavaFX application gracefully
         System.exit(0); // Terminate the Java Virtual Machine
+    }
+
+    /**
+     * Restarts the game when the "Restart" button is clicked.
+     */
+    @FXML
+    private void handleRestart() {
+        Main main = Main.getInstance();
+        if (main != null) {
+            main.restartLevel(); // Transition to the next level
+        }
     }
 }

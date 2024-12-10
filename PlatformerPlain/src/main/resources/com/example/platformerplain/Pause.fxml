@@ -53,8 +53,8 @@
     />
 
     <!--
-        Help Button placed in a new row to provide users
-        with assistance or guidance relevant to the game.
+        Help Button and Restart Button placed in a new row to provide users
+        with assistance or guidance relevant to the game, and chance to restart.
     -->
     <Button
             fx:id="helpButton"
@@ -63,6 +63,17 @@
             style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="3"
             GridPane.columnIndex="0"
+            GridPane.columnSpan="3"
+    />
+
+    <Button
+            fx:id="RestartButton"
+            onAction="#handleRestart"
+            mnemonicParsing="false"
+            text="Restart"
+            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
+            GridPane.rowIndex="3"
+            GridPane.columnIndex="1"
             GridPane.columnSpan="3"
     />
 
