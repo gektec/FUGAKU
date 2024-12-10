@@ -34,7 +34,7 @@ public class Goal extends Entity {
     }
 
     @Override
-    public Constants.EntityType getType() {
-        return Constants.EntityType.GOAL;
+    public EntityType getType() {
+        return EntityType.GOAL;
     }
 }

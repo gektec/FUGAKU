@@ -95,12 +95,11 @@ public class Player extends Entity {
                     lastAfterimageFrame = 0;
                     generateAfterimage();
                 }
-                if (lastState != MoveState.DASHING) {
-                    //frames = Assets.PLAYER_DASH[0];
+                if (lastState != MoveState.DASHING && Main.getInstance().movePlayerLogic.getMoveStatus().velocity.getX() != 0) {
+                    frames = Assets.PLAYER_DASH[0];
                     animation.setFrames(frames);
-                    animation.setDelay(5);
+                    animation.setDelay(3);
                     lastState = MoveState.DASHING;
-                    System.out.println(lastAfterimageFrame);
                 }
                 break;
         }
@@ -147,7 +146,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public Constants.EntityType getType() {
-        return Constants.EntityType.PLAYER;
+    public EntityType getType() {
+        return EntityType.PLAYER;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.platformerplain.entities;
 
-import com.example.platformerplain.Constants;
 import com.example.platformerplain.texture.Animation;
 import javafx.scene.Node;
 
@@ -10,7 +9,9 @@ public abstract class Entity {
 
     public abstract Node canvas();
 
-    public abstract Constants.EntityType getType();
+    public abstract Node hitBox();
+
+    public abstract EntityType getType();
 
     protected Animation animation;
 
@@ -24,15 +25,9 @@ public abstract class Entity {
     public void update() {
     }
 
-    public void draw() {
-
-    }
 
     public abstract int[] size();
 
 
-    public Node hitBox() {
-        return this.hitBox();
-    }
 
 }

@@ -18,19 +18,12 @@ public class Constants {
     public static final int RESISTANCE = 2;  // Horizontal resistance
     public static final int GRAVITY = 1;  // Gravity constant
 
-    public static final double DASH_DURATION = 0.2;
-    public static final int DASH_SPEED = 36;
+    public static final double DASH_DURATION = 0.25;
+    public static final int DASH_SPEED = 40;
     public static final double SLIDE_JUMP_DURATION = 0.08;
 
     public static final int SLIDE_WALL_SPEED = 2;
     public static final int SLIDE_JUMP_SPEED = 15;
-
-    public enum EntityType {
-        PLATFORM,
-        GOAL,
-        PLAYER,
-        SPIKE, LADDER, ENEMY
-    }
 
 
 }

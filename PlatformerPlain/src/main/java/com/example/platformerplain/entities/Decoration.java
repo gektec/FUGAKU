@@ -10,36 +10,32 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Ladder extends Entity {
+public class Decoration extends Entity {
     private Node node;
     private Node hitBox;
     private Canvas canvas;
     private GraphicsContext gc;
-    private int index;
 
     protected boolean isAnimated(){
         return false;
     };
 
-    public Ladder(int x, int y, int w, int h, int index) { //todo: remove useless parameters
-        if(index == 0) {
-            h = 20;  //top of ladder is shorter
-        }
-        Rectangle hitBox = new Rectangle(w, h, Color.PURPLE);
+    public Decoration(int x, int y, int w, int h) { //todo: remove useless parameters
+        Rectangle hitBox = new Rectangle(w, h, Color.DARKBLUE);
         hitBox.setTranslateX(x);
-        hitBox.setTranslateY(y+ Constants.TILE_SIZE -h);
+        hitBox.setTranslateY(y);
 
         canvas = new Canvas(Constants.TILE_SIZE,Constants.TILE_SIZE);
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(x);
         canvas.setTranslateY(y);
-        Image sprite = CutSpriteSheet.getSprite(EntityType.LADDER,0, index);
-        sprite = ImageScaler.nearestNeighborScale(sprite,5);
+        Image sprite = CutSpriteSheet.getSprite(EntityType.DECORATION, (int) (Math.random() * 5), (int) (Math.random() * 7));
+        sprite = ImageScaler.nearestNeighborScale(sprite,5); //todo: move to assets
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
+
 
         this.node = canvas;
         this.hitBox = hitBox;
-        this.index = index;
 
     }
 
@@ -60,10 +56,6 @@ public class Ladder extends Entity {
 
     @Override
     public EntityType getType() {
-        return EntityType.LADDER;
-    }
-
-    public int getIndex() { //used to detect highest ladder
-        return index;
+        return EntityType.DECORATION;
     }
 }
