@@ -46,4 +46,14 @@
             GridPane.rowIndex="2"
             GridPane.columnIndex="2"/>
 
+    <Button
+            fx:id="RestartButton"
+            onAction="#handleRestart"
+            mnemonicParsing="false"
+            text="Restart"
+            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
+            GridPane.rowIndex="1"
+            GridPane.columnIndex="1"
+    />
+
 </GridPane>

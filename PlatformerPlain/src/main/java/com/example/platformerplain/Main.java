@@ -430,19 +430,12 @@ public class Main extends Application {
         startGameLoop();
     }
 
-
-
     public void stopGameLoop() {
         if (gameLoop != null) {
             gameLoop.stop();
         }
 
     }
-
-    public int getCurrentLevel(){
-        return currentLevel;
-    }
-
 
     public void exitGame() {
         screenManager.showScreen(new FailScreen());
