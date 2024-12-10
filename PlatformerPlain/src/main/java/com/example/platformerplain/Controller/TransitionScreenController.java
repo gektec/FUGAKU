@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
+import static com.example.platformerplain.Assets.VICTORY_SOUND;
+
 /**
  * This class serves as the controller for the Transition Screen in the game.
  * It manages the initialization and configuration of UI components,
@@ -70,14 +72,9 @@ public class TransitionScreenController {
         root.setBackground(new Background(background));
     }
 
-    private void playBackgroundMusic() throws URISyntaxException {
+    private void playBackgroundMusic(){
         // Load the victory sound
-        String victorySoundFile = "/sounds/victory.mp3"; // Ensure path correctness
-        Media victorySound = new Media(Objects.requireNonNull(getClass().getResource(victorySoundFile)).toURI().toString());
-        mediaPlayer = new MediaPlayer(victorySound);
-
-        // Play the victory sound on initialization
-        mediaPlayer.play();
+        VICTORY_SOUND.play();
     }
 
 

@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.platformerplain.Assets.DASH_SFX;
 import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
@@ -132,6 +133,7 @@ public class MovePlayer {
                         playerVelocity.set((float) (x / 1.6), (float) (y / 1.6));
                     else
                         playerVelocity.set(x, y);
+                    DASH_SFX.play();
                     canDash = false;
                     playerState = MoveState.DASHING;
                     dashCooldownTimer.playFromStart();

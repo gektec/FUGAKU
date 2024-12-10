@@ -4,30 +4,42 @@ import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Assets {
 
-    public static final Image MENU_BACKGROUND = load("/images/backgrounds/Background.png",320,180,5)[0][0];
+    public static final Image MENU_BACKGROUND = loadImage("/images/backgrounds/Background.png",320,180,5)[0][0];
 
-    public static final Image BACKGROUND_SKY = load("/images/backgrounds/Sky.png");
-    public static final Image BACKGROUND_CLOUD_1 = load("/images/backgrounds/Cloud 1.png");
-    public static final Image BACKGROUND_CLOUD_2 = load("/images/backgrounds/Cloud 2.png");
-    public static final Image BACKGROUND_CLOUD_3 = load("/images/backgrounds/Cloud 3.png");
-    public static final Image BACKGROUND_MOON = load("/images/backgrounds/Moon.png");
-    public static final Image DECORATION = load("/images/objects/Props.png");
-    public static final Image[][] GHOST_IDLE = load("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
-    public static final Image[][] GHOST_DEATH = load("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
-    public static final Image[][] PLAYER_IDLE = load("/images/characters/player/Player_Idle.png", 96, 96, 3);
-    public static final Image[][] PLAYER_RUN = load("/images/characters/player/Player_Run.png", 96, 96, 3);
-    public static final Image[][] PLAYER_DASH = load("/images/characters/player/Player_Dash.png", 96, 96, 3);
-    public static final Image[][] PLAYER_JUMP_START = load("/images/characters/player/Player_Jump_Start.png", 96, 96, 3);
-    public static final Image[][] PLAYER_JUMP_FALL = load("/images/characters/player/Player_Jump_Fall.png", 96, 96, 3);
-    public static final Image[][] PLAYER_SLIDING = load("/images/characters/player/Player_Wall_Slide.png", 96, 96, 3);
+    public static final Image BACKGROUND_SKY = loadImage("/images/backgrounds/Sky.png");
+    public static final Image BACKGROUND_CLOUD_1 = loadImage("/images/backgrounds/Cloud 1.png");
+    public static final Image BACKGROUND_CLOUD_2 = loadImage("/images/backgrounds/Cloud 2.png");
+    public static final Image BACKGROUND_CLOUD_3 = loadImage("/images/backgrounds/Cloud 3.png");
+    public static final Image BACKGROUND_MOON = loadImage("/images/backgrounds/Moon.png");
+    public static final Image DECORATION = loadImage("/images/objects/Props.png");
+    public static final Image[][] GHOST_IDLE = loadImage("/images/characters/ghost/Ghost_Idle.png", 48, 48, 5);
+    public static final Image[][] GHOST_DEATH = loadImage("/images/characters/ghost/Ghost_Death.png", 48, 48, 5);
+    public static final Image[][] PLAYER_IDLE = loadImage("/images/characters/player/Player_Idle.png", 96, 96, 3);
+    public static final Image[][] PLAYER_RUN = loadImage("/images/characters/player/Player_Run.png", 96, 96, 3);
+    public static final Image[][] PLAYER_DASH = loadImage("/images/characters/player/Player_Dash.png", 96, 96, 3);
+    public static final Image[][] PLAYER_JUMP_START = loadImage("/images/characters/player/Player_Jump_Start.png", 96, 96, 3);
+    public static final Image[][] PLAYER_JUMP_FALL = loadImage("/images/characters/player/Player_Jump_Fall.png", 96, 96, 3);
+    public static final Image[][] PLAYER_SLIDING = loadImage("/images/characters/player/Player_Wall_Slide.png", 96, 96, 3);
+
+    public static final GameMediaPlayer COMPLETE_SOUND = new GameMediaPlayer("/sounds/completed.mp3");
+    public static final GameMediaPlayer VICTORY_SOUND = new GameMediaPlayer("/sounds/victory.mp3");
+    public static final GameMediaPlayer BACKGROUND_MUSIC = new GameMediaPlayer("/sounds/victory.mp3"); // todo: replace
+    public static final GameMediaPlayer JUMP_SFX = new GameMediaPlayer("/sounds/Jump.wav");
+    public static final GameMediaPlayer DASH_SFX = new GameMediaPlayer("/sounds/Dash.wav");
+
+
     private static final Map<Integer, int[]> adjacencyCodePlatform;
     private static final Map<Integer, int[]> adjacencyCodeSpike;
 
@@ -64,10 +76,55 @@ public class Assets {
         adjacencyCodeSpike.put(18, new int[]{5, 1}); // Peak is on right
     }
 
-    public static Image[][] load(String s, int w, int h, int scale) {
+    public static class GameMediaPlayer {
+        private MediaPlayer mediaPlayer;
+
+        public GameMediaPlayer(String mediaFile) {
+            Media media = loadSound(mediaFile);
+            this.mediaPlayer = new MediaPlayer(media);
+        }
+
+        public void play() {
+            if (mediaPlayer.getStatus() != MediaPlayer.Status.STOPPED) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.play();
+        }
+
+        public void cycle() {
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.play();
+                }
+            });
+        }
+
+        public void stopCycle() {
+            mediaPlayer.setOnEndOfMedia(null); // Remove the looping behavior
+        }
+    }
+
+    public static Media loadSound(String s) {
+        try {
+            String mediaPath = Objects.requireNonNull(
+                    Assets.class.getResource(s)
+            ).toURI().toString();
+            return new Media(mediaPath);
+        } catch (URISyntaxException e) {
+            System.err.println("Error loading sound file: " + e.getMessage());
+            return null;
+        } catch (NullPointerException e) {
+            System.err.println("Sound resource not found: " + s);
+            return null;
+        }
+    }
+
+    public static Image[][] loadImage(String s, int w, int h, int scale) {
         Image[][] ret;
         try {
-            InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
+            InputStream inputStream = Objects.requireNonNull(Assets.class.getResourceAsStream(s));
             Image spritesheet = new Image(inputStream);
             int width = (int) (spritesheet.getWidth() / w);
             int height = (int) (spritesheet.getHeight() / h);
@@ -89,9 +146,9 @@ public class Assets {
     }
 
     //Overload
-    public static Image load(String s) {
+    public static Image loadImage(String s) {
         try {
-            InputStream inputStream = Objects.requireNonNull(Constants.class.getResourceAsStream(s));
+            InputStream inputStream = Objects.requireNonNull(Assets.class.getResourceAsStream(s));
             Image image = new Image(inputStream);
             return image;
         } catch (Exception e) {

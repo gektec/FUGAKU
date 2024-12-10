@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+import static com.example.platformerplain.Assets.BACKGROUND_MOON;
+
 /**
  * This class serves as the controller for the Level Select Screen in the game.
  * It manages the initialization and configuration of UI components.
@@ -42,7 +44,7 @@ public class LevelSelectScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image from resources
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Moon.png")));
+        Image backgroundImage = BACKGROUND_MOON;
 
         // Set up the BackgroundImage to fit the GridPane
         BackgroundImage background = new BackgroundImage(
