@@ -10,6 +10,7 @@
         prefWidth="600.0"
         hgap="30"
         vgap="30"
+        stylesheets="@/styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
         fx:controller="com.example.platformerplain.Controller.FailScreenController">
@@ -30,7 +31,6 @@
             onAction="#handleMenu"
             mnemonicParsing="false"
             text="Menu"
-            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="0"
     />
@@ -40,7 +40,6 @@
             onAction="#handleRestart"
             mnemonicParsing="false"
             text="Restart"
-            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="1"
     />
@@ -49,7 +48,6 @@
             fx:id="ExitButton"
             onAction="#handleExitGame"
             text="Exit Game"
-            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="2"
     />

@@ -4,7 +4,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER" prefHeight="477.0" prefWidth="722.0" spacing="20" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.platformerplain.Controller.MenuScreenController">
+<VBox
+        fx:id="root"
+        alignment="CENTER"
+        prefHeight="477.0"
+        prefWidth="722.0"
+        spacing="20"
+        stylesheets="@/styles.css"
+        xmlns="http://javafx.com/javafx/22"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.platformerplain.Controller.MenuScreenController">
     <!-- VBox to design background -->
     <Text text="Welcome to NGHMP!" />
 
@@ -19,7 +28,6 @@
             onAction="#handleStartGame"
             prefHeight="34.0"
             prefWidth="108.0"
-            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white;"
             text="Start Game"
     />
 
@@ -32,7 +40,6 @@
             onAction="#handleHelp"
             prefHeight="34.0"
             prefWidth="108.0"
-            style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white;"
             text="Help"
     />
 
@@ -45,7 +52,6 @@
             onAction="#handleExitGame"
             prefHeight="34.0"
             prefWidth="108.0"
-            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white;"
             text="Exit Game"
     />
 
