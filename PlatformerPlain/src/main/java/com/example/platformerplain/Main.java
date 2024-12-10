@@ -422,12 +422,27 @@ public class Main extends Application {
         startGameLoop();
     }
 
+    public void restartLevel(){
+        startLevel();
+        primaryStage.setScene(gameScene);
+        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        gameRoot.setLayoutX(0);
+        startGameLoop();
+    }
+
+
+
     public void stopGameLoop() {
         if (gameLoop != null) {
             gameLoop.stop();
         }
 
     }
+
+    public int getCurrentLevel(){
+        return currentLevel;
+    }
+
 
     public void exitGame() {
         screenManager.showScreen(new FailScreen());

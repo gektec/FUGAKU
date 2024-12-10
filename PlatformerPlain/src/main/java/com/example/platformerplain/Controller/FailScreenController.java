@@ -1,7 +1,9 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Main;
 import com.example.platformerplain.Screen.MenuScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -116,6 +118,19 @@ public class FailScreenController {
             mediaPlayer.stop();
             mediaPlayer.dispose(); // Free up memory
             mediaPlayer = null;
+        }
+    }
+
+    /**
+     * Handles the event for the restart button when clicked.
+     * This method creates a new instance of Main and use it to call restart function.
+     * It will restart current level.
+     */
+    @FXML
+    private void handleRestart() {
+        Main main = Main.getInstance();
+        if (main != null) {
+            main.restartLevel(); // Transition to the next level
         }
     }
 }
