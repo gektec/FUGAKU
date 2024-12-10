@@ -51,7 +51,7 @@ public class FailScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Defeat.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Gameover.png")));
 
         // Create a BackgroundImage object, setting it to fit the GridPane appropriately
         BackgroundImage background = new BackgroundImage(

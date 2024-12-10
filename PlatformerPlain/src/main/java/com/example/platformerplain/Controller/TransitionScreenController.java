@@ -5,6 +5,7 @@ import com.example.platformerplain.View.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -12,6 +13,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import java.net.URISyntaxException;
 import java.util.Objects;
+
+import static com.example.platformerplain.Main.currentScore;
 
 /**
  * This class serves as the controller for the Transition Screen in the game.
@@ -25,6 +28,7 @@ public class TransitionScreenController {
     public Button NextLevelButton;
     public Button ExitButton;
     public Button RestartButton;
+    public Label scoreLabel;
     @FXML
     private GridPane root;  // Root layout in the FXML file
     private Stage primaryStage;  // Main application stage
@@ -50,7 +54,7 @@ public class TransitionScreenController {
     }
     private void loadBackgroundImage() {
         // Load background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Victory.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Transition.png")));
 
         // Create a BackgroundImage object with specified properties
         BackgroundImage background = new BackgroundImage(
@@ -76,6 +80,19 @@ public class TransitionScreenController {
 
         // Play the victory sound on initialization
         mediaPlayer.play();
+    }
+
+    // Method to set score
+    public void setScore(int score) {
+        currentScore = score;
+        scoreLabel.setText("Score: " + currentScore);
+        updateScoreDisplay();
+    }
+
+    private void updateScoreDisplay() {
+        if (scoreLabel != null) {
+            scoreLabel.setText("Score: " + currentScore);
+        }
     }
 
     /**
