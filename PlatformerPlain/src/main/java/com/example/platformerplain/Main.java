@@ -130,7 +130,6 @@ public class Main extends Application {
     private void startGameLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             update();
-            updateTime();
             if(isDebugMode) updateLables();
 
 
@@ -156,6 +155,7 @@ public class Main extends Application {
         updateFramerate();
         updatePlayerSpeed();
         updateMoveState();
+        updateTime();
     }
 
     private void updateFramerate() {
@@ -224,6 +224,12 @@ public class Main extends Application {
             moveStateLabel.setTranslateX(10);
             moveStateLabel.setTranslateY(50);
 
+            // Add a Time Label
+            timeLabel.setTextFill(Color.WHITE);
+            timeLabel.setFont(new Font(18));
+            timeLabel.setTranslateX(10);
+            timeLabel.setTranslateY(70);
+
             NumberAxis xAxis = new NumberAxis();
             NumberAxis yAxis = new NumberAxis();
             xAxis.setLabel("Time");
@@ -237,16 +243,10 @@ public class Main extends Application {
             speedY.setName("Speed Y");
             speedChart.getData().addAll(speedX, speedY);
             speedChart.setTranslateX(10);
-            speedChart.setTranslateY(70);
+            speedChart.setTranslateY(90);
             speedChart.setPrefSize(400, 300);
 
         }
-
-        // Add a Time Label
-        timeLabel.setTextFill(Color.WHITE);
-        timeLabel.setFont(new Font(18));
-        timeLabel.setTranslateX(10);
-        timeLabel.setTranslateY(10);
 
 
         // Add a Pause Button
