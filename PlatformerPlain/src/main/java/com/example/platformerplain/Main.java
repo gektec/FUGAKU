@@ -435,8 +435,6 @@ public class Main extends Application {
             stopGameLoop(); // stop game loop
             ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
             isPaused = true;
-        }else {
-            resumeGame();
         }
     }
 
