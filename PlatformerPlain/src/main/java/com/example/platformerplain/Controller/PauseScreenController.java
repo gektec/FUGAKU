@@ -109,7 +109,6 @@ public class PauseScreenController {
 
     /**
      * Exits the game when the "Exit" button is clicked.
-     * This method terminates the JavaFX application and the JVM.
      */
     @FXML
     void handleExitGame() {
@@ -117,6 +116,9 @@ public class PauseScreenController {
         System.exit(0); // Terminate the Java Virtual Machine
     }
 
+    /**
+     * Restarts the game when the "Restart" button is clicked.
+     */
     @FXML
     private void handleRestart() {
         Main main = Main.getInstance();

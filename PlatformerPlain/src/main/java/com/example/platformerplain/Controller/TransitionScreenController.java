@@ -124,6 +124,9 @@ public class TransitionScreenController {
         }
     }
 
+    /**
+     * Restarts the game when the "Restart" button is clicked.
+     */
     @FXML
     private void handleRestart() {
         Main main = Main.getInstance();
