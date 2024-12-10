@@ -118,6 +118,7 @@ public class Main extends Application {
 
     public void startGame(Stage primaryStage) {
         currentLevel = 1;
+        isPaused = false;
         initContent();
         startLevel();
         primaryStage.setScene(gameScene);
@@ -167,11 +168,12 @@ public class Main extends Application {
     }
 
     private void updateTime(){
-        elapsedTime = System.currentTimeMillis() - startTime; // Calculate elapsed time
-        long seconds = (elapsedTime / 1000) % 60; // Calculate seconds
-        long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
-        timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // update Label
-
+        if (!isPaused) {
+            elapsedTime = System.currentTimeMillis() - startTime; // Calculate elapsed time
+            long seconds = (elapsedTime / 1000) % 60; // Calculate seconds
+            long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
+            timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // update Label
+        }
     }
 
 
@@ -422,12 +424,18 @@ public class Main extends Application {
     }
 
     private void togglePauseMenu() {
+        if(!isPaused) {
             stopGameLoop(); // stop game loop
             ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
+            isPaused = true;
+        }else {
+            resumeGame();
+        }
     }
 
     public void resumeGame() {
         isPaused = false;
+        startTime = System.currentTimeMillis() - elapsedTime;// Ensure time continuity
         startGameLoop();
     }
 
