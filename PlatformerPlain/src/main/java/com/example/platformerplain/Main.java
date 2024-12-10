@@ -3,7 +3,6 @@ package com.example.platformerplain;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.entities.EntityFactory;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -78,6 +77,7 @@ public class Main extends Application {
     //Main
 
     static int currentLevel = 0;
+    public static int currentScore = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -400,6 +400,11 @@ public class Main extends Application {
         startGameLoop();
     }
 
+    public int currentScore(){
+        return currentScore;
+    }
+
+
     public static Main getInstance() {
         return instance;
     }
@@ -418,18 +423,6 @@ public class Main extends Application {
         gameRoot.getChildren().remove(enemy.canvas());
     }
 
-
-    private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
-        Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
-        if (type == EntityType.DECORATION) {
-            if (isDebugMode) gameRoot.getChildren().add(0, entity.hitBox());
-            else gameRoot.getChildren().add(0, entity.canvas());
-        } else {
-            if (isDebugMode) gameRoot.getChildren().add(entity.hitBox());
-            else gameRoot.getChildren().add(entity.canvas());
-        }
-        return entity;
-    }
 
     public boolean getDebugMode() {
         return isDebugMode;

@@ -4,6 +4,7 @@ import com.example.platformerplain.View.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -11,6 +12,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 import java.util.Objects;
+
+import static com.example.platformerplain.Main.currentScore;
 
 /**
  * This class serves as the controller for the Completed Screen in the game.
@@ -21,6 +24,7 @@ public class CompletedScreenController {
 
     public Button MenuButton;
     public Button ExitButton;
+    public Label scoreLabel;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
 
@@ -75,6 +79,19 @@ public class CompletedScreenController {
 
         // Play the sound effect upon initialization
         mediaPlayer.play();
+    }
+
+    // Method to set score
+    public void setScore(int score) {
+        currentScore = score;
+        scoreLabel.setText("Your Final Score is: " + currentScore);
+        updateScoreDisplay();
+    }
+
+    private void updateScoreDisplay() {
+        if (scoreLabel != null) {
+            scoreLabel.setText("Your Final Score is: " + currentScore);
+        }
     }
 
     /**
