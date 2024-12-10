@@ -10,6 +10,7 @@
         prefWidth="600.0"
         hgap="30"
         vgap="30"
+        stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
         fx:controller="com.example.platformerplain.Controller.PauseScreenController">
@@ -29,7 +30,6 @@
             onAction="#handleMenu"
             mnemonicParsing="false"
             text="Menu"
-            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="0"
     />
@@ -38,7 +38,6 @@
             fx:id="ExitButton"
             onAction="#handleExitGame"
             text="Exit"
-            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="1"
     />
@@ -47,7 +46,6 @@
             fx:id="ResumeButton"
             onAction="#handleResume"
             text="Resume"
-            style="-fx-font-size: 16; -fx-background-color: #F44336; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="2"
             GridPane.columnIndex="2"
     />
@@ -60,7 +58,6 @@
             fx:id="helpButton"
             onAction="#handleHelp"
             text="Help"
-            style="-fx-font-size: 16; -fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="3"
             GridPane.columnIndex="0"
             GridPane.columnSpan="3"
@@ -71,7 +68,6 @@
             onAction="#handleRestart"
             mnemonicParsing="false"
             text="Restart"
-            style="-fx-font-size: 16; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10 20;"
             GridPane.rowIndex="3"
             GridPane.columnIndex="1"
             GridPane.columnSpan="3"

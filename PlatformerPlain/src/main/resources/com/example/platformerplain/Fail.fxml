@@ -10,7 +10,7 @@
         prefWidth="600.0"
         hgap="30"
         vgap="30"
-        stylesheets="@/styles.css"
+        stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
         fx:controller="com.example.platformerplain.Controller.FailScreenController">

@@ -10,49 +10,21 @@
         prefHeight="477.0"
         prefWidth="722.0"
         spacing="20"
-        stylesheets="@/styles.css"
+        stylesheets="@styles.css"
         xmlns="http://javafx.com/javafx/22"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="com.example.platformerplain.Controller.MenuScreenController">
-    <!-- VBox to design background -->
-    <Text text="Welcome to NGHMP!" />
 
-    <Button fx:id="debugButton" onAction="#handleDebugMode" prefHeight="36.0" prefWidth="240.0" style="-fx-font-size: 16; -fx-background-color: #ad2222; -fx-text-fill: white;" text="Debug Mode" />
+    <!-- Text with custom style class to apply the font -->
+    <Text text="Welcome to NGHMP!" styleClass="custom-text" />
 
-    <!--
-        Button to initiate the game. This button triggers the
-        `handleStartGame` method when clicked, starting the game.
-    -->
-    <Button
-            fx:id="startButton"
-            onAction="#handleStartGame"
-            prefHeight="34.0"
-            prefWidth="108.0"
-            text="Start Game"
-    />
+    <!-- Apply button font style in the CSS -->
+    <Button fx:id="debugButton" onAction="#handleDebugMode" text="Debug Mode" prefWidth="200.0"/>
 
-    <!--
-        Help Button providing access to game instructions or assistance.
-        It calls the `handleHelp` method when pressed.
-    -->
-    <Button
-            fx:id="helpButton"
-            onAction="#handleHelp"
-            prefHeight="34.0"
-            prefWidth="108.0"
-            text="Help"
-    />
+    <Button fx:id="startButton" onAction="#handleStartGame" text="Start Game" prefWidth="200.0" />
 
-    <!--
-        Exit Game Button for closing the game application.
-        Activates the `handleExitGame` method upon clicking.
-    -->
-    <Button
-            fx:id="exitButton"
-            onAction="#handleExitGame"
-            prefHeight="34.0"
-            prefWidth="108.0"
-            text="Exit Game"
-    />
+    <Button fx:id="helpButton" onAction="#handleHelp" text="Help" prefWidth="200.0"/>
+
+    <Button fx:id="exitButton" onAction="#handleExitGame" text="Exit Game" prefWidth="200.0"/>
 
 </VBox>
