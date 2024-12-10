@@ -61,7 +61,7 @@ public class Main extends Application {
 
     //Debug
 
-    private boolean isDebugMode = true;
+    protected boolean isDebugMode = true;
 
     private Label framerateLabel = new Label();
     private long lastTime = 0;
