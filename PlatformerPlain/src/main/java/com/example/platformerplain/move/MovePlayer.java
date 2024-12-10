@@ -80,9 +80,9 @@ public class MovePlayer {
 
         if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
             if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
-                playerVelocity.reduce((int) RESISTANCE / 2, (int) RESISTANCE / 2);
+                playerVelocity.reduce(RESISTANCE / 2, RESISTANCE / 2);
             else
-                playerVelocity.reduce(RESISTANCE, RESISTANCE);
+                playerVelocity.reduce((float) (RESISTANCE / 1.4), (float) (RESISTANCE / 1.4));
         } else {
             // Jump
             PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall, playerVelocity));
@@ -104,11 +104,11 @@ public class MovePlayer {
                 slideJumpCooldownTimer.playFromStart();
             }
             // Move left
-            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -8) {
+            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -Constants.MAX_MOVE_SPEED) {
                 moveLeft.execute();
             }
             // Move right
-            if (isPressed(KeyCode.D) && playerVelocity.getX() <= 8) {
+            if (isPressed(KeyCode.D) && playerVelocity.getX() <= Constants.MAX_MOVE_SPEED) {
                 moveRight.execute();
             }
 
@@ -129,7 +129,7 @@ public class MovePlayer {
                 }
                 if (x != 0 || y != 0) {
                     if (x != 0 && y != 0)
-                        playerVelocity.set((int) (x / 1.6), (int) (y / 1.6));
+                        playerVelocity.set((float) (x / 1.6), (float) (y / 1.6));
                     else
                         playerVelocity.set(x, y);
                     canDash = false;
@@ -138,11 +138,12 @@ public class MovePlayer {
                 }
             }
             // Resistance
-            playerVelocity.reduce(RESISTANCE, 0);
+            //playerVelocity.reduce(RESISTANCE, 0);
+            if (isPressed(KeyCode.A) == isPressed(KeyCode.D)) playerVelocity.smoothReduce(RESISTANCE,0,10,0);
 
             // apply gravity when not dashing
             if (playerVelocity.getY() < MAX_FALL_SPEED) {
-                playerVelocity.add(0, Constants.GRAVITY);
+                playerVelocity.smoothMinus(0, Constants.GRAVITY, 0, MAX_FALL_SPEED/2);
             }
         }
 

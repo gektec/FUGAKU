@@ -72,7 +72,8 @@ public class Main extends Application {
     private Label playerSpeedLabel = new Label();
 
     private LineChart<Number, Number> speedChart;
-    private XYChart.Series<Number, Number> speedSeries;
+    private XYChart.Series<Number, Number> speedX;
+    private XYChart.Series<Number, Number> speedY;
     private int timeStep = 0;
 
     //Main
@@ -165,13 +166,15 @@ public class Main extends Application {
     }
 
     private void updatePlayerSpeed() {
-        int[] speed = movePlayerLogic.getMoveStatus().velocity.get();
+        float[] speed = movePlayerLogic.getMoveStatus().velocity.get();
         playerSpeedLabel.setText("Speed: " + Arrays.toString(speed));
-        speedSeries.getData().add(new XYChart.Data<>(timeStep++, Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1])));
+        speedX.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
+        speedY.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
-        // Keep only the last 50 data points
-        if (speedSeries.getData().size() > 60) {
-            speedSeries.getData().remove(0);
+        // Keep only the last 60 data points
+        if (speedX.getData().size() > 60) {
+            speedX.getData().removeFirst();
+            speedY.getData().removeFirst();
         }
 
         // Update x-axis bounds
@@ -181,7 +184,7 @@ public class Main extends Application {
         yAxis.setAutoRanging(false);
         xAxis.setLowerBound(timeStep - 60);
         xAxis.setUpperBound(timeStep);
-        yAxis.setUpperBound(32);
+        yAxis.setUpperBound(20);
     }
 
     private void initContent() {
@@ -210,8 +213,11 @@ public class Main extends Application {
 
             speedChart = new LineChart<>(xAxis, yAxis);
             speedChart.setTitle("Player Speed Over Time");
-            speedSeries = new XYChart.Series<>();
-            speedChart.getData().add(speedSeries);
+            speedX = new XYChart.Series<>();
+            speedX.setName("Speed X");
+            speedY = new XYChart.Series<>();
+            speedY.setName("Speed Y");
+            speedChart.getData().addAll(speedX, speedY);
             speedChart.setTranslateX(10);
             speedChart.setTranslateY(70);
             speedChart.setPrefSize(400, 300);
