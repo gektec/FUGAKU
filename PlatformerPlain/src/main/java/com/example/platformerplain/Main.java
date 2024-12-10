@@ -230,54 +230,59 @@ public class Main extends Application {
     }
 
     private void startLevel() {
+        // Clear current game state
         keys.clear();
         collidableMap.clear();
         enemyMap.clear();
         toRemove.clear();
 
+        // Initialize Panes for game layout
         appRoot = new Pane();
         gameRoot = new Pane();
         uiRoot = new Pane();
         backgroundRoot = new Pane();
 
+        // Set up the background
         Image background0 = Assets.BACKGROUND_SKY;
         ImageView backgroundSky = new ImageView(background0);
-        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH*5);
-        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT*5);
+        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH * 5);
+        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT * 5);
 
         Image background1 = Assets.BACKGROUND_CLOUD_1;
-        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1,2));
-        backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1, 2));
+        backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
+        backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
 
         Image background2 = Assets.BACKGROUND_CLOUD_2;
-        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2,2));
+        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2, 2));
         backgroundCloud2.setScaleX(-1);
-        backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
+        backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
 
         Image background3 = Assets.BACKGROUND_CLOUD_3;
-        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3,2));
-        backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH*1.2);
-        backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT*1.2);
+        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3, 2));
+        backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
+        backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
 
         Image background4 = Assets.BACKGROUND_MOON;
-        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4,2));
+        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4, 2));
         backgroundMoon.setFitWidth(Constants.BACKGROUND_WIDTH);
         backgroundMoon.setFitHeight(Constants.BACKGROUND_HEIGHT);
 
         backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
 
+        // Initialize level dimensions
         levelWidth = LevelData.getLevelInformation.getLevelWidth();
         levelHeight = LevelData.getLevelInformation.getLevelHeight();
 
+        // Position the game view
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
         gameRoot.setLayoutX(0);
         for (Node background : backgroundRoot.getChildren()) {
             background.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
         }
 
-
+        // Add level indicator text based on level
         if (currentLevel == 1) {
             Text title = new Text("Try to get the goal");
             title.setFont(new Font(36));
@@ -296,92 +301,50 @@ public class Main extends Application {
             uiRoot.getChildren().add(title);
         }
 
-        int adjacencyCode = 0;
-        for (int i = 0; i < LevelData.Levels[currentLevel].length; i++) {
-            String line = LevelData.Levels[currentLevel][i];
-            for (int j = 0; j < line.length(); j++) {
-                switch (line.charAt(j)) {
-                    case '0':
-                        break;
-                    case 'P':
-                        player = createEntity(EntityType.PLAYER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, 0);
-                        movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
-                        break;
-                    case 'M':
-                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'M');
-                        Entity platform = createEntity(EntityType.PLATFORM, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
-                        collidableMap.add(platform);
-                        break;
-                    case 'H':
-                        if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'H' && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
-                            adjacencyCode = (int)(Math.random() * 2) + 1; // 1 or 2
-                        }
-                        else if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
-                            adjacencyCode = 0;
-                        }
-                        else adjacencyCode = 3;
-                        Ladder ladder = (Ladder) createEntity(EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
-                        ladderMap.add(ladder);
-                        break;
-                    case 'G':
-                        Entity goal = createEntity(EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
-                        collidableMap.add(goal);
-                        break;
-                    case 'E':
-                        Enemy enemy = (Enemy) createEntity(EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
-                        enemyMap.add(enemy);
-                        break;
-                    case 's':
-                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'S');
-                        Spike spike = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
-                        spikeMap.add(spike);
-                        break;
-                    case 'S':
-                        adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;
-                        Spike spikeBody = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE + 2, i * Constants.TILE_SIZE + 2, Constants.TILE_SIZE - 4, Constants.TILE_SIZE - 4, adjacencyCode);
-                        spikeMap.add(spikeBody);
-                        break;
-                    case 'D':
-                        createEntity(EntityType.DECORATION, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
-                        break;
+        // Use LevelInitializer to set up the level
+        LevelInitializer levelInitializer = new LevelInitializer(keys, gameRoot, uiRoot, backgroundRoot, collidableMap, enemyMap, spikeMap, ladderMap);
+        player = levelInitializer.generateLevel(currentLevel);
+
+        // If player is not null, continue setup
+        if (player != null) {
+            movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
+
+            // Camera's follow logic
+            player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
+                int offset = newValue.intValue();
+                if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - (Constants.BACKGROUND_WIDTH - Constants.PLAYER_SIZE) / 2) {
+                    gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
+                    backgroundCloud1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4);
+                    backgroundCloud2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3);
+                    backgroundCloud3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2);
+                    backgroundMoon.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05));
                 }
-            }
+            });
+
+            player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
+                int offsetY = newValue.intValue();
+                if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 && offsetY > Constants.BACKGROUND_HEIGHT / 4) {
+                    gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
+                    backgroundCloud1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50);
+                    backgroundCloud2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50);
+                    backgroundCloud3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50);
+                    backgroundMoon.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50);
+                }
+            });
         }
 
-        player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
-            int offset = newValue.intValue();
-            if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - (Constants.BACKGROUND_WIDTH - Constants.PLAYER_SIZE) / 2) {
-
-                //todo: encapsulate this into a method
-                gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
-                backgroundCloud1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4); // Layer 1 moves at half speed
-                backgroundCloud2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3); // Layer 2 moves at 30% speed
-                backgroundCloud3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2); // Layer 2 moves at 30% speed
-                backgroundMoon.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05)); // Layer 2 moves at 30% speed
-
-            }
-        });
-        player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
-            int offsetY = newValue.intValue();
-            //test
-            //System.out.println(offsetY);
-            if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 && offsetY > Constants.BACKGROUND_HEIGHT / 4) {
-                gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
-                backgroundCloud1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50); // Layer 1 moves at half speed
-                backgroundCloud2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50); // Layer 2 moves at 30% speed
-                backgroundCloud3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50); // Layer 2 moves at 30% speed
-                backgroundMoon.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50); // Layer 2 moves at 30% speed
-            }
-        });
-
+        // Add roots to the scene
         appRoot.getChildren().addAll(backgroundRoot, gameRoot, uiRoot);
 
+        // Initialize the move logic
         move = new Move(collidableMap);
 
+        // Create game scene
         gameScene = new Scene(appRoot);
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
 
+        // UI Elements
         uiRoot.getChildren().add(pauseMenu);
         if (isDebugMode) {
             uiRoot.getChildren().add(framerateLabel);
@@ -391,22 +354,6 @@ public class Main extends Application {
         }
     }
 
-    private int calculateAdjacencyCode(String[] level, int i, int j, char target) {
-        int adjacencyCode = 0;
-        if (i > 0 && level[i - 1].charAt(j) == target) {
-            adjacencyCode += 1; // got a neighbor above
-        }
-        if (j < level[i].length() - 1 && level[i].charAt(j + 1) == target) {
-            adjacencyCode += 2; // got a neighbor to the right
-        }
-        if (i < level.length - 1 && level[i + 1].charAt(j) == target) {
-            adjacencyCode += 4; // got a neighbor below
-        }
-        if (j > 0 && level[i].charAt(j - 1) == target) {
-            adjacencyCode += 8; // got a neighbor to the left
-        }
-        return adjacencyCode;
-    }
 
     public void transitionToNextLevel() {
         stopGameLoop();
