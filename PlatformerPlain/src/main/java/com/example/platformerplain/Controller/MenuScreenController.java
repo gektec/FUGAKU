@@ -18,6 +18,8 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
+import static com.example.platformerplain.Assets.BACKGROUND_MUSIC;
+
 /**
  * This class serves as the controller for the Menu Screen in the game.
  * It manages the initialization and configuration of UI components,
@@ -74,10 +76,8 @@ public class MenuScreenController {
      * Loads and plays the background music indefinitely.
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
-    private void playBackgroundMusic() throws URISyntaxException {
-        String backgroundMusicFile = "/sounds/victory.mp3"; // Ensure this is the correct path
-        Media backgroundMusic = new Media(Objects.requireNonNull(getClass().getResource(backgroundMusicFile)).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(backgroundMusic);
+    private void playBackgroundMusic() {
+        MediaPlayer mediaPlayer = BACKGROUND_MUSIC;
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
         mediaPlayer.play(); // Start playing the music
     }

@@ -13,6 +13,7 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
+import static com.example.platformerplain.Assets.COMPLETE_SOUND;
 import static com.example.platformerplain.Main.currentScore;
 
 /**
@@ -73,9 +74,8 @@ public class CompletedScreenController {
 
     private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
-        String completedSoundFile = "/sounds/completed.mp3"; // Verify the file path is correct
-        Media completedSound = new Media(Objects.requireNonNull(getClass().getResource(completedSoundFile)).toURI().toString());
-        mediaPlayer = new MediaPlayer(completedSound);
+
+        mediaPlayer = COMPLETE_SOUND;
 
         // Play the sound effect upon initialization
         mediaPlayer.play();
