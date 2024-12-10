@@ -23,6 +23,7 @@ public class FailScreenController {
 
     public Button MenuButton;
     public Button ExitButton;
+    public Button RestartButton;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
 
