@@ -16,7 +16,6 @@ public class TransitionScreen implements Screen {
      * Loads and displays the transition screen on the specified stage.
      * @param primaryStage The stage to display the transition screen on.
      */
-    @Override
     public void show(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Transition.fxml"));
@@ -25,6 +24,7 @@ public class TransitionScreen implements Screen {
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
+
 
             primaryStage.setTitle("Congratulations on passing!");
             primaryStage.setScene(transitionScene);

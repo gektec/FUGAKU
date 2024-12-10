@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-import static com.example.platformerplain.Main.currentScore;
-
 /**
  * This class serves as the controller for the Transition Screen in the game.
  * It manages the initialization and configuration of UI components,
@@ -28,7 +26,7 @@ public class TransitionScreenController {
     public Button NextLevelButton;
     public Button ExitButton;
     public Button RestartButton;
-    public Label scoreLabel;
+
     @FXML
     private GridPane root;  // Root layout in the FXML file
     private Stage primaryStage;  // Main application stage
@@ -82,18 +80,7 @@ public class TransitionScreenController {
         mediaPlayer.play();
     }
 
-    // Method to set score
-    public void setScore(int score) {
-        currentScore = score;
-        scoreLabel.setText("Score: " + currentScore);
-        updateScoreDisplay();
-    }
 
-    private void updateScoreDisplay() {
-        if (scoreLabel != null) {
-            scoreLabel.setText("Score: " + currentScore);
-        }
-    }
 
     /**
      * Exits the game application.
