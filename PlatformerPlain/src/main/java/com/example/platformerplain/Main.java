@@ -1,6 +1,6 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.Screen.*;
+import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityFactory;
