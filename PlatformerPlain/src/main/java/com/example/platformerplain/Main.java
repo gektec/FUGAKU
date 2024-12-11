@@ -39,7 +39,7 @@ public class Main extends Application {
 
     private Pane gameRoot = new Pane();
     private static Main instance;
-    private Stage primaryStage;
+    public static Stage primaryStage;
     private ScreenManager screenManager;  // ScreenManager instance
 
 
@@ -49,7 +49,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        Main.primaryStage = primaryStage;
 
         instance = this;
 

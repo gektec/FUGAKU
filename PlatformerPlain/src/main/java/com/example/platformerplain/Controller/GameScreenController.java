@@ -2,6 +2,7 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
 import com.example.platformerplain.ScreenManager;
+import com.example.platformerplain.View.GameScreen;
 import com.example.platformerplain.View.PauseScreen;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.GameModel;
@@ -22,54 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.example.platformerplain.View.GameScreen.keys;
+
 public class GameScreenController {
-    private static HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static ArrayList<Goal> goalMap = new ArrayList<>();
-    private static ArrayList<Spike> spikeMap = new ArrayList<>();
-    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
-
-    private List<Entity> toRemove = new ArrayList<>();
-    private Pane appRoot = new Pane();
-    private Pane gameRoot = new Pane();
-    private Pane uiRoot = new Pane();
-    private Pane backgroundRoot = new Pane();
-
-    private Entity player;
-    private static int levelWidth = -1;
-    private static int levelHeight = -1;
-    public MovePlayer movePlayerLogic;
-    private MoveEnemy moveEnemyLogic;
-    private Move move;
-    private Scene gameScene;
-
-    //Debug
-
-    protected boolean isDebugMode = true;
-
-    private Label framerateLabel = new Label();
-    private long lastTime = 0;
-    private int frameCount = 0;
-
-    private Label moveStateLabel = new Label();
-
-    private Label playerSpeedLabel = new Label();
-
-    private Label timeLabel = new Label();
-
-    private LineChart<Number, Number> speedChart;
-    private XYChart.Series<Number, Number> speedX;
-    private XYChart.Series<Number, Number> speedY;
-    private int timeStep = 0;
 
     //Main
-
-    static int currentLevel = 0;
-    public static int currentScore = 0;
-    public static int finalScore = 0;
-    public static int killedEnemy = 0;
-    public static long totalTime = 0;
 
     private static Main instance;
     private static Stage primaryStage;
@@ -94,7 +52,7 @@ public class GameScreenController {
     public static void togglePauseMenu() {
         if(!isPaused) {
             GameModel.stopGameLoop(); // stop game loop
-            ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
+            ScreenManager.getInstance(Main.primaryStage).showScreen(new PauseScreen());
             isPaused = true;
         }
     }

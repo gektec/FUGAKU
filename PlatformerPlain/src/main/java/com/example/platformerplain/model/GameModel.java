@@ -2,6 +2,7 @@ package com.example.platformerplain.model;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.GameScreenController;
+import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.ScreenManager;
 import com.example.platformerplain.View.*;
@@ -31,44 +32,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GameModel {
-    private HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static ArrayList<Goal> goalMap = new ArrayList<>();
-    private static ArrayList<Spike> spikeMap = new ArrayList<>();
-    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
 
     private static List<Entity> toRemove = new ArrayList<>();
-    private Pane appRoot = new Pane();
-    private static Pane gameRoot = new Pane();
-    private Pane uiRoot = new Pane();
-    private Pane backgroundRoot = new Pane();
-
-    private static Entity player;
-    private static int levelWidth = -1;
-    private static int levelHeight = -1;
-    public static MovePlayer movePlayerLogic;
-    private MoveEnemy moveEnemyLogic;
-    private Move move;
-    private static Scene gameScene;
-
     //Debug
-
     protected static boolean isDebugMode = true;
 
-    private static Label framerateLabel = new Label();
     private static long lastTime = 0;
     private static int frameCount = 0;
 
-    private static Label moveStateLabel = new Label();
-
-    private static Label playerSpeedLabel = new Label();
-
-    private static Label timeLabel = new Label();
-
-    private static LineChart<Number, Number> speedChart;
-    private static XYChart.Series<Number, Number> speedX;
-    private static XYChart.Series<Number, Number> speedY;
     private static int timeStep = 0;
 
     //Main
@@ -78,10 +49,6 @@ public class GameModel {
     public static int finalScore = 0;
     public static int killedEnemy = 0;
     public static long totalTime = 0;
-
-    private static Main instance;
-    private static Stage primaryStage;
-    private static ScreenManager screenManager;  // ScreenManager instance
 
     private static Timeline gameLoop;
     private static Button pauseMenu = new Button();
@@ -97,7 +64,7 @@ public class GameModel {
         isPaused = false;
         GameScreen.initContent();
         GameScreen.startLevel();
-        primaryStage.setScene(gameScene);
+        primaryStage.setScene(GameScreen.gameScene);
         startGameLoop();
     }
 
@@ -106,7 +73,7 @@ public class GameModel {
         isPaused = false;
         GameScreen.initContent();
         GameScreen.startLevel();
-        primaryStage.setScene(gameScene);
+        primaryStage.setScene(GameScreen.gameScene);
         startGameLoop();
     }
 
@@ -122,8 +89,8 @@ public class GameModel {
 
             if (isDebugMode) updateLables();
 
-            enemyMap.removeAll(toRemove);
-            collidableMap.removeAll(toRemove);
+            GameScreen.enemyMap.removeAll(toRemove);
+            GameScreen.collidableMap.removeAll(toRemove);
         });
 
         gameLoop = new Timeline(frame);
@@ -134,8 +101,8 @@ public class GameModel {
 
     private static void update() {
         GameScreen.player.update();
-        if (enemyMap != null) {
-            for (Enemy enemy : enemyMap) {
+        if (GameScreen.enemyMap != null) {
+            for (Enemy enemy : GameScreen.enemyMap) {
                 enemy.update();
             }
         }
@@ -151,7 +118,7 @@ public class GameModel {
     private static void updateFramerate() {
         long currentTime = System.nanoTime();
         if (currentTime - lastTime >= 1_000_000_000) {
-            framerateLabel.setText("FPS: " + frameCount);
+            GameScreen.framerateLabel.setText("FPS: " + frameCount);
             frameCount = 0;
             lastTime = currentTime;
         }
@@ -162,32 +129,32 @@ public class GameModel {
         if (!isPaused) {
             long seconds = (elapsedTime / 1000) % 60; // Convert milliseconds to seconds
             long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
-            timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
+            GameScreen.timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
         }
     }
 
 
 
     private static void updateMoveState() {
-        MoveState moveState = movePlayerLogic.getMoveStatus().moveState;
-        moveStateLabel.setText("Move State: " + moveState);
+        MoveState moveState = GameScreen.movePlayerLogic.getMoveStatus().moveState;
+        GameScreen.moveStateLabel.setText("Move State: " + moveState);
     }
 
     private static void updatePlayerSpeed() {
-        float[] speed = movePlayerLogic.getMoveStatus().velocity.get();
-        playerSpeedLabel.setText("Speed: " + Arrays.toString(speed));
-        speedX.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
-        speedY.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
+        float[] speed = GameScreen.movePlayerLogic.getMoveStatus().velocity.get();
+        GameScreen.playerSpeedLabel.setText("Speed: " + Arrays.toString(speed));
+        GameScreen.speedX.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
+        GameScreen.speedY.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
         // Keep only the last 60 data points
-        if (speedX.getData().size() > 60) {
-            speedX.getData().removeFirst();
-            speedY.getData().removeFirst();
+        if (GameScreen.speedX.getData().size() > 60) {
+            GameScreen.speedX.getData().removeFirst();
+            GameScreen.speedY.getData().removeFirst();
         }
 
         // Update x-axis bounds
-        NumberAxis xAxis = (NumberAxis) speedChart.getXAxis();
-        NumberAxis yAxis = (NumberAxis) speedChart.getYAxis();
+        NumberAxis xAxis = (NumberAxis) GameScreen.speedChart.getXAxis();
+        NumberAxis yAxis = (NumberAxis) GameScreen.speedChart.getYAxis();
         xAxis.setAutoRanging(false);
         yAxis.setAutoRanging(false);
         xAxis.setLowerBound(timeStep - 60);
@@ -200,10 +167,10 @@ public class GameModel {
         stopGameLoop();
         if(currentLevel == 1) {
             currentScore(elapsedTime);
-            screenManager.showScreen(new TransitionScreen());
+            ScreenManager.showScreen(new TransitionScreen());
         }else{
             currentScore(elapsedTime);
-            screenManager.showScreen(new CompletedScreen());
+            ScreenManager.showScreen(new CompletedScreen());
         }
     }
 
@@ -212,7 +179,7 @@ public class GameModel {
         elapsedTime = 0; // Reset elapsed time
         currentLevel = 2;
         GameScreen.startLevel();
-        primaryStage.setScene(gameScene);
+        Main.primaryStage.setScene(GameScreen.gameScene);
         startGameLoop();
     }
 
@@ -221,9 +188,9 @@ public class GameModel {
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
         GameScreen.startLevel();
-        primaryStage.setScene(gameScene);
-        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
-        gameRoot.setLayoutX(0);
+        Main.primaryStage.setScene(GameScreen.gameScene);
+        GameScreen.gameRoot.setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.BACKGROUND_HEIGHT));
+        GameScreen.gameRoot.setLayoutX(0);
         startGameLoop();
     }
 
@@ -235,7 +202,7 @@ public class GameModel {
     }
 
     public static void exitGame() {
-        screenManager.showScreen(new FailScreen());
+        ScreenManager.showScreen(new FailScreen());
     }
 
 
@@ -265,17 +232,17 @@ public class GameModel {
     }
 
     public static ArrayList<Entity> getCollidableMap() {
-        return collidableMap;
+        return GameScreen.collidableMap;
     }
 
     public static ArrayList<Enemy> getEnemyMap() {
-        return enemyMap;
+        return GameScreen.enemyMap;
     }
 
 
     public static void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
-        gameRoot.getChildren().remove(enemy.canvas());
+        GameScreen.gameRoot.getChildren().remove(enemy.canvas());
         killedEnemy++;
     }
 

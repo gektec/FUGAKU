@@ -32,16 +32,16 @@ import java.util.List;
 import static com.example.platformerplain.Controller.GameScreenController.togglePauseMenu;
 
 public class GameScreen {
-    private static HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
+    public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+    public static ArrayList<Entity> collidableMap = new ArrayList<>();
+    public static ArrayList<Enemy> enemyMap = new ArrayList<>();
     private static ArrayList<Goal> goalMap = new ArrayList<>();
     private static ArrayList<Spike> spikeMap = new ArrayList<>();
     private static ArrayList<Ladder> ladderMap = new ArrayList<>();
 
     private static List<Entity> toRemove = new ArrayList<>();
     private static Pane appRoot = new Pane();
-    private static Pane gameRoot = new Pane();
+    public static Pane gameRoot = new Pane();
     private static Pane uiRoot = new Pane();
     private static Pane backgroundRoot = new Pane();
 
@@ -51,26 +51,21 @@ public class GameScreen {
     public static MovePlayer movePlayerLogic;
     private MoveEnemy moveEnemyLogic;
     private static Move move;
-    private static Scene gameScene;
+    public static Scene gameScene;
 
     //Debug
 
-    protected static boolean isDebugMode = true;
+    public static Label framerateLabel = new Label();
 
-    private static Label framerateLabel = new Label();
-    private long lastTime = 0;
-    private int frameCount = 0;
+    public static Label moveStateLabel = new Label();
 
-    private static Label moveStateLabel = new Label();
+    public static Label playerSpeedLabel = new Label();
 
-    private static Label playerSpeedLabel = new Label();
+    public static Label timeLabel = new Label();
 
-    private static Label timeLabel = new Label();
-
-    private static LineChart<Number, Number> speedChart;
-    private static XYChart.Series<Number, Number> speedX;
-    private static XYChart.Series<Number, Number> speedY;
-    private int timeStep = 0;
+    public static LineChart<Number, Number> speedChart;
+    public static XYChart.Series<Number, Number> speedX;
+    public static XYChart.Series<Number, Number> speedY;
 
     //Main
 
@@ -252,7 +247,7 @@ public class GameScreen {
         // UI Elements
         uiRoot.getChildren().add(pauseMenu);
         uiRoot.getChildren().add(timeLabel);
-        if (isDebugMode) {
+        if (GameModel.getDebugMode()) {
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
