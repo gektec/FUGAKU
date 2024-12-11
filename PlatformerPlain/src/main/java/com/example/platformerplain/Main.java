@@ -420,6 +420,9 @@ public class Main extends Application {
     }
 
     public void restartLevel(){
+        isPaused = false;
+        startTime = System.currentTimeMillis(); // Reset start time
+        elapsedTime = 0; // Reset elapsed time
         startLevel();
         primaryStage.setScene(gameScene);
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
