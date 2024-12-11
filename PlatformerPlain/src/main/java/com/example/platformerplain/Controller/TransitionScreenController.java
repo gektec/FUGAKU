@@ -28,8 +28,11 @@ public class TransitionScreenController {
     public Button NextLevelButton;
     public Button ExitButton;
     public Button RestartButton;
+
     @FXML
     private Label scoreLabel;
+    public Label killedLabel;
+    public Label timeLabel;
 
     @FXML
     private GridPane root;  // Root layout in the FXML file
@@ -47,6 +50,10 @@ public class TransitionScreenController {
     public void setScore(int score) {
         scoreLabel.setText("Score: " + score);
     }
+
+    public void setKilled(int killed) {killedLabel.setText("Enemy killed:" + killed);}
+
+    public void setTime(long time) {timeLabel.setText("Time: " + time + "s");}
 
     /**
      * Initializes the transition screen, loading the background image

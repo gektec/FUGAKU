@@ -82,6 +82,8 @@ public class Main extends Application {
     static int currentLevel = 0;
     public static int currentScore = 0;
     public static int finalScore = 0;
+    public static int killedEnemy = 0;
+    public static long totalTime = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -93,6 +95,8 @@ public class Main extends Application {
 
     private long startTime = 0;  // To store the start time
     private long elapsedTime = 0; // Used to store accumulated time
+    private long lastUpdateTime = 0; // To keep track of the last update time
+
 
 
     public static void main(String[] args) {
@@ -137,10 +141,14 @@ public class Main extends Application {
 
 
     private void startGameLoop() {
+        lastUpdateTime = System.currentTimeMillis(); // Initialize last update time
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-            update();
-            if(isDebugMode) updateLables();
+            long currentTime = System.currentTimeMillis();
+            elapsedTime += currentTime - lastUpdateTime; // Update elapsed time based on current frame
+            lastUpdateTime = currentTime; // Update last update time
 
+            update();
+            if (isDebugMode) updateLables();
 
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
@@ -150,6 +158,7 @@ public class Main extends Application {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
     }
+
 
     private void update() {
         player.update();
@@ -177,14 +186,14 @@ public class Main extends Application {
         frameCount++;
     }
 
-    private void updateTime(){
+    private void updateTime() {
         if (!isPaused) {
-            elapsedTime = System.currentTimeMillis() - startTime; // Calculate elapsed time
-            long seconds = (elapsedTime / 1000) % 60; // Calculate seconds
+            long seconds = (elapsedTime / 1000) % 60; // Convert milliseconds to seconds
             long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
-            timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // update Label
+            timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
         }
     }
+
 
 
     private void updateMoveState() {
@@ -420,6 +429,9 @@ public class Main extends Application {
     }
 
     public void restartLevel(){
+        isPaused = false;
+        startTime = System.currentTimeMillis(); // Reset start time
+        elapsedTime = 0; // Reset elapsed time
         startLevel();
         primaryStage.setScene(gameScene);
         gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
@@ -452,15 +464,32 @@ public class Main extends Application {
         startGameLoop();
     }
 
-    public void currentScore(long elapsedTime){
+    public void currentScore(long elapsedTime) {
         int maxScore = 1000;
-        int minTime = 500;
-        currentScore = (int) (maxScore - (minTime - elapsedTime));
+        int penaltyPerSecond = 10;
+
+        // Calculate elapsed time in seconds for the score
+        long secondsElapsed = elapsedTime / 1000;
+        totalTime += secondsElapsed;
+
+        currentScore = (int) (maxScore - (penaltyPerSecond * secondsElapsed) + (killedEnemy * 200));
+
+        // Ensure currentScore does not drop below 0
+        if (currentScore < 0) {
+            currentScore = 0;
+        }
+
         finalScore += currentScore;
     }
 
+    public long getTotalTime(){return totalTime;};
+
     public int getCurrentScore() {
         return currentScore;
+    }
+
+    public int getCurrentKilled() {
+        return killedEnemy;
     }
 
     public int getFinalScore() {
@@ -484,6 +513,7 @@ public class Main extends Application {
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         gameRoot.getChildren().remove(enemy.canvas());
+        killedEnemy++;
     }
 
 

@@ -21,12 +21,27 @@
     -->
     <Region GridPane.rowIndex="0" minHeight="50" />
 
-    <!-- Score Label -->
+    <!-- Enemies killed Label -->
+    <Label fx:id="killedLabel"
+           text="killed: 0"
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="0"/>
+
+    <!--
+
+    <- Time Label -->
+    <Label fx:id="timeLabel"
+           text="time: 0"
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="1"/>
+
+    <!--
+
+    <!- Score Label -->
     <Label fx:id="scoreLabel"
            text="score: 0"
            GridPane.rowIndex="0"
-           GridPane.columnIndex="1"
-           GridPane.halignment="CENTER"/>
+           GridPane.columnIndex="2"/>
 
     <!--
         Buttons on the transition screen for user interaction.

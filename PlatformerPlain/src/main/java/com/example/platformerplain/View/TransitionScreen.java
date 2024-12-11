@@ -28,6 +28,8 @@ public class TransitionScreen implements Screen {
             Main main = Main.getInstance();
             if (main != null) {
                 controller.setScore(main.getCurrentScore());
+                controller.setKilled(main.getCurrentKilled());
+                controller.setTime(main.getTotalTime());
             }
 
 
