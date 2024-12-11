@@ -82,7 +82,9 @@ public class LevelSelectScreenController {
         // Get the main instance and initiate level transition
         Main main = Main.getInstance();
         if (main != null) {
-            main.startNextLevel();
+            main.startLevel2(primaryStage);
+        }else {
+            System.err.println("Primary stage is not set.");
         }
     }
 }

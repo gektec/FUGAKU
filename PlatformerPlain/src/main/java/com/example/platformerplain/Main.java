@@ -127,6 +127,15 @@ public class Main extends Application {
         startGameLoop();
     }
 
+    public void startLevel2(Stage primaryStage) {
+        currentLevel = 2;
+        isPaused = false;
+        initContent();
+        startLevel();
+        primaryStage.setScene(gameScene);
+        startGameLoop();
+    }
+
 
     private void startGameLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
