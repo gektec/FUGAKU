@@ -2,6 +2,7 @@ package com.example.platformerplain.View;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.TransitionScreenController;
+import com.example.platformerplain.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +25,10 @@ public class TransitionScreen implements Screen {
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
+            Main main = Main.getInstance();
+            if (main != null) {
+                controller.setScore(main.getCurrentScore());
+            }
 
 
             primaryStage.setTitle("Congratulations on passing!");

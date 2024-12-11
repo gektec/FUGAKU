@@ -404,6 +404,7 @@ public class Main extends Application {
         stopGameLoop();
         totalTime += elapsedTime; // Add to total time
         if(currentLevel == 1) {
+            currentScore(elapsedTime);
             screenManager.showScreen(new TransitionScreen());
         }else{
             screenManager.showScreen(new CompletedScreen());
@@ -455,8 +456,12 @@ public class Main extends Application {
 
     public void currentScore(long elapsedTime){
         int maxScore = 1000;
-        int minTime = 1000;
-        currentScore = (int) (maxScore * (minTime / (double) elapsedTime));
+        int minTime = 500;
+        currentScore = (int) (maxScore - (minTime - elapsedTime));
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
     }
 
 
