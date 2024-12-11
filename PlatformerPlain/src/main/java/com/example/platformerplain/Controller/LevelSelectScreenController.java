@@ -1,14 +1,11 @@
 package com.example.platformerplain.Controller;
 
-import com.example.platformerplain.Main;
-import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.View.GameScreen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import java.util.Objects;
 
 import static com.example.platformerplain.Assets.BACKGROUND_MOON;
 
