@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <GridPane
@@ -8,69 +8,51 @@
         alignment="CENTER"
         prefHeight="400.0"
         prefWidth="600.0"
-        hgap="30"
-        vgap="30"
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
         fx:controller="com.example.platformerplain.Controller.PauseScreenController">
 
-    <!--
-        The placeholder area is used to provide vertical spacing in the first row of the GridPane.
-    -->
-    <Region GridPane.rowIndex="0" minHeight="50" />
+    <!-- Define one column and vertically distribute rows equally -->
 
-    <!--
-        Buttons on the Pause screen for user interaction.
-        Each button, when clicked, invokes a specific
-        action defined in the PauseScreenController class.
-    -->
-    <Button
-            fx:id="MenuButton"
-            onAction="#handleMenu"
-            mnemonicParsing="false"
-            text="Menu"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="0"
-    />
+    <!-- Centralizing all buttons using VBox -->
+    <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="2">
+        <Button
+                fx:id="ResumeButton"
+                onAction="#handleResume"
+                text="Resume"
+                prefWidth="200.0"
+        />
 
-    <Button
-            fx:id="ExitButton"
-            onAction="#handleExitGame"
-            text="Exit"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="1"
-    />
+        <Button
+                fx:id="MenuButton"
+                onAction="#handleMenu"
+                text="Menu"
+                mnemonicParsing="false"
+                prefWidth="200.0"
+        />
 
-    <Button
-            fx:id="ResumeButton"
-            onAction="#handleResume"
-            text="Resume"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="2"
-    />
+        <Button
+                fx:id="ExitButton"
+                onAction="#handleExitGame"
+                text="Exit"
+                prefWidth="200.0"
+        />
 
-    <!--
-        Help Button and Restart Button placed in a new row to provide users
-        with assistance or guidance relevant to the game, and chance to restart.
-    -->
-    <Button
-            fx:id="helpButton"
-            onAction="#handleHelp"
-            text="Help"
-            GridPane.rowIndex="3"
-            GridPane.columnIndex="0"
-            GridPane.columnSpan="3"
-    />
+        <Button
+                fx:id="RestartButton"
+                onAction="#handleRestart"
+                text="Restart"
+                mnemonicParsing="false"
+                prefWidth="200.0"
+        />
 
-    <Button
-            fx:id="RestartButton"
-            onAction="#handleRestart"
-            mnemonicParsing="false"
-            text="Restart"
-            GridPane.rowIndex="3"
-            GridPane.columnIndex="1"
-            GridPane.columnSpan="3"
-    />
+        <Button
+                fx:id="helpButton"
+                onAction="#handleHelp"
+                text="Help"
+                prefWidth="200.0"
+        />
+    </VBox>
 
 </GridPane>

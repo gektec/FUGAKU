@@ -3,7 +3,6 @@ package com.example.platformerplain;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.Controller.TransitionScreenController;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -82,6 +81,7 @@ public class Main extends Application {
 
     static int currentLevel = 0;
     public static int currentScore = 0;
+    public static int finalScore = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -93,7 +93,6 @@ public class Main extends Application {
 
     private long startTime = 0;  // To store the start time
     private long elapsedTime = 0; // Used to store accumulated time
-    private long totalTime = 0; // Total time variable
 
 
     public static void main(String[] args) {
@@ -120,6 +119,15 @@ public class Main extends Application {
 
     public void startGame(Stage primaryStage) {
         currentLevel = 1;
+        isPaused = false;
+        initContent();
+        startLevel();
+        primaryStage.setScene(gameScene);
+        startGameLoop();
+    }
+
+    public void startLevel2(Stage primaryStage) {
+        currentLevel = 2;
         isPaused = false;
         initContent();
         startLevel();
@@ -393,10 +401,11 @@ public class Main extends Application {
 
     public void transitionToNextLevel() {
         stopGameLoop();
-        totalTime += elapsedTime; // Add to total time
         if(currentLevel == 1) {
+            currentScore(elapsedTime);
             screenManager.showScreen(new TransitionScreen());
         }else{
+            currentScore(elapsedTime);
             screenManager.showScreen(new CompletedScreen());
         }
     }
@@ -426,7 +435,6 @@ public class Main extends Application {
     }
 
     public void exitGame() {
-        totalTime = 0;
         screenManager.showScreen(new FailScreen());
     }
 
@@ -446,8 +454,17 @@ public class Main extends Application {
 
     public void currentScore(long elapsedTime){
         int maxScore = 1000;
-        int minTime = 1000;
-        currentScore = (int) (maxScore * (minTime / (double) elapsedTime));
+        int minTime = 500;
+        currentScore = (int) (maxScore - (minTime - elapsedTime));
+        finalScore += currentScore;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public int getFinalScore() {
+        return finalScore;
     }
 
 

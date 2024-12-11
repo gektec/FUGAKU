@@ -28,6 +28,8 @@ public class TransitionScreenController {
     public Button NextLevelButton;
     public Button ExitButton;
     public Button RestartButton;
+    @FXML
+    private Label scoreLabel;
 
     @FXML
     private GridPane root;  // Root layout in the FXML file
@@ -40,6 +42,10 @@ public class TransitionScreenController {
      */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void setScore(int score) {
+        scoreLabel.setText("Score: " + score);
     }
 
     /**
