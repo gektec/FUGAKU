@@ -82,6 +82,7 @@ public class Main extends Application {
     static int currentLevel = 0;
     public static int currentScore = 0;
     public static int finalScore = 0;
+    public static int killedEnemy = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -466,6 +467,10 @@ public class Main extends Application {
         return currentScore;
     }
 
+    public int getCurrentKilled() {
+        return killedEnemy;
+    }
+
     public int getFinalScore() {
         return finalScore;
     }
@@ -487,6 +492,8 @@ public class Main extends Application {
     public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         gameRoot.getChildren().remove(enemy.canvas());
+        System.out.println("Killed!");
+        killedEnemy++;
     }
 
 

@@ -26,6 +26,8 @@ public class CompletedScreenController {
     public Button MenuButton;
     public Button ExitButton;
     public Label scoreLabel;
+    public Label killedLabel;
+    public Label timeLabel;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
 
@@ -43,6 +45,16 @@ public class CompletedScreenController {
 
     public void setScore(int score) {
         scoreLabel.setText("Your Final Score is: " + score);
+    }
+
+    public void setKilled(int killed) {
+        if (killed == 0) {
+            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
+        } else if (killed == 1) {
+            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
+        } else if (killed >= 1) {
+            killedLabel.setText("You have killed " + killed + "enemies!");
+        }
     }
 
     /**

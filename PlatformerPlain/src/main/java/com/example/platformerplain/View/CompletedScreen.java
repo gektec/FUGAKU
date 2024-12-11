@@ -29,6 +29,7 @@ public class CompletedScreen implements Screen {
             Main main = Main.getInstance();
             if (main != null) {
                 controller.setScore(main.getFinalScore());
+                controller.setKilled(main.getCurrentKilled());
             }
 
             primaryStage.setTitle("Congratulations!");

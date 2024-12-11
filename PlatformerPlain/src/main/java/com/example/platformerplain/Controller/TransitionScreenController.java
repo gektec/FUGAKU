@@ -28,8 +28,11 @@ public class TransitionScreenController {
     public Button NextLevelButton;
     public Button ExitButton;
     public Button RestartButton;
+
     @FXML
     private Label scoreLabel;
+    public Label killedLabel;
+    public Label timeLabel;
 
     @FXML
     private GridPane root;  // Root layout in the FXML file
@@ -46,6 +49,16 @@ public class TransitionScreenController {
 
     public void setScore(int score) {
         scoreLabel.setText("Score: " + score);
+    }
+
+    public void setKilled(int killed) {
+        if(killed == 0){
+            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
+        } else if  (killed == 1) {
+            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
+        } else if  (killed >= 1) {
+            killedLabel.setText("You have killed " + killed + "enemies!");
+        }
     }
 
     /**
