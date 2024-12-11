@@ -38,6 +38,7 @@ public class LevelData {
     };
 
     public static class getLevelInformation {
+
         public static int getLevelNumber() {
             return GameModel.currentLevel;
         }

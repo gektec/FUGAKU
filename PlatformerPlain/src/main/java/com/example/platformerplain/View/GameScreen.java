@@ -74,16 +74,6 @@ public class GameScreen {
 
     //Main
 
-    static int currentLevel = 0;
-    public static int currentScore = 0;
-    public static int finalScore = 0;
-    public static int killedEnemy = 0;
-    public static long totalTime = 0;
-
-    private static Main instance;
-    private Stage primaryStage;
-    private ScreenManager screenManager;  // ScreenManager instance
-
     private Timeline gameLoop;
     private static Button pauseMenu = new Button();
     private boolean isPaused = false;
@@ -199,7 +189,7 @@ public class GameScreen {
         }
 
         // Add level indicator text based on level
-        if (currentLevel == 1) {
+        if (LevelData.getLevelInformation.getLevelNumber() == 1) {
             Text title = new Text("Try to get the goal");
             title.setFont(new Font(36));
             title.setFill(Color.YELLOW);
@@ -207,7 +197,7 @@ public class GameScreen {
             title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
             title.setY(40);
             uiRoot.getChildren().add(title);
-        } else if (currentLevel == 2) {
+        } else if (LevelData.getLevelInformation.getLevelNumber() == 2) {
             Text title = new Text("Level 2: New Challenges Await!");
             title.setFont(new Font(36));
             title.setFill(Color.YELLOW);
@@ -219,7 +209,7 @@ public class GameScreen {
 
         // Use LevelInitializer to set up the level
         LevelInitializer levelInitializer = new LevelInitializer(keys, gameRoot, uiRoot, backgroundRoot, collidableMap, enemyMap, spikeMap, ladderMap);
-        player = levelInitializer.generateLevel(currentLevel);
+        player = levelInitializer.generateLevel(LevelData.getLevelInformation.getLevelNumber());
 
         // If player is not null, continue setup
         if (player != null) {

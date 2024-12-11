@@ -119,6 +119,7 @@ public class GameModel {
             lastUpdateTime = currentTime; // Update last update time
 
             update();
+
             if (isDebugMode) updateLables();
 
             enemyMap.removeAll(toRemove);

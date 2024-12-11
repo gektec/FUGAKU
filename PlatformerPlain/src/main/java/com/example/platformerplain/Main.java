@@ -37,66 +37,10 @@ import java.util.List;
 
 public class Main extends Application {
 
-    private HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static ArrayList<Goal> goalMap = new ArrayList<>();
-    private static ArrayList<Spike> spikeMap = new ArrayList<>();
-    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
-
-    private List<Entity> toRemove = new ArrayList<>();
-    private Pane appRoot = new Pane();
     private Pane gameRoot = new Pane();
-    private Pane uiRoot = new Pane();
-    private Pane backgroundRoot = new Pane();
-
-    private Entity player;
-    private static int levelWidth = -1;
-    private static int levelHeight = -1;
-    public MovePlayer movePlayerLogic;
-    private MoveEnemy moveEnemyLogic;
-    private Move move;
-    private Scene gameScene;
-
-    //Debug
-
-    protected boolean isDebugMode = true;
-
-    private Label framerateLabel = new Label();
-    private long lastTime = 0;
-    private int frameCount = 0;
-
-    private Label moveStateLabel = new Label();
-
-    private Label playerSpeedLabel = new Label();
-
-    private Label timeLabel = new Label();
-
-    private LineChart<Number, Number> speedChart;
-    private XYChart.Series<Number, Number> speedX;
-    private XYChart.Series<Number, Number> speedY;
-    private int timeStep = 0;
-
-    //Main
-
-    static int currentLevel = 0;
-    public static int currentScore = 0;
-    public static int finalScore = 0;
-    public static int killedEnemy = 0;
-    public static long totalTime = 0;
-
     private static Main instance;
     private Stage primaryStage;
     private ScreenManager screenManager;  // ScreenManager instance
-
-    private Timeline gameLoop;
-    private Button pauseMenu = new Button();
-    private boolean isPaused = false;
-
-    private long startTime = 0;  // To store the start time
-    private long elapsedTime = 0; // Used to store accumulated time
-    private long lastUpdateTime = 0; // To keep track of the last update time
-
 
 
     public static void main(String[] args) {
