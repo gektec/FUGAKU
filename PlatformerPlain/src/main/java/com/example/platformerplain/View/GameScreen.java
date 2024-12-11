@@ -1,7 +1,9 @@
 package com.example.platformerplain.View;
 
 import com.example.platformerplain.*;
+import com.example.platformerplain.Controller.GameScreenController;
 import com.example.platformerplain.entities.*;
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
@@ -43,7 +45,7 @@ public class GameScreen {
     private static Pane uiRoot = new Pane();
     private static Pane backgroundRoot = new Pane();
 
-    private static Entity player;
+    public static Entity player;
     private static int levelWidth = -1;
     private static int levelHeight = -1;
     public static MovePlayer movePlayerLogic;
@@ -66,8 +68,8 @@ public class GameScreen {
     private static Label timeLabel = new Label();
 
     private static LineChart<Number, Number> speedChart;
-    private XYChart.Series<Number, Number> speedX;
-    private XYChart.Series<Number, Number> speedY;
+    private static XYChart.Series<Number, Number> speedX;
+    private static XYChart.Series<Number, Number> speedY;
     private int timeStep = 0;
 
     //Main
@@ -86,16 +88,11 @@ public class GameScreen {
     private static Button pauseMenu = new Button();
     private boolean isPaused = false;
 
-    private static long startTime = 0;  // To store the start time
-    private static long elapsedTime = 0; // Used to store accumulated time
-    private long lastUpdateTime = 0; // To keep track of the last update time
 
 
+    public static void initContent() {
 
-
-    private void initContent() {
-
-        if(isDebugMode) {
+        if(GameModel.getDebugMode()) {
 
             framerateLabel.setTextFill(Color.WHITE);
             framerateLabel.setFont(new Font(18));
@@ -260,8 +257,7 @@ public class GameScreen {
 
         // Create game scene
         gameScene = new Scene(appRoot);
-        gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
-        gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+        GameScreenController.setKeys(gameScene);
 
         // UI Elements
         uiRoot.getChildren().add(pauseMenu);
@@ -273,8 +269,8 @@ public class GameScreen {
             uiRoot.getChildren().add(moveStateLabel);
         }
 
-        startTime = System.currentTimeMillis(); // Recording start time
-        elapsedTime = 0; // Reset elapsed time
+        GameModel.startTime = System.currentTimeMillis(); // Recording start time
+        GameModel.elapsedTime = 0; // Reset elapsed time
 
     }
 }

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GameScreenController {
-    private HashMap<KeyCode, Boolean> keys = new HashMap<>();
+    private static HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private static ArrayList<Entity> collidableMap = new ArrayList<>();
     private static ArrayList<Enemy> enemyMap = new ArrayList<>();
     private static ArrayList<Goal> goalMap = new ArrayList<>();
@@ -82,6 +82,12 @@ public class GameScreenController {
     private long startTime = 0;  // To store the start time
     private long elapsedTime = 0; // Used to store accumulated time
     private long lastUpdateTime = 0; // To keep track of the last update time
+
+
+    public static void setKeys(Scene gameScene) {
+        gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
+        gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
+    }
 
 
 

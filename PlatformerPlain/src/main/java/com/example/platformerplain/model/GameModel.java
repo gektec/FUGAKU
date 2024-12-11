@@ -73,7 +73,7 @@ public class GameModel {
 
     //Main
 
-    static int currentLevel = 0;
+    public static int currentLevel = 0;
     public static int currentScore = 0;
     public static int finalScore = 0;
     public static int killedEnemy = 0;
@@ -87,73 +87,15 @@ public class GameModel {
     private static Button pauseMenu = new Button();
     private static boolean isPaused = false;
 
-    private static long startTime = 0;  // To store the start time
-    private static long elapsedTime = 0; // Used to store accumulated time
+    public static long startTime = 0;  // To store the start time
+    public static long elapsedTime = 0; // Used to store accumulated time
     private static long lastUpdateTime = 0; // To keep track of the last update time
-
-
-
-
-
-
-    private static void initContent() {
-        if(isDebugMode) {
-            framerateLabel.setTextFill(Color.WHITE);
-            framerateLabel.setFont(new Font(18));
-            framerateLabel.setTranslateX(10);
-            framerateLabel.setTranslateY(10);
-
-            playerSpeedLabel.setTextFill(Color.WHITE);
-            playerSpeedLabel.setFont(new Font(18));
-            playerSpeedLabel.setTranslateX(10);
-            playerSpeedLabel.setTranslateY(30);
-
-            moveStateLabel.setTextFill(Color.WHITE);
-            moveStateLabel.setFont(new Font(18));
-            moveStateLabel.setTranslateX(10);
-            moveStateLabel.setTranslateY(50);
-
-            // Add a Time Label
-            timeLabel.setTextFill(Color.WHITE);
-            timeLabel.setFont(new Font(18));
-            timeLabel.setTranslateX(10);
-            timeLabel.setTranslateY(70);
-
-            NumberAxis xAxis = new NumberAxis();
-            NumberAxis yAxis = new NumberAxis();
-            xAxis.setLabel("Time");
-            yAxis.setLabel("Speed");
-
-            speedChart = new LineChart<>(xAxis, yAxis);
-            speedChart.setTitle("Player Speed Over Time");
-            speedX = new XYChart.Series<>();
-            speedX.setName("Speed X");
-            speedY = new XYChart.Series<>();
-            speedY.setName("Speed Y");
-            speedChart.getData().addAll(speedX, speedY);
-            speedChart.setTranslateX(10);
-            speedChart.setTranslateY(90);
-            speedChart.setPrefSize(400, 300);
-
-        }
-
-
-        // Add a Pause Button
-        pauseMenu.setTextFill(Color.BLACK);
-        pauseMenu.setFont(new Font(18));
-        pauseMenu.setTranslateX(Constants.BACKGROUND_WIDTH - 100);
-        pauseMenu.setTranslateY(30);
-        pauseMenu.setText("Pause");
-
-        pauseMenu.setOnAction(event -> GameScreenController.togglePauseMenu());
-    }
-
 
 
     public static void startGame(Stage primaryStage) {
         currentLevel = 1;
         isPaused = false;
-        initContent();
+        GameScreen.initContent();
         GameScreen.startLevel();
         primaryStage.setScene(gameScene);
         startGameLoop();
@@ -162,7 +104,7 @@ public class GameModel {
     public static void startLevel2(Stage primaryStage) {
         currentLevel = 2;
         isPaused = false;
-        initContent();
+        GameScreen.initContent();
         GameScreen.startLevel();
         primaryStage.setScene(gameScene);
         startGameLoop();
@@ -190,7 +132,7 @@ public class GameModel {
 
 
     private static void update() {
-        player.update();
+        GameScreen.player.update();
         if (enemyMap != null) {
             for (Enemy enemy : enemyMap) {
                 enemy.update();
