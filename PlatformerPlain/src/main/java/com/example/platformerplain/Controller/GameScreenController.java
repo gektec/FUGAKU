@@ -47,13 +47,4 @@ public class GameScreenController {
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
     }
 
-
-
-    public static void togglePauseMenu() {
-        if(!isPaused) {
-            GameModel.stopGameLoop(); // stop game loop
-            ScreenManager.getInstance(Main.primaryStage).showScreen(new PauseScreen());
-            isPaused = true;
-        }
-    }
 }
