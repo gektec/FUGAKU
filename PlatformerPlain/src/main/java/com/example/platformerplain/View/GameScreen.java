@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.platformerplain.Controller.GameScreenController.togglePauseMenu;
+import static com.example.platformerplain.model.GameModel.togglePauseMenu;
 
 public class GameScreen implements Screen {
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
