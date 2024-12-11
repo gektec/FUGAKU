@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GameModel {
+    private static GameModel instance;
 
     private static List<Entity> toRemove = new ArrayList<>();
     //Debug
@@ -57,6 +58,17 @@ public class GameModel {
     public static long startTime = 0;  // To store the start time
     public static long elapsedTime = 0; // Used to store accumulated time
     private static long lastUpdateTime = 0; // To keep track of the last update time
+
+    public static GameModel getInstance() {
+        if (instance == null) {
+            synchronized (GameModel.class) {
+                if (instance == null) {
+                    instance = new GameModel();
+                }
+            }
+        }
+        return instance;
+    }
 
 
     public static void startGame(Stage primaryStage) {

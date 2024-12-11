@@ -26,8 +26,8 @@ public class TransitionScreen implements Screen {
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            Main main = Main.getInstance();
-            if (main != null) {
+            GameModel gameModel = GameModel.getInstance();
+            if (gameModel != null) {
                 controller.setScore(GameModel.getCurrentScore());
                 controller.setKilled(GameModel.getCurrentKilled());
                 controller.setTime(GameModel.getTotalTime());
