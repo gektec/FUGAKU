@@ -31,7 +31,7 @@
 
     <- Time Label -->
     <Label fx:id="timeLabel"
-           text="Total time: 0"
+           text="time: 0"
            GridPane.rowIndex="0"
            GridPane.columnIndex="1"/>
 

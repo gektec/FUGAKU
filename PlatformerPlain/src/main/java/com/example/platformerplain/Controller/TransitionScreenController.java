@@ -51,15 +51,9 @@ public class TransitionScreenController {
         scoreLabel.setText("Score: " + score);
     }
 
-    public void setKilled(int killed) {
-        if(killed == 0){
-            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
-        } else if  (killed == 1) {
-            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
-        } else if  (killed >= 1) {
-            killedLabel.setText("You have killed " + killed + "enemies!");
-        }
-    }
+    public void setKilled(int killed) {killedLabel.setText("Enemy killed:" + killed);}
+
+    public void setTime(long time) {timeLabel.setText("Time: " + time + "s");}
 
     /**
      * Initializes the transition screen, loading the background image

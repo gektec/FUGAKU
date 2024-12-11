@@ -57,6 +57,8 @@ public class CompletedScreenController {
         }
     }
 
+    public void setTime(long time) {timeLabel.setText("Total time: " + time + "s");}
+
     /**
      * Initializes the Fail Screen by loading the background image and
      * playing the associated fail sound.
