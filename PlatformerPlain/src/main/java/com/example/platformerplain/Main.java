@@ -37,7 +37,6 @@ import java.util.List;
 
 public class Main extends Application {
 
-    private Pane gameRoot = new Pane();
     private static Main instance;
     public static Stage primaryStage;
     private ScreenManager screenManager;  // ScreenManager instance
@@ -68,11 +67,5 @@ public class Main extends Application {
 
     public static Main getInstance() {
         return instance;
-    }
-
-
-
-    public Pane getGameRoot() {
-        return gameRoot;
     }
 }

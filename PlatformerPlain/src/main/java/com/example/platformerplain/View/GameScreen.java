@@ -8,6 +8,7 @@ import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.texture.ImageScaler;
+import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -257,5 +258,9 @@ public class GameScreen {
         GameModel.startTime = System.currentTimeMillis(); // Recording start time
         GameModel.elapsedTime = 0; // Reset elapsed time
 
+    }
+
+    public static Pane getGameRoot() {
+        return gameRoot;
     }
 }

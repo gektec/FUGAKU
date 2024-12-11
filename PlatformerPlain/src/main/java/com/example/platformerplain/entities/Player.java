@@ -125,9 +125,9 @@ public class Player extends Entity {
         colorAdjust.setBrightness(-0.5);
         afterimage.setEffect(colorAdjust);
 
-        Main.getInstance().getGameRoot().getChildren().add(afterimage);
+        GameScreen.getGameRoot().getChildren().add(afterimage);
 
-        Timeline fadeOut = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> Main.getInstance().getGameRoot().getChildren().remove(afterimage)));
+        Timeline fadeOut = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> GameScreen.getGameRoot().getChildren().remove(afterimage)));
         fadeOut.play();
     }
 
