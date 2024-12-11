@@ -1,6 +1,5 @@
 package com.example.platformerplain.Controller;
 
-import com.example.platformerplain.Main;
 import com.example.platformerplain.View.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import java.net.URISyntaxException;
@@ -68,7 +66,7 @@ public class TransitionScreenController {
     }
     private void loadBackgroundImage() {
         // Load background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Transition.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Transition.png")));
 
         // Create a BackgroundImage object with specified properties
         BackgroundImage background = new BackgroundImage(
