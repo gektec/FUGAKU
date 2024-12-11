@@ -2,7 +2,6 @@ package com.example.platformerplain.View;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.TransitionScreenController;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +21,7 @@ public class TransitionScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Transition.fxml"));
             Parent transitionScreen = loader.load();
-            Scene transitionScene = new Scene(transitionScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            Scene transitionScene = new Scene(transitionScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

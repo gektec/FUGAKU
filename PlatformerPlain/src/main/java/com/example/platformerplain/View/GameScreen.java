@@ -8,7 +8,6 @@ import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.texture.ImageScaler;
-import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import static com.example.platformerplain.Controller.GameScreenController.togglePauseMenu;
 
-public class GameScreen {
+public class GameScreen implements Screen {
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
     public static ArrayList<Entity> collidableMap = new ArrayList<>();
     public static ArrayList<Enemy> enemyMap = new ArrayList<>();
@@ -50,6 +49,7 @@ public class GameScreen {
     private static int levelWidth = -1;
     private static int levelHeight = -1;
     public static MovePlayer movePlayerLogic;
+    private static int level;
     private MoveEnemy moveEnemyLogic;
     private static Move move;
     public static Scene gameScene;
@@ -72,8 +72,15 @@ public class GameScreen {
 
     private Timeline gameLoop;
     private static Button pauseMenu = new Button();
-    private boolean isPaused = false;
 
+    public GameScreen(int level) {
+        GameScreen.level = level;
+    }
+
+    @Override
+    public void show(Stage primaryStage) {
+        GameModel.startGame(primaryStage, level);
+    }
 
 
     public static void initContent() {
@@ -123,7 +130,7 @@ public class GameScreen {
         // Add a Pause Button
         pauseMenu.setTextFill(Color.BLACK);
         pauseMenu.setFont(new Font(18));
-        pauseMenu.setTranslateX(Constants.BACKGROUND_WIDTH - 100);
+        pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
 
@@ -147,29 +154,29 @@ public class GameScreen {
         // Set up the background
         Image background0 = Assets.BACKGROUND_SKY;
         ImageView backgroundSky = new ImageView(background0);
-        backgroundSky.setFitWidth(Constants.BACKGROUND_WIDTH * 5);
-        backgroundSky.setFitHeight(Constants.BACKGROUND_HEIGHT * 5);
+        backgroundSky.setFitWidth(Constants.WINDOW_WIDTH * 5);
+        backgroundSky.setFitHeight(Constants.WINDOW_HEIGHT * 5);
 
         Image background1 = Assets.BACKGROUND_CLOUD_1;
         ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1, 2));
-        backgroundCloud1.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
-        backgroundCloud1.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
+        backgroundCloud1.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
+        backgroundCloud1.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background2 = Assets.BACKGROUND_CLOUD_2;
         ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2, 2));
         backgroundCloud2.setScaleX(-1);
-        backgroundCloud2.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
-        backgroundCloud2.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
+        backgroundCloud2.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
+        backgroundCloud2.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background3 = Assets.BACKGROUND_CLOUD_3;
         ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3, 2));
-        backgroundCloud3.setFitWidth(Constants.BACKGROUND_WIDTH * 1.2);
-        backgroundCloud3.setFitHeight(Constants.BACKGROUND_HEIGHT * 1.2);
+        backgroundCloud3.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
+        backgroundCloud3.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background4 = Assets.BACKGROUND_MOON;
         ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4, 2));
-        backgroundMoon.setFitWidth(Constants.BACKGROUND_WIDTH);
-        backgroundMoon.setFitHeight(Constants.BACKGROUND_HEIGHT);
+        backgroundMoon.setFitWidth(Constants.WINDOW_WIDTH);
+        backgroundMoon.setFitHeight(Constants.WINDOW_HEIGHT);
 
         backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
 
@@ -178,10 +185,10 @@ public class GameScreen {
         levelHeight = LevelData.getLevelInformation.getLevelHeight();
 
         // Position the game view
-        gameRoot.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+        gameRoot.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
         gameRoot.setLayoutX(0);
         for (Node background : backgroundRoot.getChildren()) {
-            background.setLayoutY(-(levelHeight - Constants.BACKGROUND_HEIGHT));
+            background.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
         }
 
         // Add level indicator text based on level
@@ -190,7 +197,7 @@ public class GameScreen {
             title.setFont(new Font(36));
             title.setFill(Color.YELLOW);
             double textWidth = title.getLayoutBounds().getWidth();
-            title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
+            title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
             title.setY(40);
             uiRoot.getChildren().add(title);
         } else if (LevelData.getLevelInformation.getLevelNumber() == 2) {
@@ -198,7 +205,7 @@ public class GameScreen {
             title.setFont(new Font(36));
             title.setFill(Color.YELLOW);
             double textWidth = title.getLayoutBounds().getWidth();
-            title.setX((Constants.BACKGROUND_WIDTH - textWidth) / 2);
+            title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
             title.setY(40);
             uiRoot.getChildren().add(title);
         }
@@ -214,23 +221,23 @@ public class GameScreen {
             // Camera's follow logic
             player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
                 int offset = newValue.intValue();
-                if (offset > Constants.BACKGROUND_WIDTH / 2 && offset < levelWidth - (Constants.BACKGROUND_WIDTH - Constants.PLAYER_SIZE) / 2) {
-                    gameRoot.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2));
-                    backgroundCloud1.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.4);
-                    backgroundCloud2.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.3);
-                    backgroundCloud3.setLayoutX(-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.2);
-                    backgroundMoon.setLayoutX((-(offset - Constants.BACKGROUND_WIDTH / 2) * 0.05));
+                if (offset > Constants.WINDOW_WIDTH / 2 && offset < levelWidth - (Constants.WINDOW_WIDTH - Constants.PLAYER_SIZE) / 2) {
+                    gameRoot.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2));
+                    backgroundCloud1.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.4);
+                    backgroundCloud2.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.3);
+                    backgroundCloud3.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.2);
+                    backgroundMoon.setLayoutX((-(offset - Constants.WINDOW_WIDTH / 2) * 0.05));
                 }
             });
 
             player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
                 int offsetY = newValue.intValue();
-                if (levelHeight - offsetY > Constants.BACKGROUND_HEIGHT / 2 && offsetY > Constants.BACKGROUND_HEIGHT / 4) {
-                    gameRoot.setLayoutY(-(offsetY - Constants.BACKGROUND_HEIGHT / 2));
-                    backgroundCloud1.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.4) - 50);
-                    backgroundCloud2.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.3) - 50);
-                    backgroundCloud3.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.2) - 50);
-                    backgroundMoon.setLayoutY((-(offsetY - Constants.BACKGROUND_HEIGHT / 2) * 0.05) - 50);
+                if (levelHeight - offsetY > Constants.WINDOW_HEIGHT / 2 && offsetY > Constants.WINDOW_HEIGHT / 4) {
+                    gameRoot.setLayoutY(-(offsetY - Constants.WINDOW_HEIGHT / 2));
+                    backgroundCloud1.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
+                    backgroundCloud2.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
+                    backgroundCloud3.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
+                    backgroundMoon.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
                 }
             });
         }

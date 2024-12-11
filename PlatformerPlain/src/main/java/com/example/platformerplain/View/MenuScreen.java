@@ -21,7 +21,7 @@ public class MenuScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Menu.fxml"));
             Parent startScreen = loader.load();
-            Scene startScene = new Scene(startScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            Scene startScene = new Scene(startScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             MenuScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

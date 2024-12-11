@@ -10,8 +10,8 @@ public class Constants {
     public static final int PLAYER_HEIGHT = 30;
     public static final int PLAYER_WIDTH = 30;
     public static final int ENEMY_SIZE = 20;
-    public static final int BACKGROUND_WIDTH = 1280;
-    public static final int BACKGROUND_HEIGHT = 720;
+    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_HEIGHT = 720;
 
     public static final int MAX_SPEED = TILE_SIZE / 2;
     public static final int MAX_MOVE_SPEED = 10;

@@ -21,7 +21,7 @@ public class FailScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Fail.fxml"));
             Parent failScreen = loader.load();
-            Scene failScene = new Scene(failScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            Scene failScene = new Scene(failScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             FailScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

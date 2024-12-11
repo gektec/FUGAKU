@@ -21,7 +21,7 @@ public class LevelSelectScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/LevelSelect.fxml"));
             Parent selectScreen = loader.load();
-            Scene selectScene = new Scene(selectScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            Scene selectScene = new Scene(selectScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             LevelSelectScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

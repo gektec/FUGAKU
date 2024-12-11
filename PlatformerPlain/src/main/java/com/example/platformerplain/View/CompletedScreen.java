@@ -2,7 +2,6 @@ package com.example.platformerplain.View;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.CompletedScreenController;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +22,7 @@ public class CompletedScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Completed.fxml"));
             Parent completedScreen = loader.load();
-            Scene completedScene = new Scene(completedScreen, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            Scene completedScene = new Scene(completedScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             CompletedScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);

@@ -1,34 +1,22 @@
 package com.example.platformerplain.model;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Controller.GameScreenController;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.ScreenManager;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.*;
-import com.example.platformerplain.move.Move;
-import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.move.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class GameModel {
@@ -71,8 +59,8 @@ public class GameModel {
     }
 
 
-    public static void startGame(Stage primaryStage) {
-        currentLevel = 1;
+    public static void startGame(Stage primaryStage, int level) {
+        currentLevel = level;
         isPaused = false;
         GameScreen.initContent();
         GameScreen.startLevel();
@@ -80,14 +68,6 @@ public class GameModel {
         startGameLoop();
     }
 
-    public static void startLevel2(Stage primaryStage) {
-        currentLevel = 2;
-        isPaused = false;
-        GameScreen.initContent();
-        GameScreen.startLevel();
-        primaryStage.setScene(GameScreen.gameScene);
-        startGameLoop();
-    }
 
 
     private static void startGameLoop() {
@@ -201,7 +181,7 @@ public class GameModel {
         elapsedTime = 0; // Reset elapsed time
         GameScreen.startLevel();
         Main.primaryStage.setScene(GameScreen.gameScene);
-        GameScreen.gameRoot.setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.BACKGROUND_HEIGHT));
+        GameScreen.gameRoot.setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
         GameScreen.gameRoot.setLayoutX(0);
         startGameLoop();
     }
