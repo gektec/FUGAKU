@@ -23,7 +23,7 @@ public class GameModel {
     private static GameModel instance;
 
     private static List<Entity> toRemove = new ArrayList<>();
-    //Debug
+    // Debug
     protected static boolean isDebugMode = true;
 
     private static long lastTime = 0;
@@ -31,7 +31,7 @@ public class GameModel {
 
     private static int timeStep = 0;
 
-    //Main
+    // Main
 
     public static int currentLevel = 0;
     public static int currentScore = 0;
@@ -47,6 +47,9 @@ public class GameModel {
     public static long elapsedTime = 0; // Used to store accumulated time
     private static long lastUpdateTime = 0; // To keep track of the last update time
 
+    // Adding an Interpreter
+    private static ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
+
     public static GameModel getInstance() {
         if (instance == null) {
             synchronized (GameModel.class) {
@@ -58,7 +61,6 @@ public class GameModel {
         return instance;
     }
 
-
     public static void startGame(Stage primaryStage, int level) {
         currentLevel = level;
         isPaused = false;
@@ -67,8 +69,6 @@ public class GameModel {
         primaryStage.setScene(GameScreen.gameScene);
         startGameLoop();
     }
-
-
 
     private static void startGameLoop() {
         lastUpdateTime = System.currentTimeMillis(); // Initialize last update time
@@ -89,7 +89,6 @@ public class GameModel {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
     }
-
 
     private static void update() {
         GameScreen.player.update();
@@ -125,8 +124,6 @@ public class GameModel {
         }
     }
 
-
-
     private static void updateMoveState() {
         MoveState moveState = GameScreen.movePlayerLogic.getMoveStatus().moveState;
         GameScreen.moveStateLabel.setText("Move State: " + moveState);
@@ -154,14 +151,13 @@ public class GameModel {
         yAxis.setUpperBound(20);
     }
 
-
     public static void transitionToNextLevel() {
         stopGameLoop();
         if(currentLevel == 1) {
-            currentScore(elapsedTime);
+            calculateCurrentScore();
             ScreenManager.showScreen(new TransitionScreen());
-        }else{
-            currentScore(elapsedTime);
+        } else{
+            calculateCurrentScore();
             ScreenManager.showScreen(new CompletedScreen());
         }
     }
@@ -190,37 +186,37 @@ public class GameModel {
         if (gameLoop != null) {
             gameLoop.stop();
         }
-
     }
 
     public static void exitGame() {
         ScreenManager.showScreen(new FailScreen());
     }
 
-
-
     public static void resumeGame() {
         isPaused = false;
-        startTime = System.currentTimeMillis() - elapsedTime;// Ensure time continuity
+        startTime = System.currentTimeMillis() - elapsedTime; // Ensure time continuity
         startGameLoop();
     }
 
-    public static void currentScore(long elapsedTime) {
+    // Rewrite the currentScore method and use the interpreter mode
+    public static void calculateCurrentScore() {
         int maxScore = 1000;
         int penaltyPerSecond = 10;
+        long elapsedTimeSeconds = elapsedTime / 1000;
 
-        // Calculate elapsed time in seconds for the score
-        long secondsElapsed = elapsedTime / 1000;
-        totalTime += secondsElapsed;
+        // create context
+        ScoreContext context = new ScoreContext(maxScore, penaltyPerSecond, elapsedTime, killedEnemy);
 
-        currentScore = (int) (maxScore - (penaltyPerSecond * secondsElapsed) + (killedEnemy * 200));
+        // Interpret and calculate scores
+        currentScore = scoreInterpreter.interpret(context);
 
-        // Ensure currentScore does not drop below 0
+        // Make sure currentScore is not less than 0
         if (currentScore < 0) {
             currentScore = 0;
         }
 
         finalScore += currentScore;
+        totalTime += elapsedTimeSeconds;
     }
 
     public static ArrayList<Entity> getCollidableMap() {
@@ -231,14 +227,15 @@ public class GameModel {
         return GameScreen.enemyMap;
     }
 
-
     public static void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         GameScreen.gameRoot.getChildren().remove(enemy.canvas());
         killedEnemy++;
     }
 
-    public static long getTotalTime(){return totalTime;};
+    public static long getTotalTime(){
+        return totalTime;
+    }
 
     public static int getCurrentScore() {
         return currentScore;
@@ -252,12 +249,20 @@ public class GameModel {
         return finalScore;
     }
 
-
     public static boolean getDebugMode() {
         return isDebugMode;
     }
 
     public static void setDebugMode(boolean b) {
         isDebugMode = b;
+    }
+
+    // Toggle Pause Menu method to ensure that it cannot be clicked again when paused
+    public static void togglePauseMenu() {
+        if (!isPaused) {
+            isPaused = true; // Set the pause flag to true
+            GameModel.stopGameLoop(); // stop game loop
+            ScreenManager.getInstance(Main.primaryStage).showScreen(new PauseScreen());
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.platformerplain.Controller;
 
-import com.example.platformerplain.Main;
 import com.example.platformerplain.View.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;

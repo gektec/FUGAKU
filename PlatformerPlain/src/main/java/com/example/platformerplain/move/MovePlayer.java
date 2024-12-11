@@ -1,10 +1,8 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.View.GameScreen;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.LevelData;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.Ladder;

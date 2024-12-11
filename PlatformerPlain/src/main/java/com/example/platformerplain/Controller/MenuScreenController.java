@@ -1,7 +1,6 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Assets;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.View.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
@@ -14,13 +13,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Objects;
 
-import static com.example.platformerplain.Assets.BACKGROUND_MUSIC;
+import java.net.URISyntaxException;
 
 /**
  * This class serves as the controller for the Menu Screen in the game.
