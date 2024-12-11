@@ -3,7 +3,6 @@ package com.example.platformerplain;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.Controller.TransitionScreenController;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
@@ -82,6 +81,7 @@ public class Main extends Application {
 
     static int currentLevel = 0;
     public static int currentScore = 0;
+    public static int finalScore = 0;
 
     private static Main instance;
     private Stage primaryStage;
@@ -407,6 +407,7 @@ public class Main extends Application {
             currentScore(elapsedTime);
             screenManager.showScreen(new TransitionScreen());
         }else{
+            currentScore(elapsedTime);
             screenManager.showScreen(new CompletedScreen());
         }
     }
@@ -458,10 +459,15 @@ public class Main extends Application {
         int maxScore = 1000;
         int minTime = 500;
         currentScore = (int) (maxScore - (minTime - elapsedTime));
+        finalScore += currentScore;
     }
 
     public int getCurrentScore() {
         return currentScore;
+    }
+
+    public int getFinalScore() {
+        return finalScore;
     }
 
 

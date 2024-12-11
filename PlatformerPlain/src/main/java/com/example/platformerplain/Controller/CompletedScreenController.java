@@ -40,6 +40,10 @@ public class CompletedScreenController {
         this.primaryStage = primaryStage;
     }
 
+    public void setScore(int score) {
+        scoreLabel.setText("Your Final Score is: " + score);
+    }
+
     /**
      * Initializes the Fail Screen by loading the background image and
      * playing the associated fail sound.
@@ -81,18 +85,6 @@ public class CompletedScreenController {
         mediaPlayer.play();
     }
 
-    // Method to set score
-    public void setScore(int score) {
-        currentScore = score;
-        scoreLabel.setText("Your Final Score is: " + currentScore);
-        updateScoreDisplay();
-    }
-
-    private void updateScoreDisplay() {
-        if (scoreLabel != null) {
-            scoreLabel.setText("Your Final Score is: " + currentScore);
-        }
-    }
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.
