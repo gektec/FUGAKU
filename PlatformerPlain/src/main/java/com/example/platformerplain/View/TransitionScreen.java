@@ -3,6 +3,7 @@ package com.example.platformerplain.View;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.Controller.TransitionScreenController;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,11 +26,11 @@ public class TransitionScreen implements Screen {
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            Main main = Main.getInstance();
-            if (main != null) {
-                controller.setScore(main.getCurrentScore());
-                controller.setKilled(main.getCurrentKilled());
-                controller.setTime(main.getTotalTime());
+            GameModel gameModel = GameModel.getInstance();
+            if (gameModel != null) {
+                controller.setScore(GameModel.getCurrentScore());
+                controller.setKilled(GameModel.getCurrentKilled());
+                controller.setTime(GameModel.getTotalTime());
             }
 
 

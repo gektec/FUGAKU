@@ -14,7 +14,6 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 
 import static com.example.platformerplain.Assets.COMPLETE_SOUND;
-import static com.example.platformerplain.Main.currentScore;
 
 /**
  * This class serves as the controller for the Completed Screen in the game.

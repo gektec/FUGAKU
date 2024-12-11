@@ -1,6 +1,7 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.View.GameScreen;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
@@ -8,6 +9,7 @@ import com.example.platformerplain.entities.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.Ladder;
 import com.example.platformerplain.entities.Spike;
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Command.JumpCommand;
 import com.example.platformerplain.move.Command.MoveLeftCommand;
 import com.example.platformerplain.move.Command.MoveRightCommand;
@@ -44,7 +46,7 @@ public class MovePlayer {
     private boolean haveJKeyReleased = true;
     private boolean haveKKeyReleased = true;
 
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys, Main main) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.entityMap = platforms;
         this.keys = keys;
@@ -181,7 +183,7 @@ public class MovePlayer {
         for (Entity entity : entityMap) {
             if (entity.getType() == EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
-                Main.getInstance().transitionToNextLevel();
+                GameModel.transitionToNextLevel();
                 return;
             }
         }
@@ -219,8 +221,8 @@ public class MovePlayer {
 
     private void Die() {
         System.out.println("You lose!");
-        Main.getInstance().stopGameLoop();  // Stop game loop on player death
-        Main.getInstance().exitGame();
+        GameModel.stopGameLoop();  // Stop game loop on player death
+        GameModel.exitGame();
     }
 
     public MoveState getPlayerState() {

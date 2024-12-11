@@ -1,5 +1,7 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.model.GameModel;
+
 public class LevelData {
     public static final String[][] Levels = new String[][]{
             {},
@@ -36,15 +38,16 @@ public class LevelData {
     };
 
     public static class getLevelInformation {
+
         public static int getLevelNumber() {
-            return Main.currentLevel;
+            return GameModel.currentLevel;
         }
         public static int getLevelWidth() {
-            return Levels[Main.currentLevel][0].length() * Constants.TILE_SIZE;
+            return Levels[GameModel.currentLevel][0].length() * Constants.TILE_SIZE;
         }
 
         public static int getLevelHeight() {
-            return Levels[Main.currentLevel].length * Constants.TILE_SIZE;
+            return Levels[GameModel.currentLevel].length * Constants.TILE_SIZE;
         }
     }
 }

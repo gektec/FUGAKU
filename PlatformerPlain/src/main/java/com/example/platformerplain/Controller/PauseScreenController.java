@@ -2,6 +2,7 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
 import com.example.platformerplain.View.MenuScreen;
+import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -42,9 +43,9 @@ public class PauseScreenController {
      */
     @FXML
     private void handleResume() {
-        Main main = Main.getInstance();
-        if (main != null) {
-            main.resumeGame();  // Restore the game's logic
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameModel.resumeGame();  // Restore the game's logic
             // Remove the pause menu from the scene
             ((Pane) primaryStage.getScene().getRoot()).getChildren().remove(root);
         }
@@ -120,9 +121,9 @@ public class PauseScreenController {
      */
     @FXML
     private void handleRestart() {
-        Main main = Main.getInstance();
-        if (main != null) {
-            main.restartLevel(); // Transition to the next level
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameModel.restartLevel(); // Transition to the next level
         }
     }
 }

@@ -5,10 +5,10 @@ import javafx.stage.Stage;
 public class ScreenManager {
 
     private static ScreenManager instance;  // Singleton instance
-    private Stage primaryStage;
+    private static Stage primaryStage;
 
     private ScreenManager(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        Main.primaryStage = primaryStage;
     }
 
     // Singleton pattern
@@ -19,7 +19,7 @@ public class ScreenManager {
         return instance;
     }
 
-    public void showScreen(Screen screen) {
-        screen.show(primaryStage);
+    public static void showScreen(Screen screen) {
+        screen.show(Main.primaryStage);
     }
 }

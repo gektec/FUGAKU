@@ -2,6 +2,7 @@ package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
 import com.example.platformerplain.View.MenuScreen;
+import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -132,9 +133,9 @@ public class TransitionScreenController {
      */
     @FXML
     public void handleNextLevel() {
-        Main main = Main.getInstance();
-        if (main != null) {
-            main.startNextLevel(); // Transition to the next level
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameModel.startNextLevel(); // Transition to the next level
         }
     }
 
@@ -143,9 +144,9 @@ public class TransitionScreenController {
      */
     @FXML
     private void handleRestart() {
-        Main main = Main.getInstance();
-        if (main != null) {
-            main.restartLevel(); // Transition to the next level
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameModel.restartLevel(); // Transition to the next level
         }
     }
 }
