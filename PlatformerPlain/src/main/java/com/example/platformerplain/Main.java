@@ -32,6 +32,8 @@ public class Main extends Application {
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
 
+        AssetManager.preloadAssets();
+
     }
 
 
