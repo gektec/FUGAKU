@@ -1,6 +1,7 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Main;
+import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -69,7 +70,7 @@ public class LevelSelectScreenController {
     @FXML
     void handleFirstLevel() {
         if (primaryStage != null) {
-            Main.getInstance().startGame(primaryStage);
+            GameModel.startGame(primaryStage);
         } else {
             System.err.println("Primary stage is not set.");
         }
@@ -84,7 +85,7 @@ public class LevelSelectScreenController {
         // Get the main instance and initiate level transition
         Main main = Main.getInstance();
         if (main != null) {
-            main.startLevel2(primaryStage);
+            GameModel.startLevel2(primaryStage);
         }else {
             System.err.println("Primary stage is not set.");
         }

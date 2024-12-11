@@ -3,6 +3,7 @@ package com.example.platformerplain.Controller;
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Main;
 import com.example.platformerplain.View.LevelSelectScreen;
+import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -150,14 +151,13 @@ public class MenuScreenController {
 
     @FXML
     public void handleDebugMode(ActionEvent actionEvent) {
-        Main mainInstance = Main.getInstance();
-        mainInstance.setDebugMode(!mainInstance.getDebugMode());
+        GameModel.setDebugMode(!GameModel.getDebugMode());
         updateDebugButtonText();
     }
 
     @FXML
     private void updateDebugButtonText() {
-        if (Main.getInstance().getDebugMode()) {
+        if (GameModel.getDebugMode()) {
             debugButton.setText("Debug Mode: ON");
         } else {
             debugButton.setText("Debug Mode: OFF");

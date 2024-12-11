@@ -4,6 +4,7 @@ import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.Main;
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MoveStatus;
 import javafx.scene.Node;
@@ -32,7 +33,7 @@ public class Enemy extends Entity {
         hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
-        this.moveEnemyLogic = new MoveEnemy(this, Main.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
+        this.moveEnemyLogic = new MoveEnemy(this, GameModel.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
         frames = Assets.GHOST_IDLE[0];
         animation.setFrames(frames);
@@ -70,7 +71,7 @@ public class Enemy extends Entity {
     }
 
     public void removeFromGame() {
-        Main.getInstance().removeEnemy(this);
+        GameModel.removeEnemy(this);
     }
 
     @Override

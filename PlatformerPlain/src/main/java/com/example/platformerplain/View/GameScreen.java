@@ -1,25 +1,96 @@
 package com.example.platformerplain.View;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.LevelData;
-import com.example.platformerplain.LevelInitializer;
+import com.example.platformerplain.*;
+import com.example.platformerplain.entities.*;
 import com.example.platformerplain.move.Move;
+import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.texture.ImageScaler;
+import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import static com.example.platformerplain.Controller.GameScreenController.togglePauseMenu;
 
 public class GameScreen {
+    private static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+    private static ArrayList<Entity> collidableMap = new ArrayList<>();
+    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static ArrayList<Goal> goalMap = new ArrayList<>();
+    private static ArrayList<Spike> spikeMap = new ArrayList<>();
+    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
+
+    private static List<Entity> toRemove = new ArrayList<>();
+    private static Pane appRoot = new Pane();
+    private static Pane gameRoot = new Pane();
+    private static Pane uiRoot = new Pane();
+    private static Pane backgroundRoot = new Pane();
+
+    private static Entity player;
+    private static int levelWidth = -1;
+    private static int levelHeight = -1;
+    public static MovePlayer movePlayerLogic;
+    private MoveEnemy moveEnemyLogic;
+    private static Move move;
+    private static Scene gameScene;
+
+    //Debug
+
+    protected static boolean isDebugMode = true;
+
+    private static Label framerateLabel = new Label();
+    private long lastTime = 0;
+    private int frameCount = 0;
+
+    private static Label moveStateLabel = new Label();
+
+    private static Label playerSpeedLabel = new Label();
+
+    private static Label timeLabel = new Label();
+
+    private static LineChart<Number, Number> speedChart;
+    private XYChart.Series<Number, Number> speedX;
+    private XYChart.Series<Number, Number> speedY;
+    private int timeStep = 0;
+
+    //Main
+
+    static int currentLevel = 0;
+    public static int currentScore = 0;
+    public static int finalScore = 0;
+    public static int killedEnemy = 0;
+    public static long totalTime = 0;
+
+    private static Main instance;
+    private Stage primaryStage;
+    private ScreenManager screenManager;  // ScreenManager instance
+
+    private Timeline gameLoop;
+    private static Button pauseMenu = new Button();
+    private boolean isPaused = false;
+
+    private static long startTime = 0;  // To store the start time
+    private static long elapsedTime = 0; // Used to store accumulated time
+    private long lastUpdateTime = 0; // To keep track of the last update time
+
+
 
 
     private void initContent() {
@@ -77,7 +148,7 @@ public class GameScreen {
     }
 
 
-    private void startLevel() {
+    public static void startLevel() {
         // Clear current game state
         keys.clear();
         collidableMap.clear();
@@ -155,7 +226,7 @@ public class GameScreen {
 
         // If player is not null, continue setup
         if (player != null) {
-            movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys, this);
+            movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys);
 
             // Camera's follow logic
             player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {

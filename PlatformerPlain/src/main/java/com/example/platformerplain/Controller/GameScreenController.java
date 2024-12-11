@@ -1,42 +1,28 @@
-package com.example.platformerplain;
+package com.example.platformerplain.Controller;
 
-import com.example.platformerplain.View.*;
-import com.example.platformerplain.entities.Enemy;
-import com.example.platformerplain.entities.Entity;
-
+import com.example.platformerplain.Main;
+import com.example.platformerplain.ScreenManager;
+import com.example.platformerplain.View.PauseScreen;
 import com.example.platformerplain.entities.*;
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.MoveState;
-import com.example.platformerplain.texture.ImageScaler;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main extends Application {
-
+public class GameScreenController {
     private HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private static ArrayList<Entity> collidableMap = new ArrayList<>();
     private static ArrayList<Enemy> enemyMap = new ArrayList<>();
@@ -86,12 +72,12 @@ public class Main extends Application {
     public static long totalTime = 0;
 
     private static Main instance;
-    private Stage primaryStage;
+    private static Stage primaryStage;
     private ScreenManager screenManager;  // ScreenManager instance
 
     private Timeline gameLoop;
     private Button pauseMenu = new Button();
-    private boolean isPaused = false;
+    private static boolean isPaused = false;
 
     private long startTime = 0;  // To store the start time
     private long elapsedTime = 0; // Used to store accumulated time
@@ -99,36 +85,11 @@ public class Main extends Application {
 
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-
-        instance = this;
-
-        // Initialize ScreenManager
-        screenManager = ScreenManager.getInstance(primaryStage);
-
-        // Show the start screen
-        screenManager.showScreen(new MenuScreen());
-
-        primaryStage.setWidth(Constants.BACKGROUND_WIDTH);
-        primaryStage.setHeight(Constants.BACKGROUND_HEIGHT);
-        primaryStage.setResizable(false);
-
-    }
-
-
-    public static Main getInstance() {
-        return instance;
-    }
-
-
-
-    public Pane getGameRoot() {
-        return gameRoot;
+    public static void togglePauseMenu() {
+        if(!isPaused) {
+            GameModel.stopGameLoop(); // stop game loop
+            ScreenManager.getInstance(primaryStage).showScreen(new PauseScreen());
+            isPaused = true;
+        }
     }
 }
