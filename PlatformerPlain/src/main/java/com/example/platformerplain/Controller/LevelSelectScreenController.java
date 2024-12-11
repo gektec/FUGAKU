@@ -83,8 +83,8 @@ public class LevelSelectScreenController {
     @FXML
     private void handleSecondLevel() {
         // Get the main instance and initiate level transition
-        Main main = Main.getInstance();
-        if (main != null) {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
             GameModel.startLevel2(primaryStage);
         }else {
             System.err.println("Primary stage is not set.");

@@ -129,8 +129,8 @@ public class FailScreenController {
      */
     @FXML
     private void handleRestart() {
-        Main main = Main.getInstance();
-        if (main != null) {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
             GameModel.restartLevel(); // Transition to the next level
         }
     }

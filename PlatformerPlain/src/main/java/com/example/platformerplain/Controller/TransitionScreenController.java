@@ -133,8 +133,8 @@ public class TransitionScreenController {
      */
     @FXML
     public void handleNextLevel() {
-        Main main = Main.getInstance();
-        if (main != null) {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
             GameModel.startNextLevel(); // Transition to the next level
         }
     }
@@ -144,8 +144,8 @@ public class TransitionScreenController {
      */
     @FXML
     private void handleRestart() {
-        Main main = Main.getInstance();
-        if (main != null) {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
             GameModel.restartLevel(); // Transition to the next level
         }
     }
