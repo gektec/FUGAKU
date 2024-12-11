@@ -5,7 +5,7 @@ public class ScoreInterpreter {
     private Expression expression;
 
     public ScoreInterpreter() {
-        // 构建表达式树对应于 maxScore - (penaltyPerSecond * secondsElapsed) + (killedEnemy * 200)
+        // Constructing an expression tree corresponds to maxScore - (penaltyPerSecond * secondsElapsed) + (killedEnemy * 200)
         expression = new AddExpression(
                 new SubtractExpression(
                         new VariableExpression(VariableExpression.VariableType.MAX_SCORE),

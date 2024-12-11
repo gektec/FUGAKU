@@ -1,7 +1,7 @@
 package com.example.platformerplain;
 
 public class Constants {
-    private Constants() {
+    Constants() {
         throw new AssertionError("Cannot instantiate Constants class");
     }
 
