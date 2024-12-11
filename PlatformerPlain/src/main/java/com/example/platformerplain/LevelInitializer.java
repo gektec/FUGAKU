@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.scene.Node;
+
 import javafx.scene.input.KeyCode;
 
 public class LevelInitializer {

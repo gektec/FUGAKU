@@ -3,9 +3,7 @@ import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
 import com.example.platformerplain.View.GameScreen;
-import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveState;
-import com.example.platformerplain.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;

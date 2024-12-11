@@ -3,7 +3,6 @@ package com.example.platformerplain.entities;
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
-import com.example.platformerplain.Main;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MoveStatus;
