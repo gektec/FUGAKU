@@ -93,7 +93,6 @@ public class Main extends Application {
 
     private long startTime = 0;  // To store the start time
     private long elapsedTime = 0; // Used to store accumulated time
-    private long totalTime = 0; // Total time variable
 
 
     public static void main(String[] args) {
@@ -402,7 +401,6 @@ public class Main extends Application {
 
     public void transitionToNextLevel() {
         stopGameLoop();
-        totalTime += elapsedTime; // Add to total time
         if(currentLevel == 1) {
             currentScore(elapsedTime);
             screenManager.showScreen(new TransitionScreen());
@@ -437,7 +435,6 @@ public class Main extends Application {
     }
 
     public void exitGame() {
-        totalTime = 0;
         screenManager.showScreen(new FailScreen());
     }
 
