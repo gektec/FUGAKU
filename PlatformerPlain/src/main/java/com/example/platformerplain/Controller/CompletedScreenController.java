@@ -52,7 +52,7 @@ public class CompletedScreenController {
         } else if (killed == 1) {
             killedLabel.setText("You only killed one person. You are such a merciful Lord!");
         } else if (killed >= 1) {
-            killedLabel.setText("You have killed " + killed + "enemies!");
+            killedLabel.setText("You have killed" + " "+killed +" "+  "enemies!");
         }
     }
 

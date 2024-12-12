@@ -165,7 +165,7 @@ public class GameModel {
     public static void startNextLevel(){
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
-        currentLevel = 2;
+        currentLevel ++;
         GameScreen.startLevel();
         Main.primaryStage.setScene(GameScreen.gameScene);
         startGameLoop();
