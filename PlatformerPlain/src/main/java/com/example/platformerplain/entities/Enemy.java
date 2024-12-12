@@ -13,6 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
+import static com.example.platformerplain.View.GameScreen.getCollidableMap;
 
 
 public class Enemy extends Entity {
@@ -32,7 +35,7 @@ public class Enemy extends Entity {
         hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
-        this.moveEnemyLogic = new MoveEnemy(this, GameModel.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
+        this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getInstance().getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
         frames = Assets.GHOST_IDLE[0];
         animation.setFrames(frames);
@@ -70,7 +73,7 @@ public class Enemy extends Entity {
     }
 
     public void removeFromGame() {
-        GameModel.removeEnemy(this);
+        GameModel.getInstance().removeEnemy(this);
     }
 
     @Override

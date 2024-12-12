@@ -145,13 +145,13 @@ public class MenuScreenController {
 
     @FXML
     public void handleDebugMode(ActionEvent actionEvent) {
-        GameModel.setDebugMode(!GameModel.getDebugMode());
+        GameModel.getInstance().setDebugMode(!GameModel.getInstance().isDebugMode());
         updateDebugButtonText();
     }
 
     @FXML
     private void updateDebugButtonText() {
-        if (GameModel.getDebugMode()) {
+        if (GameModel.getInstance().isDebugMode()){
             debugButton.setText("Debug Mode: ON");
         } else {
             debugButton.setText("Debug Mode: OFF");

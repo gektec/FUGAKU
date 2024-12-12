@@ -133,7 +133,7 @@ public class TransitionScreenController {
     public void handleNextLevel() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.startNextLevel(); // Transition to the next level
+            GameModel.getInstance().startNextLevel(); // Transition to the next level
         }
     }
 
@@ -144,7 +144,7 @@ public class TransitionScreenController {
     private void handleRestart() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.restartLevel(); // Transition to the next level
+            GameModel.getInstance().restartLevel(); // Transition to the next level
         }
     }
 }

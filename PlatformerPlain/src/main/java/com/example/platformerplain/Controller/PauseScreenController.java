@@ -44,7 +44,7 @@ public class PauseScreenController {
     private void handleResume() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.resumeGame();  // Restore the game's logic
+            GameModel.getInstance().resumeGame();  // Restore the game's logic
             // Remove the pause menu from the scene
             ((Pane) primaryStage.getScene().getRoot()).getChildren().remove(root);
         }
@@ -122,7 +122,7 @@ public class PauseScreenController {
     private void handleRestart() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.restartLevel(); // Transition to the next level
+            GameModel.getInstance().restartLevel(); // Transition to the next level
         }
     }
 }

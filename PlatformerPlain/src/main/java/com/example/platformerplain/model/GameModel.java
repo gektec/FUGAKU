@@ -22,33 +22,38 @@ import java.util.List;
 public class GameModel {
     private static GameModel instance;
 
-    private static List<Entity> toRemove = new ArrayList<>();
+    private List<Entity> toRemove = new ArrayList<>();
+
     // Debug
-    protected static boolean isDebugMode = true;
+    private boolean isDebugMode = true;
 
-    private static long lastTime = 0;
-    private static int frameCount = 0;
+    private long lastTime = 0;
+    private int frameCount = 0;
 
-    private static int timeStep = 0;
+    private int timeStep = 0;
 
     // Main
 
-    public static int currentLevel = 0;
-    public static int currentScore = 0;
-    public static int finalScore = 0;
-    public static int killedEnemy = 0;
-    public static long totalTime = 0;
+    private int currentLevel = 0;
+    private int currentScore = 0;
+    private int finalScore = 0;
+    private int killedEnemy = 0;
+    private long totalTime = 0;
 
-    private static Timeline gameLoop;
-    private static Button pauseMenu = new Button();
-    private static boolean isPaused = false;
+    private Timeline gameLoop;
+    private Button pauseMenu = new Button();
+    private boolean isPaused = false;
 
     public static long startTime = 0;  // To store the start time
     public static long elapsedTime = 0; // Used to store accumulated time
-    private static long lastUpdateTime = 0; // To keep track of the last update time
+    private long lastUpdateTime = 0; // To keep track of the last update time
 
     // Adding an Interpreter
-    private static ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
+    private ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
+
+    private GameModel() {
+        // Private constructor to prevent instantiation
+    }
 
     public static GameModel getInstance() {
         if (instance == null) {
@@ -61,16 +66,16 @@ public class GameModel {
         return instance;
     }
 
-    public static void startGame(Stage primaryStage, int level) {
-        currentLevel = level;
-        isPaused = false;
+    public void startGame(Stage primaryStage, int level) {
+        this.currentLevel = level;
+        this.isPaused = false;
         GameScreen.initContent();
         GameScreen.startLevel();
-        primaryStage.setScene(GameScreen.gameScene);
+        primaryStage.setScene(GameScreen.getGameScene());
         startGameLoop();
     }
 
-    private static void startGameLoop() {
+    private void startGameLoop() {
         lastUpdateTime = System.currentTimeMillis(); // Initialize last update time
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             long currentTime = System.currentTimeMillis();
@@ -79,10 +84,10 @@ public class GameModel {
 
             update();
 
-            if (isDebugMode) updateLables();
+            if (isDebugMode) updateLabels();
 
-            GameScreen.enemyMap.removeAll(toRemove);
-            GameScreen.collidableMap.removeAll(toRemove);
+            GameScreen.getEnemyMap().removeAll(toRemove);
+            GameScreen.getCollidableMap().removeAll(toRemove);
         });
 
         gameLoop = new Timeline(frame);
@@ -90,60 +95,60 @@ public class GameModel {
         gameLoop.play();
     }
 
-    private static void update() {
-        GameScreen.player.update();
-        if (GameScreen.enemyMap != null) {
-            for (Enemy enemy : GameScreen.enemyMap) {
+    private void update() {
+        GameScreen.getPlayer().update();
+        if (GameScreen.getEnemyMap() != null) {
+            for (Enemy enemy : GameScreen.getEnemyMap()) {
                 enemy.update();
             }
         }
     }
 
-    private static void updateLables() {
+    private void updateLabels() {
         updateFramerate();
         updatePlayerSpeed();
         updateMoveState();
         updateTime();
     }
 
-    private static void updateFramerate() {
+    private void updateFramerate() {
         long currentTime = System.nanoTime();
         if (currentTime - lastTime >= 1_000_000_000) {
-            GameScreen.framerateLabel.setText("FPS: " + frameCount);
+            GameScreen.getFramerateLabel().setText("FPS: " + frameCount);
             frameCount = 0;
             lastTime = currentTime;
         }
         frameCount++;
     }
 
-    private static void updateTime() {
+    private void updateTime() {
         if (!isPaused) {
             long seconds = (elapsedTime / 1000) % 60; // Convert milliseconds to seconds
             long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
-            GameScreen.timeLabel.setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
+            GameScreen.getTimeLabel().setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
         }
     }
 
-    private static void updateMoveState() {
-        MoveState moveState = GameScreen.movePlayerLogic.getMoveStatus().moveState;
-        GameScreen.moveStateLabel.setText("Move State: " + moveState);
+    private void updateMoveState() {
+        MoveState moveState = GameScreen.getMovePlayerLogic().getMoveStatus().moveState;
+        GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
-    private static void updatePlayerSpeed() {
-        float[] speed = GameScreen.movePlayerLogic.getMoveStatus().velocity.get();
-        GameScreen.playerSpeedLabel.setText("Speed: " + Arrays.toString(speed));
-        GameScreen.speedX.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
-        GameScreen.speedY.getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
+    private void updatePlayerSpeed() {
+        float[] speed = GameScreen.getMovePlayerLogic().getMoveStatus().velocity.get();
+        GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
+        GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
+        GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
         // Keep only the last 60 data points
-        if (GameScreen.speedX.getData().size() > 60) {
-            GameScreen.speedX.getData().removeFirst();
-            GameScreen.speedY.getData().removeFirst();
+        if (GameScreen.getSpeedX().getData().size() > 60) {
+            GameScreen.getSpeedX().getData().remove(0);
+            GameScreen.getSpeedY().getData().remove(0);
         }
 
         // Update x-axis bounds
-        NumberAxis xAxis = (NumberAxis) GameScreen.speedChart.getXAxis();
-        NumberAxis yAxis = (NumberAxis) GameScreen.speedChart.getYAxis();
+        NumberAxis xAxis = (NumberAxis) GameScreen.getSpeedChart().getXAxis();
+        NumberAxis yAxis = (NumberAxis) GameScreen.getSpeedChart().getYAxis();
         xAxis.setAutoRanging(false);
         yAxis.setAutoRanging(false);
         xAxis.setLowerBound(timeStep - 60);
@@ -151,7 +156,7 @@ public class GameModel {
         yAxis.setUpperBound(20);
     }
 
-    public static void transitionToNextLevel() {
+    public void transitionToNextLevel() {
         stopGameLoop();
         if(currentLevel == 1) {
             calculateCurrentScore();
@@ -162,44 +167,44 @@ public class GameModel {
         }
     }
 
-    public static void startNextLevel(){
+    public void startNextLevel(){
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
-        currentLevel = 2;
+        currentLevel++;
         GameScreen.startLevel();
-        Main.primaryStage.setScene(GameScreen.gameScene);
+        Main.getPrimaryStage().setScene(GameScreen.getGameScene());
         startGameLoop();
     }
 
-    public static void restartLevel(){
+    public void restartLevel(){
         isPaused = false;
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
         GameScreen.startLevel();
-        Main.primaryStage.setScene(GameScreen.gameScene);
-        GameScreen.gameRoot.setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
-        GameScreen.gameRoot.setLayoutX(0);
+        Main.getPrimaryStage().setScene(GameScreen.getGameScene());
+        GameScreen.getGameRoot().setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
+        GameScreen.getGameRoot().setLayoutX(0);
         startGameLoop();
     }
 
-    public static void stopGameLoop() {
+    public void stopGameLoop() {
         if (gameLoop != null) {
             gameLoop.stop();
         }
     }
 
-    public static void exitGame() {
+    public void exitGame() {
         ScreenManager.showScreen(new FailScreen());
     }
 
-    public static void resumeGame() {
+    public void resumeGame() {
         isPaused = false;
         startTime = System.currentTimeMillis() - elapsedTime; // Ensure time continuity
         startGameLoop();
     }
 
     // Rewrite the currentScore method and use the interpreter mode
-    public static void calculateCurrentScore() {
+    public void calculateCurrentScore() {
         int maxScore = 1000;
         int penaltyPerSecond = 10;
         long elapsedTimeSeconds = elapsedTime / 1000;
@@ -219,50 +224,71 @@ public class GameModel {
         totalTime += elapsedTimeSeconds;
     }
 
-    public static ArrayList<Entity> getCollidableMap() {
-        return GameScreen.collidableMap;
+
+    public List<Entity> getCollidableMap() {
+        return GameScreen.getCollidableMap();
     }
 
-    public static ArrayList<Enemy> getEnemyMap() {
-        return GameScreen.enemyMap;
+
+    public List<Enemy> getEnemyMap() {
+        return GameScreen.getEnemyMap();
     }
 
-    public static void removeEnemy(Enemy enemy) {
+
+    public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
-        GameScreen.gameRoot.getChildren().remove(enemy.canvas());
+        GameScreen.getGameRoot().getChildren().remove(enemy.canvas());
         killedEnemy++;
     }
 
-    public static long getTotalTime(){
+
+    public long getTotalTime(){
         return totalTime;
     }
 
-    public static int getCurrentScore() {
+
+    public int getCurrentScore() {
         return currentScore;
     }
 
-    public static int getCurrentKilled() {
+
+    public int getCurrentKilled() {
         return killedEnemy;
     }
 
-    public static int getFinalScore() {
+
+    public int getFinalScore() {
         return finalScore;
     }
 
-    public static boolean getDebugMode() {
+    public int getCurrentLevel(){
+        return currentLevel;
+    }
+
+
+
+    public boolean isDebugMode() {
         return isDebugMode;
     }
 
-    public static void setDebugMode(boolean b) {
-        isDebugMode = b;
+
+    public void setDebugMode(boolean debugMode) {
+        this.isDebugMode = debugMode;
     }
 
-    // Toggle Pause Menu method to ensure that it cannot be clicked again when paused
-    public static void togglePauseMenu() {
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getElapsedTime(){
+        return elapsedTime;
+    }
+
+    public void togglePauseMenu() {
         if (!isPaused) {
             isPaused = true; // Set the pause flag to true
-            GameModel.stopGameLoop(); // stop game loop
-            ScreenManager.getInstance(Main.primaryStage).showScreen(new PauseScreen());
+            stopGameLoop(); // stop game loop
+            ScreenManager.showScreen(new PauseScreen());
         }
     }
 }
