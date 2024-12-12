@@ -66,7 +66,7 @@ public class TransitionScreenController {
     }
     private void loadBackgroundImage() {
         // Load background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Transition.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Transition.png")));
 
         // Create a BackgroundImage object with specified properties
         BackgroundImage background = new BackgroundImage(

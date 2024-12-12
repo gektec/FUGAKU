@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 import java.util.Objects;
@@ -68,10 +67,10 @@ public class CompletedScreenController {
         loadBackgroundImage();
         playBackgroundMusic();
     }
-
+//todo: load with Assets
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgrounds/Completed.png")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Completed.png")));
 
         // Create a BackgroundImage object, setting it to fit the GridPane appropriately
         BackgroundImage background = new BackgroundImage(
@@ -95,7 +94,6 @@ public class CompletedScreenController {
         // Play the sound effect upon initialization
         COMPLETE_SOUND.play();
     }
-
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.

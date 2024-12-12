@@ -28,6 +28,9 @@ public class Main extends Application {
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
+
+        AssetManager.preloadAssets();
+
     }
 
     public static Main getInstance() {
