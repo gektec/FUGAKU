@@ -44,9 +44,9 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        GameScreen.movePlayerLogic.update();
+        GameScreen.getMovePlayerLogic().update();
         canvas.setTranslateY(hitBox.getTranslateY()-130);
-        switch (GameScreen.movePlayerLogic.getPlayerState()) {
+        switch (GameScreen.getMovePlayerLogic().getPlayerState()) {
             case MoveState.IDLE:
                 if (lastState != MoveState.IDLE) {
                     frames = Assets.PLAYER_IDLE[0];
@@ -56,7 +56,7 @@ public class Player extends Entity {
                 }
                 break;
             case MoveState.SLIDING:
-                if(GameScreen.movePlayerLogic.getMoveStatus().faceLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
+                if(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
                 else canvas.setTranslateX(canvas.getTranslateX()-20);
                 if (lastState != MoveState.SLIDING) {
                     frames = Assets.PLAYER_SLIDING[0];
@@ -95,7 +95,7 @@ public class Player extends Entity {
                     lastAfterimageFrame = 0;
                     generateAfterimage();
                 }
-                if (lastState != MoveState.DASHING && GameScreen.movePlayerLogic.getMoveStatus().velocity.getX() != 0) {
+                if (lastState != MoveState.DASHING && GameScreen.getMovePlayerLogic().getMoveStatus().velocity.getX() != 0) {
                     frames = Assets.PLAYER_DASH[0];
                     animation.setFrames(frames);
                     animation.setDelay(3);
@@ -105,14 +105,14 @@ public class Player extends Entity {
         }
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage(GameScreen.movePlayerLogic.getMoveStatus().faceLeft);
+        Image sprite = animation.getImage(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
     }
 
     private void generateAfterimage() {
-        ImageView afterimage = new ImageView(animation.getImage(GameScreen.movePlayerLogic.getMoveStatus().faceLeft));
+        ImageView afterimage = new ImageView(animation.getImage(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft));
         afterimage.setFitWidth(192);
         afterimage.setFitHeight(192);
         afterimage.setTranslateX(canvas.getTranslateX());

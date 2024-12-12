@@ -29,47 +29,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.platformerplain.model.GameModel.togglePauseMenu;
+import static com.example.platformerplain.model.GameModel.getInstance;
 
 public class GameScreen implements Screen {
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    public static ArrayList<Entity> collidableMap = new ArrayList<>();
-    public static ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static ArrayList<Entity> collidableMap = new ArrayList<>();
+    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
     private static ArrayList<Goal> goalMap = new ArrayList<>();
     private static ArrayList<Spike> spikeMap = new ArrayList<>();
     private static ArrayList<Ladder> ladderMap = new ArrayList<>();
 
     private static List<Entity> toRemove = new ArrayList<>();
     private static Pane appRoot = new Pane();
-    public static Pane gameRoot = new Pane();
+    private static Pane gameRoot = new Pane();
     private static Pane uiRoot = new Pane();
     private static Pane backgroundRoot = new Pane();
 
-    public static Entity player;
+    private static Entity player;
     private static int levelWidth = -1;
     private static int levelHeight = -1;
-    public static MovePlayer movePlayerLogic;
+    private static MovePlayer movePlayerLogic;
     private static int level;
-    private MoveEnemy moveEnemyLogic;
+    private static MoveEnemy moveEnemyLogic;
     private static Move move;
-    public static Scene gameScene;
+    private static Scene gameScene;
 
-    //Debug
+    // Debug
+    private static Label framerateLabel = new Label();
+    private static Label moveStateLabel = new Label();
+    private static Label playerSpeedLabel = new Label();
+    private static Label timeLabel = new Label();
+    private static LineChart<Number, Number> speedChart;
+    private static XYChart.Series<Number, Number> speedX;
+    private static XYChart.Series<Number, Number> speedY;
 
-    public static Label framerateLabel = new Label();
-
-    public static Label moveStateLabel = new Label();
-
-    public static Label playerSpeedLabel = new Label();
-
-    public static Label timeLabel = new Label();
-
-    public static LineChart<Number, Number> speedChart;
-    public static XYChart.Series<Number, Number> speedX;
-    public static XYChart.Series<Number, Number> speedY;
-
-    //Main
-
+    // Main
     private Timeline gameLoop;
     private static Button pauseMenu = new Button();
 
@@ -79,64 +73,68 @@ public class GameScreen implements Screen {
 
     @Override
     public void show(Stage primaryStage) {
-        GameModel.startGame(primaryStage, level);
+        GameModel.getInstance().startGame(primaryStage, level);
     }
 
 
     public static void initContent() {
+        GameModel gameModel = GameModel.getInstance();
 
-        if(GameModel.getDebugMode()) {
-
-            framerateLabel.setTextFill(Color.WHITE);
-            framerateLabel.setFont(new Font(18));
-            framerateLabel.setTranslateX(10);
-            framerateLabel.setTranslateY(10);
-
-            playerSpeedLabel.setTextFill(Color.WHITE);
-            playerSpeedLabel.setFont(new Font(18));
-            playerSpeedLabel.setTranslateX(10);
-            playerSpeedLabel.setTranslateY(30);
-
-            moveStateLabel.setTextFill(Color.WHITE);
-            moveStateLabel.setFont(new Font(18));
-            moveStateLabel.setTranslateX(10);
-            moveStateLabel.setTranslateY(50);
-
-            // Add a Time Label
-            timeLabel.setTextFill(Color.WHITE);
-            timeLabel.setFont(new Font(18));
-            timeLabel.setTranslateX(10);
-            timeLabel.setTranslateY(70);
-
-            NumberAxis xAxis = new NumberAxis();
-            NumberAxis yAxis = new NumberAxis();
-            xAxis.setLabel("Time");
-            yAxis.setLabel("Speed");
-
-            speedChart = new LineChart<>(xAxis, yAxis);
-            speedChart.setTitle("Player Speed Over Time");
-            speedX = new XYChart.Series<>();
-            speedX.setName("Speed X");
-            speedY = new XYChart.Series<>();
-            speedY.setName("Speed Y");
-            speedChart.getData().addAll(speedX, speedY);
-            speedChart.setTranslateX(10);
-            speedChart.setTranslateY(90);
-            speedChart.setPrefSize(400, 300);
-
+        if (gameModel.isDebugMode()) {
+            initializeDebugLabels();
         }
 
+        initializePauseButton();
+    }
 
-        // Add a Pause Button
+    private static void initializeDebugLabels() {
+        framerateLabel.setTextFill(Color.WHITE);
+        framerateLabel.setFont(new Font(18));
+        framerateLabel.setTranslateX(10);
+        framerateLabel.setTranslateY(10);
+
+        playerSpeedLabel.setTextFill(Color.WHITE);
+        playerSpeedLabel.setFont(new Font(18));
+        playerSpeedLabel.setTranslateX(10);
+        playerSpeedLabel.setTranslateY(30);
+
+        moveStateLabel.setTextFill(Color.WHITE);
+        moveStateLabel.setFont(new Font(18));
+        moveStateLabel.setTranslateX(10);
+        moveStateLabel.setTranslateY(50);
+
+        // Add a Time Label
+        timeLabel.setTextFill(Color.WHITE);
+        timeLabel.setFont(new Font(18));
+        timeLabel.setTranslateX(10);
+        timeLabel.setTranslateY(70);
+
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Speed");
+
+        speedChart = new LineChart<>(xAxis, yAxis);
+        speedChart.setTitle("Player Speed Over Time");
+        speedX = new XYChart.Series<>();
+        speedX.setName("Speed X");
+        speedY = new XYChart.Series<>();
+        speedY.setName("Speed Y");
+        speedChart.getData().addAll(speedX, speedY);
+        speedChart.setTranslateX(10);
+        speedChart.setTranslateY(90);
+        speedChart.setPrefSize(400, 300);
+    }
+
+    private static void initializePauseButton() {
         pauseMenu.setTextFill(Color.BLACK);
         pauseMenu.setFont(new Font(18));
         pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
 
-        pauseMenu.setOnAction(event -> togglePauseMenu());
+        pauseMenu.setOnAction(event -> GameModel.getInstance().togglePauseMenu());
     }
-
 
     public static void startLevel() {
         // Clear current game state
@@ -211,12 +209,29 @@ public class GameScreen implements Screen {
         }
 
         // Use LevelInitializer to set up the level
-        LevelInitializer levelInitializer = new LevelInitializer(keys, gameRoot, uiRoot, backgroundRoot, collidableMap, enemyMap, spikeMap, ladderMap);
+        LevelInitializer levelInitializer = new LevelInitializer(
+                keys,
+                gameRoot,
+                uiRoot,
+                backgroundRoot,
+                collidableMap,
+                enemyMap,
+                spikeMap,
+                ladderMap
+        );
         player = levelInitializer.generateLevel(LevelData.getLevelInformation.getLevelNumber());
 
         // If player is not null, continue setup
         if (player != null) {
-            movePlayerLogic = new MovePlayer(player, collidableMap, enemyMap, ladderMap, spikeMap, levelWidth, keys);
+            movePlayerLogic = new MovePlayer(
+                    player,
+                    collidableMap,
+                    enemyMap,
+                    ladderMap,
+                    spikeMap,
+                    levelWidth,
+                    keys
+            );
 
             // Camera's follow logic
             player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
@@ -255,19 +270,90 @@ public class GameScreen implements Screen {
         // UI Elements
         uiRoot.getChildren().add(pauseMenu);
         uiRoot.getChildren().add(timeLabel);
-        if (GameModel.getDebugMode()) {
+        if (GameModel.getInstance().isDebugMode()) {
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
             uiRoot.getChildren().add(moveStateLabel);
         }
 
+        // Initialize timing
         GameModel.startTime = System.currentTimeMillis(); // Recording start time
         GameModel.elapsedTime = 0; // Reset elapsed time
-
     }
+
 
     public static Pane getGameRoot() {
         return gameRoot;
+    }
+
+
+    public static Scene getGameScene() {
+        return gameScene;
+    }
+
+
+    public static ArrayList<Entity> getCollidableMap() {
+        return collidableMap;
+    }
+
+
+    public static ArrayList<Enemy> getEnemyMap() {
+        return enemyMap;
+    }
+
+
+    public static Entity getPlayer() {
+        return player;
+    }
+
+
+    public static Label getFramerateLabel() {
+        return framerateLabel;
+    }
+
+
+    public static Label getMoveStateLabel() {
+        return moveStateLabel;
+    }
+
+
+    public static Label getPlayerSpeedLabel() {
+        return playerSpeedLabel;
+    }
+
+
+    public static Label getTimeLabel() {
+        return timeLabel;
+    }
+
+
+    public static LineChart<Number, Number> getSpeedChart() {
+        return speedChart;
+    }
+
+
+    public static XYChart.Series<Number, Number> getSpeedX() {
+        return speedX;
+    }
+
+
+    public static XYChart.Series<Number, Number> getSpeedY() {
+        return speedY;
+    }
+
+
+    public static MovePlayer getMovePlayerLogic() {
+        return movePlayerLogic;
+    }
+
+
+    public static int getLevelWidth() {
+        return levelWidth;
+    }
+
+
+    public static int getLevelHeight() {
+        return levelHeight;
     }
 }

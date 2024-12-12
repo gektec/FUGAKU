@@ -181,7 +181,7 @@ public class MovePlayer {
         for (Entity entity : entityMap) {
             if (entity.getType() == EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
                 System.out.println("You win!");
-                GameModel.transitionToNextLevel();
+                GameModel.getInstance().transitionToNextLevel();
                 return;
             }
         }
@@ -219,8 +219,8 @@ public class MovePlayer {
 
     private void Die() {
         System.out.println("You lose!");
-        GameModel.stopGameLoop();  // Stop game loop on player death
-        GameModel.exitGame();
+        GameModel.getInstance().stopGameLoop(); // Stop game loop on player death
+        GameModel.getInstance().exitGame();
     }
 
     public MoveState getPlayerState() {
