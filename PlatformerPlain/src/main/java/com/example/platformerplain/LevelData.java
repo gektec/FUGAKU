@@ -46,14 +46,14 @@ public class LevelData {
     public static class getLevelInformation {
 
         public static int getLevelNumber() {
-            return GameModel.currentLevel;
+            return GameModel.getInstance().getCurrentLevel();
         }
         public static int getLevelWidth() {
-            return Levels[GameModel.currentLevel][0].length() * Constants.TILE_SIZE;
+            return Levels[GameModel.getInstance().getCurrentLevel()][0].length() * Constants.TILE_SIZE;
         }
 
         public static int getLevelHeight() {
-            return Levels[GameModel.currentLevel].length * Constants.TILE_SIZE;
+            return Levels[GameModel.getInstance().getCurrentLevel()].length * Constants.TILE_SIZE;
         }
     }
 }

@@ -130,7 +130,7 @@ public class FailScreenController {
     private void handleRestart() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.restartLevel(); // Transition to the next level
+            GameModel.getInstance().restartLevel(); // Transition to the next level
         }
     }
 }

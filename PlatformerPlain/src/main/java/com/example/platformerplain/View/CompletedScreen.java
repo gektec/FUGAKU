@@ -26,9 +26,9 @@ public class CompletedScreen implements Screen {
 
             CompletedScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            controller.setScore(GameModel.getFinalScore());
-            controller.setKilled(GameModel.getCurrentKilled());
-            controller.setTime(GameModel.getTotalTime());
+            controller.setScore(GameModel.getInstance().getFinalScore());
+            controller.setKilled(GameModel.getInstance().getCurrentKilled());
+            controller.setTime(GameModel.getInstance().getTotalTime());
 
             primaryStage.setTitle("Congratulations!");
             primaryStage.setScene(completedScene);
