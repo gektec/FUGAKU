@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // ScoreContext class, which stores the variables needed for calculation
 public class ScoreContext {

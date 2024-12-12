@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // ScoreInterpreter class, used to build and interpret expression trees
 public class ScoreInterpreter {

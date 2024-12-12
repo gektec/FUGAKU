@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // VariableExpression class, representing a variable
 public class VariableExpression implements Expression {

@@ -6,6 +6,8 @@ import com.example.platformerplain.Main;
 import com.example.platformerplain.ScreenManager;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.*;
+import com.example.platformerplain.model.Interpreter.ScoreContext;
+import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,8 +21,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public class GameModel {
     private static GameModel instance;
+
+    private List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
     private List<Entity> toRemove = new ArrayList<>();
 
@@ -29,16 +35,15 @@ public class GameModel {
 
     private long lastTime = 0;
     private int frameCount = 0;
-
     private int timeStep = 0;
 
     // Main
-
     private int currentLevel = 0;
     private int currentScore = 0;
     private int finalScore = 0;
     private int killedEnemy = 0;
     private long totalTime = 0;
+    private int baseScore = 1000;
 
     private Timeline gameLoop;
     private Button pauseMenu = new Button();
@@ -66,6 +71,18 @@ public class GameModel {
         return instance;
     }
 
+    // Registering Observers
+    public void addObserver(GameModelObserver observer) {
+        if (observer != null && !observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    // Unregistering Observers
+    public void removeObserver(GameModelObserver observer) {
+        observers.remove(observer);
+    }
+
     public void startGame(Stage primaryStage, int level) {
         this.currentLevel = level;
         this.isPaused = false;
@@ -88,6 +105,7 @@ public class GameModel {
 
             GameScreen.getEnemyMap().removeAll(toRemove);
             GameScreen.getCollidableMap().removeAll(toRemove);
+            toRemove.clear(); // Clear the pending removal list to avoid duplicate removals
         });
 
         gameLoop = new Timeline(frame);
@@ -180,6 +198,8 @@ public class GameModel {
         isPaused = false;
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
+        killedEnemy = 0;
+        baseScore = 1000;
         GameScreen.startLevel();
         Main.getPrimaryStage().setScene(GameScreen.getGameScene());
         GameScreen.getGameRoot().setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
@@ -194,6 +214,7 @@ public class GameModel {
     }
 
     public void exitGame() {
+        killedEnemy = 0;
         ScreenManager.showScreen(new FailScreen());
     }
 
@@ -222,6 +243,9 @@ public class GameModel {
 
         finalScore += currentScore;
         totalTime += elapsedTimeSeconds;
+
+        // Notification of score changes
+        notifyScoreChanged(currentScore);
     }
 
 
@@ -239,6 +263,10 @@ public class GameModel {
         toRemove.add(enemy);
         GameScreen.getGameRoot().getChildren().remove(enemy.canvas());
         killedEnemy++;
+        baseScore += 200;
+        notifyScoreChanged(baseScore);
+        // Notify of changes in the number of enemies killed
+        notifyEnemyKilled(killedEnemy);
     }
 
 
@@ -282,6 +310,18 @@ public class GameModel {
 
     public long getElapsedTime(){
         return elapsedTime;
+    }
+
+    private void notifyScoreChanged(int newScore) {
+        for (GameModelObserver observer : observers) {
+            observer.onScoreChanged(newScore);
+        }
+    }
+
+    private void notifyEnemyKilled(int totalKilled) {
+        for (GameModelObserver observer : observers) {
+            observer.onEnemyKilled(totalKilled);
+        }
     }
 
     public void togglePauseMenu() {
