@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // MultiplyExpression class, representing the multiplication operation
 public class MultiplyExpression implements Expression {

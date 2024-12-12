@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // SubtractExpression class, representing the subtraction operation
 public class SubtractExpression implements Expression {

@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // AddExpression class, representing the addition operation
 public class AddExpression implements Expression {

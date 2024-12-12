@@ -1,14 +1,18 @@
+// GameScreen.java
+
 package com.example.platformerplain.View;
 
 import com.example.platformerplain.*;
 import com.example.platformerplain.Controller.GameScreenController;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.GameModel;
+import com.example.platformerplain.model.GameModelObserver;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -29,9 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.platformerplain.model.GameModel.getInstance;
-
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, GameModelObserver {
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
     private static ArrayList<Entity> collidableMap = new ArrayList<>();
     private static ArrayList<Enemy> enemyMap = new ArrayList<>();
@@ -63,6 +65,10 @@ public class GameScreen implements Screen {
     private static XYChart.Series<Number, Number> speedX;
     private static XYChart.Series<Number, Number> speedY;
 
+    // label
+    private static Label scoreLabel = new Label();
+    private static Label killedLabel = new Label();
+
     // Main
     private Timeline gameLoop;
     private static Button pauseMenu = new Button();
@@ -85,6 +91,10 @@ public class GameScreen implements Screen {
         }
 
         initializePauseButton();
+        initializeGameLabels();
+
+        GameScreen instance = new GameScreen(level); // 您需要确保 `level` 变量在这里可用
+        gameModel.addObserver(instance);
     }
 
     private static void initializeDebugLabels() {
@@ -134,6 +144,24 @@ public class GameScreen implements Screen {
         pauseMenu.setText("Pause");
 
         pauseMenu.setOnAction(event -> GameModel.getInstance().togglePauseMenu());
+    }
+
+    private static void initializeGameLabels() {
+        // set label
+        scoreLabel.setText("Score: 1000");
+        scoreLabel.setTextFill(Color.WHITE);
+        scoreLabel.setFont(new Font(18));
+        scoreLabel.setTranslateX(10);
+        scoreLabel.setTranslateY(100);
+
+        killedLabel.setText("Enemies Killed: 0");
+        killedLabel.setTextFill(Color.WHITE);
+        killedLabel.setFont(new Font(18));
+        killedLabel.setTranslateX(10);
+        killedLabel.setTranslateY(120);
+
+        // UI root
+        uiRoot.getChildren().addAll(scoreLabel, killedLabel);
     }
 
     public static void startLevel() {
@@ -270,6 +298,8 @@ public class GameScreen implements Screen {
         // UI Elements
         uiRoot.getChildren().add(pauseMenu);
         uiRoot.getChildren().add(timeLabel);
+        uiRoot.getChildren().add(scoreLabel);
+        uiRoot.getChildren().add(killedLabel);
         if (GameModel.getInstance().isDebugMode()) {
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
@@ -355,5 +385,20 @@ public class GameScreen implements Screen {
 
     public static int getLevelHeight() {
         return levelHeight;
+    }
+
+    //  GameModelObserver interface
+    @Override
+    public void onScoreChanged(int newScore) {
+        Platform.runLater(() -> {
+            scoreLabel.setText("Score: " + newScore);
+        });
+    }
+
+    @Override
+    public void onEnemyKilled(int totalKilled) {
+        Platform.runLater(() -> {
+            killedLabel.setText("Enemies Killed: " + totalKilled);
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.example.platformerplain.model;
+package com.example.platformerplain.model.Interpreter;
 
 // Expression interface
 public interface Expression {
