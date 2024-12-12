@@ -167,7 +167,7 @@ public class GameModel {
         elapsedTime = 0; // Reset elapsed time
         currentLevel ++;
         GameScreen.startLevel();
-        Main.primaryStage.setScene(GameScreen.gameScene);
+        Main.getPrimaryStage().setScene(GameScreen.gameScene);
         startGameLoop();
     }
 
@@ -176,7 +176,7 @@ public class GameModel {
         startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
         GameScreen.startLevel();
-        Main.primaryStage.setScene(GameScreen.gameScene);
+        Main.getPrimaryStage().setScene(GameScreen.gameScene);
         GameScreen.gameRoot.setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
         GameScreen.gameRoot.setLayoutX(0);
         startGameLoop();
@@ -262,7 +262,7 @@ public class GameModel {
         if (!isPaused) {
             isPaused = true; // Set the pause flag to true
             GameModel.stopGameLoop(); // stop game loop
-            ScreenManager.getInstance(Main.primaryStage).showScreen(new PauseScreen());
+            ScreenManager.getInstance(Main.getPrimaryStage()).showScreen(new PauseScreen());
         }
     }
 }
