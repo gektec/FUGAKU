@@ -73,7 +73,7 @@ public class Enemy extends Entity {
     }
 
     public void removeFromGame() {
-        GameModel.getInstance().removeEnemy();
+        GameModel.getInstance().removeEnemy(this);
     }
 
     @Override

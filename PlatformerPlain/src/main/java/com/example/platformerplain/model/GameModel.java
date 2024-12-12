@@ -235,8 +235,7 @@ public class GameModel {
     }
 
 
-    public void removeEnemy() {
-        Entity enemy = null;
+    public void removeEnemy(Enemy enemy) {
         toRemove.add(enemy);
         GameScreen.getGameRoot().getChildren().remove(enemy.canvas());
         killedEnemy++;
