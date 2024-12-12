@@ -194,6 +194,7 @@ public class GameModel {
     }
 
     public void exitGame() {
+        killedEnemy = 0;
         ScreenManager.showScreen(new FailScreen());
     }
 
