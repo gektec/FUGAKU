@@ -53,7 +53,15 @@ public class LevelInitializer {
                         collidableMap.add(platform);
                         break;
                     case 'H':
-                        // Additional logic for 'H'
+                        if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'H' && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
+                            adjacencyCode = (int)(Math.random() * 2) + 1; // 1 or 2
+                        }
+                        else if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
+                            adjacencyCode = 0;
+                        }
+                        else adjacencyCode = 3;
+                        Ladder ladder = (Ladder) createEntity(EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
+                        ladderMap.add(ladder);
                         break;
                     case 'G':
                         Entity goal = createEntity(EntityType.GOAL, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 50);
