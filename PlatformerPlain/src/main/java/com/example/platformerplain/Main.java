@@ -9,7 +9,6 @@ public class Main extends Application {
 
     private static Main instance;
     static Stage primaryStage;
-    private ScreenManager screenManager;  // ScreenManager instance
 
     public static void main(String[] args) {
         launch(args);
@@ -20,11 +19,11 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
         instance = this;
 
-        // Initialize ScreenManager
-        screenManager = ScreenManager.getInstance(primaryStage);
+        // Initialize
+        // ScreenManager instance
 
         // Show the start screen
-        screenManager.showScreen(new MenuScreen());
+        ScreenManager.showScreen(new MenuScreen());
 
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
