@@ -1,7 +1,10 @@
+.root {
+    -fx-font-family: "m6x11plus";
+}
+
 /* General style */
 .custom-text {
-    -fx-font-family: "Georgia"; /* Choosing an elegant font */
-    -fx-font-size: 24px; /* Moderate font size */
+    -fx-font-size: 28px; /* Moderate font size */
     -fx-fill: #4A4A4A; /* Dark gray color for a cool vibe */
 }
 
@@ -9,8 +12,7 @@
 .button {
     -fx-background-color: #2C3E50; /* Dark blue background for a cool aesthetic */
     -fx-text-fill: #ECF0F1; /* Light colored text */
-    -fx-font-family: "Georgia";
-    -fx-font-size: 16px;
+    -fx-font-size: 20px;
     -fx-padding: 10 20; /* Padding to make buttons easier to click */
     -fx-background-radius: 5; /* Rounded corners */
     -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 1); /* Adds shadow effect */
@@ -28,8 +30,7 @@
 /* Customize label style, consistent with button style */
 .label {
 -fx-text-fill: #ECF0F1; /* Same light text as button */
--fx-font-family: "Georgia";
--fx-font-size: 16px;
+-fx-font-size: 20px;
 -fx-padding: 10 20;
 -fx-background-radius: 5;
 -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 1);

@@ -3,6 +3,7 @@ package com.example.platformerplain;
 import com.example.platformerplain.View.*;
 
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -30,6 +31,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
         AssetManager.preloadAssets();
+
+        Font.loadFont(getClass().getResourceAsStream("/m6x11plus.ttf"), 20);
 
     }
 
