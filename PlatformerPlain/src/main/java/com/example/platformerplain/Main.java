@@ -20,6 +20,8 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
         instance = this;
 
+        Font.loadFont(getClass().getResourceAsStream("/m6x11plus.ttf"), 20);
+
         // Initialize
         // ScreenManager instance
 
@@ -31,9 +33,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
         AssetManager.preloadAssets();
-
-        Font.loadFont(getClass().getResourceAsStream("/m6x11plus.ttf"), 20);
-
     }
 
     public static Main getInstance() {

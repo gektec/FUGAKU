@@ -27,21 +27,6 @@ import static com.example.platformerplain.View.GameScreen.keys;
 
 public class GameScreenController {
 
-    //Main
-
-    private static Main instance;
-    private static Stage primaryStage;
-    private ScreenManager screenManager;  // ScreenManager instance
-
-    private Timeline gameLoop;
-    private Button pauseMenu = new Button();
-    private static boolean isPaused = false;
-
-    private long startTime = 0;  // To store the start time
-    private long elapsedTime = 0; // Used to store accumulated time
-    private long lastUpdateTime = 0; // To keep track of the last update time
-
-
     public static void setKeys(Scene gameScene) {
         gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
