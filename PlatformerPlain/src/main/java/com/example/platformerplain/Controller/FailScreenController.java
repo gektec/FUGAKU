@@ -84,6 +84,10 @@ public class FailScreenController {
      */
     @FXML
     private void handleMenu() {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameModel.getInstance().stopGameLoop();
+        }
         // Instantiate the MenuScreen and pass the main stage
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.show(primaryStage);  // Forward the current stage

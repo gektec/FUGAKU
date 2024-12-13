@@ -207,6 +207,7 @@ public class GameModel {
         startGameLoop();
     }
 
+
     public void stopGameLoop() {
         if (gameLoop != null) {
             gameLoop.stop();
