@@ -53,17 +53,8 @@ public class MenuScreenController {
      * Sets the background image of the root VBox.
      */
     private void loadBackgroundImage() {
-        Image backgroundImage = Assets.MENU_BACKGROUND;
 
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(200, 150,
-                        false, false, true, true));
-
-        root.setBackground(new Background(background));
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     /**

@@ -54,22 +54,8 @@ public class FailScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = Assets.LEVEL_FAILED_BACKGROUND;
 
-        // Create a BackgroundImage object, setting it to fit the GridPane appropriately
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,  // Prevent image repetition
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(200, 150,  // Customized width and height
-                        false,  // Do not stretch width
-                        false,  // Do not stretch height
-                        true,   // Maintain aspect ratio for width
-                        true));  // Maintain aspect ratio for height
-
-        // Apply the background to the GridPane
-        root.setBackground(new Background(background));
+        root.setBackground(Assets.LEVEL_FAILED_BACKGROUND);
     }
 
     /**

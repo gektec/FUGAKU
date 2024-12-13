@@ -1,14 +1,16 @@
 package com.example.platformerplain;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 
 public class Assets {
 
     //Backgrounds
-    public static final Image MENU_BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Background.png", 5);
-    public static final Image LEVEL_COMPLETE_BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Completed.png");
-    public static final Image LEVEL_FAILED_BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Gameover.png");
-    public static final Image LEVEL_TRANSITION_BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Transition.png");
+    public static final Background MENU_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Background.png", 5),null,null,null,null));
+    public static final Background LEVEL_COMPLETE_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Completed.png", 5),null,null,null,null));
+    public static final Background LEVEL_FAILED_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Gameover.png", 5),null,null,null,null));
+    public static final Background LEVEL_TRANSITION_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Transition.png", 5),null,null,null,null));
 
     //Textures
     public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");

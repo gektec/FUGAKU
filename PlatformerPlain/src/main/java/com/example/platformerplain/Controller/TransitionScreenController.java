@@ -62,22 +62,8 @@ public class TransitionScreenController {
     }
     private void loadBackgroundImage() {
         // Load background image
-        Image backgroundImage = Assets.LEVEL_TRANSITION_BACKGROUND;
 
-        // Create a BackgroundImage object with specified properties
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
-                BackgroundRepeat.NO_REPEAT,  // Do not repeat the image
-                BackgroundPosition.CENTER,    // Center the image
-                new BackgroundSize(200, 150,  // Custom width and height
-                        false,   // Do not stretch the width
-                        false,   // Do not stretch the height
-                        true,    // Preserve aspect ratio for the width
-                        true));  // Preserve aspect ratio for the height
-
-        // Set the GridPane background
-        root.setBackground(new Background(background));
+        root.setBackground(Assets.LEVEL_TRANSITION_BACKGROUND);
     }
 
     private void playBackgroundMusic(){
