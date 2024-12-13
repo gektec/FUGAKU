@@ -1,5 +1,3 @@
-// GameScreen.java
-
 package com.example.platformerplain.View;
 
 import com.example.platformerplain.*;

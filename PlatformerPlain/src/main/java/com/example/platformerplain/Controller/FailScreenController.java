@@ -1,5 +1,6 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.View.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
@@ -12,6 +13,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 import java.util.Objects;
+
+import static com.example.platformerplain.Assets.FAIL_SOUND;
 
 /**
  * This class serves as the controller for the Fail Screen in the game.
@@ -51,7 +54,7 @@ public class FailScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Gameover.png")));
+        Image backgroundImage = Assets.LEVEL_FAILED_BACKGROUND;
 
         // Create a BackgroundImage object, setting it to fit the GridPane appropriately
         BackgroundImage background = new BackgroundImage(
@@ -74,14 +77,8 @@ public class FailScreenController {
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() throws URISyntaxException {
-
-        // Load the fail sound effect
-        String failSoundFile = "/sound/defeat.mp3"; // Verify the file path is correct
-        Media failSound = new Media(Objects.requireNonNull(getClass().getResource(failSoundFile)).toURI().toString());
-        mediaPlayer = new MediaPlayer(failSound);
-
         // Play the sound effect upon initialization
-        mediaPlayer.play();
+        FAIL_SOUND.play();
     }
 
     /**

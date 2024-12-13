@@ -4,7 +4,6 @@ import com.example.platformerplain.Assets;
 import com.example.platformerplain.View.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.net.URISyntaxException;
+import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
 /**
  * This class serves as the controller for the Menu Screen in the game.
@@ -41,10 +40,9 @@ public class MenuScreenController {
 
     /**
      * Loads the background image and initializes background music playback.
-     * @throws URISyntaxException if there is an error with the URI for the music file
      */
     @FXML
-    private void initialize() throws URISyntaxException {
+    private void initialize() {
         //loadBackgroundImage();
         loadBackgroundImage();
         playBackgroundMusic();
@@ -70,12 +68,10 @@ public class MenuScreenController {
 
     /**
      * Loads and plays the background music indefinitely.
-     * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() {
-        //MediaPlayer mediaPlayer = BACKGROUND_MUSIC;
-       // mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
-        //mediaPlayer.play(); // Start playing the music
+        //TODO : replace it.
+        VICTORY_SOUND.play();
     }
 
     /**
@@ -144,7 +140,7 @@ public class MenuScreenController {
     }
 
     @FXML
-    public void handleDebugMode(ActionEvent actionEvent) {
+    public void handleDebugMode() {
         GameModel.getInstance().setDebugMode(!GameModel.getInstance().isDebugMode());
         updateDebugButtonText();
     }

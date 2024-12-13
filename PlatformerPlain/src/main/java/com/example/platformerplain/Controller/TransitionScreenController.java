@@ -1,8 +1,8 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.View.MenuScreen;
 import com.example.platformerplain.model.GameModel;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,8 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import java.net.URISyntaxException;
-import java.util.Objects;
 
 import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
@@ -25,7 +23,6 @@ public class TransitionScreenController {
 
     public Button MenuButton;
     public Button NextLevelButton;
-    public Button ExitButton;
     public Button RestartButton;
 
     @FXML
@@ -57,16 +54,15 @@ public class TransitionScreenController {
     /**
      * Initializes the transition screen, loading the background image
      * and playing the victory sound.
-     * @throws URISyntaxException if the URI for the media file is malformed
      */
     @FXML
-    private void initialize() throws URISyntaxException {
+    private void initialize() {
         loadBackgroundImage();
         playBackgroundMusic();
     }
     private void loadBackgroundImage() {
         // Load background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Transition.png")));
+        Image backgroundImage = Assets.LEVEL_TRANSITION_BACKGROUND;
 
         // Create a BackgroundImage object with specified properties
         BackgroundImage background = new BackgroundImage(
@@ -89,17 +85,6 @@ public class TransitionScreenController {
         VICTORY_SOUND.play();
     }
 
-
-
-    /**
-     * Exits the game application.
-     * This method closes the platform and terminates the JVM.
-     */
-    @FXML
-    public void handleExitGame() {
-        Platform.exit(); // Close the JavaFX application
-        System.exit(0); // Terminate the Java Virtual Machine
-    }
 
     /**
      * Navigates back to the main menu when the menu button is pressed.

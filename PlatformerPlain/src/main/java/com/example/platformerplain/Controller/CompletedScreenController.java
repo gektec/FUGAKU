@@ -1,5 +1,6 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.View.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -67,10 +68,10 @@ public class CompletedScreenController {
         loadBackgroundImage();
         playBackgroundMusic();
     }
-//todo: load with Assets
+
     private void loadBackgroundImage() {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/backgroundImage/Completed.png")));
+        Image backgroundImage = Assets.LEVEL_COMPLETE_BACKGROUND;
 
         // Create a BackgroundImage object, setting it to fit the GridPane appropriately
         BackgroundImage background = new BackgroundImage(
