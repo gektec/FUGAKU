@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class GameScreen implements Screen, GameModelObserver {
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
@@ -135,8 +136,7 @@ public class GameScreen implements Screen, GameModelObserver {
     }
 
     private static void initializePauseButton() {
-        pauseMenu.setTextFill(Color.BLACK);
-        pauseMenu.setFont(new Font(18));
+        pauseMenu.getStyleClass().add("button");
         pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
@@ -162,12 +162,30 @@ public class GameScreen implements Screen, GameModelObserver {
         uiRoot.getChildren().addAll(scoreLabel, killedLabel);
     }
 
-    public static void startLevel() {
-        // Clear current game state
+    public static void clearData(){
         keys.clear();
         collidableMap.clear();
         enemyMap.clear();
         toRemove.clear();
+    }
+
+    public static  void clearPane(){
+        Pane[] panes = {appRoot, gameRoot, uiRoot, backgroundRoot};
+
+        for (Pane pane : panes) {
+            if (pane != null) {
+                pane.getChildren().clear();
+
+                if (pane.getParent() != null) {
+                    ((Pane) pane.getParent()).getChildren().remove(pane);
+                }
+            }
+        }
+    }
+
+    public static void startLevel() {
+        // Clear current game state
+        clearData();
 
         // Initialize Panes for game layout
         appRoot = new Pane();
@@ -291,6 +309,7 @@ public class GameScreen implements Screen, GameModelObserver {
 
         // Create game scene
         gameScene = new Scene(appRoot);
+        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
         GameScreenController.setKeys(gameScene);
 
         // UI Elements
