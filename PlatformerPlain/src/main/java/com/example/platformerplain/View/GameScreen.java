@@ -59,6 +59,7 @@ public class GameScreen implements Screen, GameModelObserver {
     private static Label moveStateLabel = new Label();
     private static Label playerSpeedLabel = new Label();
     private static Label timeLabel = new Label();
+    private static Label positionLabel = new Label();
     private static LineChart<Number, Number> speedChart;
     private static XYChart.Series<Number, Number> speedX;
     private static XYChart.Series<Number, Number> speedY;
@@ -70,6 +71,7 @@ public class GameScreen implements Screen, GameModelObserver {
     // Main
     private Timeline gameLoop;
     private static Button pauseMenu = new Button();
+    private static int labelNumber = 0;
 
     public GameScreen(int level) {
         GameScreen.level = level;
@@ -95,6 +97,14 @@ public class GameScreen implements Screen, GameModelObserver {
         gameModel.addObserver(instance);
     }
 
+    private static void setLable(Label label){
+        framerateLabel.setTextFill(Color.WHITE);
+        framerateLabel.setFont(Main.baseFont(18));
+        framerateLabel.setTranslateX(10);
+        framerateLabel.setTranslateY(10 + labelNumber * 20);
+        labelNumber++;
+    }
+
     private static void initializeDebugLabels() {
         framerateLabel.setTextFill(Color.WHITE);
         framerateLabel.setFont(new Font(18));
@@ -111,11 +121,16 @@ public class GameScreen implements Screen, GameModelObserver {
         moveStateLabel.setTranslateX(10);
         moveStateLabel.setTranslateY(50);
 
+        positionLabel.setTextFill(Color.WHITE);
+        positionLabel.setFont(new Font(18));
+        positionLabel.setTranslateX(10);
+        positionLabel.setTranslateY(50);
+
         // Add a Time Label
         timeLabel.setTextFill(Color.WHITE);
         timeLabel.setFont(new Font(18));
         timeLabel.setTranslateX(10);
-        timeLabel.setTranslateY(70);
+        timeLabel.setTranslateY(90);
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -130,7 +145,7 @@ public class GameScreen implements Screen, GameModelObserver {
         speedY.setName("Speed Y");
         speedChart.getData().addAll(speedX, speedY);
         speedChart.setTranslateX(10);
-        speedChart.setTranslateY(90);
+        speedChart.setTranslateY(110);
         speedChart.setPrefSize(400, 300);
     }
 

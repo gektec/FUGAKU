@@ -6,6 +6,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.io.InputStream;
@@ -24,6 +25,9 @@ public class AssetManager {
                 if (field.get(null) instanceof GameMediaPlayer gameMediaPlayer) {
                     gameMediaPlayer.play();
                     gameMediaPlayer.stop();
+                }
+                else if(field.get(null) instanceof Font font) {
+                    font.getName();
                 }
             }catch(IllegalAccessException e){
                     e.printStackTrace();

@@ -10,6 +10,7 @@ public class Main extends Application {
 
     private static Main instance;
     static Stage primaryStage;
+    public static Font baseFont;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,7 +21,7 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
         instance = this;
 
-        Font.loadFont(getClass().getResourceAsStream("/m6x11plus.ttf"), 20);
+        AssetManager.preloadAssets();
 
         // Show the start screen
         ScreenManager.showScreen(new MenuScreen());
@@ -28,8 +29,6 @@ public class Main extends Application {
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
-
-        AssetManager.preloadAssets();
     }
 
     public static Main getInstance() {
