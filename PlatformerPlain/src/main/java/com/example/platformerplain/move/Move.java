@@ -61,6 +61,9 @@ public class Move {
     }
 
     private static void beforeMove(Entity moveable, MoveStatus moveStatus){
+        isTouchingGround = false;
+        isTouchingLeftWall = false;
+        isTouchingRightWall = false;
         velocity = moveStatus.velocity;
         for(Entity platform : collidableMap){
             if(moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())){
@@ -87,7 +90,6 @@ public class Move {
     }
 
 
-//todo: restrict max speed to avoid clipping through walls
     private static void afterMove(Entity moveable, MoveStatus moveStatus) {
         moveStatus.canJump = false;
         velocity = moveStatus.velocity;

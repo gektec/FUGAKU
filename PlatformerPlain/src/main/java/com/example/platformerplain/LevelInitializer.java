@@ -93,7 +93,7 @@ public class LevelInitializer {
     private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
         if (entity != null) {
-            if (GameModel.getInstance().isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
+            if (GameModel.isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
             else gameRoot.getChildren().add(entity.canvas());
         }
         else System.err.println("Entity creation failed");

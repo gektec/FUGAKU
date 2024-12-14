@@ -5,11 +5,7 @@ import com.example.platformerplain.Controller.GameScreenController;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.model.GameModelObserver;
-import com.example.platformerplain.move.Move;
-import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.texture.ImageScaler;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,7 +14,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -30,29 +25,18 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class GameScreen implements Screen, GameModelObserver {
-    public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static ArrayList<Goal> goalMap = new ArrayList<>();
-    private static ArrayList<Spike> spikeMap = new ArrayList<>();
-    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
 
-    private static List<Entity> toRemove = new ArrayList<>();
     private static Pane appRoot = new Pane();
     private static Pane gameRoot = new Pane();
     private static Pane uiRoot = new Pane();
     private static Pane backgroundRoot = new Pane();
 
-    private static Entity player;
     private static int levelWidth = -1;
     private static int levelHeight = -1;
-    private static MovePlayer movePlayerLogic;
     private static int level;
-    private static MoveEnemy moveEnemyLogic;
     private static Scene gameScene;
 
     // Debug
@@ -61,7 +45,9 @@ public class GameScreen implements Screen, GameModelObserver {
     private static Label playerSpeedLabel = new Label();
     private static Label timeLabel = new Label();
     private static Label positionLabel = new Label();
-    private static LineChart<Number, Number> speedChart;
+    private static NumberAxis xAxis = new NumberAxis();
+    private static NumberAxis yAxis = new NumberAxis();
+    private static LineChart speedChart = new LineChart<>(xAxis, yAxis);
     private static XYChart.Series<Number, Number> speedX;
     private static XYChart.Series<Number, Number> speedY;
 
@@ -70,9 +56,14 @@ public class GameScreen implements Screen, GameModelObserver {
     private static Label killedLabel = new Label();
 
     // Main
-    private Timeline gameLoop;
     private static Button pauseMenu = new Button();
     private static int labelNumber = 0;
+
+    static ImageView backgroundSky;
+    static ImageView backgroundCloud1;
+    static ImageView backgroundCloud2;
+    static ImageView backgroundCloud3;
+    static ImageView backgroundMoon;
 
     public GameScreen(int level) {
         GameScreen.level = level;
@@ -86,13 +77,15 @@ public class GameScreen implements Screen, GameModelObserver {
 
 
     public static void initContent() {
-        GameModel gameModel = GameModel.getInstance();
+        GameModel gameModel = GameModel.getInstance(); // ????
+
+        initPanes();
 
         initializePauseButton();
 
         initLabels();
 
-        GameScreen instance = new GameScreen(level); // 您需要确保 `level` 变量在这里可用
+        GameScreen instance = new GameScreen(level);// ????
         gameModel.addObserver(instance);
     }
 
@@ -121,12 +114,10 @@ public class GameScreen implements Screen, GameModelObserver {
 
             setLable(timeLabel);
 
-            NumberAxis xAxis = new NumberAxis();
-            NumberAxis yAxis = new NumberAxis();
+
             xAxis.setLabel("Time");
             yAxis.setLabel("Speed");
 
-            speedChart = new LineChart<>(xAxis, yAxis);
             speedChart.setTitle("Player Speed Over Time");
             speedX = new XYChart.Series<>();
             speedX.setName("Speed X");
@@ -145,14 +136,6 @@ public class GameScreen implements Screen, GameModelObserver {
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
         pauseMenu.setOnAction(event -> GameModel.getInstance().togglePauseMenu());
-    }
-
-
-    private static void clearData(){
-        keys.clear();
-        collidableMap.clear();
-        enemyMap.clear();
-        toRemove.clear();
     }
 
     public static  void clearPane(){
@@ -174,11 +157,6 @@ public class GameScreen implements Screen, GameModelObserver {
         gameRoot = new Pane();
         uiRoot = new Pane();
         backgroundRoot = new Pane();
-    }
-
-    private static void initDimensions(){
-        levelWidth = LevelData.getLevelInformation.getLevelWidth();
-        levelHeight = LevelData.getLevelInformation.getLevelHeight();
     }
 
     private static void addLevelIndicatorText() {
@@ -204,18 +182,12 @@ public class GameScreen implements Screen, GameModelObserver {
         uiRoot.getChildren().add(title);
     }
 
-    private static void createGameScene() {
-        gameScene = new Scene(appRoot);
-        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
-        GameScreenController.setKeys(gameScene);
-    }
-
     private static void initializeUIElements() {
         uiRoot.getChildren().add(pauseMenu);
         uiRoot.getChildren().add(timeLabel);
         uiRoot.getChildren().add(scoreLabel);
         uiRoot.getChildren().add(killedLabel);
-        if (GameModel.getInstance().isDebugMode()) {
+        if (GameModel.isDebugMode()) {
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
@@ -224,50 +196,74 @@ public class GameScreen implements Screen, GameModelObserver {
         }
     }
 
-    private static void initializeTiming() {
-        GameModel.startTime = System.currentTimeMillis(); // Recording start time
-        GameModel.elapsedTime = 0; // Reset elapsed time
-    }
-
-
-    public static void startLevel() {
-        // Clear current game state
-        clearData();
-
-        // Initialize Panes for game layout
-        initPanes();
-
-        // Set up the background
+    private static void initBackground(){
         Image background0 = Assets.BACKGROUND_SKY;
-        ImageView backgroundSky = new ImageView(background0);
+        backgroundSky = new ImageView(background0);
         backgroundSky.setFitWidth(Constants.WINDOW_WIDTH * 5);
         backgroundSky.setFitHeight(Constants.WINDOW_HEIGHT * 5);
 
         Image background1 = Assets.BACKGROUND_CLOUD_1;
-        ImageView backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1, 2));
+        backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1, 2));
         backgroundCloud1.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
         backgroundCloud1.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background2 = Assets.BACKGROUND_CLOUD_2;
-        ImageView backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2, 2));
+        backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2, 2));
         backgroundCloud2.setScaleX(-1);
         backgroundCloud2.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
         backgroundCloud2.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background3 = Assets.BACKGROUND_CLOUD_3;
-        ImageView backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3, 2));
+        backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3, 2));
         backgroundCloud3.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
         backgroundCloud3.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
         Image background4 = Assets.BACKGROUND_MOON;
-        ImageView backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4, 2));
+        backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4, 2));
         backgroundMoon.setFitWidth(Constants.WINDOW_WIDTH);
         backgroundMoon.setFitHeight(Constants.WINDOW_HEIGHT);
 
         backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
+    }
 
-        // Initialize level dimensions
-        initDimensions();
+    private static void setCameraFollow(){
+        GameModel.player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
+            int offset = newValue.intValue();
+            if (offset > Constants.WINDOW_WIDTH / 2 && offset < levelWidth - (Constants.WINDOW_WIDTH - Constants.PLAYER_SIZE) / 2) {
+                gameRoot.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2));
+                backgroundCloud1.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.4);
+                backgroundCloud2.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.3);
+                backgroundCloud3.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.2);
+                backgroundMoon.setLayoutX((-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.05));
+            }
+        });
+
+        GameModel.player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
+            int offsetY = newValue.intValue();
+            if (levelHeight - offsetY > Constants.WINDOW_HEIGHT / 2 && offsetY > Constants.WINDOW_HEIGHT / 4) {
+                gameRoot.setLayoutY(-(offsetY - (double) Constants.WINDOW_HEIGHT / 2));
+                backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
+                backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
+                backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
+                backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
+            }
+        });
+    }
+
+
+    private static void createGameScene() {
+        gameScene = new Scene(appRoot);
+        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
+        GameScreenController.setKeys(gameScene);
+    }
+
+
+    public static void startLevel() {
+        // Set up the background
+        initBackground();
+
+        levelWidth = LevelData.getLevelInformation.getLevelWidth();
+        levelHeight = LevelData.getLevelInformation.getLevelHeight();
 
         // Position the game view
         gameRoot.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
@@ -280,59 +276,12 @@ public class GameScreen implements Screen, GameModelObserver {
         addLevelIndicatorText();
 
         // Use LevelInitializer to set up the level
-        LevelInitializer levelInitializer = new LevelInitializer(
-                keys,
-                gameRoot,
-                uiRoot,
-                backgroundRoot,
-                collidableMap,
-                enemyMap,
-                spikeMap,
-                ladderMap
-        );
-        player = levelInitializer.generateLevel(LevelData.getLevelInformation.getLevelNumber());
+        //todo
 
-        // If player is not null, continue setup
-        if (player != null) {
-            movePlayerLogic = new MovePlayer(
-                    player,
-                    collidableMap,
-                    enemyMap,
-                    ladderMap,
-                    spikeMap,
-                    levelWidth,
-                    keys
-            );
-
-            // Camera's follow logic
-            player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
-                int offset = newValue.intValue();
-                if (offset > Constants.WINDOW_WIDTH / 2 && offset < levelWidth - (Constants.WINDOW_WIDTH - Constants.PLAYER_SIZE) / 2) {
-                    gameRoot.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2));
-                    backgroundCloud1.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.4);
-                    backgroundCloud2.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.3);
-                    backgroundCloud3.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.2);
-                    backgroundMoon.setLayoutX((-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.05));
-                }
-            });
-
-            player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
-                int offsetY = newValue.intValue();
-                if (levelHeight - offsetY > Constants.WINDOW_HEIGHT / 2 && offsetY > Constants.WINDOW_HEIGHT / 4) {
-                    gameRoot.setLayoutY(-(offsetY - (double) Constants.WINDOW_HEIGHT / 2));
-                    backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
-                    backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
-                    backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
-                    backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
-                }
-            });
-        }
+        setCameraFollow();
 
         // Add roots to the scene
         appRoot.getChildren().addAll(backgroundRoot, gameRoot, uiRoot);
-
-        // Initialize the move logic
-        Move move = new Move(collidableMap);
 
         // Create game scene
         createGameScene();
@@ -340,8 +289,6 @@ public class GameScreen implements Screen, GameModelObserver {
         // UI Elements
         initializeUIElements();
 
-        // Initialize timing
-        initializeTiming();
     }
 
 
@@ -349,24 +296,17 @@ public class GameScreen implements Screen, GameModelObserver {
         return gameRoot;
     }
 
+    public static Pane getUIRoot() {
+        return uiRoot;
+    }
+
+    public static Pane getBackgroundRoot() {
+        return backgroundRoot;
+    }
+
 
     public static Scene getGameScene() {
         return gameScene;
-    }
-
-
-    public static ArrayList<Entity> getCollidableMap() {
-        return collidableMap;
-    }
-
-
-    public static ArrayList<Enemy> getEnemyMap() {
-        return enemyMap;
-    }
-
-
-    public static Entity getPlayer() {
-        return player;
     }
 
 
@@ -407,11 +347,6 @@ public class GameScreen implements Screen, GameModelObserver {
 
     public static XYChart.Series<Number, Number> getSpeedY() {
         return speedY;
-    }
-
-
-    public static MovePlayer getMovePlayerLogic() {
-        return movePlayerLogic;
     }
 
 
