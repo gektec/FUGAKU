@@ -250,6 +250,14 @@ public class GameScreen implements Screen, GameModelObserver {
             title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
             title.setY(40);
             uiRoot.getChildren().add(title);
+        }else if (LevelData.getLevelInformation.getLevelNumber() == 3) {
+            Text title = new Text("Level 3: The Final Battle Begins");
+            title.setFont(new Font(36));
+            title.setFill(Color.YELLOW);
+            double textWidth = title.getLayoutBounds().getWidth();
+            title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
+            title.setY(40);
+            uiRoot.getChildren().add(title);
         }
 
         // Use LevelInitializer to set up the level

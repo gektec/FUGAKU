@@ -176,7 +176,7 @@ public class GameModel {
 
     public void transitionToNextLevel() {
         stopGameLoop();
-        if(currentLevel == 1) {
+        if(currentLevel <= 2) {
             calculateCurrentScore();
             ScreenManager.showScreen(new TransitionScreen());
         } else{

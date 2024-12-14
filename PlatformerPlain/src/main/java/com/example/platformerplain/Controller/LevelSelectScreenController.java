@@ -21,6 +21,7 @@ public class LevelSelectScreenController {
 
     public Button FirstLevel;
     public Button SecondLevel;
+    public Button ThirdLevel;
     @FXML
     private GridPane root;  // Root layout for the Level Select screen
 
@@ -62,6 +63,15 @@ public class LevelSelectScreenController {
         if (gameModel != null) {
             GameScreen.clearPane();
             gameModel.startGame(primaryStage, 2);
+        }
+    }
+
+    @FXML
+    private void handleThirdLevel() {
+        GameModel gameModel = GameModel.getInstance();
+        if (gameModel != null) {
+            GameScreen.clearPane();
+            gameModel.startGame(primaryStage, 3);
         }
     }
 
