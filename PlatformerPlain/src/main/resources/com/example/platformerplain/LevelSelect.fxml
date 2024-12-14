@@ -50,7 +50,7 @@
 
     <Button
             fx:id="ThirdLevel"
-            onAction="#handleSecondLevel"
+            onAction="#handleThirdLevel"
             text="3"
             GridPane.rowIndex="2"
             GridPane.columnIndex="2"
