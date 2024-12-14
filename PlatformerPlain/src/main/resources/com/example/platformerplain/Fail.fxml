@@ -20,7 +20,7 @@
     <!--
         The placeholder area in the first row is used to create vertical spacing above the buttons.
     -->
-    <Label text="Game                                   Over" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
+    <Label text="Game                            Over!" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
         <font>
             <Font name="System" size="100"/>
         </font>
