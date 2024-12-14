@@ -62,8 +62,7 @@ public class TransitionScreenController {
     }
     private void loadBackgroundImage() {
         // Load background image
-
-        root.setBackground(Assets.LEVEL_TRANSITION_BACKGROUND);
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     private void playBackgroundMusic(){

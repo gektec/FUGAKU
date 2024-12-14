@@ -53,7 +53,6 @@ public class MenuScreenController {
      * Sets the background image of the root VBox.
      */
     private void loadBackgroundImage() {
-
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 

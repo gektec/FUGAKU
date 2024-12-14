@@ -1,5 +1,6 @@
 package com.example.platformerplain.Controller;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.View.GameScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
@@ -43,23 +44,7 @@ public class LevelSelectScreenController {
     }
 
     private void loadBackgroundImage() {
-        // Load the background image from resources
-        Image backgroundImage = BACKGROUND_MOON;
-
-        // Set up the BackgroundImage to fit the GridPane
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,  // Don't repeat the image
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(200, 150,  // Define custom dimensions
-                        false,   // Don't stretch width
-                        false,   // Don't stretch height
-                        true,    // Keep aspect ratio for width
-                        true));  // Keep aspect ratio for height
-
-        // Apply the generated background to the GridPane
-        root.setBackground(new Background(background));
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     @FXML

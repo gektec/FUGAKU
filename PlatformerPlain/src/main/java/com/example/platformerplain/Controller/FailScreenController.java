@@ -54,8 +54,7 @@ public class FailScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-
-        root.setBackground(Assets.LEVEL_FAILED_BACKGROUND);
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     /**

@@ -309,8 +309,8 @@ public class GameModel {
         return startTime;
     }
 
-    public long getElapsedTime(){
-        return elapsedTime;
+    public long getGameTime(){
+        return (int)(elapsedTime/1000);
     }
 
     private void notifyScoreChanged(int newScore) {
