@@ -27,7 +27,8 @@ public class FailScreenController {
     public Button ExitButton;
     public Button RestartButton;
     @FXML
-    private GridPane root;  // The root layout for the Fail Screen
+    //private GridPane root;  // The root layout for the Fail Screen
+    private StackPane root;
 
     @FXML
     private Stage primaryStage;  // The main application stage

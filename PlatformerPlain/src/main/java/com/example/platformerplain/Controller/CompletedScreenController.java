@@ -71,7 +71,7 @@ public class CompletedScreenController {
 
     private void loadBackgroundImage() {
         // Load the background image
-        root.setBackground(Assets.LEVEL_COMPLETE_BACKGROUND);
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     private void playBackgroundMusic() throws URISyntaxException {
