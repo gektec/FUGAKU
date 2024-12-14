@@ -20,7 +20,7 @@
     <!--
         The placeholders in the first row are used to create vertical spacing above the buttons.
     -->
-    <Label text="Please select your level" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
+    <Label text="Pick   a   Level   to   Start   Your   Adventure!" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
         <font>
             <Font name="System" size="100"/>
         </font>
@@ -44,6 +44,14 @@
             fx:id="SecondLevel"
             onAction="#handleSecondLevel"
             text="2"
+            GridPane.rowIndex="2"
+            GridPane.columnIndex="1"
+    />
+
+    <Button
+            fx:id="ThirdLevel"
+            onAction="#handleThirdLevel"
+            text="3"
             GridPane.rowIndex="2"
             GridPane.columnIndex="2"
     />

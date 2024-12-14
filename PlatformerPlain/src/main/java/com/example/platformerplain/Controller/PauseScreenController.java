@@ -75,6 +75,12 @@ public class PauseScreenController {
             3. You can defeat enemies by jumping on them—just be cautious!
             4. Collect power-ups to boost your abilities and gain an edge.
             5. Race against time to reach the goal quickly and claim victory!
+            
+            Scoring System:
+            - Each level starts with 1000 points.
+            - You lose 10 points for every second that passes.
+            - Defeating an enemy earns you an additional 200 points.
+            - Aim for high scores by defeating enemies quickly and completing levels efficiently!
 
             Awesome Moves to Master:
             1. Slide Jump: Press 'J' while running for an extra boost in height!

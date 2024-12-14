@@ -52,7 +52,6 @@ public class GameScreen implements Screen, GameModelObserver {
     private static MovePlayer movePlayerLogic;
     private static int level;
     private static MoveEnemy moveEnemyLogic;
-    private static Move move;
     private static Scene gameScene;
 
     // Debug
@@ -162,7 +161,7 @@ public class GameScreen implements Screen, GameModelObserver {
         uiRoot.getChildren().addAll(scoreLabel, killedLabel);
     }
 
-    public static void clearData(){
+    private static void clearData(){
         keys.clear();
         collidableMap.clear();
         enemyMap.clear();
@@ -183,15 +182,72 @@ public class GameScreen implements Screen, GameModelObserver {
         }
     }
 
+    private static void initPanes(){
+        appRoot = new Pane();
+        gameRoot = new Pane();
+        uiRoot = new Pane();
+        backgroundRoot = new Pane();
+    }
+
+    private static void initDimensions(){
+        levelWidth = LevelData.getLevelInformation.getLevelWidth();
+        levelHeight = LevelData.getLevelInformation.getLevelHeight();
+    }
+
+    private static void addLevelIndicatorText() {
+        int levelNumber = LevelData.getLevelInformation.getLevelNumber();
+        String titleText;
+
+        if (levelNumber == 1) {
+            titleText = "Try to get the goal";
+        } else if (levelNumber == 2) {
+            titleText = "Level 2: New Challenges Await!";
+        } else if (levelNumber == 3) {
+            titleText = "Level 3: The Final Battle Begins";
+        } else {
+            return; // Return early if the level number does not match case
+        }
+
+        Text title = new Text(titleText);
+        title.setFont(new Font(36));
+        title.setFill(Color.YELLOW);
+        double textWidth = title.getLayoutBounds().getWidth();
+        title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
+        title.setY(40);
+        uiRoot.getChildren().add(title);
+    }
+
+    private static void createGameScene() {
+        gameScene = new Scene(appRoot);
+        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
+        GameScreenController.setKeys(gameScene);
+    }
+
+    private static void initializeUIElements() {
+        uiRoot.getChildren().add(pauseMenu);
+        uiRoot.getChildren().add(timeLabel);
+        uiRoot.getChildren().add(scoreLabel);
+        uiRoot.getChildren().add(killedLabel);
+        if (GameModel.getInstance().isDebugMode()) {
+            uiRoot.getChildren().add(framerateLabel);
+            uiRoot.getChildren().add(playerSpeedLabel);
+            uiRoot.getChildren().add(speedChart);
+            uiRoot.getChildren().add(moveStateLabel);
+        }
+    }
+
+    private static void initializeTiming() {
+        GameModel.startTime = System.currentTimeMillis(); // Recording start time
+        GameModel.elapsedTime = 0; // Reset elapsed time
+    }
+
+
     public static void startLevel() {
         // Clear current game state
         clearData();
 
         // Initialize Panes for game layout
-        appRoot = new Pane();
-        gameRoot = new Pane();
-        uiRoot = new Pane();
-        backgroundRoot = new Pane();
+        initPanes();
 
         // Set up the background
         Image background0 = Assets.BACKGROUND_SKY;
@@ -223,8 +279,7 @@ public class GameScreen implements Screen, GameModelObserver {
         backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
 
         // Initialize level dimensions
-        levelWidth = LevelData.getLevelInformation.getLevelWidth();
-        levelHeight = LevelData.getLevelInformation.getLevelHeight();
+        initDimensions();
 
         // Position the game view
         gameRoot.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
@@ -234,23 +289,7 @@ public class GameScreen implements Screen, GameModelObserver {
         }
 
         // Add level indicator text based on level
-        if (LevelData.getLevelInformation.getLevelNumber() == 1) {
-            Text title = new Text("Try to get the goal");
-            title.setFont(new Font(36));
-            title.setFill(Color.YELLOW);
-            double textWidth = title.getLayoutBounds().getWidth();
-            title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
-            title.setY(40);
-            uiRoot.getChildren().add(title);
-        } else if (LevelData.getLevelInformation.getLevelNumber() == 2) {
-            Text title = new Text("Level 2: New Challenges Await!");
-            title.setFont(new Font(36));
-            title.setFill(Color.YELLOW);
-            double textWidth = title.getLayoutBounds().getWidth();
-            title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
-            title.setY(40);
-            uiRoot.getChildren().add(title);
-        }
+        addLevelIndicatorText();
 
         // Use LevelInitializer to set up the level
         LevelInitializer levelInitializer = new LevelInitializer(
@@ -281,22 +320,22 @@ public class GameScreen implements Screen, GameModelObserver {
             player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
                 int offset = newValue.intValue();
                 if (offset > Constants.WINDOW_WIDTH / 2 && offset < levelWidth - (Constants.WINDOW_WIDTH - Constants.PLAYER_SIZE) / 2) {
-                    gameRoot.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2));
-                    backgroundCloud1.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.4);
-                    backgroundCloud2.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.3);
-                    backgroundCloud3.setLayoutX(-(offset - Constants.WINDOW_WIDTH / 2) * 0.2);
-                    backgroundMoon.setLayoutX((-(offset - Constants.WINDOW_WIDTH / 2) * 0.05));
+                    gameRoot.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2));
+                    backgroundCloud1.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.4);
+                    backgroundCloud2.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.3);
+                    backgroundCloud3.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.2);
+                    backgroundMoon.setLayoutX((-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.05));
                 }
             });
 
             player.hitBox().translateYProperty().addListener((obs, old, newValue) -> {
                 int offsetY = newValue.intValue();
                 if (levelHeight - offsetY > Constants.WINDOW_HEIGHT / 2 && offsetY > Constants.WINDOW_HEIGHT / 4) {
-                    gameRoot.setLayoutY(-(offsetY - Constants.WINDOW_HEIGHT / 2));
-                    backgroundCloud1.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
-                    backgroundCloud2.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
-                    backgroundCloud3.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
-                    backgroundMoon.setLayoutY((-(offsetY - Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
+                    gameRoot.setLayoutY(-(offsetY - (double) Constants.WINDOW_HEIGHT / 2));
+                    backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
+                    backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
+                    backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
+                    backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
                 }
             });
         }
@@ -305,28 +344,16 @@ public class GameScreen implements Screen, GameModelObserver {
         appRoot.getChildren().addAll(backgroundRoot, gameRoot, uiRoot);
 
         // Initialize the move logic
-        move = new Move(collidableMap);
+        Move move = new Move(collidableMap);
 
         // Create game scene
-        gameScene = new Scene(appRoot);
-        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
-        GameScreenController.setKeys(gameScene);
+        createGameScene();
 
         // UI Elements
-        uiRoot.getChildren().add(pauseMenu);
-        uiRoot.getChildren().add(timeLabel);
-        uiRoot.getChildren().add(scoreLabel);
-        uiRoot.getChildren().add(killedLabel);
-        if (GameModel.getInstance().isDebugMode()) {
-            uiRoot.getChildren().add(framerateLabel);
-            uiRoot.getChildren().add(playerSpeedLabel);
-            uiRoot.getChildren().add(speedChart);
-            uiRoot.getChildren().add(moveStateLabel);
-        }
+        initializeUIElements();
 
         // Initialize timing
-        GameModel.startTime = System.currentTimeMillis(); // Recording start time
-        GameModel.elapsedTime = 0; // Reset elapsed time
+        initializeTiming();
     }
 
 

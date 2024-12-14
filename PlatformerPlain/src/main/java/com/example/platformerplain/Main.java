@@ -22,9 +22,6 @@ public class Main extends Application {
 
         Font.loadFont(getClass().getResourceAsStream("/m6x11plus.ttf"), 20);
 
-        // Initialize
-        // ScreenManager instance
-
         // Show the start screen
         ScreenManager.showScreen(new MenuScreen());
 
