@@ -18,6 +18,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -77,6 +78,7 @@ public class GameScreen implements Screen, GameModelObserver {
         GameScreen.level = level;
     }
 
+
     @Override
     public void show(Stage primaryStage) {
         GameModel.getInstance().startGame(primaryStage, level);
@@ -86,67 +88,55 @@ public class GameScreen implements Screen, GameModelObserver {
     public static void initContent() {
         GameModel gameModel = GameModel.getInstance();
 
-        if (gameModel.isDebugMode()) {
-            initializeDebugLabels();
-        }
-
         initializePauseButton();
-        initializeGameLabels();
+
+        initLabels();
 
         GameScreen instance = new GameScreen(level); // 您需要确保 `level` 变量在这里可用
         gameModel.addObserver(instance);
     }
 
     private static void setLable(Label label){
-        framerateLabel.setTextFill(Color.WHITE);
-        framerateLabel.setFont(Main.baseFont(18));
-        framerateLabel.setTranslateX(10);
-        framerateLabel.setTranslateY(10 + labelNumber * 20);
+        label.setFont(AssetManager.loadFont(Assets.baseFont, 18));
+        label.setTranslateX(10);
+        label.setTranslateY(10 + labelNumber * 20);
         labelNumber++;
     }
 
-    private static void initializeDebugLabels() {
-        framerateLabel.setTextFill(Color.WHITE);
-        framerateLabel.setFont(new Font(18));
-        framerateLabel.setTranslateX(10);
-        framerateLabel.setTranslateY(10);
+    private static void initLabels() {
+        scoreLabel.setText("Score: 1000");
+        setLable(scoreLabel);
 
-        playerSpeedLabel.setTextFill(Color.WHITE);
-        playerSpeedLabel.setFont(new Font(18));
-        playerSpeedLabel.setTranslateX(10);
-        playerSpeedLabel.setTranslateY(30);
+        killedLabel.setText("Enemies Killed: 0");
+        setLable(killedLabel);
 
-        moveStateLabel.setTextFill(Color.WHITE);
-        moveStateLabel.setFont(new Font(18));
-        moveStateLabel.setTranslateX(10);
-        moveStateLabel.setTranslateY(50);
+        if(GameModel.isDebugMode()) {
+            setLable(framerateLabel);
 
-        positionLabel.setTextFill(Color.WHITE);
-        positionLabel.setFont(new Font(18));
-        positionLabel.setTranslateX(10);
-        positionLabel.setTranslateY(50);
+            setLable(playerSpeedLabel);
 
-        // Add a Time Label
-        timeLabel.setTextFill(Color.WHITE);
-        timeLabel.setFont(new Font(18));
-        timeLabel.setTranslateX(10);
-        timeLabel.setTranslateY(90);
+            setLable(moveStateLabel);
 
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Speed");
+            setLable(positionLabel);
 
-        speedChart = new LineChart<>(xAxis, yAxis);
-        speedChart.setTitle("Player Speed Over Time");
-        speedX = new XYChart.Series<>();
-        speedX.setName("Speed X");
-        speedY = new XYChart.Series<>();
-        speedY.setName("Speed Y");
-        speedChart.getData().addAll(speedX, speedY);
-        speedChart.setTranslateX(10);
-        speedChart.setTranslateY(110);
-        speedChart.setPrefSize(400, 300);
+            setLable(timeLabel);
+
+            NumberAxis xAxis = new NumberAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel("Time");
+            yAxis.setLabel("Speed");
+
+            speedChart = new LineChart<>(xAxis, yAxis);
+            speedChart.setTitle("Player Speed Over Time");
+            speedX = new XYChart.Series<>();
+            speedX.setName("Speed X");
+            speedY = new XYChart.Series<>();
+            speedY.setName("Speed Y");
+            speedChart.getData().addAll(speedX, speedY);
+            speedChart.setTranslateX(10);
+            speedChart.setTranslateY(10 + labelNumber * 20);
+            speedChart.setPrefSize(400, 300);
+        }
     }
 
     private static void initializePauseButton() {
@@ -154,27 +144,9 @@ public class GameScreen implements Screen, GameModelObserver {
         pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
-
         pauseMenu.setOnAction(event -> GameModel.getInstance().togglePauseMenu());
     }
 
-    private static void initializeGameLabels() {
-        // set label
-        scoreLabel.setText("Score: 1000");
-        scoreLabel.setTextFill(Color.WHITE);
-        scoreLabel.setFont(new Font(18));
-        scoreLabel.setTranslateX(10);
-        scoreLabel.setTranslateY(100);
-
-        killedLabel.setText("Enemies Killed: 0");
-        killedLabel.setTextFill(Color.WHITE);
-        killedLabel.setFont(new Font(18));
-        killedLabel.setTranslateX(10);
-        killedLabel.setTranslateY(120);
-
-        // UI root
-        uiRoot.getChildren().addAll(scoreLabel, killedLabel);
-    }
 
     private static void clearData(){
         keys.clear();
@@ -248,6 +220,7 @@ public class GameScreen implements Screen, GameModelObserver {
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
             uiRoot.getChildren().add(moveStateLabel);
+            uiRoot.getChildren().add(positionLabel);
         }
     }
 
@@ -415,6 +388,11 @@ public class GameScreen implements Screen, GameModelObserver {
     public static Label getTimeLabel() {
         return timeLabel;
     }
+
+    public static Label getPositionLabel() {
+        return positionLabel;
+    }
+
 
 
     public static LineChart<Number, Number> getSpeedChart() {

@@ -180,4 +180,15 @@ public class AssetManager {
         return null;
     }
 
+    public static Font loadFont(Font f, int size) {
+        try {
+            return Font.loadFont(f.getFamily(), size);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading font.");
+            System.exit(0);
+        }
+        return null;
+    }
+
 }

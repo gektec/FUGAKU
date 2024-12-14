@@ -31,7 +31,7 @@ public class GameModel {
     private List<Entity> toRemove = new ArrayList<>();
 
     // Debug
-    private boolean isDebugMode = true;
+    private static boolean isDebugMode = true;
 
     private long lastTime = 0;
     private int frameCount = 0;
@@ -51,13 +51,12 @@ public class GameModel {
 
     public static long startTime = 0;  // To store the start time
     public static long elapsedTime = 0; // Used to store accumulated time
-    private long lastUpdateTime = 0; // To keep track of the last update time
+    private static long lastUpdateTime = 0; // To keep track of the last update time
 
     // Adding an Interpreter
     private ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
 
     private GameModel() {
-        // Private constructor to prevent instantiation
     }
 
     public static GameModel getInstance() {
@@ -124,9 +123,10 @@ public class GameModel {
 
     private void updateLabels() {
         updateFramerate();
-        updatePlayerSpeed();
         updateMoveState();
         updateTime();
+        updatePosition();
+        updatePlayerSpeed();
     }
 
     private void updateFramerate() {
@@ -150,6 +150,12 @@ public class GameModel {
     private void updateMoveState() {
         MoveState moveState = GameScreen.getMovePlayerLogic().getMoveStatus().moveState;
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
+    }
+
+    private void updatePosition() {
+        double x = GameScreen.getPlayer().hitBox().getTranslateX();
+        double y = GameScreen.getPlayer().hitBox().getTranslateY();
+        GameScreen.getPositionLabel().setText("Position: (" + x + ", " + y + ")");
     }
 
     private void updatePlayerSpeed() {
@@ -296,13 +302,13 @@ public class GameModel {
 
 
 
-    public boolean isDebugMode() {
+    public static boolean isDebugMode() {
         return isDebugMode;
     }
 
 
     public void setDebugMode(boolean debugMode) {
-        this.isDebugMode = debugMode;
+        isDebugMode = debugMode;
     }
 
     public long getStartTime() {
