@@ -32,7 +32,7 @@ public class MovePlayer {
     private ArrayList<Ladder> ladders;
     private ArrayList<Spike> spikes;
     private boolean onGround;  // Flag indicating whether the player can jump
-    private boolean moveLeft;
+    private boolean isFacingLeft;
     private boolean canDash;
     private boolean onWall;
     private MoveState playerState;
@@ -55,7 +55,7 @@ public class MovePlayer {
         this.ladders = ladders;
         this.playerState = MoveState.IDLE;
 
-        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> playerState = MoveState.IDLE));
+        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> canDash = true));
         dashCooldownTimer.setCycleCount(1);
 
         slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> playerState = MoveState.IDLE));
@@ -86,9 +86,9 @@ public class MovePlayer {
                 playerVelocity.reduce((float) (RESISTANCE / 1.4), (float) (RESISTANCE / 1.4));
         } else {
             // Jump
-            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall, playerVelocity));
+            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround,  onWall, playerVelocity));
             // Slide jump
-            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, canDash, false, playerVelocity));
+            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, false, playerVelocity));
             // Move left and right commands
             PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
             PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
@@ -162,14 +162,12 @@ public class MovePlayer {
             }
         }
 
-        MoveStatus moveStatus = new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
+        MoveStatus moveStatus = new MoveStatus(playerState, isFacingLeft, onGround, onWall, playerVelocity);
         Move.move(player, moveStatus);
 
         playerState = moveStatus.moveState;
-        moveLeft = moveStatus.faceLeft;
-        onGround = moveStatus.canJump;
-        canDash = moveStatus.canDash;
-        onWall = moveStatus.canSlideJump;
+        isFacingLeft = moveStatus.isFacingLeft;
+
 
         checkGoal();
         checkEnemy();
@@ -228,6 +226,6 @@ public class MovePlayer {
     }
 
     public MoveStatus getMoveStatus() {
-        return new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
+        return new MoveStatus(playerState, isFacingLeft, onGround, onWall, playerVelocity);
     }
 }

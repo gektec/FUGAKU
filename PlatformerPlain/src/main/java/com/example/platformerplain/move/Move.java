@@ -54,10 +54,11 @@ public class Move {
 
     }
 
-    public static void move(Entity moveable, MoveStatus moveStatus){
+    public static MoveStatus move(Entity moveable, MoveStatus moveStatus){
         beforeMove(moveable,moveStatus);
         afterMove(moveable,moveStatus);
         setStatus(moveable,moveStatus);
+        return moveStatus;
     }
 
     private static void beforeMove(Entity moveable, MoveStatus moveStatus){
@@ -91,13 +92,12 @@ public class Move {
 
 
     private static void afterMove(Entity moveable, MoveStatus moveStatus) {
-        moveStatus.canJump = false;
         velocity = moveStatus.velocity;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
-            if (velocity.getX() > 0) moveStatus.faceLeft = false;
-            else if (velocity.getX() < 0) moveStatus.faceLeft = true;
+            if (velocity.getX() > 0) moveStatus.isFacingLeft = false;
+            else if (velocity.getX() < 0) moveStatus.isFacingLeft = true;
             for (Entity platform : collidableMap) {
                 //Next line may not improve performance
                 //if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {
@@ -111,8 +111,7 @@ public class Move {
                             if (velocity.getX() != 0) moveStatus.moveState = MoveState.RUNNING;
                             else moveStatus.moveState = MoveState.IDLE;
                         }
-                        moveStatus.canJump = true;
-                        moveStatus.canDash = true;
+                        moveStatus.isTouchingGround = true;
                     } else if (relativeLocation == 2) {
                         isTouchingRightWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
@@ -121,7 +120,7 @@ public class Move {
                             velocity.setX(-Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveStatus.faceLeft = true;
+                            moveStatus.isFacingLeft = true;
                             moveStatus.moveState = MoveState.SLIDING;
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
@@ -133,7 +132,7 @@ public class Move {
                             velocity.setX(Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveStatus.faceLeft = false;
+                            moveStatus.isFacingLeft = false;
                             moveStatus.moveState = MoveState.SLIDING;
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
@@ -149,21 +148,22 @@ public class Move {
 
     private static void setStatus(Entity moveable, MoveStatus moveStatus) {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
-            moveStatus.canSlideJump = !isTouchingGround && isTouchingWall;
-            if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
-                moveStatus.moveState = MoveState.IDLE;
-            }
-            if (isTouchingGround && isTouchingWall) {
-                if (moveStatus.moveState == MoveState.SLIDING) {
-                    moveStatus.moveState = MoveState.IDLE;
-                }
-            }
-            if (!isTouchingWall && velocity.getY() > 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.JUMPING || moveStatus.moveState == MoveState.RUNNING)) {
-                moveStatus.moveState = MoveState.FALLING;
-            }
-            else if(!isTouchingWall && velocity.getY() < 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.RUNNING)) {
-                moveStatus.moveState = MoveState.JUMPING;
-            }
+            moveStatus.isTouchingWall = isTouchingWall;
+
+//            if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
+//                moveStatus.moveState = MoveState.IDLE;
+//            }
+//            if (isTouchingGround && isTouchingWall) {
+//                if (moveStatus.moveState == MoveState.SLIDING) {
+//                    moveStatus.moveState = MoveState.IDLE;
+//                }
+//            }
+//            if (!isTouchingWall && velocity.getY() > 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.JUMPING || moveStatus.moveState == MoveState.RUNNING)) {
+//                moveStatus.moveState = MoveState.FALLING;
+//            }
+//            else if(!isTouchingWall && velocity.getY() < 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.RUNNING)) {
+//                moveStatus.moveState = MoveState.JUMPING;
+//            }
         // Set canvas position
         moveable.canvas().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.canvas().getBoundsInParent().getWidth() / 2);
         moveable.canvas().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.canvas().getBoundsInParent().getHeight() / 2);

@@ -57,7 +57,7 @@ public class Player extends Entity {
                 }
                 break;
             case MoveState.SLIDING:
-                if(GameModel.getMovePlayerLogic().getMoveStatus().faceLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
+                if(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
                 else canvas.setTranslateX(canvas.getTranslateX()-20);
                 if (lastState != MoveState.SLIDING) {
                     frames = Assets.PLAYER_SLIDING[0];
@@ -106,14 +106,14 @@ public class Player extends Entity {
         }
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().faceLeft);
+        Image sprite = animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
     }
 
     private void generateAfterimage() {
-        ImageView afterimage = new ImageView(animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().faceLeft));
+        ImageView afterimage = new ImageView(animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft));
         afterimage.setFitWidth(192);
         afterimage.setFitHeight(192);
         afterimage.setTranslateX(canvas.getTranslateX());

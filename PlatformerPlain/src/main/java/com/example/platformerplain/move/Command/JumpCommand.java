@@ -21,7 +21,7 @@ public class JumpCommand implements PlayCommand {
     @Override
     public void execute() {
         velocity.setY(-20);  // 跳跃的速度
-        moveStatus.canJump = false;  // 设置跳跃状态
+        moveStatus.isTouchingGround = false;  // 设置跳跃状态
 
         JUMP_SFX.play();
 
