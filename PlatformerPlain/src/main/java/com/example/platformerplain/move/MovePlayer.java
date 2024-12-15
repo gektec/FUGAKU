@@ -137,6 +137,7 @@ public class MovePlayer {
             if (canDash && isPressed(KeyCode.K) && haveKKeyReleased) {
                 dash.execute();
                 canDash = false;
+                haveKKeyReleased = false;
             }
             // Resistance
             if (isPressed(KeyCode.A) == isPressed(KeyCode.D)) playerVelocity.smoothReduce(RESISTANCE,0,10,0);

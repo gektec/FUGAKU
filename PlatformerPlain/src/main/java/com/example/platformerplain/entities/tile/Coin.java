@@ -17,7 +17,6 @@ public class Coin extends Tile {
     private GraphicsContext gc;
     private Image sprite;
     public boolean isCollected = false;
-    private boolean canCollect = true;
 
 
     public Coin(int x, int y, int w, int h) {
@@ -34,10 +33,9 @@ public class Coin extends Tile {
 
     @Override
     public void update() {
-        if(isCollected && canCollect){
+        if(isCollected){
             GameModel.removeEntity(this);
             GameModel.collectedCoin();
-            canCollect = false;
         }
     }
 

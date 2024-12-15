@@ -164,6 +164,7 @@ public class GameModel {
 
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
+            coinMap.removeAll(toRemove);
             toRemove.clear(); // Clear the pending removal list to avoid duplicate removals
         });
 
