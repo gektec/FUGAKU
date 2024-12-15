@@ -16,6 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class is responsible for loading game assets from path provided by {@link com.example.platformerplain.Assets}, such as images, sounds, and fonts.
+ * @author Changyu Li
+ * @date 2024/12/11
+ */
 public class AssetManager {
     public static void preloadAssets() {
         Field[] fields = Assets.class.getDeclaredFields();
@@ -80,6 +85,10 @@ public class AssetManager {
         return adjacencyCodeSpike.get(adjacencyCode);
     }
 
+    /**
+     * @author Changyu Li
+     * @date 2024/12/11
+     */
     public static class GameMediaPlayer {
         private MediaPlayer mediaPlayer;
 
@@ -129,6 +138,14 @@ public class AssetManager {
         }
     }
 
+    /**
+     * Load image from file path, cut it and scale it into different states.
+     * @param s
+     * @param w
+     * @param h
+     * @param scale
+     * @return {@link Image[][] }
+     */
     public static Image[][] loadImage(String s, int w, int h, int scale) {
         Image[][] ret;
         try {
@@ -153,6 +170,12 @@ public class AssetManager {
         return null;
     }
 
+    /**
+     * Overload, without cutting the image.
+     * @param s
+     * @param scale
+     * @return {@link Image }
+     */
     public static Image loadImage(String s, int scale) {
         try {
             InputStream inputStream = Objects.requireNonNull(Assets.class.getResourceAsStream(s));
@@ -166,7 +189,12 @@ public class AssetManager {
         return null;
     }
 
-    //Overload
+
+    /**
+     * Overload, just load the image.
+     * @param s
+     * @return {@link Image }
+     */
     public static Image loadImage(String s) {
         try {
             InputStream inputStream = Objects.requireNonNull(Assets.class.getResourceAsStream(s));

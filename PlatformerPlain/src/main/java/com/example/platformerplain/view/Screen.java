@@ -1,4 +1,4 @@
-package com.example.platformerplain.View;
+package com.example.platformerplain.view;
 
 import javafx.stage.Stage;
 

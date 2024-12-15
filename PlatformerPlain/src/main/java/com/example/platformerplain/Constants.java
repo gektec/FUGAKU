@@ -1,5 +1,10 @@
 package com.example.platformerplain;
 
+/**
+ * Constants class to store all the constants used in the game
+ * @author Changyu Li
+ * @date 2024/11/18
+ */
 public class Constants {
     Constants() {
         throw new AssertionError("Cannot instantiate Constants class");

@@ -1,7 +1,7 @@
-package com.example.platformerplain.View;
+package com.example.platformerplain.view;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Controller.CompletedScreenController;
+import com.example.platformerplain.controller.CompletedScreenController;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,9 +26,9 @@ public class CompletedScreen implements Screen {
 
             CompletedScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            controller.setScore(GameModel.getInstance().getFinalScore());
-            controller.setKilled(GameModel.getInstance().getCurrentKilled());
-            controller.setTime(GameModel.getInstance().getTotalTime());
+            controller.setScore(GameModel.getFinalScore());
+            controller.setKilled(GameModel.getCurrentKilled());
+            controller.setTime(GameModel.getTotalTime());
 
             primaryStage.setTitle("Congratulations!");
             primaryStage.setScene(completedScene);

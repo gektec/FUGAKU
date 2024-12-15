@@ -1,13 +1,12 @@
-package com.example.platformerplain.Controller;
+package com.example.platformerplain.controller;
 
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.LevelData;
-import com.example.platformerplain.View.MenuScreen;
+import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -102,10 +101,7 @@ public class TransitionScreenController {
      */
     @FXML
     public void handleNextLevel() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameModel.getInstance().startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber()+1); // Transition to the next level
-        }
+        GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber()+1); // Transition to the next level
     }
 
     /**
@@ -113,9 +109,6 @@ public class TransitionScreenController {
      */
     @FXML
     private void handleRestart() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameModel.getInstance().restartLevel(); // Transition to the next level
-        }
+        GameModel.restartLevel(); // Transition to the next level
     }
 }

@@ -13,7 +13,7 @@
         stylesheets="@styles.css"
         xmlns="http://javafx.com/javafx/22"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.example.platformerplain.Controller.MenuScreenController">
+        fx:controller="com.example.platformerplain.controller.MenuScreenController">
 
     <!-- Text with custom style class to apply the font -->
     <Text text="Welcome to NGHMP!" styleClass="custom-text" />

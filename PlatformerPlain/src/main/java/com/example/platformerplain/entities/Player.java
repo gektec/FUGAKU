@@ -2,7 +2,7 @@ package com.example.platformerplain.entities;
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
-import com.example.platformerplain.View.GameScreen;
+import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveState;
 import javafx.animation.KeyFrame;

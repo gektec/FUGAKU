@@ -1,7 +1,6 @@
-package com.example.platformerplain.Controller;
+package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.View.LevelSelectScreen;
+import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,68 +8,44 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.VICTORY_SOUND;
-
 /**
- * This class serves as the controller for the Menu Screen in the game.
+ * This class serves as the controller for the Pause Screen in the game.
  * It manages the initialization and configuration of UI components,
- * including setting the background image and handling different buttons.
+ * including setting the background image and three options appear when the player presses the pause button: Menu, Exit, Help, Resume
  */
-public class MenuScreenController {
 
-    public Button startButton;
+public class PauseScreenController {
+
+    public Button MenuButton;
+    public Button ExitButton;
+    public Button ResumeButton;
     public Button helpButton;
-    public Button exitButton;
+    public Button RestartButton;
     @FXML
-    private VBox root;  // VBox in the FXML file
-    public Button debugButton;
-    private Stage primaryStage;
+    private GridPane root;  // Root layout for the pause menu
+    private Stage primaryStage;  // The main application stage
 
     /**
      * Assigns the primary stage to this controller.
-     * @param primaryStage the Stage instance to be used
+     * @param primaryStage the Stage instance to be set
      */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     /**
-     * Loads the background image and initializes background music playback.
+     * Resumes the game when the "Resume" button is clicked.
+     * This method restores the game state and removes the pause menu from the display.
      */
     @FXML
-    private void initialize() {
-        //loadBackgroundImage();
-        loadBackgroundImage();
-        playBackgroundMusic();
-        updateDebugButtonText();
-    }
+    private void handleResume() {
 
-    /**
-     * Sets the background image of the root VBox.
-     */
-    private void loadBackgroundImage() {
-        root.setBackground(Assets.MENU_BACKGROUND);
-    }
-
-    /**
-     * Loads and plays the background music indefinitely.
-     */
-    private void playBackgroundMusic() {
-        //TODO : replace it.
-        VICTORY_SOUND.play();
-    }
-
-    /**
-     * Handles the "Start Game" button click event, opening the Level Select screen.
-     */
-    @FXML
-    private void handleStartGame() {
-        LevelSelectScreen selectScreen = new LevelSelectScreen();
-        selectScreen.show(primaryStage);
+        GameModel.resumeGame();  // Restore the game's logic
+        // Remove the pause menu from the scene
+        ((Pane) primaryStage.getScene().getRoot()).getChildren().remove(root);
     }
 
     /**
@@ -127,26 +102,29 @@ public class MenuScreenController {
 
 
     /**
-     * Exits the application when the game is closed.
+     * Navigates the user back to the main menu when the "Menu" button is clicked.
+     */
+    @FXML
+    private void handleMenu() {
+        MenuScreen menuScreen = new MenuScreen();
+        menuScreen.show(primaryStage);  // Display the main menu
+    }
+
+    /**
+     * Exits the game when the "Exit" button is clicked.
      */
     @FXML
     void handleExitGame() {
-        Platform.exit(); // Exit the JavaFX application
-        System.exit(0); // Terminate the JVM
+        Platform.exit(); // Exit the JavaFX application gracefully
+        System.exit(0); // Terminate the Java Virtual Machine
     }
 
+    /**
+     * Restarts the game when the "Restart" button is clicked.
+     */
     @FXML
-    public void handleDebugMode() {
-        GameModel.getInstance().setDebugMode(!GameModel.getInstance().isDebugMode());
-        updateDebugButtonText();
-    }
+    private void handleRestart() {
 
-    @FXML
-    private void updateDebugButtonText() {
-        if (GameModel.getInstance().isDebugMode()){
-            debugButton.setText("Debug Mode: ON");
-        } else {
-            debugButton.setText("Debug Mode: OFF");
-        }
+        GameModel.restartLevel(); // Transition to the next level
     }
 }

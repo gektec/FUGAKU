@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
+/**
+ * @author Changyu Li
+ * @date 2024/11/24
+ */
 public class MoveEnemy {
     private Enemy enemy;
     private ArrayList<Entity> entityMap;
@@ -19,6 +23,11 @@ public class MoveEnemy {
     private MoveState enemyState;
 
 
+    /**
+     * @param enemy
+     * @param platforms
+     * @param levelWidth
+     */
     public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth) {
         this.enemy = enemy;
         this.entityMap = platforms;
@@ -28,7 +37,6 @@ public class MoveEnemy {
         this.enemyState = MoveState.IDLE;
     }
 //todo
-    //Rectangle leftEdgeSensor = new Rectangle(5, Constants.PLAYER_SIZE, Color.BLUE);
 
     public void update() {
 

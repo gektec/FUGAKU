@@ -11,7 +11,7 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.Controller.PauseScreenController">
+        fx:controller="com.example.platformerplain.controller.PauseScreenController">
 
     <!-- Define one column and vertically distribute rows equally -->
 

@@ -15,12 +15,12 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.Controller.LevelSelectScreenController">
+        fx:controller="com.example.platformerplain.controller.LevelSelectScreenController">
 
     <!--
         The placeholders in the first row are used to create vertical spacing above the buttons.
     -->
-    <Label text="Pick   a   Level   to   Start   Your   Adventure!" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
+    <Label text="Pick a Level to Start Your Adventure!" GridPane.rowIndex="0" GridPane.columnSpan="3" alignment="CENTER">
         <font>
             <Font name="System" size="100"/>
         </font>

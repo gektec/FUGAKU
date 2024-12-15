@@ -1,34 +1,32 @@
-package com.example.platformerplain.Controller;
+package com.example.platformerplain.controller;
 
 import com.example.platformerplain.Assets;
-import com.example.platformerplain.View.MenuScreen;
-import com.example.platformerplain.model.GameModel;
+import com.example.platformerplain.view.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
-import java.util.Objects;
 
-import static com.example.platformerplain.Assets.FAIL_SOUND;
+import static com.example.platformerplain.Assets.COMPLETE_SOUND;
 
 /**
- * This class serves as the controller for the Fail Screen in the game.
+ * This class serves as the controller for the Completed Screen in the game.
  * It manages the initialization and configuration of UI components,
- * including setting the background image and handling sound effects when the player fails.
+ * including setting the background image and handling sound effects when the player completed all levels.
  */
-public class FailScreenController {
+public class CompletedScreenController {
 
     public Button MenuButton;
     public Button ExitButton;
-    public Button RestartButton;
+    public Label scoreLabel;
+    public Label killedLabel;
+    public Label timeLabel;
     @FXML
-    //private GridPane root;  // The root layout for the Fail Screen
-    private StackPane root;
+    private GridPane root;  // The root layout for the Fail Screen
 
     @FXML
     private Stage primaryStage;  // The main application stage
@@ -41,6 +39,22 @@ public class FailScreenController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+    public void setScore(int score) {
+        scoreLabel.setText("Your Final Score is: " + score);
+    }
+
+    public void setKilled(int killed) {
+        if (killed == 0) {
+            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
+        } else if (killed == 1) {
+            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
+        } else if (killed >= 1) {
+            killedLabel.setText("You have killed" + " "+killed +" "+  "enemies!");
+        }
+    }
+
+    public void setTime(long time) {timeLabel.setText("Total time: " + time + "s");}
 
     /**
      * Initializes the Fail Screen by loading the background image and
@@ -58,13 +72,11 @@ public class FailScreenController {
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 
-    /**
-     * Loads and plays the background music indefinitely.
-     * @throws URISyntaxException if there is an issue retrieving the URI of the music file
-     */
     private void playBackgroundMusic() throws URISyntaxException {
+        // Load the fail sound effect
+
         // Play the sound effect upon initialization
-        FAIL_SOUND.play();
+        COMPLETE_SOUND.play();
     }
 
     /**
@@ -84,10 +96,6 @@ public class FailScreenController {
      */
     @FXML
     private void handleMenu() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameModel.getInstance().stopGameLoop();
-        }
         // Instantiate the MenuScreen and pass the main stage
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.show(primaryStage);  // Forward the current stage
@@ -105,19 +113,6 @@ public class FailScreenController {
             mediaPlayer.stop();
             mediaPlayer.dispose(); // Free up memory
             mediaPlayer = null;
-        }
-    }
-
-    /**
-     * Handles the event for the restart button when clicked.
-     * This method creates a new instance of Main and use it to call restart function.
-     * It will restart current level.
-     */
-    @FXML
-    private void handleRestart() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameModel.getInstance().restartLevel(); // Transition to the next level
         }
     }
 }

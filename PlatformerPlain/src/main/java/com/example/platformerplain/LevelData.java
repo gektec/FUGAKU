@@ -2,6 +2,10 @@ package com.example.platformerplain;
 
 import com.example.platformerplain.model.GameModel;
 
+/**
+ * @author Changyu Li, Zelin Xia
+ * @date 2024/11/5
+ */
 public class LevelData {
     public static final String[][] Levels = new String[][]{
             {},
@@ -66,14 +70,14 @@ public class LevelData {
     public static class getLevelInformation {
 
         public static int getLevelNumber() {
-            return GameModel.getInstance().getCurrentLevel();
+            return GameModel.getCurrentLevel();
         }
         public static int getLevelWidth() {
-            return Levels[GameModel.getInstance().getCurrentLevel()][0].length() * Constants.TILE_SIZE;
+            return Levels[GameModel.getCurrentLevel()][0].length() * Constants.TILE_SIZE;
         }
 
         public static int getLevelHeight() {
-            return Levels[GameModel.getInstance().getCurrentLevel()].length * Constants.TILE_SIZE;
+            return Levels[GameModel.getCurrentLevel()].length * Constants.TILE_SIZE;
         }
     }
 }

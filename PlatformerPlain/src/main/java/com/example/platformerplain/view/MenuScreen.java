@@ -1,7 +1,7 @@
-package com.example.platformerplain.View;
+package com.example.platformerplain.view;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Controller.MenuScreenController;
+import com.example.platformerplain.controller.MenuScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

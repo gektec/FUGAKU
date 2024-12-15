@@ -14,7 +14,7 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.Controller.CompletedScreenController">
+        fx:controller="com.example.platformerplain.controller.CompletedScreenController">
 
     <!--
         The placeholder area in the first row is used to create vertical spacing above the buttons.

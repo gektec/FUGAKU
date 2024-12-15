@@ -13,7 +13,7 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.Controller.FailScreenController">
+        fx:controller="com.example.platformerplain.controller.FailScreenController">
 
     <!-- background -->
     <StackPane>

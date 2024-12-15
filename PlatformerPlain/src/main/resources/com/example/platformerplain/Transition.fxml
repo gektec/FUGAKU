@@ -14,7 +14,7 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.Controller.TransitionScreenController">
+        fx:controller="com.example.platformerplain.controller.TransitionScreenController">
 
     <!--
         The placeholder area is used to provide vertical spacing in the first row of the GridPane.

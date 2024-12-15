@@ -1,8 +1,7 @@
-package com.example.platformerplain.View;
+package com.example.platformerplain.view;
 
 import com.example.platformerplain.*;
-import com.example.platformerplain.Controller.GameScreenController;
-import com.example.platformerplain.entities.*;
+import com.example.platformerplain.controller.GameScreenController;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.model.GameModelObserver;
 import com.example.platformerplain.texture.ImageScaler;
@@ -16,17 +15,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Represents the main game screen where the game is displayed.
+ * Implements the {@link Screen} interface and {@link GameModelObserver}.
+ * Responsible for initializing and managing the game's UI components, background, and camera follow behavior.
+ *
+ * @autho Changyu Li
+ * @date 2024/12/11
+ */
 public class GameScreen implements Screen, GameModelObserver {
 
     private static Pane appRoot = new Pane();
@@ -65,30 +66,46 @@ public class GameScreen implements Screen, GameModelObserver {
     static ImageView backgroundCloud3;
     static ImageView backgroundMoon;
 
+    /**
+     * Constructs a new {@code GameScreen} for the provided level.
+     *
+     * @param level the level number to initialize the game screen for.
+     */
     public GameScreen(int level) {
         GameScreen.level = level;
     }
 
-
+    /**
+     * Displays the game screen.
+     *
+     * @param primaryStage the primary stage on which the game screen will be displayed.
+     */
     @Override
     public void show(Stage primaryStage) {
-        GameModel.getInstance().startGame(primaryStage, level);
+        GameModel.startGame(primaryStage, level);
     }
 
-
+    /**
+     * Initializes content for the game screen, including panes, labels, and pause button.
+     */
     public static void initContent() {
-        GameModel gameModel = GameModel.getInstance(); // ????
 
         initPanes();
 
         initializePauseButton();
 
+        labelNumber = 0;
         initLabels();
 
-        GameScreen instance = new GameScreen(level);// ????
-        gameModel.addObserver(instance);
+        GameScreen instance = new GameScreen(level);
+        GameModel.addObserver(instance);
     }
 
+    /**
+     * Sets the properties for a given label, including font and position.
+     *
+     * @param label the label to set properties for.
+     */
     private static void setLable(Label label){
         label.setFont(AssetManager.loadFont(Assets.baseFont, 18));
         label.setTranslateX(10);
@@ -96,6 +113,9 @@ public class GameScreen implements Screen, GameModelObserver {
         labelNumber++;
     }
 
+    /**
+     * Initializes various labels used in the game UI.
+     */
     private static void initLabels() {
         scoreLabel.setText("Score: 1000");
         setLable(scoreLabel);
@@ -130,28 +150,20 @@ public class GameScreen implements Screen, GameModelObserver {
         }
     }
 
+    /**
+     * Initializes the pause button and sets its properties and action events.
+     */
     private static void initializePauseButton() {
         pauseMenu.getStyleClass().add("button");
         pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
-        pauseMenu.setOnAction(event -> GameModel.getInstance().togglePauseMenu());
+        pauseMenu.setOnAction(event -> GameModel.togglePauseMenu());
     }
 
-    public static  void clearPane(){
-        Pane[] panes = {appRoot, gameRoot, uiRoot, backgroundRoot};
-
-        for (Pane pane : panes) {
-            if (pane != null) {
-                pane.getChildren().clear();
-
-                if (pane.getParent() != null) {
-                    ((Pane) pane.getParent()).getChildren().remove(pane);
-                }
-            }
-        }
-    }
-
+    /**
+     * Initializes the panes used in the game screen.
+     */
     private static void initPanes(){
         appRoot = new Pane();
         gameRoot = new Pane();
@@ -159,35 +171,15 @@ public class GameScreen implements Screen, GameModelObserver {
         backgroundRoot = new Pane();
     }
 
-    private static void addLevelIndicatorText() {
-        int levelNumber = LevelData.getLevelInformation.getLevelNumber();
-        String titleText;
-
-        if (levelNumber == 1) {
-            titleText = "Try to get the goal";
-        } else if (levelNumber == 2) {
-            titleText = "Level 2: New Challenges Await!";
-        } else if (levelNumber == 3) {
-            titleText = "Level 3: The Final Battle Begins";
-        } else {
-            return; // Return early if the level number does not match case
-        }
-
-        Text title = new Text(titleText);
-        title.setFont(new Font(36));
-        title.setFill(Color.YELLOW);
-        double textWidth = title.getLayoutBounds().getWidth();
-        title.setX((Constants.WINDOW_WIDTH - textWidth) / 2);
-        title.setY(40);
-        uiRoot.getChildren().add(title);
-    }
-
-    private static void initializeUIElements() {
+    /**
+     * Initializes UI elements and adds them to the UI root pane.
+     */
+    private static void initUIElements() {
         uiRoot.getChildren().add(pauseMenu);
-        uiRoot.getChildren().add(timeLabel);
         uiRoot.getChildren().add(scoreLabel);
         uiRoot.getChildren().add(killedLabel);
         if (GameModel.isDebugMode()) {
+            uiRoot.getChildren().add(timeLabel);
             uiRoot.getChildren().add(framerateLabel);
             uiRoot.getChildren().add(playerSpeedLabel);
             uiRoot.getChildren().add(speedChart);
@@ -196,6 +188,9 @@ public class GameScreen implements Screen, GameModelObserver {
         }
     }
 
+    /**
+     * Initializes the background images and adds them to the background root pane.
+     */
     private static void initBackground(){
         Image background0 = Assets.BACKGROUND_SKY;
         backgroundSky = new ImageView(background0);
@@ -226,6 +221,9 @@ public class GameScreen implements Screen, GameModelObserver {
         backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
     }
 
+    /**
+     * Sets the camera follow behavior to track the player's movements.
+     */
     private static void setCameraFollow(){
         GameModel.player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {
             int offset = newValue.intValue();
@@ -250,14 +248,18 @@ public class GameScreen implements Screen, GameModelObserver {
         });
     }
 
-
+    /**
+     * Creates the game scene and applies styles and key events.
+     */
     private static void createGameScene() {
         gameScene = new Scene(appRoot);
         gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
         GameScreenController.setKeys(gameScene);
     }
 
-
+    /**
+     * Starts the level by initializing background, setting camera follow, and creating the game scene.
+     */
     public static void startLevel() {
         // Set up the background
         initBackground();
@@ -272,12 +274,6 @@ public class GameScreen implements Screen, GameModelObserver {
             background.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
         }
 
-        // Add level indicator text based on level
-        addLevelIndicatorText();
-
-        // Use LevelInitializer to set up the level
-        //todo
-
         setCameraFollow();
 
         // Add roots to the scene
@@ -287,12 +283,13 @@ public class GameScreen implements Screen, GameModelObserver {
         createGameScene();
 
         // UI Elements
-        initializeUIElements();
-
+        initUIElements();
     }
 
 
-    public static Pane getGameRoot() {
+
+
+public static Pane getGameRoot() {
         return gameRoot;
     }
 
@@ -349,15 +346,6 @@ public class GameScreen implements Screen, GameModelObserver {
         return speedY;
     }
 
-
-    public static int getLevelWidth() {
-        return levelWidth;
-    }
-
-
-    public static int getLevelHeight() {
-        return levelHeight;
-    }
 
     //  GameModelObserver interface
     @Override

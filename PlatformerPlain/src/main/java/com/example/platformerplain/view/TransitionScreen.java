@@ -1,7 +1,7 @@
-package com.example.platformerplain.View;
+package com.example.platformerplain.view;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.Controller.TransitionScreenController;
+import com.example.platformerplain.controller.TransitionScreenController;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,11 +10,15 @@ import javafx.stage.Stage;
 
 /**
  * This class shows the screen that transitions the player from one level to the next.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/15
  */
 public class TransitionScreen implements Screen {
 
     /**
      * Loads and displays the transition screen on the specified stage.
+     *
      * @param primaryStage The stage to display the transition screen on.
      */
     public void show(Stage primaryStage) {
@@ -25,12 +29,10 @@ public class TransitionScreen implements Screen {
 
             TransitionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            GameModel gameModel = GameModel.getInstance();
-            if (gameModel != null) {
-                controller.setScore(GameModel.getInstance().getCurrentScore());
-                controller.setKilled(GameModel.getInstance().getCurrentKilled());;
-                controller.setTime(GameModel.getInstance().getGameTime());
-            }
+
+            controller.setScore(GameModel.getCurrentScore());
+            controller.setKilled(GameModel.getCurrentKilled());;
+            controller.setTime(GameModel.getGameTime());
 
 
             primaryStage.setTitle("Congratulations on passing!");

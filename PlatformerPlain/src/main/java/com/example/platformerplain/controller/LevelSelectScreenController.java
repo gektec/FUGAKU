@@ -1,15 +1,11 @@
-package com.example.platformerplain.Controller;
+package com.example.platformerplain.controller;
 
 import com.example.platformerplain.Assets;
-import com.example.platformerplain.View.GameScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import static com.example.platformerplain.Assets.BACKGROUND_MOON;
 
 /**
  * This class serves as the controller for the Level Select Screen in the game.
@@ -50,29 +46,20 @@ public class LevelSelectScreenController {
 
     @FXML
     void handleFirstLevel() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameScreen.clearPane();
-            gameModel.startGame(primaryStage, 1);
-        }
+
+            GameModel.startGame(primaryStage, 1);
     }
 
     @FXML
     private void handleSecondLevel() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameScreen.clearPane();
-            gameModel.startGame(primaryStage, 2);
-        }
+
+            GameModel.startGame(primaryStage, 2);
     }
 
     @FXML
     private void handleThirdLevel() {
-        GameModel gameModel = GameModel.getInstance();
-        if (gameModel != null) {
-            GameScreen.clearPane();
-            gameModel.startGame(primaryStage, 3);
-        }
+
+            GameModel.startGame(primaryStage, 3);
     }
 
 }

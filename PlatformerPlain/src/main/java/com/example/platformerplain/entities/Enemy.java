@@ -33,7 +33,7 @@ public class Enemy extends Entity {
         hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
-        this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getInstance().getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
+        this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
 
         frames = Assets.GHOST_IDLE[0];
         animation.setFrames(frames);
@@ -71,7 +71,7 @@ public class Enemy extends Entity {
     }
 
     public void removeFromGame() {
-        GameModel.getInstance().removeEnemy(this);
+        GameModel.removeEnemy(this);
     }
 
     @Override

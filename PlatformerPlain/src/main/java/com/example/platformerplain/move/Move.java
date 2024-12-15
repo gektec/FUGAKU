@@ -6,10 +6,13 @@ import com.example.platformerplain.entities.Entity;
 
 import java.util.ArrayList;
 
-
-//the move class is responsible for moving the player and detecting collisions
-//it is also responsible for changing the player's state based on the collision
-//todo: it should input player and command, return moveState and adjancy status
+/**
+ * the move class is responsible for moving the player and detecting collisions
+ * it is also responsible for changing the player's state based on the collision
+ *
+ * @author Changyu Li
+ * @date 2024/11/23
+ */
 
 public class Move {
     private static ArrayList<Entity> collidableMap;
@@ -22,6 +25,14 @@ public class Move {
         Move.collidableMap = collidableMap;
     }
 
+    /**
+     * @param moveable
+     * @param collidable
+     * @return int
+     *             1
+     *        2 PLATFORM 4
+     *             3
+     */
     private static int detectRelativeLocation(Entity moveable, Entity collidable) {
         Coord2D moveableCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (moveable.size()[0] / 2), (int) moveable.hitBox().getTranslateY() + (moveable.size()[1] / 2));
         Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
@@ -48,9 +59,7 @@ public class Move {
         } else {
             return 4;
         }
-//             1
-//        2 PLATFORM 4
-//             3
+
 
     }
 
@@ -61,6 +70,10 @@ public class Move {
         return moveStatus;
     }
 
+    /**
+     * @param moveable
+     * @param moveStatus
+     */
     private static void beforeMove(Entity moveable, MoveStatus moveStatus){
         isTouchingGround = false;
         isTouchingLeftWall = false;
@@ -91,6 +104,10 @@ public class Move {
     }
 
 
+    /**
+     * @param moveable
+     * @param moveStatus
+     */
     private static void afterMove(Entity moveable, MoveStatus moveStatus) {
         velocity = moveStatus.velocity;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
@@ -146,6 +163,10 @@ public class Move {
         }
     }
 
+    /**
+     * @param moveable
+     * @param moveStatus
+     */
     private static void setStatus(Entity moveable, MoveStatus moveStatus) {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
             moveStatus.isTouchingWall = isTouchingWall;

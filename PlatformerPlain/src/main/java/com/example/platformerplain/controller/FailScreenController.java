@@ -1,34 +1,32 @@
-package com.example.platformerplain.Controller;
+package com.example.platformerplain.controller;
 
 import com.example.platformerplain.Assets;
-import com.example.platformerplain.View.MenuScreen;
+import com.example.platformerplain.LevelData;
+import com.example.platformerplain.view.MenuScreen;
+import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
-import java.util.Objects;
 
-import static com.example.platformerplain.Assets.COMPLETE_SOUND;
+import static com.example.platformerplain.Assets.FAIL_SOUND;
 
 /**
- * This class serves as the controller for the Completed Screen in the game.
+ * This class serves as the controller for the Fail Screen in the game.
  * It manages the initialization and configuration of UI components,
- * including setting the background image and handling sound effects when the player completed all levels.
+ * including setting the background image and handling sound effects when the player fails.
  */
-public class CompletedScreenController {
+public class FailScreenController {
 
     public Button MenuButton;
     public Button ExitButton;
-    public Label scoreLabel;
-    public Label killedLabel;
-    public Label timeLabel;
+    public Button RestartButton;
     @FXML
-    private GridPane root;  // The root layout for the Fail Screen
+    //private GridPane root;  // The root layout for the Fail Screen
+    private StackPane root;
 
     @FXML
     private Stage primaryStage;  // The main application stage
@@ -41,22 +39,6 @@ public class CompletedScreenController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-
-    public void setScore(int score) {
-        scoreLabel.setText("Your Final Score is: " + score);
-    }
-
-    public void setKilled(int killed) {
-        if (killed == 0) {
-            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
-        } else if (killed == 1) {
-            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
-        } else if (killed >= 1) {
-            killedLabel.setText("You have killed" + " "+killed +" "+  "enemies!");
-        }
-    }
-
-    public void setTime(long time) {timeLabel.setText("Total time: " + time + "s");}
 
     /**
      * Initializes the Fail Screen by loading the background image and
@@ -74,11 +56,13 @@ public class CompletedScreenController {
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 
+    /**
+     * Loads and plays the background music indefinitely.
+     * @throws URISyntaxException if there is an issue retrieving the URI of the music file
+     */
     private void playBackgroundMusic() throws URISyntaxException {
-        // Load the fail sound effect
-
         // Play the sound effect upon initialization
-        COMPLETE_SOUND.play();
+        FAIL_SOUND.play();
     }
 
     /**
@@ -98,6 +82,8 @@ public class CompletedScreenController {
      */
     @FXML
     private void handleMenu() {
+
+        GameModel.stopGameLoop();
         // Instantiate the MenuScreen and pass the main stage
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.show(primaryStage);  // Forward the current stage
@@ -116,6 +102,16 @@ public class CompletedScreenController {
             mediaPlayer.dispose(); // Free up memory
             mediaPlayer = null;
         }
+    }
+
+    /**
+     * Handles the event for the restart button when clicked.
+     * This method creates a new instance of Main and use it to call restart function.
+     * It will restart current level.
+     */
+    @FXML
+    private void handleRestart() {
+        GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber());
     }
 }
 

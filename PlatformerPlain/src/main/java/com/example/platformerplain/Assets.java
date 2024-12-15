@@ -5,6 +5,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.text.Font;
 
+/**
+ * This class is responsible for storing all game assets.
+ * @author Changyu Li
+ * @date 2024/12/8
+ */
 public class Assets {
 
     // Backgrounds

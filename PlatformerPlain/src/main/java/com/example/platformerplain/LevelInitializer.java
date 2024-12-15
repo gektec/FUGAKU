@@ -9,6 +9,10 @@ import java.util.HashMap;
 
 import javafx.scene.input.KeyCode;
 
+/**
+ * @author Changyu Li
+ * @date 2024/11/23
+ */
 public class LevelInitializer {
     private HashMap<KeyCode, Boolean> keys;
     private Pane gameRoot;
