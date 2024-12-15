@@ -114,6 +114,9 @@ public class Move {
      */
     private static void afterMove(Entity moveable, MoveData moveData) {
         velocity = moveData.velocity;
+        isTouchingGround = false;
+        isTouchingLeftWall = false;
+        isTouchingRightWall = false;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());

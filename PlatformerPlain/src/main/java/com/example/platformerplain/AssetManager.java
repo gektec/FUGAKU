@@ -118,6 +118,10 @@ public class AssetManager {
             }
         }
 
+        public MediaPlayer getMediaPlayer() {
+            return mediaPlayer;
+        }
+
     }
 
     /**

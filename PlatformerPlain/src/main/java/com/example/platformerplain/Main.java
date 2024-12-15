@@ -3,7 +3,10 @@ package com.example.platformerplain;
 import com.example.platformerplain.view.*;
 
 import javafx.application.Application;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import static com.example.platformerplain.Assets.BACKGROUND_MUSIC;
 
 /**
  * @author Changyu Li, Zelin Xia
@@ -35,6 +38,9 @@ public class Main extends Application {
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
+
+        BACKGROUND_MUSIC.play();
+        BACKGROUND_MUSIC.getMediaPlayer().setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     /**
