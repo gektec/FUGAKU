@@ -25,8 +25,7 @@ public class FailScreenController {
     public Button ExitButton;
     public Button RestartButton;
     @FXML
-    //private GridPane root;  // The root layout for the Fail Screen
-    private StackPane root;
+    private StackPane root;  // The root layout for the Fail Screen
 
     @FXML
     private Stage primaryStage;  // The main application stage
@@ -51,13 +50,18 @@ public class FailScreenController {
         playBackgroundMusic();
     }
 
+    /**
+     * Loads and sets the background image for the fail screen using the Assets class.
+     */
     private void loadBackgroundImage() {
         // Load the background image
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     /**
-     * Loads and plays the background music indefinitely.
+     * Plays the background music associated with the fail screen.
+     * This method plays the fail sound effect, which is usually played when the player fails.
+     *
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() throws URISyntaxException {
@@ -67,7 +71,7 @@ public class FailScreenController {
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.
-     * This method shuts down the application.
+     * This method shuts down the application, ensuring proper termination of resources.
      */
     @FXML
     void handleExitGame() {
@@ -94,7 +98,7 @@ public class FailScreenController {
 
     /**
      * Releases resources held by the media player.
-     * It stops playback and cleans up the media player instance.
+     * It stops playback and cleans up the media player instance to free up memory.
      */
     private void releaseMediaPlayer() {
         if (mediaPlayer != null) {
@@ -106,12 +110,11 @@ public class FailScreenController {
 
     /**
      * Handles the event for the restart button when clicked.
-     * This method creates a new instance of Main and use it to call restart function.
-     * It will restart current level.
+     * This method restarts the current game level by invoking the startGame method
+     * of the GameModel class, using the current level number.
      */
     @FXML
     private void handleRestart() {
         GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber());
     }
 }
-

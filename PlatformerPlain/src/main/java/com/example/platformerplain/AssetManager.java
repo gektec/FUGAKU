@@ -120,6 +120,11 @@ public class AssetManager {
 
     }
 
+    /**
+     * Loads a sound file from the specified path.
+     * @param s the path of the sound file to load.
+     * @return a Media object for the loaded sound, or null if loading failed.
+     */
     public static Media loadSound(String s) {
         try {
             String mediaPath = Objects.requireNonNull(
@@ -205,6 +210,12 @@ public class AssetManager {
         return null;
     }
 
+    /**
+     * Loads a font from the specified Font object with a specified size.
+     * @param f the Font object to load.
+     * @param size the size of the font to be loaded.
+     * @return the loaded font with the specified size.
+     */
     public static Font loadFont(Font f, int size) {
         try {
             return Font.loadFont(f.getFamily(), size);
