@@ -92,10 +92,88 @@ public class MovePlayer {
      * This method processes input for movement, jumping, dashing, and climbing.
      */
     public void update() {
-        // Update player state and handle movement logic here
         playerState = moveData.getState();
-        // Remaining implementation...
-    }
+        isFacingLeft = moveData.isFacingLeft;
+        isTouchingGround = moveData.isTouchingGround;
+        isTouchingWall = moveData.isTouchingWall;
+        canClimb = false;
+        canDash = canDash || isTouchingGround;
+
+        PlayCommand jump = new JumpCommand(moveData);
+        PlayCommand slideJump = new WallJumpCommand(moveData);
+        PlayCommand moveLeft = new MoveLeftCommand(moveData);
+        PlayCommand moveRight = new MoveRightCommand(moveData);
+        PlayCommand dash = new DashCommand(moveData);
+        PlayCommand climb = new ClimbCommand(moveData);
+
+        if (!isPressed(KeyCode.J)) {
+            haveJKeyReleased = true;
+        }
+        if (!isTouchingGround && !isTouchingWall) {
+            haveJKeyReleased = false;
+        }
+        if (!isPressed(KeyCode.K)) {
+            haveKKeyReleased = true;
+        }
+
+        if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
+            if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
+                playerVelocity.reduce((double) RESISTANCE / 2, (double) RESISTANCE / 2);
+            else
+                playerVelocity.reduce((RESISTANCE / 1.4), (RESISTANCE / 1.4));
+        } else {
+            if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingGround && playerState != MoveState.DASHING) {
+                jump.execute();
+                JUMP_SFX.play();
+                haveJKeyReleased = false;
+            }
+            // Slide jump
+            else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall && !isTouchingGround && playerState != MoveState.SLIDE_JUMPING) {
+                slideJump.execute();
+                JUMP_SFX.play();
+                haveJKeyReleased = false;
+            }
+            // Move left
+            if (isPressed(KeyCode.A) && playerVelocity.getX() >= -Constants.MAX_MOVE_SPEED) {
+                moveLeft.execute();
+            }
+            // Move right
+            if (isPressed(KeyCode.D) && playerVelocity.getX() <= Constants.MAX_MOVE_SPEED) {
+                moveRight.execute();
+            }
+
+            // Dash
+            if (canDash && isPressed(KeyCode.K) && haveKKeyReleased) {
+                dash.execute();
+                canDash = false;
+                haveKKeyReleased = false;
+            }
+            // Resistance
+            if (isPressed(KeyCode.A) == isPressed(KeyCode.D)) playerVelocity.smoothReduce(RESISTANCE,0,10,0);
+
+            // Apply gravity when not dashing
+            if (playerVelocity.getY() < MAX_FALL_SPEED && playerState != MoveState.CLIMBING) {
+                playerVelocity.smoothMinus(0, Constants.GRAVITY, 0, (double) MAX_FALL_SPEED /2);
+            }
+        }
+
+        for (Ladder ladder : ladders) {
+            if (player.hitBox().getBoundsInParent().intersects(ladder.hitBox().getBoundsInParent())) {
+                climb.execute();
+                canClimb = true;
+            }
+        }
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.setState(MoveState.IDLE);
+
+        Move.move(player, moveData);
+
+        checkCoin();
+        checkGoal();
+        checkEnemy();
+        checkSpike();
+        checkFall();
+
+}
 
     /**
      * Checks if the player has collected any coins.

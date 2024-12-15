@@ -1,7 +1,7 @@
 package com.example.platformerplain.entities.moveable;
+
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
-
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.move.data.MoveData;
 import com.example.platformerplain.view.GameScreen;
@@ -18,12 +18,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-
+/**
+ * Represents a player character in the game.
+ * The player can move and perform actions, with animations based on their movement state.
+ *
+ * @author Changyu Li
+ * @date 2024/11/8
+ */
 public class Player extends Moveable {
-    Image[] frames;
     private GraphicsContext gc;
     private MoveState lastState = MoveState.IDLE;
 
+    /**
+     * Constructs a Player object at specified coordinates and dimensions.
+     *
+     * @param x the x-coordinate of the player's position
+     * @param y the y-coordinate of the player's position
+     * @param w the width of the player's hitbox
+     * @param h the height of the player's hitbox
+     */
     public Player(int x, int y, int w, int h) {
         hitBox = new Rectangle(w, h, Color.BLUE);
         hitBox.setTranslateX(x);
@@ -31,16 +44,19 @@ public class Player extends Moveable {
 
         animation.setFrames(Assets.PLAYER_IDLE[0]);
         animation.setDelay(10);
-        canvas = new Canvas(192,192);
+        canvas = new Canvas(192, 192);
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(hitBox.getTranslateX());
         canvas.setTranslateY(hitBox.getTranslateY());
     }
 
+    /**
+     * Updates the player's state and redraws the player on the canvas.
+     */
     @Override
     public void update() {
         GameModel.getMovePlayerLogic().update();
-        canvas.setTranslateY(hitBox.getTranslateY()-130);
+        canvas.setTranslateY(hitBox.getTranslateY() - 130);
 
         GameModel.getMovePlayerLogic().getMoveData().drawPlayer(this, lastState, animation);
 
@@ -53,6 +69,9 @@ public class Player extends Moveable {
         }
     }
 
+    /**
+     * Generates an afterimage effect for the player to enhance visual feedback.
+     */
     public void generateAfterimage() {
         ImageView afterimage = new ImageView(animation.getImage(GameModel.getMovePlayerLogic().getMoveData().isFacingLeft));
         afterimage.setFitWidth(192);
@@ -71,21 +90,40 @@ public class Player extends Moveable {
         fadeOut.play();
     }
 
+    /**
+     * Returns the size of the player.
+     *
+     * @return an array containing the width and height of the player
+     */
     @Override
     public int[] size() {
         return new int[]{Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT};
     }
 
-
+    /**
+     * Returns the type of the entity.
+     *
+     * @return the EntityType of the player
+     */
     @Override
     public EntityType getType() {
         return EntityType.PLAYER;
     }
 
+    /**
+     * Gets the MoveData associated with the player.
+     *
+     * @return the MoveData object
+     */
     public MoveData getMoveData() {
         return GameModel.getMovePlayerLogic().getMoveData();
     }
 
+    /**
+     * Sets the last state of the player.
+     *
+     * @param lastState the last MoveState of the player
+     */
     public void setLastState(MoveState lastState) {
         this.lastState = lastState;
     }

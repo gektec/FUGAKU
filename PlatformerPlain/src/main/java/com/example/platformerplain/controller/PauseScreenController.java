@@ -17,6 +17,9 @@ import javafx.stage.Stage;
  * This class serves as the controller for the Pause Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and three options appear when the player presses the pause button: Menu, Exit, Help, Resume
+ *
+ * @author Zelin Xia
+ * @date 2024/12/7
  */
 
 public class PauseScreenController {

@@ -19,23 +19,34 @@ import java.util.ArrayList;
 
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
-
+/**
+ * Represents an enemy entity in the platformer game that can move and perform actions.
+ * The enemy can jump, random move, and die, with corresponding animations for each state.
+ *
+ * @author Changyu Li
+ * @date 2024/11/11
+ */
 public class Enemy extends Moveable {
-    Image[] frames;
     private GraphicsContext gc;
     public boolean isDead;
     private boolean deathAnimationSet = false;
     private MoveEnemy moveEnemyLogic;
     private MoveState lastState;
 
+    /**
+     * Constructs an Enemy instance at the specified position and size.
+     *
+     * @param x the x-coordinate of the enemy's position
+     * @param y the y-coordinate of the enemy's position
+     * @param w the width of the enemy
+     * @param h the height of the enemy
+     */
     public Enemy(int x, int y, int w, int h) {
         hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
         this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
-
-        frames = Assets.FROG_IDLE[0];
-        animation.setFrames(frames);
+        animation.setFrames(Assets.FROG_IDLE[0]);
         animation.setDelay(10);
 
         canvas = new Canvas(96,96);
@@ -44,12 +55,14 @@ public class Enemy extends Moveable {
         canvas.setTranslateY(hitBox.getTranslateY());
     }
 
-
+    /**
+     * Updates the enemy's state, including animations and movement.
+     * If the enemy is dead, it will handle the death animation and removal.
+     */
     @Override
     public void update() {
         if(isDead && !deathAnimationSet){
-            frames = Assets.FROG_DEATH[0];
-            animation.setFrames(frames);
+            animation.setFrames(Assets.FROG_DEATH[0]);
             animation.setDelay(10);
             deathAnimationSet = true;
             GameModel.killedEnemy();
@@ -66,9 +79,9 @@ public class Enemy extends Moveable {
                 }
             }
             else if (lastState != MoveState.IDLE) {
-                    animation.setFrames(Assets.FROG_IDLE[0]);
-                    animation.setDelay(10);
-                    lastState = MoveState.IDLE;
+                animation.setFrames(Assets.FROG_IDLE[0]);
+                animation.setDelay(10);
+                lastState = MoveState.IDLE;
             }
             animation.update();
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -77,20 +90,34 @@ public class Enemy extends Moveable {
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
             moveEnemyLogic.update();
-
         }
     }
 
+    /**
+     * Returns the size of the enemy.
+     *
+     * @return an array containing the width and height of the enemy
+     */
     @Override
     public int[] size() {
         return new int[]{Constants.ENEMY_SIZE, Constants.ENEMY_SIZE};
     }
 
+    /**
+     * Returns the type of the entity.
+     *
+     * @return the entity type as ENEMY
+     */
     @Override
     public EntityType getType() {
         return EntityType.ENEMY;
     }
 
+    /**
+     * Gets the current movement status of the enemy.
+     *
+     * @return the MoveData object representing the enemy's movement state
+     */
     public MoveData getMoveStatus() {
         return moveEnemyLogic.getMoveData();
     }

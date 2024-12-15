@@ -16,6 +16,9 @@ import java.net.URISyntaxException;
  * This class serves as the controller for the Completed Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and handling sound effects when the player completed all levels.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class CompletedScreenController {
 

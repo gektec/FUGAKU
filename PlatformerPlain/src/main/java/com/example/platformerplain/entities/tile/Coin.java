@@ -13,12 +13,25 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Represents a collectible coin.
+ * The coin can be collected by the player, which removes it from the game.
+ *
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class Coin extends Tile {
     private GraphicsContext gc;
     private Image sprite;
     public boolean isCollected = false;
 
-
+    /**
+     *
+     * @param x The x-coordinate of the coin's position.
+     * @param y The y-coordinate of the coin's position.
+     * @param w The width of the coin's hitbox.
+     * @param h The height of the coin's hitbox.
+     */
     public Coin(int x, int y, int w, int h) {
         hitBox = new Rectangle(w, h, Color.GOLD);
         hitBox.setTranslateX(x);
@@ -31,6 +44,9 @@ public class Coin extends Tile {
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+    /**
+     * Updates the coin's state. If the coin has been collected, it removes itself from the game model.
+     */
     @Override
     public void update() {
         if(isCollected){
@@ -39,11 +55,21 @@ public class Coin extends Tile {
         }
     }
 
+    /**
+     * Returns the size of the coin.
+     *
+     * @return An array containing the width and height of the coin.
+     */
     @Override
     public int[] size() {
         return new int[]{Constants.COIN_SIZE, Constants.COIN_SIZE};
     }
 
+    /**
+     * Returns the type of the entity, which is COIN.
+     *
+     * @return The entity type of this coin.
+     */
     @Override
     public EntityType getType() {
         return EntityType.COIN;

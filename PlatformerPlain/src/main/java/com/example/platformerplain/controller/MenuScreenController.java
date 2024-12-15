@@ -14,6 +14,9 @@ import javafx.stage.Stage;
  * This class serves as the controller for the Menu Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and handling different buttons.
+ *
+ * @author Zelin Xia
+ * @date 2024/11/13
  */
 public class MenuScreenController {
 

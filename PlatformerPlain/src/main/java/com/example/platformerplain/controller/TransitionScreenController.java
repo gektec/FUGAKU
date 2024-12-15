@@ -17,6 +17,9 @@ import javafx.stage.Stage;
  * It manages the initialization and configuration of UI components,
  * including options that appear when the player completes the current level:
  * Menu, Next Level, and Restart.
+ *
+ * @author Changyu Li
+ * @date 2024/12/3
  */
 public class TransitionScreenController {
 

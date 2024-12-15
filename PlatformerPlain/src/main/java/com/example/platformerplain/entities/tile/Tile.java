@@ -6,11 +6,9 @@ import com.example.platformerplain.entities.Entity;
 import java.util.ArrayList;
 
 /**
- * <h3>PlatformerPlain</h3>
  *
  * @author Changyu Li
- * @description <p>Composite node</p>
- * @date 2024-12-15 18:56
+ * @date 2024-12-15
  **/
 abstract class Tile extends Entity {
     private ArrayList<Entity> children = new ArrayList<>();
