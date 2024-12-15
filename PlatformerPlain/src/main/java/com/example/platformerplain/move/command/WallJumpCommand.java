@@ -9,6 +9,10 @@ import javafx.util.Duration;
 
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
+/**
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class WallJumpCommand implements PlayCommand {
     private MoveData moveData;
     private Timeline slideJumpCooldownTimer;

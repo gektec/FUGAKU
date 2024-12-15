@@ -5,9 +5,9 @@ import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
 /**
- * Represents the movement data for a player character in a platformer game.
+ * Represents the movement data for a player character.
  * This class maintains the current movement state and handles the logic
- * for different movement states such as jumping, running, and sliding.
+ * for different movement states.
  *
  * @author Changyu Li
  * @date 2024/12/15
@@ -21,7 +21,6 @@ public class MoveData {
     private MoveStateHandler stateHandler;
 
     /**
-     * Constructs a MoveData instance with specified movement parameters.
      *
      * @param moveState        the initial movement state of the player
      * @param isFacingLeft     indicates if the player is facing left

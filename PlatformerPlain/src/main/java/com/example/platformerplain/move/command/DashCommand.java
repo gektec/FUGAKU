@@ -12,6 +12,10 @@ import javafx.util.Duration;
 import static com.example.platformerplain.Assets.DASH_SFX;
 import static com.example.platformerplain.model.GameModel.keys;
 
+/**
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class DashCommand implements PlayCommand {
     private Coord2D velocity;
     private MoveData moveData;

@@ -7,6 +7,10 @@ import javafx.scene.input.KeyCode;
 import static com.example.platformerplain.Constants.MAX_CLIMB_SPEED;
 import static com.example.platformerplain.model.GameModel.keys;
 
+/**
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class ClimbCommand implements PlayCommand {
     private MoveData moveData;
     private boolean isPressed(KeyCode key) {

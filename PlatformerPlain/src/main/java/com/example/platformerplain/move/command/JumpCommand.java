@@ -5,6 +5,10 @@ import com.example.platformerplain.move.data.MoveState;
 
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
+/**
+ * @author Zelin Xia
+ * @date 2024/12/2
+ */
 public class JumpCommand implements PlayCommand {
     private MoveData moveData;
 
