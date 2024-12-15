@@ -61,4 +61,8 @@ public class Main extends Application {
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
+
+    public static void putDebugInfo(String message) {
+        System.out.println("[DEBUG]: " + message);
+    }
 }

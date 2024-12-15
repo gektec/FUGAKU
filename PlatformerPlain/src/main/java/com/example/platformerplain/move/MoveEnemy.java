@@ -70,7 +70,7 @@ public class MoveEnemy {
         if (isTouchingGround && waitingTime <= 0) {
             jump.execute();
             isFacingLeft = !isFacingLeft;
-            waitingTime = (Math.random() * 10);
+            waitingTime = (Math.random() * 6 + 3);
         }
 
         if(moveData.stateIs(MoveState.JUMPING)) {

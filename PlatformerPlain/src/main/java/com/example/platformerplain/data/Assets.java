@@ -14,6 +14,7 @@ public class Assets {
 
     // Backgrounds
     public static final Background MENU_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Background.png", 5),null,null,null,null));
+    public static final Image BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Background.png");
 
     // Textures
     public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");

@@ -225,6 +225,7 @@ public class GameScreen implements Screen, GameModelObserver {
 
     /**
      * Sets the camera follow behavior to track the player's movements.
+     * The closer the background image is to the camera, the faster it moves.
      */
     private static void setCameraFollow(){
         GameModel.player.hitBox().translateXProperty().addListener((obs, old, newValue) -> {

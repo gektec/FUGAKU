@@ -1,5 +1,6 @@
 package com.example.platformerplain.move;
 
+import com.example.platformerplain.Main;
 import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.data.LevelData;
@@ -186,6 +187,7 @@ public class MovePlayer {
             if (player.hitBox().getBoundsInParent().intersects(coin.hitBox().getBoundsInParent())) {
                 coin.isCollected = true;
                 COIN_SFX.play();
+                Main.putDebugInfo("Coin collected");
                 return;
             }
         }
@@ -197,7 +199,7 @@ public class MovePlayer {
     private void checkGoal() {
         for (Entity entity : entityMap) {
             if (entity.getType() == EntityType.GOAL && player.hitBox().getBoundsInParent().intersects(entity.hitBox().getBoundsInParent())) {
-                System.out.println("You win!");
+                Main.putDebugInfo("Level complete");
                 GameModel.transitionToNextLevel();
                 return;
             }
@@ -221,7 +223,7 @@ public class MovePlayer {
                 if (getMoveData().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
                     enemy.isDead = true;
                     playerVelocity.set(0, -15);
-                    System.out.println("enemy killed");
+                    Main.putDebugInfo("Enemy killed");
                 } else Die();
             }
         }
@@ -246,7 +248,7 @@ public class MovePlayer {
      * Stops the game loop and exits the game.
      */
     private void Die() {
-        System.out.println("You lose!");
+        Main.putDebugInfo("Player dead");
         GameModel.stopGameLoop(); // Stop game loop on player death
         GameModel.exitGame();
     }
