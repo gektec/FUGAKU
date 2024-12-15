@@ -77,7 +77,8 @@ public class MenuScreenController {
      */
     @FXML
     public void handleHelp() {
-        PauseScreenController.handleHelp();
+        PauseScreenController pause = new PauseScreenController();
+        pause.handleHelp();
     }
 
 

@@ -19,12 +19,12 @@
     <Text text="F U G A K U" styleClass="title" />
 
     <!-- Apply button font style in the CSS -->
-    <Button fx:id="debugButton" onAction="#handleDebugMode" text="Debug Mode" prefWidth="200.0"/>
+    <Button fx:id="debugButton" onAction="#handleDebugMode" prefWidth="200.0"/>
 
     <Button fx:id="startButton" onAction="#handleStartGame" text="Start Game" prefWidth="200.0" />
 
-    <Button fx:id="helpButton" onAction="#handleHelp" text="Help" prefWidth="200.0"/>
+    <Button fx:id="helpButton" onAction="#handleHelp" text="Instructions" prefWidth="200.0"/>
 
-    <Button fx:id="exitButton" onAction="#handleExitGame" text="Exit Game" prefWidth="200.0"/>
+    <Button fx:id="exitButton" onAction="#handleExitGame" text="Exit to Desktop" prefWidth="200.0"/>
 
 </VBox>

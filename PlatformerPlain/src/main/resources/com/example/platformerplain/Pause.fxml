@@ -25,21 +25,6 @@
         />
 
         <Button
-                fx:id="MenuButton"
-                onAction="#handleMenu"
-                text="Menu"
-                mnemonicParsing="false"
-                prefWidth="200.0"
-        />
-
-        <Button
-                fx:id="ExitButton"
-                onAction="#handleExitGame"
-                text="Exit"
-                prefWidth="200.0"
-        />
-
-        <Button
                 fx:id="RestartButton"
                 onAction="#handleRestart"
                 text="Restart"
@@ -50,7 +35,22 @@
         <Button
                 fx:id="helpButton"
                 onAction="#handleHelp"
-                text="Help"
+                text="Instructions"
+                prefWidth="200.0"
+        />
+
+        <Button
+                fx:id="MenuButton"
+                onAction="#handleMenu"
+                text="Return to Menu"
+                mnemonicParsing="false"
+                prefWidth="200.0"
+        />
+
+        <Button
+                fx:id="ExitButton"
+                onAction="#handleExitGame"
+                text="Exit to Desktop"
                 prefWidth="200.0"
         />
     </VBox>

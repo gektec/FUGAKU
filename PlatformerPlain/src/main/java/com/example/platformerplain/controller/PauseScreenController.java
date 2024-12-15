@@ -54,7 +54,7 @@ public class PauseScreenController {
      * Displays a dialog with instructions on how to play the game.
      */
     @FXML
-    public static void handleHelp() {
+    public void handleHelp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Help");
         alert.setHeaderText("How to Play");
