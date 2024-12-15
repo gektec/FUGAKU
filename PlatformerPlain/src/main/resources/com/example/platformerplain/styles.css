@@ -4,13 +4,13 @@
 
 /* General style */
 .title {
-    -fx-font-size: 64px; /* Moderate font size */
-    -fx-fill: #443333; /* Dark gray color for a cool vibe */
+    -fx-font-size: 64px;
+    -fx-fill: #443333;
 }
 
 .subtitle {
-    -fx-font-size: 40px; /* Smaller font size */
-    -fx-fill: #BBBBBB; /* Dark gray color */
+    -fx-font-size: 40px;
+    -fx-fill: #443333;
 }
 
 /* Button style */

@@ -77,51 +77,7 @@ public class MenuScreenController {
      */
     @FXML
     public void handleHelp() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Help");
-        alert.setHeaderText("How to Play");
-
-        TextArea helpTextArea = new TextArea();
-        helpTextArea.setText("""
-            Controls:
-            - Press 'A' to move left and explore.
-            - Press 'D' to dash right into action!
-            - Press 'J' to jump high and reach new heights.
-            - Press 'K' to dash and swiftly dodge obstacles.
-            - Press 'W' to climb up ladders and discover what's above.
-            - Press 'S' to descend down ladders and uncover hidden secrets.
-
-            Tips for Success:
-            1. Use 'J' to interact with objects in your environment.
-            2. Keep an eye out for enemies and avoid them to stay in the game.
-            3. You can defeat enemies by jumping on them—just be cautious!
-            4. Collect power-ups to boost your abilities and gain an edge.
-            5. Race against time to reach the goal quickly and claim victory!
-            
-            Scoring System:
-            - Each level starts with 1000 points.
-            - You lose 10 points for every second that passes.
-            - Defeating an enemy earns you an additional 200 points.
-            - Aim for high scores by defeating enemies quickly and completing levels efficiently!
-
-            Awesome Moves to Master:
-            1. Slide Jump: Press 'J' while running for an extra boost in height!
-            2. Dash: Tap 'K' while moving to zip past hazards with style.
-            3. Mix and match your moves for exciting strategies and combos!
-
-            Good luck out there! Have a blast and don’t hesitate to reach out if you have any questions!""");
-
-        helpTextArea.setEditable(false);
-        helpTextArea.setWrapText(true);
-        helpTextArea.setPrefSize(400, 300);
-
-        alert.getDialogPane().setContent(helpTextArea);
-
-        // Customize the button text
-        ButtonType gotItButtonType = new ButtonType("Got it");
-        alert.getButtonTypes().setAll(gotItButtonType); // Replace default buttons with our custom button
-
-        alert.showAndWait();
+        PauseScreenController.handleHelp();
     }
 
 
