@@ -5,10 +5,7 @@ import com.example.platformerplain.view.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -31,6 +28,7 @@ public class MenuScreenController {
 
     /**
      * Assigns the primary stage to this controller.
+     *
      * @param primaryStage the Stage instance to be used
      */
     public void setPrimaryStage(Stage primaryStage) {
@@ -39,17 +37,19 @@ public class MenuScreenController {
 
     /**
      * Loads the background image and initializes background music playback.
+     * This method is called automatically after the FXML file is loaded,
+     * setting up the initial state of the menu screen.
      */
     @FXML
     private void initialize() {
-        //loadBackgroundImage();
         loadBackgroundImage();
         playBackgroundMusic();
         updateDebugButtonText();
     }
 
     /**
-     * Sets the background image of the root VBox.
+     * Sets the background image of the root VBox using the Assets class.
+     * This method enhances the visual appearance of the menu screen.
      */
     private void loadBackgroundImage() {
         root.setBackground(Assets.MENU_BACKGROUND);
@@ -57,14 +57,17 @@ public class MenuScreenController {
 
     /**
      * Loads and plays the background music indefinitely.
+     * Currently set to play the victory sound, which may need to be replaced
+     * with appropriate background music in the future.
      */
     private void playBackgroundMusic() {
-        //TODO : replace it.
+        // TODO : replace it.
         VICTORY_SOUND.play();
     }
 
     /**
-     * Handles the "Start Game" button click event, opening the Level Select screen.
+     * Handles the "Start Game" button click event. This method opens
+     * the Level Select screen, allowing the user to choose a level to play.
      */
     @FXML
     private void handleStartGame() {
@@ -74,6 +77,7 @@ public class MenuScreenController {
 
     /**
      * Displays a dialog with instructions on how to play the game.
+     * This method delegates the help display to the PauseScreenController.
      */
     @FXML
     public void handleHelp() {
@@ -81,9 +85,9 @@ public class MenuScreenController {
         pause.handleHelp();
     }
 
-
     /**
-     * Exits the application when the game is closed.
+     * Exits the application when the exit button is clicked.
+     * This method terminates the JavaFX application and the JVM.
      */
     @FXML
     void handleExitGame() {
@@ -91,15 +95,24 @@ public class MenuScreenController {
         System.exit(0); // Terminate the JVM
     }
 
+    /**
+     * Toggles debug mode on or off in the game.
+     * This method updates the game model's debug mode state and refreshes the button text
+     * to reflect the current status of debug mode.
+     */
     @FXML
     public void handleDebugMode() {
         GameModel.setDebugMode(!GameModel.isDebugMode());
         updateDebugButtonText();
     }
 
+    /**
+     * Updates the text of the debug button to indicate whether debug mode is currently enabled or disabled.
+     * If debug mode is on, the button shows "Debug Mode: ON"; otherwise, it shows "Debug Mode: OFF".
+     */
     @FXML
     private void updateDebugButtonText() {
-        if (GameModel.isDebugMode()){
+        if (GameModel.isDebugMode()) {
             debugButton.setText("Debug Mode: ON");
         } else {
             debugButton.setText("Debug Mode: OFF");

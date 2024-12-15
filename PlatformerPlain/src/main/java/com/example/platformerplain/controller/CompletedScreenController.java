@@ -40,21 +40,35 @@ public class CompletedScreenController {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Updates the score label to display the player's final score.
+     * @param score the final score to be displayed
+     */
     public void setScore(int score) {
         scoreLabel.setText("Your Final Score is: " + score);
     }
 
+    /**
+     * Updates the killed label based on the number of enemies killed by the player.
+     * @param killed the number of enemies killed
+     */
     public void setKilled(int killed) {
         if (killed == 0) {
             killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
         } else if (killed == 1) {
             killedLabel.setText("You only killed one person. You are such a merciful Lord!");
         } else if (killed >= 1) {
-            killedLabel.setText("You have killed" + " "+killed +" "+  "enemies!");
+            killedLabel.setText("You have killed" + " " + killed + " " + "enemies!");
         }
     }
 
-    public void setTime(long time) {timeLabel.setText("Total time: " + time + "s");}
+    /**
+     * Updates the time label to display the total time spent in the game.
+     * @param time the total time in seconds
+     */
+    public void setTime(long time) {
+        timeLabel.setText("Total time: " + time + "s");
+    }
 
     /**
      * Initializes the Fail Screen by loading the background image and
@@ -67,11 +81,18 @@ public class CompletedScreenController {
         playBackgroundMusic();
     }
 
+    /**
+     * Loads and sets the background image for the completed screen.
+     */
     private void loadBackgroundImage() {
         // Load the background image
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 
+    /**
+     * Plays the background music associated with the completed screen.
+     * @throws URISyntaxException if an error occurs while retrieving the URI of the sound file
+     */
     private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
 
@@ -81,7 +102,7 @@ public class CompletedScreenController {
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.
-     * This method shuts down the application.
+     * This method shuts down the application and ensures all resources are released.
      */
     @FXML
     void handleExitGame() {
@@ -116,4 +137,3 @@ public class CompletedScreenController {
         }
     }
 }
-
