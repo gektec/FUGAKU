@@ -1,5 +1,6 @@
 package com.example.platformerplain.move.data;
 
+import com.example.platformerplain.Assets;
 import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.texture.Animation;
 
@@ -25,5 +26,10 @@ class SlideJumpingState implements MoveStateHandler {
      */
     @Override
     public void updatePlayer(Player player, MoveState lastState, Animation animation) {
+        if (lastState != MoveState.SLIDE_JUMPING) {
+            animation.setFrames(Assets.PLAYER_WALL_JUMPING[0]);
+            animation.setDelay(10);
+            player.setLastState(MoveState.SLIDE_JUMPING);
+        }
     }
 }

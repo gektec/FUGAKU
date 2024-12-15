@@ -84,6 +84,7 @@ public class MovePlayer {
         playerState = moveData.getState();
         isFacingLeft = moveData.isFacingLeft;
         isTouchingGround = moveData.isTouchingGround;
+        isTouchingWall = moveData.isTouchingWall;
         canClimb = false;
         canDash = canDash || isTouchingGround;
 
@@ -115,7 +116,7 @@ public class MovePlayer {
                 haveJKeyReleased = false;
             }
             // Slide jump
-            else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall) {
+            else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall && !isTouchingGround && playerState != MoveState.SLIDE_JUMPING) {
                 slideJump.execute();
                 haveJKeyReleased = false;
             }
@@ -151,6 +152,7 @@ public class MovePlayer {
         if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
 
         Move.move(player, moveData);
+
 
         checkGoal();
         checkEnemy();

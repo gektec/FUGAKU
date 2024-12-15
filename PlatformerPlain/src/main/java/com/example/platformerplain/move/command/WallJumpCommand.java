@@ -22,7 +22,8 @@ public class WallJumpCommand implements PlayCommand {
 
     @Override
     public void execute() {
-        moveData.velocity.setY(-15);
+        moveData.velocity.setY(-Constants.SLIDE_JUMP_SPEED);
+        moveData.velocity.setX(moveData.isFacingLeft ? Constants.SLIDE_JUMP_SPEED : -Constants.SLIDE_JUMP_SPEED);
         moveData.isTouchingWall = false;
         moveData.setState(MoveState.SLIDE_JUMPING);
         JUMP_SFX.play();

@@ -127,20 +127,13 @@ public class Move {
                     if (relativeLocation == 1) {
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                         velocity.setY(0);
-                        if (!moveData.stateIs(MoveState.DASHING)) {
-                            if (velocity.getX() != 0) moveData.setState(MoveState.RUNNING);
-                            else moveData.setState(MoveState.IDLE);
-                        }
                         isTouchingGround = true;
                     } else if (relativeLocation == 2) {
                         isTouchingRightWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
                         velocity.setX(0);
-                        if (moveData.stateIs(MoveState.SLIDE_JUMPING)) {
-                            velocity.setX(-Constants.SLIDE_JUMP_SPEED);
-                            moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
-                        } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            isFacingLeft = true;
+                        if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                            isFacingLeft = false;
                             moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
@@ -148,18 +141,14 @@ public class Move {
                         isTouchingLeftWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
-                        if (moveData.stateIs(MoveState.SLIDE_JUMPING)) {
-                            velocity.setX(Constants.SLIDE_JUMP_SPEED);
-                            moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
-                        } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            isFacingLeft = false;
+                            if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                            isFacingLeft = true;
                             moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 3) {
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
-                        moveData.setState(MoveState.IDLE);
                     }
                 }
             }

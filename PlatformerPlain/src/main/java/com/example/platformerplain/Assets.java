@@ -42,6 +42,8 @@ public class Assets {
     public static final Image[][] PLAYER_JUMP_START = AssetManager.loadImage("/images/character/player/Player_Jump_Start.png", 96, 96, 3);
     public static final Image[][] PLAYER_JUMP_FALL = AssetManager.loadImage("/images/character/player/Player_Jump_Fall.png", 96, 96, 3);
     public static final Image[][] PLAYER_SLIDING = AssetManager.loadImage("/images/character/player/Player_Wall_Slide.png", 96, 96, 3);
+    public static final Image[][] PLAYER_WALL_JUMPING = AssetManager.loadImage("/images/character/player/Player_Wall_Jump.png", 96, 96, 3);
+
 
     // Sounds
     public static final AssetManager.GameMediaPlayer COMPLETE_SOUND = new AssetManager.GameMediaPlayer("/sound/completed.mp3");

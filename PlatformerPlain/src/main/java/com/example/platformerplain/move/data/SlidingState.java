@@ -27,9 +27,9 @@ class SlidingState implements MoveStateHandler {
             player.setLastState(MoveState.SLIDING);
         }
         if (player.getMoveData().isFacingLeft) {
-            player.canvas().setTranslateX(player.canvas().getTranslateX() + 20);
-        } else {
             player.canvas().setTranslateX(player.canvas().getTranslateX() - 20);
+        } else {
+            player.canvas().setTranslateX(player.canvas().getTranslateX() + 20);
         }
     }
 }
