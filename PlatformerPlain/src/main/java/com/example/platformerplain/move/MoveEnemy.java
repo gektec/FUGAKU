@@ -1,7 +1,7 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.entities.Enemy;
+import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.Entity;
 
 import java.util.ArrayList;

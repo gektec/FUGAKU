@@ -1,6 +1,9 @@
 package com.example.platformerplain;
 
 import com.example.platformerplain.entities.*;
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Ladder;
+import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
 import javafx.scene.layout.Pane;
 

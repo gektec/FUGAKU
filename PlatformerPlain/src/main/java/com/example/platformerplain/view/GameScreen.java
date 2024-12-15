@@ -134,15 +134,9 @@ public class GameScreen implements Screen, GameModelObserver {
 
             setLable(timeLabel);
 
-
-            xAxis.setLabel("Time");
-            yAxis.setLabel("Speed");
-
             speedChart.setTitle("Player Speed Over Time");
             speedX = new XYChart.Series<>();
-            speedX.setName("Speed X");
             speedY = new XYChart.Series<>();
-            speedY.setName("Speed Y");
             speedChart.getData().addAll(speedX, speedY);
             speedChart.setTranslateX(10);
             speedChart.setTranslateY(10 + labelNumber * 20);

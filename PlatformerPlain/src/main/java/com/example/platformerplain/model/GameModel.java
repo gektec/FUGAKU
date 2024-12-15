@@ -1,6 +1,10 @@
 package com.example.platformerplain.model;
 
 import com.example.platformerplain.*;
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Goal;
+import com.example.platformerplain.entities.tile.Ladder;
+import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.view.*;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.Interpreter.ScoreContext;

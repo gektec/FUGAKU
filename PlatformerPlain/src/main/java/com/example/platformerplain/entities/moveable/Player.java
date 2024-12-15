@@ -1,7 +1,9 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.moveable;
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveState;
@@ -18,13 +20,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 
-public class Player extends Entity {
-    private Node hitBox;
-    protected boolean isAnimated(){
-        return true;
-    }
+public class Player extends Moveable {
     Image[] frames;
-    private Canvas canvas;
     private GraphicsContext gc;
     private MoveState lastState = MoveState.IDLE;
     private int lastAfterimageFrame = 0;
@@ -135,16 +132,6 @@ public class Player extends Entity {
         return new int[]{Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT};
     }
 
-
-    @Override
-    public Node hitBox() {
-        return hitBox;
-    }
-
-    @Override
-    public Node canvas() {
-        return canvas;
-    }
 
     @Override
     public EntityType getType() {

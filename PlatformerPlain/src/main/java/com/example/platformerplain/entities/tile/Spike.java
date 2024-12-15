@@ -1,7 +1,9 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.tile;
 
 import com.example.platformerplain.AssetManager;
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.texture.CutSpriteSheet;
@@ -13,12 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Spike extends Entity {
-    protected boolean isAnimated(){
-        return false;
-    };
-    private Node hitBox;
-    private Canvas canvas;
+public class Spike extends Tile {
     private GraphicsContext gc;
     private int index;
 
@@ -47,18 +44,13 @@ public class Spike extends Entity {
     }
 
     @Override
+    public void update() {
+        //todo
+    }
+
+    @Override
     public int[] size() {
         return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
-    }
-
-    @Override
-    public Node hitBox() {
-        return hitBox;
-    }
-
-    @Override
-    public Node canvas() {
-        return canvas;
     }
 
     @Override

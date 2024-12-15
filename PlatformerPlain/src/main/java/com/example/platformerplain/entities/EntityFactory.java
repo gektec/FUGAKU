@@ -1,5 +1,9 @@
 package com.example.platformerplain.entities;
 
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.moveable.Player;
+import com.example.platformerplain.entities.tile.*;
+
 public class EntityFactory {
 
     public static Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {

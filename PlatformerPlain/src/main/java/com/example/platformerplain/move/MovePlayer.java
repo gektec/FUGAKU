@@ -3,12 +3,12 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.LevelData;
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Ladder;
+import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Command.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
