@@ -11,10 +11,10 @@ import com.example.platformerplain.move.Coord2D;
  **/
 class FallingState implements MoveStateHandler {
     @Override
-    public void handle(Coord2D velocity, MoveData moveData) {
+    public void analyzeState(MoveData moveData) {
         // Implement Falling state-specific logic
-        if (velocity.getY() < 0) {
-            moveData.setState(MoveState.JUMPING);
+        if(moveData.isTouchingGround){
+            moveData.setState(MoveState.IDLE);
         }
     }
 }

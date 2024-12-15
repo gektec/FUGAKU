@@ -176,6 +176,8 @@ public class Move {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
             moveData.isTouchingWall = isTouchingWall;
 
+            moveData.analyzeState(moveData);
+
 //            if (!isTouchingWall && moveData.moveState == MoveState.SLIDING) {
 //                moveData.moveState = MoveState.IDLE;
 //            }

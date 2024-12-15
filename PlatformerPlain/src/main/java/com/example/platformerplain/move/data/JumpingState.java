@@ -11,8 +11,12 @@ import com.example.platformerplain.move.Coord2D;
  **/
 class JumpingState implements MoveStateHandler {
     @Override
-    public void handle(Coord2D velocity, MoveData moveData) {
-        // Implement Jumping state-specific logic
-        // For example, handling transitions to other states
+    public void analyzeState(MoveData moveData) {
+        if(moveData.isTouchingWall && moveData.velocity.getY() > 0) {
+            moveData.setState(MoveState.SLIDING);
+        }
+        if(moveData.velocity.getY() > 0){
+            moveData.setState(MoveState.FALLING);
+        }
     }
 }

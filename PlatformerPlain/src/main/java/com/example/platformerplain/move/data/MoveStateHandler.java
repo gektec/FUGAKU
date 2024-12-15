@@ -10,7 +10,7 @@ import com.example.platformerplain.move.Coord2D;
  * @date 2024-12-15 19:38
  **/
 interface MoveStateHandler {
-    void handle(Coord2D velocity, MoveData moveData);
+    void analyzeState(MoveData moveData);
 }
 
 // Add other states as needed...

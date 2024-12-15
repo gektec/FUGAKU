@@ -55,9 +55,9 @@ public class MoveData {
     }
 
 
-    public void handle(Coord2D velocity, MoveData moveData) {
+    public void analyzeState(MoveData moveData) {
         if (stateHandler != null) {
-            stateHandler.handle(velocity, moveData);
+            stateHandler.analyzeState(moveData);
         }
     }
 

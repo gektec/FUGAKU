@@ -11,12 +11,14 @@ import com.example.platformerplain.move.Coord2D;
  **/
 class IdleState implements MoveStateHandler {
     @Override
-    public void handle(Coord2D velocity, MoveData moveData) {
-        // Implement Idle state-specific logic
-        // For example, if the entity is not touching a wall or the ground, transition to the appropriate state
-        if (!moveData.isTouchingWall && !moveData.isTouchingGround && velocity.getY() > 0) {
-            moveData.setState(MoveState.FALLING);
+    public void analyzeState(MoveData moveData) {
+
+        if (!moveData.isTouchingWall && !moveData.isTouchingGround) {
+            if(moveData.velocity.getY() > 0) moveData.setState(MoveState.FALLING);
+            else moveData.setState(MoveState.JUMPING);
         }
-        // Additional logic as needed
+        if(moveData.isTouchingGround && moveData.velocity.getX() != 0){
+            moveData.setState(MoveState.RUNNING);
+        }
     }
 }

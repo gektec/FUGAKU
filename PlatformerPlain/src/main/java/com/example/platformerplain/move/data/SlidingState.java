@@ -11,8 +11,7 @@ import com.example.platformerplain.move.Coord2D;
  **/
 class SlidingState implements MoveStateHandler {
     @Override
-    public void handle(Coord2D velocity, MoveData moveData) {
-        // Implement Sliding state-specific logic
+    public void analyzeState(MoveData moveData) {
         if (!moveData.isTouchingWall) {
             moveData.setState(MoveState.IDLE);
         }
