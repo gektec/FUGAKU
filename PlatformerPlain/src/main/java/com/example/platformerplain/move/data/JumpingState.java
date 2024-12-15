@@ -5,6 +5,8 @@ import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
+import static com.example.platformerplain.Assets.JUMP_SFX;
+
 /**
  * <h3>PlatformerPlain</h3>
  *
@@ -33,6 +35,7 @@ class JumpingState implements MoveStateHandler {
         if (lastState != MoveState.JUMPING) {
             animation.setFrames(Assets.PLAYER_JUMP_START[0]);
             animation.setDelay(2);
+            JUMP_SFX.play();
             player.setLastState(MoveState.JUMPING);
         }
     }

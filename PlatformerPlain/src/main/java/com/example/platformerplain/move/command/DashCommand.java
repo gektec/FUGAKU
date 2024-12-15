@@ -47,7 +47,6 @@ public class DashCommand implements PlayCommand {
                 velocity.set((float) (x / 1.6), (float) (y / 1.6));
             else
                 velocity.set(x, y);
-            DASH_SFX.play();
             moveData.setState(MoveState.DASHING);
             dashCooldownTimer.playFromStart();
 

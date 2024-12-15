@@ -35,8 +35,15 @@ public class Assets {
     public static final Image GOAL = AssetManager.loadImage("/images/tile/Goal.png");
     public static final Image COIN = AssetManager.loadImage("/images/tile/Coin.png");
 
-    public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 5);
-    public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 5);
+    public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 3);
+    public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 3);
+
+    public static final Image[][] FROG_IDLE = AssetManager.loadImage("/images/character/frog/Frog_Idle.png", 48, 48, 3);
+    public static final Image[][] FROG_DEATH = AssetManager.loadImage("/images/character/frog/Frog_Explosion.png", 48, 48, 3);
+    public static final Image[][] FROG_JUMP = AssetManager.loadImage("/images/character/frog/Frog_Hop.png", 48, 48, 3);
+
+
+
     public static final Image[][] PLAYER_IDLE = AssetManager.loadImage("/images/character/player/Player_Idle.png", 96, 96, 3);
     public static final Image[][] PLAYER_RUN = AssetManager.loadImage("/images/character/player/Player_Run.png", 96, 96, 3);
     public static final Image[][] PLAYER_DASH = AssetManager.loadImage("/images/character/player/Player_Dash.png", 96, 96, 3);
