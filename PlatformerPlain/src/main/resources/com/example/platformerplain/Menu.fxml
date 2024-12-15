@@ -27,4 +27,6 @@
 
     <Button fx:id="exitButton" onAction="#handleExitGame" text="Exit to Desktop" prefWidth="200.0"/>
 
+    <Button fx:id="RankButton" onAction="#handleRanking" text="See history" prefWidth="200.0"/>
+
 </VBox>

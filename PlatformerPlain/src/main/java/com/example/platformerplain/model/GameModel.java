@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,6 +61,7 @@ public class GameModel {
     public static int killedEnemy = 0;
     private static long totalTime = 0;
     private static int baseScore = 1000;
+
 
     private static Timeline gameLoop;
     private static boolean isPaused = false;
@@ -248,7 +250,8 @@ public class GameModel {
 
     public static void transitionToNextLevel() {
         stopGameLoop();
-        if(currentLevel <= 2) {
+
+    if(currentLevel <= 2) {
             calculateCurrentScore();
             ScreenManager.showScreen(new TransitionScreen());
         } else{
@@ -349,10 +352,17 @@ public class GameModel {
         return finalScore;
     }
 
+    public static int setFinalScore() {
+        finalScore = 0;
+        return finalScore;
+    }
+
+
+
+
     public static int getCurrentLevel(){
         return currentLevel;
     }
-
 
 
     public static boolean isDebugMode() {
@@ -368,6 +378,7 @@ public class GameModel {
     public static long getGameTime(){
         return (int)(elapsedTime/1000);
     }
+
 
     private static void notifyScoreChanged(int newScore) {
         for (GameModelObserver observer : observers) {

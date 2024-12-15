@@ -1,11 +1,14 @@
 package com.example.platformerplain.controller;
 
 import com.example.platformerplain.Assets;
+import com.example.platformerplain.model.RankModel;
 import com.example.platformerplain.view.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
+import com.example.platformerplain.view.RankScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -21,6 +24,7 @@ public class MenuScreenController {
     public Button startButton;
     public Button helpButton;
     public Button exitButton;
+    public Button RankButton;
     @FXML
     private VBox root;  // VBox in the FXML file
     public Button debugButton;
@@ -71,6 +75,7 @@ public class MenuScreenController {
      */
     @FXML
     private void handleStartGame() {
+        GameModel.setFinalScore();
         LevelSelectScreen selectScreen = new LevelSelectScreen();
         selectScreen.show(primaryStage);
     }
@@ -117,5 +122,16 @@ public class MenuScreenController {
         } else {
             debugButton.setText("Debug Mode: OFF");
         }
+    }
+
+    /**
+     * Handles the event for the rank button when clicked.
+     * This method creates a new instance of RankScreen and displays it,
+     */
+    @FXML
+    private void handleRanking() {
+        RankModel.highestScore();
+        RankScreen rankScreen = new RankScreen();
+        rankScreen.show(primaryStage);  // Forward the current stage
     }
 }
