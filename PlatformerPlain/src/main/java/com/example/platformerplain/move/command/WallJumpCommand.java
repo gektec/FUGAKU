@@ -1,8 +1,6 @@
-package com.example.platformerplain.move.Command;
+package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.move.MoveState;
 import com.example.platformerplain.move.MoveStatus;
 import javafx.animation.KeyFrame;

@@ -7,7 +7,7 @@ import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.Command.*;
+import com.example.platformerplain.move.command.*;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;

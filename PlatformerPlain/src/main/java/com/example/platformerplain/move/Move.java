@@ -168,18 +168,20 @@ public class Move {
      * @param moveable
      * @param moveStatus
      */
+
+    //todo: use state pattern
     private static void setStatus(Entity moveable, MoveStatus moveStatus) {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
             moveStatus.isTouchingWall = isTouchingWall;
 
-//            if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
-//                moveStatus.moveState = MoveState.IDLE;
-//            }
-//            if (isTouchingGround && isTouchingWall) {
-//                if (moveStatus.moveState == MoveState.SLIDING) {
-//                    moveStatus.moveState = MoveState.IDLE;
-//                }
-//            }
+            if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
+                moveStatus.moveState = MoveState.IDLE;
+            }
+            if (isTouchingGround && isTouchingWall) {
+                if (moveStatus.moveState == MoveState.SLIDING) {
+                    moveStatus.moveState = MoveState.IDLE;
+                }
+            }
             if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
                 moveStatus.moveState = MoveState.FALLING;
             }
