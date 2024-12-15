@@ -2,6 +2,7 @@ package com.example.platformerplain.entities;
 import com.example.platformerplain.AssetManager;
 import com.example.platformerplain.Constants;
 
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ public class Platform extends Entity {
     private Node hitBox;
     private Canvas canvas;
     private GraphicsContext gc;
+    private Image sprite;
 
     protected boolean isAnimated(){
         return false;
@@ -29,7 +31,8 @@ public class Platform extends Entity {
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(rectangle.getTranslateX());
         canvas.setTranslateY(rectangle.getTranslateY());
-        Image sprite = CutSpriteSheet.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1]);
+        if(GameModel.getCurrentLevel() == 3 ) sprite = CutSpriteSheet.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1] + 5);
+        else sprite = CutSpriteSheet.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 

@@ -1,9 +1,12 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.texture.CutSpriteSheet;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.text.Font;
+
+import java.util.Objects;
 
 /**
  * This class is responsible for storing all game assets.
@@ -24,7 +27,12 @@ public class Assets {
     public static final Image BACKGROUND_CLOUD_2 = AssetManager.loadImage("/images/backgroundTexture/Cloud 2.png");
     public static final Image BACKGROUND_CLOUD_3 = AssetManager.loadImage("/images/backgroundTexture/Cloud 3.png");
     public static final Image BACKGROUND_MOON = AssetManager.loadImage("/images/backgroundTexture/Moon.png");
+
+    public static final Image PLATFORM = AssetManager.loadImage("/images/tile/Ground_Tiles.png");
+    public static final Image LADDER = AssetManager.loadImage("/images/tile/Ladder.png");
+    public static final Image SPIKE = AssetManager.loadImage("/images/tile/Spikes.png");
     public static final Image DECORATION = AssetManager.loadImage("/images/object/Props.png");
+
     public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 5);
     public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 5);
     public static final Image[][] PLAYER_IDLE = AssetManager.loadImage("/images/character/player/Player_Idle.png", 96, 96, 3);

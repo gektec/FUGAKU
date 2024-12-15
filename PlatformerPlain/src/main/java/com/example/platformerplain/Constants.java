@@ -11,6 +11,7 @@ public class Constants {
     }
 
     public static final int TILE_SIZE = 60;
+    public static final int SPIKE_SIZE = 56;
     public static final int PLAYER_SIZE = 30;
     public static final int PLAYER_HEIGHT = 30;
     public static final int PLAYER_WIDTH = 30;

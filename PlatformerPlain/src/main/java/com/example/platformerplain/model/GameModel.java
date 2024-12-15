@@ -101,6 +101,7 @@ public class GameModel {
         primaryStage.setScene(GameScreen.getGameScene());
 
         Move move = new Move(collidableMap);
+        primaryStage.setTitle("FUGAKU: Level " + level);
         startGameLoop();
     }
 
@@ -240,21 +241,6 @@ public class GameModel {
             ScreenManager.showScreen(new CompletedScreen());
         }
     }
-
-
-
-    public static void restartLevel(){
-        isPaused = false;
-        elapsedTime = 0; // Reset elapsed time
-        killedEnemy = 0;
-        baseScore = 1000;
-        GameScreen.startLevel();
-        Main.getPrimaryStage().setScene(GameScreen.getGameScene());
-        GameScreen.getGameRoot().setLayoutY(-(LevelData.getLevelInformation.getLevelHeight() - Constants.WINDOW_HEIGHT));
-        GameScreen.getGameRoot().setLayoutX(0);
-        startGameLoop();
-    }
-
 
     public static void stopGameLoop() {
         if (gameLoop != null) {

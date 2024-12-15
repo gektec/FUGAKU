@@ -101,7 +101,7 @@ public class TransitionScreenController {
      */
     @FXML
     public void handleNextLevel() {
-        GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber()+1); // Transition to the next level
+        GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber() + 1); // Transition to the next level
     }
 
     /**
@@ -109,6 +109,6 @@ public class TransitionScreenController {
      */
     @FXML
     private void handleRestart() {
-        GameModel.restartLevel(); // Transition to the next level
+        GameModel.startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber());
     }
 }

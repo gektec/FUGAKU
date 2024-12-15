@@ -1,5 +1,6 @@
 package com.example.platformerplain.controller;
 
+import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
@@ -124,7 +125,6 @@ public class PauseScreenController {
      */
     @FXML
     private void handleRestart() {
-
-        GameModel.restartLevel(); // Transition to the next level
+        GameModel.startGame(primaryStage, GameModel.getCurrentLevel()); // Transition to the next level
     }
 }

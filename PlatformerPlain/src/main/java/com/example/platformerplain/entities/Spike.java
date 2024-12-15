@@ -2,6 +2,8 @@ package com.example.platformerplain.entities;
 
 import com.example.platformerplain.AssetManager;
 import com.example.platformerplain.Constants;
+import com.example.platformerplain.move.Coord2D;
+import com.example.platformerplain.move.Move;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
@@ -27,16 +29,15 @@ public class Spike extends Entity {
         hitBox.setTranslateX(x - ( w - Constants.TILE_SIZE) / 2);
         hitBox.setTranslateY(y - ( h - Constants.TILE_SIZE) / 2);
         canvas = new Canvas(Constants.TILE_SIZE, Constants.TILE_SIZE);
+        if(index>=16) {
+            this.hitBox = hitBox;
+            Move.centerAlign(this, new Coord2D(0,0));
+        }else this.hitBox = new Rectangle(-1000,0,0,0);
+
         gc = canvas.getGraphicsContext2D();
-        canvas.setTranslateX(hitBox.getTranslateX());
-        canvas.setTranslateY(hitBox.getTranslateY());
         Image sprite = CutSpriteSheet.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0], AssetManager.getSpikePosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
-
-        if(index>=16) {
-            this.hitBox = hitBox;
-        }else this.hitBox = new Rectangle(0,0,0,0);
     }
 
     public void playerDead(){

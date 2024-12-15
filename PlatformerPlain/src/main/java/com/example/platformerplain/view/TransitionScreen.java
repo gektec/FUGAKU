@@ -35,7 +35,7 @@ public class TransitionScreen implements Screen {
             controller.setTime(GameModel.getGameTime());
 
 
-            primaryStage.setTitle("Congratulations on passing!");
+            primaryStage.setTitle("FUGAKU: Level " + GameModel.getCurrentLevel() + " Completed!");
             primaryStage.setScene(transitionScene);
             primaryStage.show();
         } catch (Exception e) {

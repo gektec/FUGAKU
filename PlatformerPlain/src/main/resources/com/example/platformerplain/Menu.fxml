@@ -16,7 +16,7 @@
         fx:controller="com.example.platformerplain.controller.MenuScreenController">
 
     <!-- Text with custom style class to apply the font -->
-    <Text text="Welcome to NGHMP!" styleClass="custom-text" />
+    <Text text="F U G A K U" styleClass="title" />
 
     <!-- Apply button font style in the CSS -->
     <Button fx:id="debugButton" onAction="#handleDebugMode" text="Debug Mode" prefWidth="200.0"/>

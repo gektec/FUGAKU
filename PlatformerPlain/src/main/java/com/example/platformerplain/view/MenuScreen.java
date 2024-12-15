@@ -26,7 +26,7 @@ public class MenuScreen implements Screen {
             MenuScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            primaryStage.setTitle("Platformer Game");
+            primaryStage.setTitle("FUGAKU");
             primaryStage.setScene(startScene);
             primaryStage.show();
         } catch (Exception e) {

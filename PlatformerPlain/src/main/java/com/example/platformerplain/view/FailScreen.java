@@ -26,7 +26,7 @@ public class FailScreen implements Screen {
             FailScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            primaryStage.setTitle("EXIT AND TRY AGAIN!");
+            primaryStage.setTitle("FUGAKU: Failed!");
             primaryStage.setScene(failScene);
             primaryStage.show();
         } catch (Exception e) {

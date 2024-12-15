@@ -18,9 +18,9 @@ public class CutSpriteSheet {
 
 
     public static Image getSprite(EntityType type, int row, int col) {
-        if (type == EntityType.PLATFORM)  spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tile/Ground_Tiles.png")));
-        else if (type == EntityType.LADDER) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tile/Ladder.png")));
-        else if (type == EntityType.SPIKE) spriteSheet = new Image(Objects.requireNonNull(CutSpriteSheet.class.getResourceAsStream("/images/tile/Spikes.png")));
+        if (type == EntityType.PLATFORM)  spriteSheet = Assets.PLATFORM;
+        else if (type == EntityType.LADDER) spriteSheet = Assets.LADDER;
+        else if (type == EntityType.SPIKE) spriteSheet = Assets.SPIKE;
         else if (type == EntityType.DECORATION) spriteSheet = Assets.DECORATION;
         else throw new IllegalArgumentException("Unknown entity type: " + type);
         PixelReader reader = spriteSheet.getPixelReader();

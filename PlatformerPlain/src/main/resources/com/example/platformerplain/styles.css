@@ -3,9 +3,14 @@
 }
 
 /* General style */
-.custom-text {
-    -fx-font-size: 28px; /* Moderate font size */
-    -fx-fill: #4A4A4A; /* Dark gray color for a cool vibe */
+.title {
+    -fx-font-size: 64px; /* Moderate font size */
+    -fx-fill: #443333; /* Dark gray color for a cool vibe */
+}
+
+.subtitle {
+    -fx-font-size: 40px; /* Smaller font size */
+    -fx-fill: #BBBBBB; /* Dark gray color */
 }
 
 /* Button style */

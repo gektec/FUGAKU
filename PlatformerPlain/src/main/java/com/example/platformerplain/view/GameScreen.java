@@ -284,6 +284,7 @@ public class GameScreen implements Screen, GameModelObserver {
 
         // UI Elements
         initUIElements();
+
     }
 
 

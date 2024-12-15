@@ -67,6 +67,7 @@ public class Move {
         beforeMove(moveable,moveStatus);
         afterMove(moveable,moveStatus);
         setStatus(moveable,moveStatus);
+        centerAlign(moveable, new Coord2D(0,0));
         return moveStatus;
     }
 
@@ -185,8 +186,10 @@ public class Move {
             else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.SLIDE_JUMPING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
                 moveStatus.moveState = MoveState.JUMPING;
             }
-        // Set canvas position
-        moveable.canvas().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.canvas().getBoundsInParent().getWidth() / 2);
-        moveable.canvas().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.canvas().getBoundsInParent().getHeight() / 2);
+    }
+
+    public static void centerAlign(Entity moveable, Coord2D offset){
+        moveable.canvas().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.canvas().getBoundsInParent().getWidth() / 2 + offset.getX());
+        moveable.canvas().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.canvas().getBoundsInParent().getHeight() / 2 + offset.getY());
     }
 }

@@ -26,7 +26,7 @@ public class LevelSelectScreen implements Screen {
             LevelSelectScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            primaryStage.setTitle("Select Level");
+            primaryStage.setTitle("FUGAKU: Select Level");
             primaryStage.setScene(selectScene);
             primaryStage.show();
         } catch (Exception e) {
