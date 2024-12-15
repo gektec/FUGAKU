@@ -11,7 +11,7 @@ import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.MoveState;
+import com.example.platformerplain.move.data.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;

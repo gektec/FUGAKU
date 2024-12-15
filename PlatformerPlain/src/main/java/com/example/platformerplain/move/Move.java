@@ -3,6 +3,8 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.data.state.MoveState;
 
 import java.util.ArrayList;
 
@@ -63,23 +65,23 @@ public class Move {
 
     }
 
-    public static MoveStatus move(Entity moveable, MoveStatus moveStatus){
-        beforeMove(moveable,moveStatus);
-        afterMove(moveable,moveStatus);
-        setStatus(moveable,moveStatus);
+    public static MoveData move(Entity moveable, MoveData moveData){
+        beforeMove(moveable, moveData);
+        afterMove(moveable, moveData);
+        setStatus(moveable, moveData);
         centerAlign(moveable, new Coord2D(0,0));
-        return moveStatus;
+        return moveData;
     }
 
     /**
      * @param moveable
-     * @param moveStatus
+     * @param moveData
      */
-    private static void beforeMove(Entity moveable, MoveStatus moveStatus){
+    private static void beforeMove(Entity moveable, MoveData moveData){
         isTouchingGround = false;
         isTouchingLeftWall = false;
         isTouchingRightWall = false;
-        velocity = moveStatus.velocity;
+        velocity = moveData.velocity;
         for(Entity platform : collidableMap){
             if(moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())){
                 int relativeLocation = detectRelativeLocation(moveable, platform);
@@ -107,15 +109,15 @@ public class Move {
 
     /**
      * @param moveable
-     * @param moveStatus
+     * @param moveData
      */
-    private static void afterMove(Entity moveable, MoveStatus moveStatus) {
-        velocity = moveStatus.velocity;
+    private static void afterMove(Entity moveable, MoveData moveData) {
+        velocity = moveData.velocity;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
-            if (velocity.getX() > 0) moveStatus.isFacingLeft = false;
-            else if (velocity.getX() < 0) moveStatus.isFacingLeft = true;
+            if (velocity.getX() > 0) moveData.isFacingLeft = false;
+            else if (velocity.getX() < 0) moveData.isFacingLeft = true;
             for (Entity platform : collidableMap) {
                 //Next line may not improve performance
                 //if (Math.max(Math.abs(moveable.hitBox().getTranslateX() - platform.hitBox().getTranslateX()), Math.abs(moveable.hitBox().getTranslateY() - platform.hitBox().getTranslateY())) <= moveable.size() + platform.size() + 1) {
@@ -125,39 +127,39 @@ public class Move {
                         isTouchingGround = true;
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                         velocity.setY(0);
-                        if (moveStatus.moveState != MoveState.DASHING) {
-                            if (velocity.getX() != 0) moveStatus.moveState = MoveState.RUNNING;
-                            else moveStatus.moveState = MoveState.IDLE;
+                        if (moveData.moveState != MoveState.DASHING) {
+                            if (velocity.getX() != 0) moveData.moveState = MoveState.RUNNING;
+                            else moveData.moveState = MoveState.IDLE;
                         }
-                        moveStatus.isTouchingGround = true;
+                        moveData.isTouchingGround = true;
                     } else if (relativeLocation == 2) {
                         isTouchingRightWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
                         velocity.setX(0);
-                        if (moveStatus.moveState == MoveState.SLIDE_JUMPING) {
+                        if (moveData.moveState == MoveState.SLIDE_JUMPING) {
                             velocity.setX(-Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveStatus.isFacingLeft = true;
-                            moveStatus.moveState = MoveState.SLIDING;
+                            moveData.isFacingLeft = true;
+                            moveData.moveState = MoveState.SLIDING;
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 4) {
                         isTouchingLeftWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
-                        if (moveStatus.moveState == MoveState.SLIDE_JUMPING) {
+                        if (moveData.moveState == MoveState.SLIDE_JUMPING) {
                             velocity.setX(Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveStatus.isFacingLeft = false;
-                            moveStatus.moveState = MoveState.SLIDING;
+                            moveData.isFacingLeft = false;
+                            moveData.moveState = MoveState.SLIDING;
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 3) {
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
-                        moveStatus.moveState = MoveState.IDLE;
+                        moveData.moveState = MoveState.IDLE;
                     }
                 }
             }
@@ -166,27 +168,27 @@ public class Move {
 
     /**
      * @param moveable
-     * @param moveStatus
+     * @param moveData
      */
 
     //todo: use state pattern
-    private static void setStatus(Entity moveable, MoveStatus moveStatus) {
+    private static void setStatus(Entity moveable, MoveData moveData) {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
-            moveStatus.isTouchingWall = isTouchingWall;
+            moveData.isTouchingWall = isTouchingWall;
 
-            if (!isTouchingWall && moveStatus.moveState == MoveState.SLIDING) {
-                moveStatus.moveState = MoveState.IDLE;
+            if (!isTouchingWall && moveData.moveState == MoveState.SLIDING) {
+                moveData.moveState = MoveState.IDLE;
             }
             if (isTouchingGround && isTouchingWall) {
-                if (moveStatus.moveState == MoveState.SLIDING) {
-                    moveStatus.moveState = MoveState.IDLE;
+                if (moveData.moveState == MoveState.SLIDING) {
+                    moveData.moveState = MoveState.IDLE;
                 }
             }
-            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
-                moveStatus.moveState = MoveState.FALLING;
+            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.CLIMBING)) {
+                moveData.moveState = MoveState.FALLING;
             }
-            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.SLIDE_JUMPING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
-                moveStatus.moveState = MoveState.JUMPING;
+            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.SLIDE_JUMPING) && !moveData.stateIs(MoveState.CLIMBING)) {
+                moveData.moveState = MoveState.JUMPING;
             }
     }
 

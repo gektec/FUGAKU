@@ -2,14 +2,12 @@ package com.example.platformerplain.entities.moveable;
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
-import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.MoveState;
+import com.example.platformerplain.move.data.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.ColorAdjust;

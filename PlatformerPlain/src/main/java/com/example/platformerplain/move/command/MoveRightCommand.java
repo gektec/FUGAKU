@@ -1,19 +1,19 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.move.MoveStatus;
+import com.example.platformerplain.move.data.MoveData;
 
 import static com.example.platformerplain.Constants.MAX_MOVE_SPEED;
 
 public class MoveRightCommand implements PlayCommand {
-    private MoveStatus moveStatus;
+    private MoveData moveData;
 
-    public MoveRightCommand(MoveStatus moveStatus) {
-        this.moveStatus = moveStatus;
+    public MoveRightCommand(MoveData moveData) {
+        this.moveData = moveData;
     }
 
     @Override
     public void execute() {
-        moveStatus.velocity.smoothAdd(2, 0, MAX_MOVE_SPEED, 0);
+        moveData.velocity.smoothAdd(2, 0, MAX_MOVE_SPEED, 0);
     }
 }
 

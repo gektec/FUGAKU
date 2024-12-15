@@ -3,6 +3,8 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.data.state.MoveState;
 
 import java.util.ArrayList;
 
@@ -54,16 +56,16 @@ public class MoveEnemy {
             velocity.add(0, -20);
             canJump = false;
         }
-        MoveStatus moveStatus = new MoveStatus(enemyState, false,false, false, velocity);
-        Move.move(enemy, moveStatus);
+        MoveData moveData = new MoveData(enemyState, false,false, false, velocity);
+        Move.move(enemy, moveData);
 
-        moveLeft = moveStatus.isFacingLeft;
-        canJump = moveStatus.isTouchingGround;
+        moveLeft = moveData.isFacingLeft;
+        canJump = moveData.isTouchingGround;
 
 //        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
 //        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
     }
-    public MoveStatus getMoveStatus() {
-        return new MoveStatus(enemyState, moveLeft, canJump, false, velocity);
+    public MoveData getMoveStatus() {
+        return new MoveData(enemyState, moveLeft, canJump, false, velocity);
     }
 }

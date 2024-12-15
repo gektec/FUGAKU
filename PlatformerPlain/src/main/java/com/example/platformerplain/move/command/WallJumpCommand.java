@@ -1,8 +1,8 @@
 package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.move.MoveState;
-import com.example.platformerplain.move.MoveStatus;
+import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.data.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -10,21 +10,21 @@ import javafx.util.Duration;
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
 public class WallJumpCommand implements PlayCommand {
-    private MoveStatus moveStatus;
+    private MoveData moveData;
     private Timeline slideJumpCooldownTimer;
 
 
-    public WallJumpCommand(MoveStatus moveStatus) {
-        this.moveStatus = moveStatus;
-        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> moveStatus.moveState = MoveState.IDLE));
+    public WallJumpCommand(MoveData moveData) {
+        this.moveData = moveData;
+        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> moveData.moveState = MoveState.IDLE));
         slideJumpCooldownTimer.setCycleCount(1);
     }
 
     @Override
     public void execute() {
-        moveStatus.velocity.setY(-15);
-        moveStatus.isTouchingWall = false;
-        moveStatus.moveState = MoveState.SLIDE_JUMPING;
+        moveData.velocity.setY(-15);
+        moveData.isTouchingWall = false;
+        moveData.moveState = MoveState.SLIDE_JUMPING;
         JUMP_SFX.play();
         slideJumpCooldownTimer.playFromStart();
     }

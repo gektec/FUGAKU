@@ -6,10 +6,8 @@ import com.example.platformerplain.LevelData;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.move.MoveStatus;
-import javafx.scene.Node;
+import com.example.platformerplain.move.data.MoveData;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -81,7 +79,7 @@ public class Enemy extends Moveable {
         return EntityType.ENEMY;
     }
 
-    public MoveStatus getMoveStatus() {
+    public MoveData getMoveStatus() {
         return moveEnemyLogic.getMoveStatus();
     }
 }
