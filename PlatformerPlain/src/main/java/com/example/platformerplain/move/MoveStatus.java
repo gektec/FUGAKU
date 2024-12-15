@@ -14,4 +14,8 @@ public class MoveStatus {
         this.isTouchingWall = isTouchingWall;
         this.velocity = velocity;
     }
+
+    public boolean stateIs(MoveState state) {
+        return moveState == state;
+    }
 }

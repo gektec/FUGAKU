@@ -16,6 +16,7 @@ public class Constants {
     public static final int MAX_SPEED = TILE_SIZE / 2;
     public static final int MAX_MOVE_SPEED = 10;
     public static final int MAX_FALL_SPEED = 20;  // Maximum falling speed
+    public static final int MAX_CLIMB_SPEED = 6;
     public static final int RESISTANCE = 2;  // Horizontal resistance
     public static final int GRAVITY = 1;  // Gravity constant
 

@@ -16,7 +16,6 @@ import static com.example.platformerplain.Assets.JUMP_SFX;
 import static com.example.platformerplain.model.GameModel.keys;
 
 public class DashCommand implements PlayCommand {
-    private Entity player;
     private Coord2D velocity;
     private MoveStatus moveStatus;
     private Timeline dashCooldownTimer;
@@ -24,8 +23,7 @@ public class DashCommand implements PlayCommand {
         return keys.getOrDefault(key, false);
     }
 
-    public DashCommand(Entity player, MoveStatus moveStatus) {
-        this.player = player;
+    public DashCommand(MoveStatus moveStatus) {
         this.velocity = moveStatus.velocity;
         this.moveStatus = moveStatus;
         dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> moveStatus.moveState = MoveState.IDLE));

@@ -26,8 +26,8 @@ public class Move {
         Coord2D moveableCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (moveable.size()[0] / 2), (int) moveable.hitBox().getTranslateY() + (moveable.size()[1] / 2));
         Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
 
-        float xDiff = moveableCoord.getX() - platformCoord.getX();
-        float yDiff = moveableCoord.getY() - platformCoord.getY();
+        double xDiff = moveableCoord.getX() - platformCoord.getX();
+        double yDiff = moveableCoord.getY() - platformCoord.getY();
 
         //test
         int totalSize = moveable.size()[0] + collidable.size()[0];
@@ -158,12 +158,12 @@ public class Move {
 //                    moveStatus.moveState = MoveState.IDLE;
 //                }
 //            }
-//            if (!isTouchingWall && velocity.getY() > 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.JUMPING || moveStatus.moveState == MoveState.RUNNING)) {
-//                moveStatus.moveState = MoveState.FALLING;
-//            }
-//            else if(!isTouchingWall && velocity.getY() < 0 && (moveStatus.moveState == MoveState.IDLE || moveStatus.moveState == MoveState.RUNNING)) {
-//                moveStatus.moveState = MoveState.JUMPING;
-//            }
+            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
+                moveStatus.moveState = MoveState.FALLING;
+            }
+            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveStatus.stateIs(MoveState.DASHING) && !moveStatus.stateIs(MoveState.SLIDE_JUMPING) && !moveStatus.stateIs(MoveState.CLIMBING)) {
+                moveStatus.moveState = MoveState.JUMPING;
+            }
         // Set canvas position
         moveable.canvas().setTranslateX(moveable.hitBox().getTranslateX() + moveable.hitBox().getBoundsInParent().getWidth() / 2 - moveable.canvas().getBoundsInParent().getWidth() / 2);
         moveable.canvas().setTranslateY(moveable.hitBox().getTranslateY() + moveable.hitBox().getBoundsInParent().getHeight() / 2 - moveable.canvas().getBoundsInParent().getHeight() / 2);

@@ -210,7 +210,7 @@ public class GameModel {
     }
 
     private void updatePlayerSpeed() {
-        float[] speed = getMovePlayerLogic().getMoveStatus().velocity.get();
+        double[] speed = getMovePlayerLogic().getMoveStatus().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
