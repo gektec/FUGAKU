@@ -158,7 +158,7 @@ public class MovePlayer {
                 canClimb = true;
             }
         }
-        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.setState(MoveState.IDLE);
 
         Move.move(player, moveData);
 

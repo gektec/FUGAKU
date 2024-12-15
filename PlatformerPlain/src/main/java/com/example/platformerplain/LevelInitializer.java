@@ -101,8 +101,7 @@ public class LevelInitializer {
                         break;
                     case 's':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'S');
-                        Spike spike = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
-                        spikeMap.add(spike);
+                        createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         break;
                     case 'S':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;
