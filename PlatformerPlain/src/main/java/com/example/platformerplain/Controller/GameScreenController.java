@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.platformerplain.View.GameScreen.keys;
+import static com.example.platformerplain.model.GameModel.keys;
 
 public class GameScreenController {
 

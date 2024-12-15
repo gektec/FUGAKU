@@ -3,6 +3,7 @@ import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 
 import com.example.platformerplain.View.GameScreen;
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -44,9 +45,9 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        GameScreen.getMovePlayerLogic().update();
+        GameModel.getMovePlayerLogic().update();
         canvas.setTranslateY(hitBox.getTranslateY()-130);
-        switch (GameScreen.getMovePlayerLogic().getPlayerState()) {
+        switch (GameModel.getMovePlayerLogic().getPlayerState()) {
             case MoveState.IDLE:
                 if (lastState != MoveState.IDLE) {
                     frames = Assets.PLAYER_IDLE[0];
@@ -56,7 +57,7 @@ public class Player extends Entity {
                 }
                 break;
             case MoveState.SLIDING:
-                if(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
+                if(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft) canvas.setTranslateX(canvas.getTranslateX()+20);
                 else canvas.setTranslateX(canvas.getTranslateX()-20);
                 if (lastState != MoveState.SLIDING) {
                     frames = Assets.PLAYER_SLIDING[0];
@@ -95,7 +96,7 @@ public class Player extends Entity {
                     lastAfterimageFrame = 0;
                     generateAfterimage();
                 }
-                if (lastState != MoveState.DASHING && GameScreen.getMovePlayerLogic().getMoveStatus().velocity.getX() != 0) {
+                if (lastState != MoveState.DASHING && GameModel.getMovePlayerLogic().getMoveStatus().velocity.getX() != 0) {
                     frames = Assets.PLAYER_DASH[0];
                     animation.setFrames(frames);
                     animation.setDelay(3);
@@ -105,14 +106,14 @@ public class Player extends Entity {
         }
         animation.update();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft);
+        Image sprite = animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
     }
 
     private void generateAfterimage() {
-        ImageView afterimage = new ImageView(animation.getImage(GameScreen.getMovePlayerLogic().getMoveStatus().faceLeft));
+        ImageView afterimage = new ImageView(animation.getImage(GameModel.getMovePlayerLogic().getMoveStatus().isFacingLeft));
         afterimage.setFitWidth(192);
         afterimage.setFitHeight(192);
         afterimage.setTranslateX(canvas.getTranslateX());

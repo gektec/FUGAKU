@@ -2,18 +2,20 @@ package com.example.platformerplain.move;
 
 public class MoveStatus {
     public MoveState moveState;
-    public boolean faceLeft;
-    public boolean canJump;
-    public boolean canDash;
-    public boolean canSlideJump;
+    public boolean isFacingLeft;
+    public boolean isTouchingGround;
+    public boolean isTouchingWall;
     public Coord2D velocity;
 
-    public MoveStatus(MoveState moveState, boolean faceLeft, boolean canJump, boolean canDash, boolean canSlideJump, Coord2D velocity) {
+    public MoveStatus(MoveState moveState, boolean isFacingLeft, boolean isTouchingGround, boolean isTouchingWall, Coord2D velocity) {
         this.moveState = moveState;
-        this.faceLeft = faceLeft;
-        this.canJump = canJump;
-        this.canDash = canDash;
-        this.canSlideJump = canSlideJump;
+        this.isFacingLeft = isFacingLeft;
+        this.isTouchingGround = isTouchingGround;
+        this.isTouchingWall = isTouchingWall;
         this.velocity = velocity;
+    }
+
+    public boolean stateIs(MoveState state) {
+        return moveState == state;
     }
 }

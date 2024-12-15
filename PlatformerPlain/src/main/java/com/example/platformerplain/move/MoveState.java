@@ -8,4 +8,5 @@ public enum MoveState {
     SLIDING,
     SLIDE_JUMPING,
     DASHING,
+    CLIMBING,
 }

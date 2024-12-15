@@ -24,8 +24,8 @@ public class Spike extends Entity {
     public Spike(int x, int y, int w, int h, int index) {
         this.index = index;
         Rectangle hitBox = new Rectangle(w, h, Color.RED);
-        hitBox.setTranslateX(x + ( w - Constants.TILE_SIZE) / 2);
-        hitBox.setTranslateY(y + ( h - Constants.TILE_SIZE) / 2);
+        hitBox.setTranslateX(x - ( w - Constants.TILE_SIZE) / 2);
+        hitBox.setTranslateY(y - ( h - Constants.TILE_SIZE) / 2);
         canvas = new Canvas(Constants.TILE_SIZE, Constants.TILE_SIZE);
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(hitBox.getTranslateX());

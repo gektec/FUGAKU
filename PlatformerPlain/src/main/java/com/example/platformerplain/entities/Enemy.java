@@ -15,8 +15,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-import static com.example.platformerplain.View.GameScreen.getCollidableMap;
-
 
 public class Enemy extends Entity {
     private Node hitBox;

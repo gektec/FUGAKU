@@ -78,7 +78,7 @@ public class LevelInitializer {
                         break;
                     case 'S':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;
-                        Spike spikeBody = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE + 2, i * Constants.TILE_SIZE + 2, Constants.TILE_SIZE - 4, Constants.TILE_SIZE - 4, adjacencyCode);
+                        Spike spikeBody = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE - 4, Constants.TILE_SIZE - 4, adjacencyCode);
                         spikeMap.add(spikeBody);
                         break;
                     case 'D':
@@ -93,7 +93,7 @@ public class LevelInitializer {
     private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
         if (entity != null) {
-            if (GameModel.getInstance().isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
+            if (GameModel.isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
             else gameRoot.getChildren().add(entity.canvas());
         }
         else System.err.println("Entity creation failed");

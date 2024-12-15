@@ -1,17 +1,10 @@
 package com.example.platformerplain.move;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.entities.EntityType;
+import com.example.platformerplain.entities.*;
 import com.example.platformerplain.LevelData;
-import com.example.platformerplain.entities.Enemy;
-import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.entities.Ladder;
-import com.example.platformerplain.entities.Spike;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.Command.JumpCommand;
-import com.example.platformerplain.move.Command.MoveLeftCommand;
-import com.example.platformerplain.move.Command.MoveRightCommand;
-import com.example.platformerplain.move.Command.PlayCommand;
+import com.example.platformerplain.move.Command.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
@@ -20,46 +13,41 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.platformerplain.Assets.DASH_SFX;
 import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
 public class MovePlayer {
-    private static final int MAX_CLIMB_SPEED = 6;
     private Entity player;
     private ArrayList<Enemy> enemies;
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private ArrayList<Ladder> ladders;
     private ArrayList<Spike> spikes;
-    private boolean onGround;  // Flag indicating whether the player can jump
-    private boolean moveLeft;
-    private boolean canDash;
-    private boolean onWall;
+    private boolean isTouchingGround;  // Flag indicating whether the player can jump
+    private boolean isFacingLeft;
+    private boolean canDash = true;
+    private boolean canClimb = false;
+    private boolean isTouchingWall;
     private MoveState playerState;
 
     private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
     private Coord2D playerVelocity; // Current velocity of the player
-    private Timeline dashCooldownTimer;
-    private Timeline slideJumpCooldownTimer;
     private boolean haveJKeyReleased = true;
     private boolean haveKKeyReleased = true;
+    private static MoveStatus moveStatus;
 
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders , ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.entityMap = platforms;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);
-        this.onGround = true;
+        this.isTouchingGround = true;
         this.enemies = enemies;
         this.spikes = spikes;
         this.ladders = ladders;
         this.playerState = MoveState.IDLE;
+        moveStatus = new MoveStatus(playerState, isFacingLeft, isTouchingGround, isTouchingWall, playerVelocity);
 
-        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> playerState = MoveState.IDLE));
-        dashCooldownTimer.setCycleCount(1);
 
-        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> playerState = MoveState.IDLE));
-        slideJumpCooldownTimer.setCycleCount(1);
     }
 
     private boolean isPressed(KeyCode key) {
@@ -67,12 +55,24 @@ public class MovePlayer {
     }
 
     public void update() {
-        int x = 0, y = 0;
+
+        playerState = moveStatus.moveState;
+        isFacingLeft = moveStatus.isFacingLeft;
+        isTouchingGround = moveStatus.isTouchingGround;
+        canClimb = false;
+        canDash = canDash || isTouchingGround;
+
+        PlayCommand jump = new JumpCommand(moveStatus);
+        PlayCommand slideJump = new WallJumpCommand(moveStatus);
+        PlayCommand moveLeft = new MoveLeftCommand(moveStatus);
+        PlayCommand moveRight = new MoveRightCommand(moveStatus);
+        PlayCommand dash = new DashCommand(moveStatus);
+        PlayCommand climb = new ClimbCommand(moveStatus);
 
         if (!isPressed(KeyCode.J)) {
             haveJKeyReleased = true;
         }
-        if (!onGround && !onWall) {
+        if (!isTouchingGround && !isTouchingWall) {
             haveJKeyReleased = false;
         }
         if (!isPressed(KeyCode.K)) {
@@ -81,28 +81,20 @@ public class MovePlayer {
 
         if (playerState == MoveState.DASHING || playerState == MoveState.SLIDE_JUMPING) {
             if (playerVelocity.getX() != 0 && playerVelocity.getY() != 0)
-                playerVelocity.reduce(RESISTANCE / 2, RESISTANCE / 2);
+                playerVelocity.reduce((double) RESISTANCE / 2, (double) RESISTANCE / 2);
             else
-                playerVelocity.reduce((float) (RESISTANCE / 1.4), (float) (RESISTANCE / 1.4));
+                playerVelocity.reduce((RESISTANCE / 1.4), (RESISTANCE / 1.4));
         } else {
-            // Jump
-            PlayCommand jump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState,false, onGround, canDash, onWall, playerVelocity));
-            // Slide jump
-            PlayCommand slideJump = new JumpCommand(player, playerVelocity, new MoveStatus(playerState, false, false, canDash, false, playerVelocity));
-            // Move left and right commands
-            PlayCommand moveLeft = new MoveLeftCommand(player, playerVelocity);
-            PlayCommand moveRight = new MoveRightCommand(player, playerVelocity);
 
-            if (isPressed(KeyCode.J) && haveJKeyReleased && onGround && playerState != MoveState.DASHING) {
+            if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingGround && playerState != MoveState.DASHING) {
                 jump.execute();
                 haveJKeyReleased = false;
             }
             // Slide jump
-            else if (isPressed(KeyCode.J) && haveJKeyReleased && onWall) {
+            else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall) {
                 slideJump.execute();
                 haveJKeyReleased = false;
-                playerState = MoveState.SLIDE_JUMPING;
-                slideJumpCooldownTimer.playFromStart();
+
             }
             // Move left
             if (isPressed(KeyCode.A) && playerVelocity.getX() >= -Constants.MAX_MOVE_SPEED) {
@@ -115,61 +107,28 @@ public class MovePlayer {
 
             // Dash
             if (canDash && isPressed(KeyCode.K) && haveKKeyReleased) {
-                haveKKeyReleased = false;
-                if (isPressed(KeyCode.A)) {
-                    x -= Constants.DASH_SPEED;
-                }
-                if (isPressed(KeyCode.D)) {
-                    x += Constants.DASH_SPEED;
-                }
-                if (isPressed(KeyCode.W)) {
-                    y -= Constants.DASH_SPEED;
-                }
-                if (isPressed(KeyCode.S)) {
-                    y += Constants.DASH_SPEED;
-                }
-                if (x != 0 || y != 0) {
-                    if (x != 0 && y != 0)
-                        playerVelocity.set((float) (x / 1.6), (float) (y / 1.6));
-                    else
-                        playerVelocity.set(x, y);
-                    DASH_SFX.play();
-                    canDash = false;
-                    playerState = MoveState.DASHING;
-                    dashCooldownTimer.playFromStart();
-                }
+                dash.execute();
+                canDash = false;
             }
             // Resistance
             //playerVelocity.reduce(RESISTANCE, 0);
             if (isPressed(KeyCode.A) == isPressed(KeyCode.D)) playerVelocity.smoothReduce(RESISTANCE,0,10,0);
 
             // apply gravity when not dashing
-            if (playerVelocity.getY() < MAX_FALL_SPEED) {
-                playerVelocity.smoothMinus(0, Constants.GRAVITY, 0, MAX_FALL_SPEED/2);
+            if (playerVelocity.getY() < MAX_FALL_SPEED && playerState != MoveState.CLIMBING) {
+                playerVelocity.smoothMinus(0, Constants.GRAVITY, 0, (double) MAX_FALL_SPEED /2);
             }
         }
 
         for (Ladder ladder : ladders) {
             if (player.hitBox().getBoundsInParent().intersects(ladder.hitBox().getBoundsInParent())) {
-                if (isPressed(KeyCode.W) && playerVelocity.getY() >= -MAX_CLIMB_SPEED) {
-                    playerVelocity.add(0, -4);
-                    break;
-                }
-                if (isPressed(KeyCode.S) && playerVelocity.getY() <= MAX_CLIMB_SPEED) {
-                    playerVelocity.add(0, 4);
-                    break;
-                }
+                climb.execute();
+                canClimb = true;
             }
         }
+        if(!canClimb && moveStatus.stateIs(MoveState.CLIMBING)) moveStatus.moveState = MoveState.IDLE;
 
-        MoveStatus moveStatus = new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
         Move.move(player, moveStatus);
-
-        playerState = moveStatus.moveState;
-        moveLeft = moveStatus.faceLeft;
-        onGround = moveStatus.canJump;
-        canDash = moveStatus.canDash;
-        onWall = moveStatus.canSlideJump;
 
         checkGoal();
         checkEnemy();
@@ -228,6 +187,6 @@ public class MovePlayer {
     }
 
     public MoveStatus getMoveStatus() {
-        return new MoveStatus(playerState, moveLeft, onGround, canDash, onWall, playerVelocity);
+        return moveStatus;
     }
 }

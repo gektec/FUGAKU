@@ -1,6 +1,7 @@
 package com.example.platformerplain.Controller;
 
 import com.example.platformerplain.Assets;
+import com.example.platformerplain.LevelData;
 import com.example.platformerplain.View.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
@@ -103,7 +104,7 @@ public class TransitionScreenController {
     public void handleNextLevel() {
         GameModel gameModel = GameModel.getInstance();
         if (gameModel != null) {
-            GameModel.getInstance().startNextLevel(); // Transition to the next level
+            GameModel.getInstance().startGame(primaryStage, LevelData.getLevelInformation.getLevelNumber()+1); // Transition to the next level
         }
     }
 

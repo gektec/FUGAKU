@@ -1,24 +1,25 @@
 package com.example.platformerplain.model;
 
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.LevelData;
-import com.example.platformerplain.Main;
-import com.example.platformerplain.ScreenManager;
+import com.example.platformerplain.*;
 import com.example.platformerplain.View.*;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
+import com.example.platformerplain.move.Move;
+import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.move.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -28,17 +29,27 @@ public class GameModel {
 
     private List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
-    private List<Entity> toRemove = new ArrayList<>();
+    private static List<Entity> toRemove = new ArrayList<>();
+
+    public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+    private static ArrayList<Entity> collidableMap = new ArrayList<>();
+    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static ArrayList<Goal> goalMap = new ArrayList<>();
+    private static ArrayList<Spike> spikeMap = new ArrayList<>();
+    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
+
+    public static Entity player;
+    private static MovePlayer movePlayerLogic;
 
     // Debug
-    private boolean isDebugMode = true;
+    private static boolean isDebugMode = true;
 
     private long lastTime = 0;
     private int frameCount = 0;
     private int timeStep = 0;
 
     // Main
-    private int currentLevel = 0;
+    private static int currentLevel = 0;
     private int currentScore = 0;
     private int finalScore = 0;
     private int killedEnemy = 0;
@@ -46,18 +57,15 @@ public class GameModel {
     private int baseScore = 1000;
 
     private Timeline gameLoop;
-    private Button pauseMenu = new Button();
     private boolean isPaused = false;
 
-    public static long startTime = 0;  // To store the start time
     public static long elapsedTime = 0; // Used to store accumulated time
-    private long lastUpdateTime = 0; // To keep track of the last update time
+    private static long lastUpdateTime = 0; // To keep track of the last update time
 
     // Adding an Interpreter
     private ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
 
     private GameModel() {
-        // Private constructor to prevent instantiation
     }
 
     public static GameModel getInstance() {
@@ -84,12 +92,54 @@ public class GameModel {
     }
 
     public void startGame(Stage primaryStage, int level) {
-        this.currentLevel = level;
+        clearData();
+        elapsedTime = 0;
+        currentLevel = level;
         this.isPaused = false;
         GameScreen.initContent();
+        initLevel();
         GameScreen.startLevel();
         primaryStage.setScene(GameScreen.getGameScene());
+
+        Move move = new Move(collidableMap);
         startGameLoop();
+    }
+
+    private static void initLevel() {
+
+        // Use LevelInitializer to set up the level
+        LevelInitializer levelInitializer = new LevelInitializer(
+                keys,
+                GameScreen.getGameRoot(),
+                GameScreen.getUIRoot(),
+                GameScreen.getBackgroundRoot(),
+                collidableMap,
+                enemyMap,
+                spikeMap,
+                ladderMap
+        );
+        player = levelInitializer.generateLevel(currentLevel);
+
+        // If player is not null, continue setup
+        if (player != null) {
+            movePlayerLogic = new MovePlayer(
+                    player,
+                    collidableMap,
+                    enemyMap,
+                    ladderMap,
+                    spikeMap,
+                    LevelData.getLevelInformation.getLevelWidth(),
+                    keys
+            );
+        }
+        else System.err.println("Cannot generate player!");
+    }
+
+    public static void clearData(){
+        keys.clear();
+        collidableMap.clear();
+        enemyMap.clear();
+        toRemove.clear();
     }
 
     private void startGameLoop() {
@@ -103,8 +153,8 @@ public class GameModel {
 
             if (isDebugMode) updateLabels();
 
-            GameScreen.getEnemyMap().removeAll(toRemove);
-            GameScreen.getCollidableMap().removeAll(toRemove);
+            enemyMap.removeAll(toRemove);
+            collidableMap.removeAll(toRemove);
             toRemove.clear(); // Clear the pending removal list to avoid duplicate removals
         });
 
@@ -114,9 +164,9 @@ public class GameModel {
     }
 
     private void update() {
-        GameScreen.getPlayer().update();
-        if (GameScreen.getEnemyMap() != null) {
-            for (Enemy enemy : GameScreen.getEnemyMap()) {
+        player.update();
+        if (enemyMap != null) {
+            for (Enemy enemy : enemyMap) {
                 enemy.update();
             }
         }
@@ -124,9 +174,10 @@ public class GameModel {
 
     private void updateLabels() {
         updateFramerate();
-        updatePlayerSpeed();
         updateMoveState();
         updateTime();
+        updatePosition();
+        updatePlayerSpeed();
     }
 
     private void updateFramerate() {
@@ -148,12 +199,18 @@ public class GameModel {
     }
 
     private void updateMoveState() {
-        MoveState moveState = GameScreen.getMovePlayerLogic().getMoveStatus().moveState;
+        MoveState moveState = getMovePlayerLogic().getMoveStatus().moveState;
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
+    private void updatePosition() {
+        double x = player.hitBox().getTranslateX();
+        double y = player.hitBox().getTranslateY();
+        GameScreen.getPositionLabel().setText("Position: (" + x + ", " + y + ")");
+    }
+
     private void updatePlayerSpeed() {
-        float[] speed = GameScreen.getMovePlayerLogic().getMoveStatus().velocity.get();
+        double[] speed = getMovePlayerLogic().getMoveStatus().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
@@ -185,18 +242,10 @@ public class GameModel {
         }
     }
 
-    public void startNextLevel(){
-        startTime = System.currentTimeMillis(); // Reset start time
-        elapsedTime = 0; // Reset elapsed time
-        currentLevel++;
-        GameScreen.startLevel();
-        Main.getPrimaryStage().setScene(GameScreen.getGameScene());
-        startGameLoop();
-    }
+
 
     public void restartLevel(){
         isPaused = false;
-        startTime = System.currentTimeMillis(); // Reset start time
         elapsedTime = 0; // Reset elapsed time
         killedEnemy = 0;
         baseScore = 1000;
@@ -221,7 +270,6 @@ public class GameModel {
 
     public void resumeGame() {
         isPaused = false;
-        startTime = System.currentTimeMillis() - elapsedTime; // Ensure time continuity
         startGameLoop();
     }
 
@@ -251,12 +299,12 @@ public class GameModel {
 
 
     public List<Entity> getCollidableMap() {
-        return GameScreen.getCollidableMap();
+        return collidableMap;
     }
 
 
     public List<Enemy> getEnemyMap() {
-        return GameScreen.getEnemyMap();
+        return enemyMap;
     }
 
 
@@ -270,6 +318,9 @@ public class GameModel {
         notifyEnemyKilled(killedEnemy);
     }
 
+    public static MovePlayer getMovePlayerLogic() {
+        return movePlayerLogic;
+    }
 
     public long getTotalTime(){
         return totalTime;
@@ -296,18 +347,15 @@ public class GameModel {
 
 
 
-    public boolean isDebugMode() {
+    public static boolean isDebugMode() {
         return isDebugMode;
     }
 
 
     public void setDebugMode(boolean debugMode) {
-        this.isDebugMode = debugMode;
+        isDebugMode = debugMode;
     }
 
-    public long getStartTime() {
-        return startTime;
-    }
 
     public long getGameTime(){
         return (int)(elapsedTime/1000);
