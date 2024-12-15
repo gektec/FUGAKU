@@ -185,7 +185,7 @@ public class MovePlayer {
     private void checkEnemy() {
         for (Enemy enemy : enemies) {
             if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent()) && !enemy.isDead) {
-                if (getMoveStatus().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
+                if (getMoveData().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
                     enemy.isDead = true;
                     playerVelocity.set(0, -15);
                     System.out.println("enemy killed");
@@ -227,20 +227,11 @@ public class MovePlayer {
     }
 
     /**
-     * Gets the current state of the player.
-     *
-     * @return The current MoveState of the player.
-     */
-    public MoveState getPlayerState() {
-        return playerState;
-    }
-
-    /**
      * Gets the current move data of the player.
      *
      * @return The current MoveData of the player.
      */
-    public MoveData getMoveStatus() {
+    public MoveData getMoveData() {
         return moveData;
     }
 }

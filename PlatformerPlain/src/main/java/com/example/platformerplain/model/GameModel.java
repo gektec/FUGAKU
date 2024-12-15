@@ -203,7 +203,7 @@ public class GameModel {
     }
 
     private static void updateMoveState() {
-        MoveState moveState = getMovePlayerLogic().getMoveStatus().getState();
+        MoveState moveState = getMovePlayerLogic().getMoveData().getState();
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
@@ -214,7 +214,7 @@ public class GameModel {
     }
 
     private static void updatePlayerSpeed() {
-        double[] speed = getMovePlayerLogic().getMoveStatus().velocity.get();
+        double[] speed = getMovePlayerLogic().getMoveData().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));

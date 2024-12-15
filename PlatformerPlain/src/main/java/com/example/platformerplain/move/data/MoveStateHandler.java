@@ -1,6 +1,8 @@
 package com.example.platformerplain.move.data;
 
+import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
+import com.example.platformerplain.texture.Animation;
 
 /**
  * <h3>PlatformerPlain</h3>
@@ -11,6 +13,8 @@ import com.example.platformerplain.move.Coord2D;
  **/
 interface MoveStateHandler {
     void analyzeState(MoveData moveData);
+
+    void updatePlayer(Player player, MoveState lastState, Animation animation);
 }
 
 // Add other states as needed...

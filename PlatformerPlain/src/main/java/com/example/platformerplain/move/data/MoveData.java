@@ -1,6 +1,8 @@
 package com.example.platformerplain.move.data;
 
+import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
+import com.example.platformerplain.texture.Animation;
 
 public class MoveData {
     private MoveState moveState;
@@ -58,6 +60,12 @@ public class MoveData {
     public void analyzeState(MoveData moveData) {
         if (stateHandler != null) {
             stateHandler.analyzeState(moveData);
+        }
+    }
+
+    public void updatePlayer(Player player, MoveState lastState, Animation animation) {
+        if (stateHandler != null) {
+            stateHandler.updatePlayer(player, lastState, animation);
         }
     }
 

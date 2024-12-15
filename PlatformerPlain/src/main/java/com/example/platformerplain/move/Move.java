@@ -177,21 +177,6 @@ public class Move {
             moveData.isTouchingWall = isTouchingWall;
 
             moveData.analyzeState(moveData);
-
-//            if (!isTouchingWall && moveData.moveState == MoveState.SLIDING) {
-//                moveData.moveState = MoveState.IDLE;
-//            }
-//            if (isTouchingGround && isTouchingWall) {
-//                if (moveData.moveState == MoveState.SLIDING) {
-//                    moveData.moveState = MoveState.IDLE;
-//                }
-//            }
-//            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.CLIMBING)) {
-//                moveData.moveState = MoveState.FALLING;
-//            }
-//            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.SLIDE_JUMPING) && !moveData.stateIs(MoveState.CLIMBING)) {
-//                moveData.moveState = MoveState.JUMPING;
-//            }
     }
 
     public static void centerAlign(Entity moveable, Coord2D offset){
