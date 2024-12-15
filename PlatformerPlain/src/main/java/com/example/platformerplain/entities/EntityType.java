@@ -7,5 +7,5 @@ public enum EntityType {
     SPIKE,
     LADDER,
     ENEMY,
-    DECORATION
+    COIN, DECORATION
 }

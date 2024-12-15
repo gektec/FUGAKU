@@ -2,6 +2,7 @@ package com.example.platformerplain.model;
 
 import com.example.platformerplain.*;
 import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Goal;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
@@ -40,6 +41,7 @@ public class GameModel {
     private static ArrayList<Goal> goalMap = new ArrayList<>();
     private static ArrayList<Spike> spikeMap = new ArrayList<>();
     private static ArrayList<Ladder> ladderMap = new ArrayList<>();
+    private static ArrayList<Coin> coinMap = new ArrayList<>();
 
     public static Entity player;
     private static MovePlayer movePlayerLogic;
@@ -55,7 +57,7 @@ public class GameModel {
     private static int currentLevel = 0;
     private static int currentScore = 0;
     private static int finalScore = 0;
-    private static int killedEnemy = 0;
+    public static int killedEnemy = 0;
     private static long totalTime = 0;
     private static int baseScore = 1000;
 
@@ -120,9 +122,11 @@ public class GameModel {
                 collidableMap,
                 enemyMap,
                 spikeMap,
-                ladderMap
+                ladderMap,
+                coinMap
         );
         player = levelInitializer.generateLevel(currentLevel);
+
 
         // If player is not null, continue setup
         if (player != null) {
@@ -132,6 +136,7 @@ public class GameModel {
                     enemyMap,
                     ladderMap,
                     spikeMap,
+                    coinMap,
                     LevelData.getLevelInformation.getLevelWidth(),
                     keys
             );
@@ -297,9 +302,12 @@ public class GameModel {
     }
 
 
-    public static void removeEnemy(Enemy enemy) {
-        toRemove.add(enemy);
-        GameScreen.getGameRoot().getChildren().remove(enemy.canvas());
+    public static void removeEntity(Entity entity) {
+        toRemove.add(entity);
+        GameScreen.getGameRoot().getChildren().remove(entity.canvas());
+    }
+
+    public static void killedEnemy(){
         killedEnemy++;
         baseScore += 200;
         notifyScoreChanged(baseScore);

@@ -33,6 +33,7 @@ public class Assets {
     public static final Image SPIKE = AssetManager.loadImage("/images/tile/Spikes.png");
     public static final Image DECORATION = AssetManager.loadImage("/images/object/Props.png");
     public static final Image GOAL = AssetManager.loadImage("/images/tile/Goal.png");
+    public static final Image COIN = AssetManager.loadImage("/images/tile/Coin.png");
 
     public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 5);
     public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 5);

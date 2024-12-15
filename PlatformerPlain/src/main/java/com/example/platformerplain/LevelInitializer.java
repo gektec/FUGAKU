@@ -2,6 +2,7 @@ package com.example.platformerplain;
 
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
@@ -28,6 +29,7 @@ public class LevelInitializer {
     private ArrayList<Enemy> enemyMap;
     private ArrayList<Spike> spikeMap;
     private ArrayList<Ladder> ladderMap;
+    private ArrayList<Coin> coinMap;
 
     /**
      * Constructs a LevelInitializer with the specified parameters.
@@ -42,7 +44,7 @@ public class LevelInitializer {
      */
     public LevelInitializer(HashMap<KeyCode, Boolean> keys, Pane gameRoot, Pane uiRoot, Pane backgroundRoot,
                             ArrayList<Entity> collidableMap, ArrayList<Enemy> enemyMap,
-                            ArrayList<Spike> spikeMap, ArrayList<Ladder> ladderMap) {
+                            ArrayList<Spike> spikeMap, ArrayList<Ladder> ladderMap, ArrayList<Coin> coinMap) {
         this.keys = keys;
         this.gameRoot = gameRoot;
         this.uiRoot = uiRoot;
@@ -51,6 +53,7 @@ public class LevelInitializer {
         this.enemyMap = enemyMap;
         this.spikeMap = spikeMap;
         this.ladderMap = ladderMap;
+        this.coinMap = coinMap;
     }
 
     /**
@@ -108,6 +111,10 @@ public class LevelInitializer {
                         break;
                     case 'D':
                         createEntity(EntityType.DECORATION, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
+                        break;
+                    case 'C':
+                        Coin coin = (Coin) createEntity(EntityType.COIN, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
+                        coinMap.add(coin);
                         break;
                 }
             }

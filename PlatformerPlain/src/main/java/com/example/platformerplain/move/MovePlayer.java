@@ -4,6 +4,7 @@ import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
@@ -30,6 +31,7 @@ public class MovePlayer {
     private ArrayList<Entity> entityMap; // List to store all platform and goal entities
     private ArrayList<Ladder> ladders;
     private ArrayList<Spike> spikes;
+    private ArrayList<Coin> coinMap;
     private boolean isTouchingGround;  // Flag indicating whether the player can jump
     private boolean isFacingLeft;
     private boolean canDash = true;
@@ -46,15 +48,16 @@ public class MovePlayer {
     /**
      * Constructor to initialize the MovePlayer object.
      *
-     * @param player  The Entity object representing the player.
-     * @param platforms A list of platform entities in the game.
-     * @param enemies A list of enemy entities in the game.
-     * @param ladders A list of ladder entities in the game.
-     * @param spikes A list of spike entities in the game.
+     * @param player     The Entity object representing the player.
+     * @param platforms  A list of platform entities in the game.
+     * @param enemies    A list of enemy entities in the game.
+     * @param ladders    A list of ladder entities in the game.
+     * @param spikes     A list of spike entities in the game.
+     * @param coinMap
      * @param levelWidth The width of the current level.
-     * @param keys A HashMap storing the state of keyboard keys.
+     * @param keys       A HashMap storing the state of keyboard keys.
      */
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders, ArrayList<Spike> spikes, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders, ArrayList<Spike> spikes, ArrayList<Coin> coinMap, int levelWidth, HashMap<KeyCode, Boolean> keys) {
         this.player = player;
         this.entityMap = platforms;
         this.keys = keys;
@@ -63,6 +66,7 @@ public class MovePlayer {
         this.enemies = enemies;
         this.spikes = spikes;
         this.ladders = ladders;
+        this.coinMap = coinMap;
         this.playerState = MoveState.IDLE;
         moveData = new MoveData(playerState, isFacingLeft, isTouchingGround, isTouchingWall, playerVelocity);
     }
@@ -153,12 +157,24 @@ public class MovePlayer {
 
         Move.move(player, moveData);
 
-
+        checkCoin();
         checkGoal();
         checkEnemy();
         checkSpike();
         checkFall();
     }
+
+    private void checkCoin() {
+        if(coinMap == null) return;
+        for (Coin coin : coinMap) {
+            if (player.hitBox().getBoundsInParent().intersects(coin.hitBox().getBoundsInParent())) {
+                //todo
+                return;
+            }
+        }
+    }
+
+
 
     /**
      * Checks if the player has reached the goal.

@@ -48,6 +48,7 @@ public class Enemy extends Moveable {
             animation.setFrames(frames);
             animation.setDelay(10);
             deathAnimationSet = true;
+            GameModel.killedEnemy();
         }
         if(isDead && animation.hasPlayedOnce()){
             removeFromGame();
@@ -66,7 +67,7 @@ public class Enemy extends Moveable {
     }
 
     public void removeFromGame() {
-        GameModel.removeEnemy(this);
+        GameModel.removeEntity(this);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.platformerplain.entities;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.entities.tile.*;
+import com.example.platformerplain.entities.tile.Coin;
 
 public class EntityFactory {
 
@@ -22,6 +23,8 @@ public class EntityFactory {
                 return new Ladder(x, y, w, h, index);
             case DECORATION:
                 return new Decoration(x, y, w, h);
+            case COIN:
+                return new Coin(x, y, w, h, index);
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + type);
         }
