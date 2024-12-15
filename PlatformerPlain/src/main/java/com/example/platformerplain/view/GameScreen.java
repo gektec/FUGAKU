@@ -267,9 +267,13 @@ public class GameScreen implements Screen, GameModelObserver {
         // Position the game view
         gameRoot.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
         gameRoot.setLayoutX(0);
-        for (Node background : backgroundRoot.getChildren()) {
-            background.setLayoutY(-(levelHeight - Constants.WINDOW_HEIGHT));
-        }
+
+        // Position the background images
+        int offsetY = levelHeight - Constants.WINDOW_HEIGHT/2;
+        backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
+        backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
+        backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
+        backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
 
         setCameraFollow();
 

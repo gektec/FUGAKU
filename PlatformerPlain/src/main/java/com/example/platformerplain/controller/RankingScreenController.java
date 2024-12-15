@@ -58,14 +58,8 @@ public class RankingScreenController {
 
     }
 
-    /**
-     * Plays the background music associated with the completed screen.
-     * @throws URISyntaxException if an error occurs while retrieving the URI of the sound file
-     */
     private void playBackgroundMusic() throws URISyntaxException {
-        // Load the fail sound effect
-        // Play the sound effect upon initialization
-        COMPLETE_SOUND.play();
+        // TODO
     }
 
     /**

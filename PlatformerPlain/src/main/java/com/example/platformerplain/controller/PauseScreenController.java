@@ -71,7 +71,8 @@ public class PauseScreenController {
 
             Tips:
             - Wall Jump: Press 'J' while sliding on walls.
-            - Step on enemies to get extra height.""");
+            - Step on enemies to get extra height.
+            - Finish all levels at once to get higher score.""");
 
         helpTextArea.setEditable(false);
         helpTextArea.setWrapText(true);
