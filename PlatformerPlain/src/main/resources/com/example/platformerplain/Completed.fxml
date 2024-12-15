@@ -23,7 +23,7 @@
 
     <!-- Enemies killed Label -->
     <Label fx:id="killedLabel"
-           text="killed: 0"
+           text="ERROR: not initialized"
            GridPane.rowIndex="0"
            GridPane.columnIndex="0"/>
 
@@ -31,7 +31,7 @@
 
     <- Time Label -->
     <Label fx:id="timeLabel"
-           text="Total time: 0"
+           text="ERROR: not initialized"
            GridPane.rowIndex="0"
            GridPane.columnIndex="1"/>
 
@@ -39,7 +39,7 @@
 
     <!- Score Label -->
     <Label fx:id="scoreLabel"
-           text="score: 0"
+           text="ERROR: not initialized"
            GridPane.rowIndex="0"
            GridPane.columnIndex="2"/>
 

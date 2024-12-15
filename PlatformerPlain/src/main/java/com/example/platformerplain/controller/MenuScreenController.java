@@ -1,6 +1,7 @@
 package com.example.platformerplain.controller;
 
 import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.model.RankModel;
 import com.example.platformerplain.view.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.view.RankScreen;
@@ -75,7 +76,6 @@ public class MenuScreenController {
      */
     @FXML
     private void handleStartGame() {
-        GameModel.setFinalScore();
         LevelSelectScreen selectScreen = new LevelSelectScreen();
         selectScreen.show(primaryStage);
     }

@@ -1,32 +1,52 @@
 package com.example.platformerplain.model;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 public class RankModel {
     private static RankModel instance;
+    private static final int MAX_SIZE = 3;
+    private static PriorityQueue<Integer> scores = new PriorityQueue<>(MAX_SIZE, Collections.reverseOrder());
+    private int first,second,third;
 
-    public static int[] highestArray = new int[3];
 
     public static void highestScore(){
-            int i  = GameModel.getFinalScore();
-            if(i > highestArray[2]){
-                if(i > highestArray[1]){
-                    if(i > highestArray[0]){
-                        highestArray[0] = i;
-                    }
-                    highestArray[1] = i;
-                }
-            }highestArray[2] = i;
+        int score  = GameModel.getFinalScore();
+        if (scores.size() < MAX_SIZE) {
+            scores.offer(score);
+        } else {
+            if (score > scores.peek()) {
+                scores.poll();
+                scores.offer(score);
+            }
+        }
     }
 
-    public static int getHighestScore(){;
-        return highestArray[0];
+    private static Integer[] getScores() {
+        PriorityQueue<Integer> scoreCopy = new PriorityQueue<>(RankModel.scores);
+        return new Integer[]{scoreCopy.poll(), scoreCopy.poll(), scoreCopy.poll()};
     }
 
-    public static int getSecondScore(){
-        return highestArray[1];
+    public static Integer getFirstScore() {
+        if(getScores()[0] == null){
+            return 0;
+        }
+        return getScores()[0];
     }
 
-    public static int getThirdScore(){
-        return highestArray[2];
+    public static Integer getSecondScore() {
+        if(getScores()[1] == null){
+            return 0;
+        }
+        return getScores()[1];
+    }
+
+    public static Integer getThirdScore() {
+        if(getScores()[2] == null){
+            return 0;
+        }
+        return getScores()[2];
     }
 
 }

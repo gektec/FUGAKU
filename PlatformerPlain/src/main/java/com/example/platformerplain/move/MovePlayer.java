@@ -169,8 +169,10 @@ public class MovePlayer {
 
         checkCoin();
         checkGoal();
-        checkEnemy();
-        checkSpike();
+        if(!GameModel.isDebugMode()) {
+            checkEnemy();
+            checkSpike();
+        }
         checkFall();
 
 }

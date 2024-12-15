@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 <VBox
         fx:id="root"
         alignment="CENTER"
@@ -19,29 +20,30 @@
 
 
     <!-- Title Label -->
-    <Label fx:id="rankingTitleLabel"
-           text="Ranking"
-           styleClass="title"
-           />
+    <Text text="Ranking" styleClass="title"/>
 
     <!-- Ranking Labels -->
     <Label fx:id="highScore1Label"
-           text="Highest Score: 0"
+           text="ERROR: not initialized"
+           styleClass="label-dark"
            />
 
 
     <Label fx:id="highScore2Label"
-           text="the Second highest score: 0"
+           text="ERROR: not initialized"
+           styleClass="label-dark"
            />
 
 
     <Label fx:id="highScore3Label"
-           text="the Third highest score: 0"
+           text="ERROR: not initialized"
+           styleClass="label-dark"
            />
 
 
     <Label fx:id="yourScoreLabel"
-           text="your final score: 0"
+           text="ERROR: not initialized"
+           styleClass="label-dark"
            />
 
 

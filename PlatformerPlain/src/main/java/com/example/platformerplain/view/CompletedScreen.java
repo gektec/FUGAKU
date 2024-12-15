@@ -33,7 +33,7 @@ public class CompletedScreen implements Screen {
             controller.setKilled(GameModel.getCurrentKilled());
             controller.setTime(GameModel.getTotalTime());
 
-            primaryStage.setTitle("Congratulations!");
+            primaryStage.setTitle("FUGAKU: All Levels Done!");
             primaryStage.setScene(completedScene);
             primaryStage.show();
         } catch (Exception e) {

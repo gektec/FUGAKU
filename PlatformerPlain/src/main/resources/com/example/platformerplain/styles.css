@@ -34,11 +34,19 @@
 
 /* Customize label style, consistent with button style */
 .label {
--fx-text-fill: #ECF0F1; /* Same light text as button */
--fx-font-size: 20px;
--fx-padding: 10 20;
--fx-background-radius: 5;
--fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 1);
--fx-cursor: hand; /* If interaction is required */
+    -fx-text-fill: #ECF0F1;
+    -fx-font-size: 24px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 5, 0, 0, 1);
+    -fx-cursor: hand;
+}
+
+.label-dark {
+    -fx-text-fill: #332222;
+    -fx-font-size: 24px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
 

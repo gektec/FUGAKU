@@ -354,13 +354,6 @@ public class GameModel {
         return finalScore;
     }
 
-    public static int setFinalScore() {
-        finalScore = 0;
-        return finalScore;
-    }
-
-
-
 
     public static int getCurrentLevel(){
         return currentLevel;

@@ -1,6 +1,6 @@
 package com.example.platformerplain.view;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.controller.RankingScreenController;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.model.RankModel;
@@ -28,7 +28,7 @@ public class RankScreen implements Screen {
             RankingScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
             controller.setYourScore(GameModel.getFinalScore());
-            controller.setHighScore1Label(RankModel.getHighestScore());
+            controller.setHighScore1Label(RankModel.getFirstScore());
             controller.setHighScore2Label(RankModel.getSecondScore());
             controller.setHighScore3Label(RankModel.getThirdScore());
 
