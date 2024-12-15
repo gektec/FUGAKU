@@ -1,12 +1,9 @@
 package com.example.platformerplain;
 
-import com.example.platformerplain.texture.CutSpriteSheet;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.text.Font;
-
-import java.util.Objects;
 
 /**
  * This class is responsible for storing all game assets.

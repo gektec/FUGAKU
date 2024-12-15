@@ -1,13 +1,10 @@
 package com.example.platformerplain.entities.tile;
 import com.example.platformerplain.AssetManager;
-import com.example.platformerplain.Constants;
 
-import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.texture.CutSpriteSheet;
+import com.example.platformerplain.texture.TextureMapping;
 import com.example.platformerplain.texture.ImageScaler;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -31,8 +28,8 @@ public class Platform extends Tile {
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateX(hitBox.getTranslateX());
         canvas.setTranslateY(hitBox.getTranslateY());
-        if(GameModel.getCurrentLevel() == 3 ) sprite = CutSpriteSheet.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1] + 5);
-        else sprite = CutSpriteSheet.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1]);
+        if(GameModel.getCurrentLevel() == 3 ) sprite = TextureMapping.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1] + 5);
+        else sprite = TextureMapping.getSprite(EntityType.PLATFORM, AssetManager.getPlatformPosition(index)[0], AssetManager.getPlatformPosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }

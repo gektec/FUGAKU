@@ -2,13 +2,11 @@ package com.example.platformerplain.entities.tile;
 
 import com.example.platformerplain.AssetManager;
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.move.Move;
-import com.example.platformerplain.texture.CutSpriteSheet;
+import com.example.platformerplain.texture.TextureMapping;
 import com.example.platformerplain.texture.ImageScaler;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -36,13 +34,13 @@ public class Spike extends Tile {
         }
 
         gc = canvas.getGraphicsContext2D();
-        Image sprite = CutSpriteSheet.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0], AssetManager.getSpikePosition(index)[1]);
+        Image sprite = TextureMapping.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0], AssetManager.getSpikePosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     public void playerDead(){
-        Image sprite = CutSpriteSheet.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0] - 4, AssetManager.getSpikePosition(index)[1]);
+        Image sprite = TextureMapping.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0] - 4, AssetManager.getSpikePosition(index)[1]);
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }

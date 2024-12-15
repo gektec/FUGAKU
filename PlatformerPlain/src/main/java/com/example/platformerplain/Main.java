@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import static com.example.platformerplain.Assets.BACKGROUND_MUSIC;
 
 /**
+ * <h3>PlatformerPlain</h3>
  * @author Changyu Li, Zelin Xia
- * @date 2024/12/11
+ * @date 2024/11/5
  */
 public class Main extends Application {
 

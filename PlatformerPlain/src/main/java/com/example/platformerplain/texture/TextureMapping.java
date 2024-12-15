@@ -6,17 +6,25 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
-import java.util.Objects;
+/**
+ * <p> mapping entity types to their respective sprites <p/>
+ * @author Changyu Li
+ * @date 2024/12/11
+ */
+public class TextureMapping {
+    private static final int spriteWidth = 16; // Width of each sprite in pixels
+    private static final int spriteHeight = 16; // Height of each sprite in pixels
+    private static Image spriteSheet; // The current sprite sheet image
 
-public class CutSpriteSheet {
-    private static final int spriteWidth = 16;
-    private static final int spriteHeight = 16;
-    private static final int columns = 11;
-    //private static final int backgroundWidth = 112;
-    private static Image spriteSheet;
-    //private static final Map<Integer, Image> spriteCache = new HashMap<>();
-
-
+    /**
+     * Retrieves a sprite from the sprite sheet based on the entity type, row, and column.
+     *
+     * @param type The type of the entity (e.g., PLATFORM, LADDER, SPIKE, DECORATION).
+     * @param row The row index of the sprite in the sprite sheet.
+     * @param col The column index of the sprite in the sprite sheet.
+     * @return A WritableImage representing the sprite corresponding to the specified entity type, row, and column.
+     * @throws IllegalArgumentException If the entity type is unknown.
+     */
     public static Image getSprite(EntityType type, int row, int col) {
         if (type == EntityType.PLATFORM)  spriteSheet = Assets.PLATFORM;
         else if (type == EntityType.LADDER) spriteSheet = Assets.LADDER;
@@ -27,15 +35,4 @@ public class CutSpriteSheet {
         WritableImage sprite = new WritableImage(reader, row * spriteWidth, col * spriteHeight, spriteWidth, spriteHeight);
         return sprite;
     }
-
-    // New method to get sprite by index with caching
-//    public static Image getSpriteByIndex(int index) {
-//        if (!spriteCache.containsKey(index)) {
-//            int row = index / columns;
-//            int col = index % columns;
-//            Image sprite = getSprite(col,row);
-//            spriteCache.put(index, sprite);
-//        }
-//        return spriteCache.get(index);
-//    }
 }

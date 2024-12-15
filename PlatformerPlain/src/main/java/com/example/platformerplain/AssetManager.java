@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * <h3>PlatformerPlain</h3>
  * This class is responsible for loading game assets from path provided by {@link com.example.platformerplain.Assets}, such as images, sounds, and fonts.
  * @author Changyu Li
  * @date 2024/12/11

@@ -1,14 +1,10 @@
 package com.example.platformerplain.entities.tile;
-import com.example.platformerplain.AssetManager;
 
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.entities.EntityType;
-import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.move.Move;
-import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
