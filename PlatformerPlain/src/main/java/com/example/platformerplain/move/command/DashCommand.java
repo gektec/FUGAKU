@@ -2,7 +2,7 @@ package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import com.example.platformerplain.move.data.MoveData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,7 +23,7 @@ public class DashCommand implements PlayCommand {
     public DashCommand(MoveData moveData) {
         this.velocity = moveData.velocity;
         this.moveData = moveData;
-        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> moveData.moveState = MoveState.IDLE));
+        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> moveData.setState(MoveState.IDLE)));
         dashCooldownTimer.setCycleCount(1);
     }
 
@@ -48,7 +48,7 @@ public class DashCommand implements PlayCommand {
             else
                 velocity.set(x, y);
             DASH_SFX.play();
-            moveData.moveState = MoveState.DASHING;
+            moveData.setState(MoveState.DASHING);
             dashCooldownTimer.playFromStart();
 
     }

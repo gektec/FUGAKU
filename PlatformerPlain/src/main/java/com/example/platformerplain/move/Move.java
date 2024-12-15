@@ -4,7 +4,7 @@ import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 
 import java.util.ArrayList;
 
@@ -127,39 +127,39 @@ public class Move {
                         isTouchingGround = true;
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                         velocity.setY(0);
-                        if (moveData.moveState != MoveState.DASHING) {
-                            if (velocity.getX() != 0) moveData.moveState = MoveState.RUNNING;
-                            else moveData.moveState = MoveState.IDLE;
+                        if (!moveData.stateIs(MoveState.DASHING)) {
+                            if (velocity.getX() != 0) moveData.setState(MoveState.RUNNING);
+                            else moveData.setState(MoveState.IDLE);
                         }
                         moveData.isTouchingGround = true;
                     } else if (relativeLocation == 2) {
                         isTouchingRightWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
                         velocity.setX(0);
-                        if (moveData.moveState == MoveState.SLIDE_JUMPING) {
+                        if (moveData.stateIs(MoveState.SLIDE_JUMPING)) {
                             velocity.setX(-Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
                             moveData.isFacingLeft = true;
-                            moveData.moveState = MoveState.SLIDING;
+                            moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 4) {
                         isTouchingLeftWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
-                        if (moveData.moveState == MoveState.SLIDE_JUMPING) {
+                        if (moveData.stateIs(MoveState.SLIDE_JUMPING)) {
                             velocity.setX(Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
                             moveData.isFacingLeft = false;
-                            moveData.moveState = MoveState.SLIDING;
+                            moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
                     } else if (relativeLocation == 3) {
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() + Constants.TILE_SIZE);
                         velocity.setY(0);
-                        moveData.moveState = MoveState.IDLE;
+                        moveData.setState(MoveState.IDLE);
                     }
                 }
             }
@@ -176,20 +176,20 @@ public class Move {
             boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
             moveData.isTouchingWall = isTouchingWall;
 
-            if (!isTouchingWall && moveData.moveState == MoveState.SLIDING) {
-                moveData.moveState = MoveState.IDLE;
-            }
-            if (isTouchingGround && isTouchingWall) {
-                if (moveData.moveState == MoveState.SLIDING) {
-                    moveData.moveState = MoveState.IDLE;
-                }
-            }
-            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.CLIMBING)) {
-                moveData.moveState = MoveState.FALLING;
-            }
-            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.SLIDE_JUMPING) && !moveData.stateIs(MoveState.CLIMBING)) {
-                moveData.moveState = MoveState.JUMPING;
-            }
+//            if (!isTouchingWall && moveData.moveState == MoveState.SLIDING) {
+//                moveData.moveState = MoveState.IDLE;
+//            }
+//            if (isTouchingGround && isTouchingWall) {
+//                if (moveData.moveState == MoveState.SLIDING) {
+//                    moveData.moveState = MoveState.IDLE;
+//                }
+//            }
+//            if (!isTouchingWall && !isTouchingGround && velocity.getY() > 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.CLIMBING)) {
+//                moveData.moveState = MoveState.FALLING;
+//            }
+//            else if(!isTouchingWall && !isTouchingGround && velocity.getY() < 0 && !moveData.stateIs(MoveState.DASHING) && !moveData.stateIs(MoveState.SLIDE_JUMPING) && !moveData.stateIs(MoveState.CLIMBING)) {
+//                moveData.moveState = MoveState.JUMPING;
+//            }
     }
 
     public static void centerAlign(Entity moveable, Coord2D offset){

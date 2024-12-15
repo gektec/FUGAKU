@@ -11,7 +11,7 @@ import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
@@ -203,7 +203,7 @@ public class GameModel {
     }
 
     private static void updateMoveState() {
-        MoveState moveState = getMovePlayerLogic().getMoveStatus().moveState;
+        MoveState moveState = getMovePlayerLogic().getMoveStatus().getState();
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 

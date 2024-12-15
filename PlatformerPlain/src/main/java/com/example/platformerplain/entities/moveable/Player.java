@@ -5,7 +5,7 @@ import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;

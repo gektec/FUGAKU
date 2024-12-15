@@ -1,14 +1,14 @@
 package com.example.platformerplain.move.data;
 
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.state.MoveState;
 
 public class MoveData {
-    public MoveState moveState;
+    private MoveState moveState;
     public boolean isFacingLeft;
     public boolean isTouchingGround;
     public boolean isTouchingWall;
     public Coord2D velocity;
+    private MoveStateHandler stateHandler;
 
     public MoveData(MoveState moveState, boolean isFacingLeft, boolean isTouchingGround, boolean isTouchingWall, Coord2D velocity) {
         this.moveState = moveState;
@@ -17,6 +17,50 @@ public class MoveData {
         this.isTouchingWall = isTouchingWall;
         this.velocity = velocity;
     }
+
+    public void setState(MoveState state) {
+        this.moveState = state;
+        switch (state) {
+            case IDLE:
+                this.stateHandler = new IdleState();
+                break;
+            case SLIDING:
+                this.stateHandler = new SlidingState();
+                break;
+            case FALLING:
+                this.stateHandler = new FallingState();
+                break;
+            case JUMPING:
+                this.stateHandler = new JumpingState();
+                break;
+            case RUNNING:
+                this.stateHandler = new RunningState();
+                break;
+            case SLIDE_JUMPING:
+                this.stateHandler = new SlideJumpingState();
+                break;
+            case DASHING:
+                this.stateHandler = new DashingState();
+                break;
+            case CLIMBING:
+                this.stateHandler = new ClimbingState();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected state: " + state);
+        }
+    }
+
+    public MoveState getState() {
+        return moveState;
+    }
+
+
+    public void handle(Coord2D velocity, MoveData moveData) {
+        if (stateHandler != null) {
+            stateHandler.handle(velocity, moveData);
+        }
+    }
+
 
 
 

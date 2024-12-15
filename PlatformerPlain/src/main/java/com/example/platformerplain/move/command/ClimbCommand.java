@@ -1,6 +1,6 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import com.example.platformerplain.move.data.MoveData;
 import javafx.scene.input.KeyCode;
 
@@ -23,13 +23,13 @@ public class ClimbCommand implements PlayCommand {
         moveData.isTouchingGround = true;
         if (isPressed(KeyCode.W) && moveData.velocity.getY() >= -MAX_CLIMB_SPEED) {
             moveData.velocity.add(0, -2);
-            moveData.moveState = MoveState.CLIMBING;
+            moveData.setState(MoveState.CLIMBING);
         }
         else if (isPressed(KeyCode.S) && moveData.velocity.getY() <= MAX_CLIMB_SPEED) {
             moveData.velocity.add(0, 2);
-            moveData.moveState = MoveState.CLIMBING;
+            moveData.setState(MoveState.CLIMBING);
         }
-        else if (moveData.moveState == MoveState.CLIMBING)
+        else if (moveData.stateIs(MoveState.CLIMBING))
             moveData.velocity.reduce(0,2);
     }
 }

@@ -2,7 +2,7 @@ package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -16,7 +16,7 @@ public class WallJumpCommand implements PlayCommand {
 
     public WallJumpCommand(MoveData moveData) {
         this.moveData = moveData;
-        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> moveData.moveState = MoveState.IDLE));
+        slideJumpCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.SLIDE_JUMP_DURATION), event -> moveData.setState(MoveState.IDLE)));
         slideJumpCooldownTimer.setCycleCount(1);
     }
 
@@ -24,7 +24,7 @@ public class WallJumpCommand implements PlayCommand {
     public void execute() {
         moveData.velocity.setY(-15);
         moveData.isTouchingWall = false;
-        moveData.moveState = MoveState.SLIDE_JUMPING;
+        moveData.setState(MoveState.SLIDE_JUMPING);
         JUMP_SFX.play();
         slideJumpCooldownTimer.playFromStart();
     }

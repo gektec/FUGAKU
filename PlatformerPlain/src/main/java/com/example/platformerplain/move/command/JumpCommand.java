@@ -1,7 +1,7 @@
 package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
@@ -16,7 +16,7 @@ public class JumpCommand implements PlayCommand {
     public void execute() {
         moveData.velocity.setY(-20);
         moveData.isTouchingGround = false;
-        moveData.moveState = MoveState.JUMPING;
+        moveData.setState(MoveState.JUMPING);
         JUMP_SFX.play();
 
     }

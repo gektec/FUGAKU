@@ -1,7 +1,6 @@
-package com.example.platformerplain.move.data.state;
+package com.example.platformerplain.move.data;
 
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.MoveData;
 
 /**
  * <h3>PlatformerPlain</h3>

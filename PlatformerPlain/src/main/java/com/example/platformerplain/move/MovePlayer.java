@@ -8,7 +8,7 @@ import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.command.*;
-import com.example.platformerplain.move.data.state.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import com.example.platformerplain.move.data.MoveData;
 import javafx.scene.input.KeyCode;
 
@@ -81,7 +81,7 @@ public class MovePlayer {
      * Updates the player movement and state based on the current inputs and interactions.
      */
     public void update() {
-        playerState = moveData.moveState;
+        playerState = moveData.getState();
         isFacingLeft = moveData.isFacingLeft;
         isTouchingGround = moveData.isTouchingGround;
         canClimb = false;
@@ -148,7 +148,7 @@ public class MovePlayer {
                 canClimb = true;
             }
         }
-        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.moveState = MoveState.IDLE;
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
 
         Move.move(player, moveData);
 

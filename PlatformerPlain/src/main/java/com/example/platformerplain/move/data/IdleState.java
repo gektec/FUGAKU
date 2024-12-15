@@ -1,7 +1,6 @@
-package com.example.platformerplain.move.data.state;
+package com.example.platformerplain.move.data;
 
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.MoveData;
 
 /**
  * <h3>PlatformerPlain</h3>
@@ -16,7 +15,7 @@ class IdleState implements MoveStateHandler {
         // Implement Idle state-specific logic
         // For example, if the entity is not touching a wall or the ground, transition to the appropriate state
         if (!moveData.isTouchingWall && !moveData.isTouchingGround && velocity.getY() > 0) {
-            moveData.moveState = MoveState.FALLING;
+            moveData.setState(MoveState.FALLING);
         }
         // Additional logic as needed
     }

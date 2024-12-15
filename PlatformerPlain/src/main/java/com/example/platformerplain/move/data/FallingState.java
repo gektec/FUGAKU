@@ -1,7 +1,6 @@
-package com.example.platformerplain.move.data.state;
+package com.example.platformerplain.move.data;
 
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.MoveData;
 
 /**
  * <h3>PlatformerPlain</h3>
@@ -15,7 +14,7 @@ class FallingState implements MoveStateHandler {
     public void handle(Coord2D velocity, MoveData moveData) {
         // Implement Falling state-specific logic
         if (velocity.getY() < 0) {
-            moveData.moveState = MoveState.JUMPING;
+            moveData.setState(MoveState.JUMPING);
         }
     }
 }
