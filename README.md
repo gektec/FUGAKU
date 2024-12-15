@@ -208,6 +208,8 @@ We adhere to best practices for Javadoc comments, including:
 - **Method-Level Comments**: Each method should be documented with a brief description of what it does, parameters it takes, return values, and any exceptions that may be thrown.
 - **Field-Level Comments**: Important fields should also include comments explaining their purpose within the class.
 
+---
+
 ## Class Diagram
 
 The class diagram is a visual representation of the main classes in the NGHMP project and their relationships. Below is the description and explanation of the class diagram:
@@ -244,6 +246,40 @@ The class diagram file can be found in the `Diagram` directory. You can open the
 
 ![Class Diagram](Diagram/ClassDiagram.jpg)
 
+---
+
+## Test Cases
+
+This section outlines the basic test case used to validate the functionality of the NGHMP project. Includes the purpose, preconditions, steps to execute the test, expected results.
+### Basic Test
+  **Purpose**: verify that the basic functionalities of the game are working correctly, including:
+  1. The game can successfully enter the first level after starting.
+  2. The player can control the character using the keyboard (e.g., pressing the D key to move and the J key to jump).
+
+  **Preconditions**: 
+  - The game program (Main.class) must be correctly implemented and able to launch.
+  - The game interface must have loaded and contain the following elements:
+  1. startButton: The start button used to enter the game.
+  2. FirstLevel: Identifier for the first level.
+
+  **Steps**:
+  1. Setup: Launch the game in the setUp method.
+  2. Start Game: Simulate clicking #startButton and wait for the interface to respond.
+  3. Verify Level: Check that the text of #FirstLevel is "1".
+  4. Click #FirstLevel to enter the game.
+  5. Press D to move right, recording the x positions before and after to assert movement.
+  6. Press J to jump and track the y position to confirm the player falls after jumping.
+
+  **Expected Results**:
+  - The game should enter the first level with #FirstLevel displaying "1".
+  - Player's x position should increase after pressing D.
+  - The player should be falling after pressing J, confirming effective downward movement.
+
+### Running Tests
+
+To automate test or run the test manually, please refer to the testing guidelines/code in the `/test` directory. Ensure you have the necessary dependencies set up as specified in the project documentation.
+
+---
 
 ## Appendix
 
