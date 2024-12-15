@@ -1,6 +1,6 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

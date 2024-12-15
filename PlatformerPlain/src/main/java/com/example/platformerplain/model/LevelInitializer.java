@@ -1,11 +1,12 @@
-package com.example.platformerplain;
+package com.example.platformerplain.model;
 
+import com.example.platformerplain.data.Constants;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
-import com.example.platformerplain.model.GameModel;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;

@@ -1,11 +1,11 @@
-package com.example.platformerplain.move.data;
+package com.example.platformerplain.move.state;
 
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.texture.Animation;
 
-import static com.example.platformerplain.Assets.DASH_SFX;
+import static com.example.platformerplain.data.Assets.DASH_SFX;
 
 /**
  * @author Changyu Li

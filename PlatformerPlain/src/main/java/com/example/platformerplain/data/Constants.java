@@ -1,4 +1,4 @@
-package com.example.platformerplain;
+package com.example.platformerplain.data;
 
 /**
  * Constants class to store all the constants used in the game

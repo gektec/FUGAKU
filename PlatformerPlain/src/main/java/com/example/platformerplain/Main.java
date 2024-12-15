@@ -1,12 +1,14 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.data.AssetManager;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.view.*;
 
 import javafx.application.Application;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.BACKGROUND_MUSIC;
+import static com.example.platformerplain.data.Assets.BACKGROUND_MUSIC;
 
 /**
  * <h3>PlatformerPlain</h3>

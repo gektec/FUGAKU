@@ -1,6 +1,6 @@
 package com.example.platformerplain.view;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.controller.TransitionScreenController;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;

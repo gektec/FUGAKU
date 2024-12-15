@@ -1,9 +1,9 @@
-package com.example.platformerplain;
+package com.example.platformerplain.data;
 
 import com.example.platformerplain.model.GameModel;
 
 /**
- * Class representing level data, including level layouts and related information.
+ * Class representing level state, including level layouts and related information.
  * @author Changyu Li, Zelin Xia
  * @date 2024/11/5
  */

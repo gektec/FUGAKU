@@ -1,6 +1,6 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.view.MenuScreen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

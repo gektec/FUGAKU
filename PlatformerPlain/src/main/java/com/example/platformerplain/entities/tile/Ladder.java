@@ -1,6 +1,6 @@
 package com.example.platformerplain.entities.tile;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.texture.TextureMapping;
 import com.example.platformerplain.texture.ImageScaler;

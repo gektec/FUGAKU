@@ -1,7 +1,7 @@
 package com.example.platformerplain.entities.tile;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.Coord2D;

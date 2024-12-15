@@ -1,9 +1,7 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.MoveState;
-
-import static com.example.platformerplain.Assets.JUMP_SFX;
+import com.example.platformerplain.move.state.MoveData;
+import com.example.platformerplain.move.state.MoveState;
 
 /**
  * @author Zelin Xia

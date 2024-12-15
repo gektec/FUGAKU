@@ -1,4 +1,4 @@
-package com.example.platformerplain;
+package com.example.platformerplain.data;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;

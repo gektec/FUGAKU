@@ -1,11 +1,8 @@
-package com.example.platformerplain.move.data;
+package com.example.platformerplain.move.state;
 
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.entities.moveable.Player;
-import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
-
-import static com.example.platformerplain.Assets.LANDING_SFX;
 
 /**
  * @author Changyu Li

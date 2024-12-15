@@ -1,6 +1,7 @@
 package com.example.platformerplain.model;
 
 import com.example.platformerplain.*;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Goal;
@@ -12,7 +13,7 @@ import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
@@ -231,7 +232,7 @@ public class GameModel {
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
-        // Keep only the last 60 data points
+        // Keep only the last 60 state points
         if (GameScreen.getSpeedX().getData().size() > 60) {
             GameScreen.getSpeedX().getData().remove(0);
             GameScreen.getSpeedY().getData().remove(0);

@@ -22,6 +22,10 @@ module com.example.platformerplain {
     opens com.example.platformerplain.entities.tile to javafx.fxml;
     exports com.example.platformerplain.entities.moveable;
     opens com.example.platformerplain.entities.moveable to javafx.fxml;
-    exports com.example.platformerplain.move.data;
-    opens com.example.platformerplain.move.data to javafx.fxml;
+    exports com.example.platformerplain.move.state;
+    opens com.example.platformerplain.move.state to javafx.fxml;
+    exports com.example.platformerplain.data;
+    opens com.example.platformerplain.data to javafx.fxml;
+    exports com.example.platformerplain.model;
+    opens com.example.platformerplain.model to javafx.fxml;
 }

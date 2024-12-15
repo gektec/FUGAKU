@@ -1,16 +1,16 @@
 package com.example.platformerplain.move;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.move.command.*;
-import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveData;
+import com.example.platformerplain.move.state.MoveState;
 
 import java.util.ArrayList;
 
-import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
-import static com.example.platformerplain.Constants.RESISTANCE;
+import static com.example.platformerplain.data.Constants.MAX_FALL_SPEED;
+import static com.example.platformerplain.data.Constants.RESISTANCE;
 
 /**
  * This class is responsible for controlling the movement of enemy entities in the platformer game.
@@ -94,7 +94,7 @@ public class MoveEnemy {
     }
 
     /**
-     * Gets the current movement data of the enemy.
+     * Gets the current movement state of the enemy.
      *
      * @return a MoveData object containing the current state and movement information of the enemy
      */

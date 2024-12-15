@@ -1,4 +1,4 @@
-package com.example.platformerplain.move.data;
+package com.example.platformerplain.move.state;
 
 public enum MoveState {
     IDLE,

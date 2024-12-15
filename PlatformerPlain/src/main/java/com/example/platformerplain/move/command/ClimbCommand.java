@@ -1,10 +1,10 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.move.data.MoveState;
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveState;
+import com.example.platformerplain.move.state.MoveData;
 import javafx.scene.input.KeyCode;
 
-import static com.example.platformerplain.Constants.MAX_CLIMB_SPEED;
+import static com.example.platformerplain.data.Constants.MAX_CLIMB_SPEED;
 import static com.example.platformerplain.model.GameModel.keys;
 
 /**

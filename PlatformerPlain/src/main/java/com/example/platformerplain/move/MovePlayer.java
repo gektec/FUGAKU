@@ -1,25 +1,25 @@
 package com.example.platformerplain.move;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.*;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.command.*;
-import com.example.platformerplain.move.data.MoveState;
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveState;
+import com.example.platformerplain.move.state.MoveData;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.platformerplain.Assets.COIN_SFX;
-import static com.example.platformerplain.Assets.JUMP_SFX;
-import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
-import static com.example.platformerplain.Constants.RESISTANCE;
+import static com.example.platformerplain.data.Assets.COIN_SFX;
+import static com.example.platformerplain.data.Assets.JUMP_SFX;
+import static com.example.platformerplain.data.Constants.MAX_FALL_SPEED;
+import static com.example.platformerplain.data.Constants.RESISTANCE;
 
 /**
  * <h3>PlatformerPlain</h3>
@@ -259,7 +259,7 @@ public class MovePlayer {
     }
 
     /**
-     * Gets the current move data of the player.
+     * Gets the current move state of the player.
      *
      * @return The current MoveData of the player.
      */

@@ -1,4 +1,4 @@
-package com.example.platformerplain;
+package com.example.platformerplain.data;
 
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.image.Image;
@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * <h3>PlatformerPlain</h3>
- * This class is responsible for loading game assets from path provided by {@link com.example.platformerplain.Assets}, such as images, sounds, and fonts.
+ * This class is responsible for loading game assets from path provided by {@link Assets}, such as images, sounds, and fonts.
  * @author Changyu Li
  * @date 2024/12/11
  */

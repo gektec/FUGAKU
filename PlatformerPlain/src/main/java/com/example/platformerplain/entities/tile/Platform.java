@@ -1,6 +1,6 @@
 package com.example.platformerplain.entities.tile;
 
-import com.example.platformerplain.AssetManager;
+import com.example.platformerplain.data.AssetManager;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.texture.TextureMapping;

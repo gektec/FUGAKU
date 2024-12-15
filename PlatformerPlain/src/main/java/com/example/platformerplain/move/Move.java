@@ -1,10 +1,10 @@
 package com.example.platformerplain.move;
 
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.Constants;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.Entity;
-import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveData;
+import com.example.platformerplain.move.state.MoveState;
 
 import java.util.ArrayList;
 

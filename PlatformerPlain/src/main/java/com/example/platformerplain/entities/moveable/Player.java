@@ -1,12 +1,12 @@
 package com.example.platformerplain.entities.moveable;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.EntityType;
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveData;
 import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;

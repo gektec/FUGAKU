@@ -1,7 +1,6 @@
-package com.example.platformerplain.move.data;
+package com.example.platformerplain.move.state;
 
 import com.example.platformerplain.entities.moveable.Player;
-import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
 /**

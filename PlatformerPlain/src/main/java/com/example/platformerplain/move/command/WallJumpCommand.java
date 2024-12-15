@@ -1,13 +1,13 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.data.Constants;
+import com.example.platformerplain.move.state.MoveData;
+import com.example.platformerplain.move.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-import static com.example.platformerplain.Assets.JUMP_SFX;
+import static com.example.platformerplain.data.Assets.JUMP_SFX;
 
 /**
  * @author Changyu Li

@@ -1,14 +1,14 @@
 package com.example.platformerplain.entities.moveable;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.Constants;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.Constants;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.move.data.MoveData;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveData;
+import com.example.platformerplain.move.state.MoveState;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -16,8 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-
-import static com.example.platformerplain.Assets.JUMP_SFX;
 
 /**
  * Represents an enemy entity in the platformer game that can move and perform actions.

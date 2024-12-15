@@ -1,6 +1,6 @@
 package com.example.platformerplain.texture;
 
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.entities.EntityType;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
