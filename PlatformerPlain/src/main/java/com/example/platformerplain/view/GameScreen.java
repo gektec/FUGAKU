@@ -64,6 +64,8 @@ public class GameScreen implements Screen, GameModelObserver {
     private static int labelNumber = 0;
 
     static ImageView backgroundSky;
+    static ImageView backgroundMountain1;
+    static ImageView backgroundMountain2;
     static ImageView backgroundCloud1;
     static ImageView backgroundCloud2;
     static ImageView backgroundCloud3;
@@ -189,33 +191,36 @@ public class GameScreen implements Screen, GameModelObserver {
      * Initializes the background images and adds them to the background root pane.
      */
     private static void initBackground(){
-        Image background0 = Assets.BACKGROUND_SKY;
-        backgroundSky = new ImageView(background0);
+        backgroundSky = new ImageView(Assets.BACKGROUND_SKY);
         backgroundSky.setFitWidth(Constants.WINDOW_WIDTH * 5);
         backgroundSky.setFitHeight(Constants.WINDOW_HEIGHT * 5);
 
-        Image background1 = Assets.BACKGROUND_CLOUD_1;
-        backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(background1, 2));
-        backgroundCloud1.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
-        backgroundCloud1.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
+        backgroundMountain1 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_MOUNTAIN_1, 3));
+        backgroundMountain1.setFitWidth(Constants.WINDOW_WIDTH * 1.8);
+        backgroundMountain1.setFitHeight(Constants.WINDOW_HEIGHT * 1.8);
 
-        Image background2 = Assets.BACKGROUND_CLOUD_2;
-        backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(background2, 2));
+        backgroundMountain2 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_MOUNTAIN_2, 3));
+        backgroundMountain2.setFitWidth(Constants.WINDOW_WIDTH * 1.6);
+        backgroundMountain2.setFitHeight(Constants.WINDOW_HEIGHT * 1.6);
+
+        backgroundCloud1 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_CLOUD_1, 2));
+        backgroundCloud1.setFitWidth(Constants.WINDOW_WIDTH * 1.5);
+        backgroundCloud1.setFitHeight(Constants.WINDOW_HEIGHT * 1.5);
+
+        backgroundCloud2 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_CLOUD_2, 2));
         backgroundCloud2.setScaleX(-1);
-        backgroundCloud2.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
-        backgroundCloud2.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
+        backgroundCloud2.setFitWidth(Constants.WINDOW_WIDTH * 1.3);
+        backgroundCloud2.setFitHeight(Constants.WINDOW_HEIGHT * 1.3);
 
-        Image background3 = Assets.BACKGROUND_CLOUD_3;
-        backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(background3, 2));
+        backgroundCloud3 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_CLOUD_3, 2));
         backgroundCloud3.setFitWidth(Constants.WINDOW_WIDTH * 1.2);
         backgroundCloud3.setFitHeight(Constants.WINDOW_HEIGHT * 1.2);
 
-        Image background4 = Assets.BACKGROUND_MOON;
-        backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(background4, 2));
+        backgroundMoon = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_MOON, 2));
         backgroundMoon.setFitWidth(Constants.WINDOW_WIDTH);
         backgroundMoon.setFitHeight(Constants.WINDOW_HEIGHT);
 
-        backgroundRoot.getChildren().addAll(backgroundSky, backgroundCloud3, backgroundCloud2, backgroundMoon, backgroundCloud1);
+        backgroundRoot.getChildren().addAll(backgroundSky, backgroundMoon, backgroundCloud3, backgroundCloud2, backgroundCloud1, backgroundMountain2, backgroundMountain1);
     }
 
     /**
@@ -226,6 +231,8 @@ public class GameScreen implements Screen, GameModelObserver {
             int offset = newValue.intValue();
             if (offset > Constants.WINDOW_WIDTH / 2 && offset < levelWidth - (Constants.WINDOW_WIDTH - Constants.PLAYER_SIZE) / 2) {
                 gameRoot.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2));
+                backgroundMountain1.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.6);
+                backgroundMountain2.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.5);
                 backgroundCloud1.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.4);
                 backgroundCloud2.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.3);
                 backgroundCloud3.setLayoutX(-(offset - (double) Constants.WINDOW_WIDTH / 2) * 0.2);
@@ -237,10 +244,13 @@ public class GameScreen implements Screen, GameModelObserver {
             int offsetY = newValue.intValue();
             if (levelHeight - offsetY > Constants.WINDOW_HEIGHT / 2 && offsetY > Constants.WINDOW_HEIGHT / 4) {
                 gameRoot.setLayoutY(-(offsetY - (double) Constants.WINDOW_HEIGHT / 2));
-                backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
-                backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
-                backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
-                backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
+                backgroundMountain1.setLayoutY(-(offsetY - (double) Constants.WINDOW_WIDTH / 2) * 0.6 - 100);
+                backgroundMountain2.setLayoutY(-(offsetY - (double) Constants.WINDOW_WIDTH / 2) * 0.5 - 100);
+                backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 100);
+                backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 100);
+                backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 100);
+                backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 100);
+
             }
         });
     }
@@ -270,10 +280,12 @@ public class GameScreen implements Screen, GameModelObserver {
 
         // Position the background images
         int offsetY = levelHeight - Constants.WINDOW_HEIGHT/2;
-        backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 50);
-        backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 50);
-        backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 50);
-        backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 50);
+        backgroundMountain1.setLayoutY(-(offsetY - (double) Constants.WINDOW_WIDTH / 2) * 0.6 - 100);
+        backgroundMountain2.setLayoutY(-(offsetY - (double) Constants.WINDOW_WIDTH / 2) * 0.5 - 100);
+        backgroundCloud1.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.4) - 100);
+        backgroundCloud2.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.3) - 100);
+        backgroundCloud3.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.2) - 100);
+        backgroundMoon.setLayoutY((-(offsetY - (double) Constants.WINDOW_HEIGHT / 2) * 0.05) - 100);
 
         setCameraFollow();
 

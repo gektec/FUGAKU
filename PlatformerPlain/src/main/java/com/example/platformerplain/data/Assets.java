@@ -14,12 +14,11 @@ public class Assets {
 
     // Backgrounds
     public static final Background MENU_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Background.png", 5),null,null,null,null));
-    public static final Background LEVEL_COMPLETE_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Completed.png", 5),null,null,null,null));
-    public static final Background LEVEL_FAILED_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Gameover.png", 5),null,null,null,null));
-    public static final Background LEVEL_TRANSITION_BACKGROUND = new Background( new BackgroundImage(AssetManager.loadImage("/images/backgroundImage/Transition.png", 5),null,null,null,null));
 
     // Textures
     public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");
+    public static final Image BACKGROUND_MOUNTAIN_1 = AssetManager.loadImage("/images/backgroundTexture/Mountain 1.png");
+    public static final Image BACKGROUND_MOUNTAIN_2 = AssetManager.loadImage("/images/backgroundTexture/Mountain 2.png");
     public static final Image BACKGROUND_CLOUD_1 = AssetManager.loadImage("/images/backgroundTexture/Cloud 1.png");
     public static final Image BACKGROUND_CLOUD_2 = AssetManager.loadImage("/images/backgroundTexture/Cloud 2.png");
     public static final Image BACKGROUND_CLOUD_3 = AssetManager.loadImage("/images/backgroundTexture/Cloud 3.png");
