@@ -35,7 +35,6 @@ class JumpingState implements MoveStateHandler {
         if (lastState != MoveState.JUMPING) {
             animation.setFrames(Assets.PLAYER_JUMP_START[0]);
             animation.setDelay(2);
-            JUMP_SFX.play();
             player.setLastState(MoveState.JUMPING);
         }
     }

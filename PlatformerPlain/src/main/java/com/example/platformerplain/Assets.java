@@ -62,6 +62,7 @@ public class Assets {
     public static final AssetManager.GameMediaPlayer DASH_SFX = new AssetManager.GameMediaPlayer("/sound/Dash.wav");
     public static final AssetManager.GameMediaPlayer RUN_SFX = new AssetManager.GameMediaPlayer("/sound/Step_Wood.wav");
     public static final AssetManager.GameMediaPlayer LANDING_SFX = new AssetManager.GameMediaPlayer("/sound/Landing.wav");
+    public static final AssetManager.GameMediaPlayer COIN_SFX = new AssetManager.GameMediaPlayer("/sound/Coin.wav");
 
     // Fonts
     public static final Font baseFont = Font.loadFont(Assets.class.getResourceAsStream("/m6x11plus.ttf"), 20);

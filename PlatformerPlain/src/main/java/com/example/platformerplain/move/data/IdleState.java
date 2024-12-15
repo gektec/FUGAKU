@@ -23,9 +23,11 @@ class IdleState implements MoveStateHandler {
         if(moveData.isTouchingGround && moveData.velocity.getX() != 0){
             moveData.setState(MoveState.RUNNING);
         }
-        if(!moveData.isTouchingGround && moveData.velocity.getY() < 0){
-            moveData.setState(MoveState.JUMPING);
+        if(!moveData.isTouchingGround){
+            if(moveData.velocity.getY() <= 0) moveData.setState(MoveState.JUMPING);
+            else moveData.setState(MoveState.FALLING);
         }
+
     }
 
     /**
