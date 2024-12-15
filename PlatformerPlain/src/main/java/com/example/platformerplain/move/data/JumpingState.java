@@ -8,11 +8,8 @@ import com.example.platformerplain.texture.Animation;
 import static com.example.platformerplain.Assets.JUMP_SFX;
 
 /**
- * <h3>PlatformerPlain</h3>
- *
  * @author Changyu Li
- * @description <p></p>
- * @date 2024-12-15 19:50
+ * @date 2024-12-15
  **/
 class JumpingState implements MoveStateHandler {
     @Override

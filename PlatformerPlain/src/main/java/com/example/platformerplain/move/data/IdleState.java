@@ -6,11 +6,8 @@ import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
 /**
- * <h3>PlatformerPlain</h3>
- *
  * @author Changyu Li
- * @description <p></p>
- * @date 2024-12-15 19:50
+ * @date 2024-12-15
  **/
 class IdleState implements MoveStateHandler {
     @Override

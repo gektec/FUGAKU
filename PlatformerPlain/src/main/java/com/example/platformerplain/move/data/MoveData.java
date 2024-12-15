@@ -4,6 +4,14 @@ import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
+/**
+ * Represents the movement data for a player character in a platformer game.
+ * This class maintains the current movement state and handles the logic
+ * for different movement states such as jumping, running, and sliding.
+ *
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class MoveData {
     private MoveState moveState;
     public boolean isFacingLeft;
@@ -12,6 +20,15 @@ public class MoveData {
     public Coord2D velocity;
     private MoveStateHandler stateHandler;
 
+    /**
+     * Constructs a MoveData instance with specified movement parameters.
+     *
+     * @param moveState        the initial movement state of the player
+     * @param isFacingLeft     indicates if the player is facing left
+     * @param isTouchingGround indicates if the player is on the ground
+     * @param isTouchingWall   indicates if the player is touching a wall
+     * @param velocity         the current velocity of the player
+     */
     public MoveData(MoveState moveState, boolean isFacingLeft, boolean isTouchingGround, boolean isTouchingWall, Coord2D velocity) {
         this.moveState = moveState;
         this.isFacingLeft = isFacingLeft;
@@ -20,6 +37,11 @@ public class MoveData {
         this.velocity = velocity;
     }
 
+    /**
+     * Sets the current movement state and initializes the corresponding state handler.
+     *
+     * @param state the new movement state
+     */
     public void setState(MoveState state) {
         this.moveState = state;
         switch (state) {
@@ -52,26 +74,45 @@ public class MoveData {
         }
     }
 
+    /**
+     * Retrieves the current movement state.
+     *
+     * @return the current movement state
+     */
     public MoveState getState() {
         return moveState;
     }
 
-
+    /**
+     * Analyzes the current state of the movement data using the active state handler.
+     *
+     * @param moveData the MoveData instance to analyze
+     */
     public void analyzeState(MoveData moveData) {
         if (stateHandler != null) {
             stateHandler.analyzeState(moveData);
         }
     }
 
+    /**
+     * Updates the player appearance based on the current state and animation.
+     *
+     * @param player     the player to update
+     * @param lastState  the last movement state of the player
+     * @param animation  the animation to be applied
+     */
     public void drawPlayer(Player player, MoveState lastState, Animation animation) {
         if (stateHandler != null) {
             stateHandler.updatePlayer(player, lastState, animation);
         }
     }
 
-
-
-
+    /**
+     * Checks if the current movement state matches the specified state.
+     *
+     * @param state the state to check against
+     * @return true if the current state matches, false otherwise
+     */
     public boolean stateIs(MoveState state) {
         return moveState == state;
     }

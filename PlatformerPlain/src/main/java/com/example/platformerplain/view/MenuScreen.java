@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 /**
  * This class manages the main menu screen of the game.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class MenuScreen implements Screen {
 

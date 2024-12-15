@@ -7,8 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
 /**
- * <h3>Animation</h3>
- *
  * This class manages a sequence of images (frames) to create an animation effect.
  * It handles frame updates based on a specified delay and allows for flipping image.
  *

@@ -8,11 +8,8 @@ import com.example.platformerplain.texture.Animation;
 import static com.example.platformerplain.Assets.DASH_SFX;
 
 /**
- * <h3>PlatformerPlain</h3>
- *
  * @author Changyu Li
- * @description <p></p>
- * @date 2024-12-15 20:18
+ * @date 2024-12-15
  **/
 class DashingState implements MoveStateHandler {
     int lastAfterimageFrame = 0;

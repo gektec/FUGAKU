@@ -7,7 +7,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 /**
- * <p> mapping entity types to their respective sprites <p/>
+ * mapping entity types to their respective sprites
  * @author Changyu Li
  * @date 2024/12/11
  */

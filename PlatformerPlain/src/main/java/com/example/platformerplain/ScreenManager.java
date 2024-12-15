@@ -3,6 +3,10 @@ package com.example.platformerplain;
 import com.example.platformerplain.view.Screen;
 import javafx.stage.Stage;
 
+/**
+ * @author Zelin Xia
+ * @date 2024/11/25
+ */
 public class ScreenManager {
 
     private static ScreenManager instance;  // Singleton instance

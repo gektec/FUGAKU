@@ -4,11 +4,8 @@ import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.texture.Animation;
 
 /**
- * <h3>PlatformerPlain</h3>
- *
  * @author Changyu Li
- * @description <p></p>
- * @date 2024-12-15 20:18
+ * @date 2024-12-15
  **/
 class ClimbingState implements MoveStateHandler {
     /**

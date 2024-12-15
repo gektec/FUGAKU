@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 /**
  * This class represents the screen that is shown to players when they fail a level.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class FailScreen implements Screen {
 

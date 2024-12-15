@@ -13,8 +13,11 @@ import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
 /**
+ * This class is responsible for controlling the movement of enemy entities in the platformer game.
+ * It handles the enemy's state, velocity, and interactions with the game environment.
+ *
  * @author Changyu Li
- * @date 2024/11/24
+ * @date 2024/11/11
  */
 public class MoveEnemy {
     private Enemy enemy;
@@ -27,23 +30,28 @@ public class MoveEnemy {
     private MoveData moveData;
     private double waitingTime = 0;
 
-
     /**
-     * @param enemy
-     * @param platforms
-     * @param levelWidth
+     * Constructs a MoveEnemy instance for the given enemy and platform entities.
+     *
+     * @param enemy the enemy entity to be controlled
+     * @param platforms the list of platform entities in the game
+     * @param levelWidth the width of the game level (not currently used)
      */
     public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth) {
         this.enemy = enemy;
         this.entityMap = platforms;
-        //this.levelWidth = levelWidth;
         this.velocity = new Coord2D(0, 0);
         this.isTouchingGround = true;
         this.enemyState = MoveState.IDLE;
         moveData = new MoveData(enemyState, isFacingLeft, isTouchingGround, isTouchingWall, velocity);
     }
-//todo
 
+    /**
+     * Updates the enemy's movement and state based on game logic.
+     * <p>This method processes enemy actions such as jumping and moving left or right,
+     * applies gravity, and updates the enemy's position.</p>
+     * <p>It also handles waiting time for jump actions.</p>
+     */
     public void update() {
         if (enemy.isDead) {
             return;
@@ -73,7 +81,6 @@ public class MoveEnemy {
             }
         }
 
-
         velocity.reduce(RESISTANCE, 0);
 
         if (velocity.getY() < MAX_FALL_SPEED) {
@@ -84,9 +91,13 @@ public class MoveEnemy {
 
         isTouchingGround = moveData.isTouchingGround;
         isTouchingWall = moveData.isTouchingWall;
-
-
     }
+
+    /**
+     * Gets the current movement data of the enemy.
+     *
+     * @return a MoveData object containing the current state and movement information of the enemy
+     */
     public MoveData getMoveData() {
         return new MoveData(enemyState, isFacingLeft, isTouchingGround, false, velocity);
     }

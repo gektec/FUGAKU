@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 /**
  * This class represents the screen where players can select the level they want to play.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class LevelSelectScreen implements Screen {
 
