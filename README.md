@@ -161,6 +161,8 @@ In our game project, we implemented the Singleton Pattern to create the `ScreenM
 
 3. **Resource Management**: The Singleton Pattern allows for better management of shared resources, reducing memory overhead and enhancing performance. All screens can utilize a single manager instance to handle transitions and state without duplicating logic.
 
+### State Pattern
+
 ---
 
 ## Javadocs
