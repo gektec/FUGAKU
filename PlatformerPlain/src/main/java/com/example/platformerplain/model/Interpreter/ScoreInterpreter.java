@@ -4,6 +4,11 @@ package com.example.platformerplain.model.Interpreter;
 public class ScoreInterpreter {
     private Expression expression;
 
+    /**
+     * Constructs a ScoreInterpreter instance and initializes the expression tree.
+     * The expression tree corresponds to the calculation:
+     * maxScore - (penaltyPerSecond * elapsedSeconds) + (killedEnemy * 200).
+     */
     public ScoreInterpreter() {
         // Constructing an expression tree corresponds to maxScore - (penaltyPerSecond * secondsElapsed) + (killedEnemy * 200)
         expression = new AddExpression(
@@ -18,6 +23,12 @@ public class ScoreInterpreter {
         );
     }
 
+    /**
+     * Interprets the expression tree using the provided ScoreContext.
+     *
+     * @param context the ScoreContext that provides the necessary variable values for interpretation
+     * @return the result of the expression evaluation based on the current score context
+     */
     public int interpret(ScoreContext context) {
         return expression.interpret(context);
     }

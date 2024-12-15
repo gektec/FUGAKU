@@ -9,11 +9,12 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.scene.input.KeyCode;
 
 /**
- * @author Changyu Li
+ * Initializes the level by creating entities based on the specified layout.
+ * Responsible for generating the player, platforms, enemies, spikes, ladders, and goals.
+ * @author Changyu Li, Zelin Xia
  * @date 2024/11/23
  */
 public class LevelInitializer {
@@ -28,6 +29,17 @@ public class LevelInitializer {
     private ArrayList<Spike> spikeMap;
     private ArrayList<Ladder> ladderMap;
 
+    /**
+     * Constructs a LevelInitializer with the specified parameters.
+     * @param keys the hashmap to store key states.
+     * @param gameRoot the pane where game entities will be rendered.
+     * @param uiRoot the pane for UI elements.
+     * @param backgroundRoot the pane for background elements.
+     * @param collidableMap the list of collidable entities in the level.
+     * @param enemyMap the list of enemies in the level.
+     * @param spikeMap the list of spikes in the level.
+     * @param ladderMap the list of ladders in the level.
+     */
     public LevelInitializer(HashMap<KeyCode, Boolean> keys, Pane gameRoot, Pane uiRoot, Pane backgroundRoot,
                             ArrayList<Entity> collidableMap, ArrayList<Enemy> enemyMap,
                             ArrayList<Spike> spikeMap, ArrayList<Ladder> ladderMap) {
@@ -41,6 +53,12 @@ public class LevelInitializer {
         this.ladderMap = ladderMap;
     }
 
+    /**
+     * Generates the level entities based on the current level layout.
+     * Resets previous state and creates new entities accordingly.
+     * @param currentLevel the index of the current level to generate.
+     * @return the player entity.
+     */
     public Entity generateLevel(int currentLevel) {
         keys.clear();
         collidableMap.clear();
@@ -62,11 +80,11 @@ public class LevelInitializer {
                     case 'H':
                         if (i > 0 && LevelData.Levels[currentLevel][i - 1].charAt(j) == 'H' && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
                             adjacencyCode = (int)(Math.random() * 2) + 1; // 1 or 2
-                        }
-                        else if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
+                        } else if (i < LevelData.Levels[currentLevel].length - 1 && LevelData.Levels[currentLevel][i + 1].charAt(j) == 'H') {
                             adjacencyCode = 0;
+                        } else {
+                            adjacencyCode = 3;
                         }
-                        else adjacencyCode = 3;
                         Ladder ladder = (Ladder) createEntity(EntityType.LADDER, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         ladderMap.add(ladder);
                         break;
@@ -97,16 +115,35 @@ public class LevelInitializer {
         return player;
     }
 
+    /**
+     * Creates an entity of the specified type with the given parameters.
+     * @param type the type of the entity to create.
+     * @param x the x-coordinate position of the entity.
+     * @param y the y-coordinate position of the entity.
+     * @param w the width of the entity.
+     * @param h the height of the entity.
+     * @param index the index used for certain entities.
+     * @return the created entity or null if creation failed.
+     */
     private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
         if (entity != null) {
             if (GameModel.isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
             else gameRoot.getChildren().add(entity.canvas());
+        } else {
+            System.err.println("Entity creation failed");
         }
-        else System.err.println("Entity creation failed");
         return entity;
     }
 
+    /**
+     * Calculates the adjacency code for the given position in the level based on neighboring tiles.
+     * @param level the current level's string array.
+     * @param i the row index of the specific tile.
+     * @param j the column index of the specific tile.
+     * @param target the character representing the target tile type.
+     * @return the calculated adjacency code based on neighboring tiles.
+     */
     private int calculateAdjacencyCode(String[] level, int i, int j, char target) {
         int adjacencyCode = 0;
         if (i > 0 && level[i - 1].charAt(j) == target) {

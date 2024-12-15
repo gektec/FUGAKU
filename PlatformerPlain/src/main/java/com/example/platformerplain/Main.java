@@ -20,7 +20,7 @@ public class Main extends Application {
 
     /**
      * Start the application
-     * @param primaryStage
+     * @param primaryStage the primary stage for this application.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -37,10 +37,18 @@ public class Main extends Application {
         primaryStage.setResizable(false);
     }
 
+    /**
+     * Gets the instance of the Main class.
+     * @return the current instance of Main.
+     */
     public static Main getInstance() {
         return instance;
     }
 
+    /**
+     * Gets the primary stage of the application.
+     * @return the primary stage.
+     */
     public static Stage getPrimaryStage() {
         return primaryStage;
     }

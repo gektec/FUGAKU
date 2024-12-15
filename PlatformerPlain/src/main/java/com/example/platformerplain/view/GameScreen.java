@@ -283,66 +283,126 @@ public class GameScreen implements Screen, GameModelObserver {
 
 
 
-
+    /**
+     * Retrieves the game root pane.
+     * This pane contains all game-related nodes and is used for rendering the game scene.
+     *
+     * @return the game root pane
+     */
 public static Pane getGameRoot() {
         return gameRoot;
     }
 
+    /**
+     * Retrieves the UI root pane.
+     * This pane contains all UI-related nodes and overlays used for player interface elements.
+     *
+     * @return the UI root pane
+     */
     public static Pane getUIRoot() {
         return uiRoot;
     }
 
+    /**
+     * Retrieves the background root pane.
+     * This pane contains all background images used in the game.
+     *
+     * @return the background root pane
+     */
     public static Pane getBackgroundRoot() {
         return backgroundRoot;
     }
 
-
+    /**
+     * Retrieves the game scene.
+     * This scene contains all nodes and UI elements for the game window.
+     *
+     * @return the game scene
+     */
     public static Scene getGameScene() {
         return gameScene;
     }
 
-
+    /**
+     * Retrieves the framerate label used for displaying debug information.
+     *
+     * @return the framerate label
+     */
     public static Label getFramerateLabel() {
         return framerateLabel;
     }
 
-
+    /**
+     * Retrieves the move state label used for displaying debug information.
+     *
+     * @return the move state label
+     */
     public static Label getMoveStateLabel() {
         return moveStateLabel;
     }
 
-
+    /**
+     * Retrieves the player speed label used for displaying debug information.
+     *
+     * @return the player speed label
+     */
     public static Label getPlayerSpeedLabel() {
         return playerSpeedLabel;
     }
 
-
+    /**
+     * Retrieves the time label used for displaying debug information.
+     *
+     * @return the time label
+     */
     public static Label getTimeLabel() {
         return timeLabel;
     }
 
+    /**
+     * Retrieves the position label used for displaying debug information.
+     *
+     * @return the position label
+     */
     public static Label getPositionLabel() {
         return positionLabel;
     }
 
 
-
+    /**
+     * Retrieves the speed chart used for displaying player speed over time.
+     *
+     * @return the speed chart
+     */
     public static LineChart<Number, Number> getSpeedChart() {
         return speedChart;
     }
 
-
+    /**
+     * Retrieves the X-axis data series for the speed chart.
+     *
+     * @return the X-axis data series
+     */
     public static XYChart.Series<Number, Number> getSpeedX() {
         return speedX;
     }
 
-
+    /**
+     * Retrieves the Y-axis data series for the speed chart.
+     *
+     * @return the Y-axis data series
+     */
     public static XYChart.Series<Number, Number> getSpeedY() {
         return speedY;
     }
 
 
-    //  GameModelObserver interface
+    /**
+     * Notifies observers when the score has changed.
+     * This method updates the score label with the new score value.
+     *
+     * @param newScore the new score value after the change
+     */
     @Override
     public void onScoreChanged(int newScore) {
         Platform.runLater(() -> {
@@ -350,6 +410,12 @@ public static Pane getGameRoot() {
         });
     }
 
+    /**
+     * Notifies observers when an enemy has been killed.
+     * This method updates the enemies killed label with the new total.
+     *
+     * @param totalKilled the total number of enemies killed so far
+     */
     @Override
     public void onEnemyKilled(int totalKilled) {
         Platform.runLater(() -> {
