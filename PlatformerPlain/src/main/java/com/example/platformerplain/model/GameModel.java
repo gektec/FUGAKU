@@ -101,6 +101,7 @@ public class GameModel {
         elapsedTime = 0;
         currentLevel = level;
         isPaused = false;
+        baseScore = 1000;
         GameScreen.initContent();
         initLevel();
         GameScreen.startLevel();
