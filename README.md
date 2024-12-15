@@ -212,31 +212,7 @@ We adhere to best practices for Javadoc comments, including:
 
 ## Class Diagram
 
-The class diagram is a visual representation of the main classes in the NGHMP project and their relationships. Below is the description and explanation of the class diagram:
-
-### Class Diagram Explanation
-
-- **Main Classes**: The class diagram includes the main classes in the project, including but not limited to:
-  - `Entity`: An abstract base class for all game entities, including players, enemies, decorations, and coins.
-  - `Player`: A concrete implementation of `Entity` that handles player behavior and state.
-  - `Enemy`: A concrete implementation of `Entity` that defines enemy behavior.
-  - `LevelManager`: Manages level logic, responsible for loading and switching levels.
-  - `GameModel`: Manages game state (such as score, time, etc.) and logic.
-  - `ScreenManager`: Implements the singleton pattern, responsible for managing and switching different UI screens.
-  - `InputManager`: Handles user input and passes it to the corresponding commands for execution.
-  - Various state classes (e.g., `RunningState`, `JumpingState`, `ClimbingState`, `FallingState`, etc.).
-
-### Relationships Between Classes
-
-- **Inheritance Relationships**:
-  - The `Player` and `Enemy` classes inherit from the `Entity` class, indicating that they are specific types of entities.
-
-- **Aggregation Relationships**:
-  - `GameModel` has an aggregation relationship with `ScreenManager`, indicating that it can utilize `ScreenManager` to manage different screens.
-
-- **Dependency Relationships**:
-  - `LevelManager` depends on `GameModel` to update and communicate the current game state.
-  - `InputManager` depends on the `Command` interface, allowing various movement commands to be implemented and executed.
+The class diagram is a visual representation of the main classes in the NGHMP project and their relationships. Below is the introduction of our class diagram:
 
 ### How to View the Class Diagram
 
