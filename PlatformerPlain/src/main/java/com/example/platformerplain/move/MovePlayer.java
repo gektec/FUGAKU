@@ -168,7 +168,7 @@ public class MovePlayer {
         if(coinMap == null) return;
         for (Coin coin : coinMap) {
             if (player.hitBox().getBoundsInParent().intersects(coin.hitBox().getBoundsInParent())) {
-                //todo
+                coin.isCollected = true;
                 return;
             }
         }

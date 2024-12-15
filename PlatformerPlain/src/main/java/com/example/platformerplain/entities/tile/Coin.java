@@ -16,33 +16,34 @@ import javafx.scene.shape.Rectangle;
 public class Coin extends Tile {
     private GraphicsContext gc;
     private Image sprite;
+    public boolean isCollected = false;
+    private boolean canCollect = true;
 
 
-    public Coin(int x, int y, int w, int h, int index) {
+    public Coin(int x, int y, int w, int h) {
         hitBox = new Rectangle(w, h, Color.GOLD);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
-        canvas = new Canvas(Constants.TILE_SIZE, Constants.TILE_SIZE);
+        canvas = new Canvas(40, 40);
         gc = canvas.getGraphicsContext2D();
-        Move.centerAlign(this,new Coord2D(10,-32));
+        Move.centerAlign(this,new Coord2D(0,0));
 
         sprite = ImageScaler.nearestNeighborScale(Assets.COIN,3);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-
-    public void removeFromGame() {
-        GameModel.removeEntity(this);
-    }
-
     @Override
     public void update() {
-        //todo
+        if(isCollected && canCollect){
+            GameModel.removeEntity(this);
+            GameModel.collectedCoin();
+            canCollect = false;
+        }
     }
 
     @Override
     public int[] size() {
-        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
+        return new int[]{Constants.COIN_SIZE, Constants.COIN_SIZE};
     }
 
     @Override

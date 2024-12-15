@@ -113,7 +113,7 @@ public class LevelInitializer {
                         createEntity(EntityType.DECORATION, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
                         break;
                     case 'C':
-                        Coin coin = (Coin) createEntity(EntityType.COIN, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, 0);
+                        Coin coin = (Coin) createEntity(EntityType.COIN, j * Constants.TILE_SIZE + (Constants.TILE_SIZE - Constants.COIN_SIZE)/2, i * Constants.TILE_SIZE+ (Constants.TILE_SIZE - Constants.COIN_SIZE)/2, Constants.COIN_SIZE, Constants.COIN_SIZE, 0);
                         coinMap.add(coin);
                         break;
                 }

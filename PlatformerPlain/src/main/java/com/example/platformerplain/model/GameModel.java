@@ -179,6 +179,11 @@ public class GameModel {
                 enemy.update();
             }
         }
+        if(coinMap != null){
+            for(Coin coin : coinMap){
+                coin.update();
+            }
+        }
     }
 
     private static void updateLabels() {
@@ -313,6 +318,11 @@ public class GameModel {
         notifyScoreChanged(baseScore);
         // Notify of changes in the number of enemies killed
         notifyEnemyKilled(killedEnemy);
+    }
+
+    public static void collectedCoin(){
+        baseScore += 300;
+        notifyScoreChanged(baseScore);
     }
 
     public static MovePlayer getMovePlayerLogic() {

@@ -51,23 +51,18 @@ public class Enemy extends Moveable {
             GameModel.killedEnemy();
         }
         if(isDead && animation.hasPlayedOnce()){
-            removeFromGame();
+            GameModel.removeEntity(this);
         } else {
             // Update and draw
             animation.update();
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             Image sprite = animation.getImage();
             if (sprite != null) {
-                //sprite = ImageScaler.nearestNeighborScale(sprite);
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
             moveEnemyLogic.update();
 
         }
-    }
-
-    public void removeFromGame() {
-        GameModel.removeEntity(this);
     }
 
     @Override

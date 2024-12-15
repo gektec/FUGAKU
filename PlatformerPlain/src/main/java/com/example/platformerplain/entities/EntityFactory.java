@@ -24,7 +24,7 @@ public class EntityFactory {
             case DECORATION:
                 return new Decoration(x, y, w, h);
             case COIN:
-                return new Coin(x, y, w, h, index);
+                return new Coin(x, y, w, h);
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + type);
         }
