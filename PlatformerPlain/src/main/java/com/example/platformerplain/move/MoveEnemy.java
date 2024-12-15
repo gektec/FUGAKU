@@ -19,7 +19,7 @@ public class MoveEnemy {
     private Enemy enemy;
     private ArrayList<Entity> entityMap;
     private boolean moveLeft;
-    private boolean canJump;
+    private boolean isTouchingGround;
     //private int levelWidth;
     private Coord2D velocity;
     private MoveState enemyState;
@@ -35,7 +35,7 @@ public class MoveEnemy {
         this.entityMap = platforms;
         //this.levelWidth = levelWidth;
         this.velocity = new Coord2D(0, 0);
-        this.canJump = true;
+        this.isTouchingGround = true;
         this.enemyState = MoveState.IDLE;
     }
 //todo
@@ -52,20 +52,20 @@ public class MoveEnemy {
             velocity.add(0, Constants.GRAVITY);
         }
 
-        if(canJump){
+        if(isTouchingGround){
             velocity.add(0, -20);
-            canJump = false;
+            isTouchingGround = false;
         }
-        MoveData moveData = new MoveData(enemyState, false,false, false, velocity);
+        MoveData moveData = new MoveData(enemyState, false, isTouchingGround, false, velocity);
         Move.move(enemy, moveData);
 
         moveLeft = moveData.isFacingLeft;
-        canJump = moveData.isTouchingGround;
+        isTouchingGround = moveData.isTouchingGround;
 
 //        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
 //        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
     }
     public MoveData getMoveStatus() {
-        return new MoveData(enemyState, moveLeft, canJump, false, velocity);
+        return new MoveData(enemyState, moveLeft, isTouchingGround, false, velocity);
     }
 }

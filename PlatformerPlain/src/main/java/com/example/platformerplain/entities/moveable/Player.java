@@ -42,7 +42,7 @@ public class Player extends Moveable {
         GameModel.getMovePlayerLogic().update();
         canvas.setTranslateY(hitBox.getTranslateY()-130);
 
-        GameModel.getMovePlayerLogic().getMoveData().updatePlayer(this, lastState, animation);
+        GameModel.getMovePlayerLogic().getMoveData().drawPlayer(this, lastState, animation);
 
         animation.update();
 

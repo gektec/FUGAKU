@@ -12,7 +12,7 @@ import com.example.platformerplain.texture.Animation;
  * @description <p></p>
  * @date 2024-12-15 20:18
  **/
-public class DashingState implements MoveStateHandler {
+class DashingState implements MoveStateHandler {
     int lastAfterimageFrame = 0;
     /**
      * @param moveData

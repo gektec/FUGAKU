@@ -10,7 +10,7 @@ import com.example.platformerplain.texture.Animation;
  * @description <p></p>
  * @date 2024-12-15 20:17
  **/
-public class SlideJumpingState implements MoveStateHandler {
+class SlideJumpingState implements MoveStateHandler {
     /**
      * @param moveData
      */

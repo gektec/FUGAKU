@@ -22,6 +22,7 @@ public class Move {
     private static boolean isTouchingGround = false;
     private static boolean isTouchingLeftWall = false;
     private static boolean isTouchingRightWall = false;
+    private static boolean isFacingLeft = false;
 
     public Move(ArrayList<Entity> collidableMap) {
         Move.collidableMap = collidableMap;
@@ -124,14 +125,13 @@ public class Move {
                 if (moveable.hitBox().getBoundsInParent().intersects(platform.hitBox().getBoundsInParent())) {
                     int relativeLocation = detectRelativeLocation(moveable, platform);
                     if (relativeLocation == 1) {
-                        isTouchingGround = true;
                         moveable.hitBox().setTranslateY(platform.hitBox().getTranslateY() - moveable.size()[1]);
                         velocity.setY(0);
                         if (!moveData.stateIs(MoveState.DASHING)) {
                             if (velocity.getX() != 0) moveData.setState(MoveState.RUNNING);
                             else moveData.setState(MoveState.IDLE);
                         }
-                        moveData.isTouchingGround = true;
+                        isTouchingGround = true;
                     } else if (relativeLocation == 2) {
                         isTouchingRightWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() - moveable.size()[0]);
@@ -140,7 +140,7 @@ public class Move {
                             velocity.setX(-Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() - Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveData.isFacingLeft = true;
+                            isFacingLeft = true;
                             moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
@@ -152,7 +152,7 @@ public class Move {
                             velocity.setX(Constants.SLIDE_JUMP_SPEED);
                             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + Constants.SLIDE_JUMP_SPEED);
                         } else if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
-                            moveData.isFacingLeft = false;
+                            isFacingLeft = false;
                             moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
                         }
@@ -163,6 +163,9 @@ public class Move {
                     }
                 }
             }
+            moveData.isTouchingGround = isTouchingGround;
+            moveData.isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
+            if (isTouchingLeftWall || isTouchingRightWall) moveData.isFacingLeft = isFacingLeft;
         }
     }
 
@@ -173,8 +176,7 @@ public class Move {
 
     //todo: use state pattern
     private static void setStatus(Entity moveable, MoveData moveData) {
-            boolean isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
-            moveData.isTouchingWall = isTouchingWall;
+            moveData.isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
 
             moveData.analyzeState(moveData);
     }

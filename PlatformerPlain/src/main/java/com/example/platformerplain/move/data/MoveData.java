@@ -63,7 +63,7 @@ public class MoveData {
         }
     }
 
-    public void updatePlayer(Player player, MoveState lastState, Animation animation) {
+    public void drawPlayer(Player player, MoveState lastState, Animation animation) {
         if (stateHandler != null) {
             stateHandler.updatePlayer(player, lastState, animation);
         }

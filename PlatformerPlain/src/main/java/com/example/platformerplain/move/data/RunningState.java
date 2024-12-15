@@ -12,7 +12,7 @@ import com.example.platformerplain.texture.Animation;
  * @description <p></p>
  * @date 2024-12-15 20:17
  **/
-public class RunningState implements MoveStateHandler {
+class RunningState implements MoveStateHandler {
     /**
      * @param moveData
      */

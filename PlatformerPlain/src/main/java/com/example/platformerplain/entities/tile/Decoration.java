@@ -16,7 +16,7 @@ public class Decoration extends Tile {
     private GraphicsContext gc;
 
     public Decoration(int x, int y, int w, int h) { //todo: remove useless parameters
-        Rectangle hitBox = new Rectangle(w, h, Color.DARKBLUE);
+        hitBox = new Rectangle(w, h, Color.DARKBLUE);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
 
@@ -27,8 +27,6 @@ public class Decoration extends Tile {
         Image sprite = CutSpriteSheet.getSprite(EntityType.DECORATION, (int) (Math.random() * 5), (int) (Math.random() * 7));
         sprite = ImageScaler.nearestNeighborScale(sprite,5); //todo: move to assets
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
-
-        this.hitBox = hitBox;
 
     }
 

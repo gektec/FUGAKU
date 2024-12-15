@@ -20,7 +20,7 @@ public class Ladder extends Tile {
         if(index == 0) {
             h = 20;  //top of ladder is shorter
         }
-        Rectangle hitBox = new Rectangle(w, h, Color.PURPLE);
+        hitBox = new Rectangle(w, h, Color.PURPLE);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y+ Constants.TILE_SIZE -h);
 
@@ -32,7 +32,6 @@ public class Ladder extends Tile {
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
-        this.hitBox = hitBox;
         this.index = index;
 
     }

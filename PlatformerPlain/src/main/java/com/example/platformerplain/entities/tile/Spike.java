@@ -22,14 +22,17 @@ public class Spike extends Tile {
 
     public Spike(int x, int y, int w, int h, int index) {
         this.index = index;
-        Rectangle hitBox = new Rectangle(w, h, Color.RED);
+        hitBox = new Rectangle(w, h, Color.RED);
         hitBox.setTranslateX(x - ( w - Constants.TILE_SIZE) / 2);
         hitBox.setTranslateY(y - ( h - Constants.TILE_SIZE) / 2);
         canvas = new Canvas(Constants.TILE_SIZE, Constants.TILE_SIZE);
         if(index>=16) {
-            this.hitBox = hitBox;
             Move.centerAlign(this, new Coord2D(0,0));
-        }else this.hitBox = new Rectangle(-1000,0,0,0);
+        }else {
+            this.hitBox = new Rectangle(-1000,0,0,0);
+            canvas.setTranslateX(x);
+            canvas.setTranslateX(y);
+        }
 
         gc = canvas.getGraphicsContext2D();
         Image sprite = CutSpriteSheet.getSprite(EntityType.SPIKE, AssetManager.getSpikePosition(index)[0], AssetManager.getSpikePosition(index)[1]);
@@ -50,7 +53,7 @@ public class Spike extends Tile {
 
     @Override
     public int[] size() {
-        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
+        return new int[]{Constants.SPIKE_SIZE, Constants.SPIKE_SIZE};
     }
 
     @Override
