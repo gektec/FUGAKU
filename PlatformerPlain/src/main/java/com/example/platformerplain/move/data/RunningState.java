@@ -4,6 +4,9 @@ import com.example.platformerplain.Assets;
 import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
+import javafx.util.Duration;
+
+import static com.example.platformerplain.Assets.RUN_SFX;
 
 /**
  * <h3>PlatformerPlain</h3>
@@ -38,8 +41,9 @@ class RunningState implements MoveStateHandler {
     public void updatePlayer(Player player, MoveState lastState, Animation animation) {
         if (lastState != MoveState.RUNNING) {
             animation.setFrames(Assets.PLAYER_RUN[0]);
-            animation.setDelay(5);
             player.setLastState(MoveState.RUNNING);
         }
+        animation.setDelay( 13 - (int) Math.abs (player.getMoveData().velocity.getX()));
+        RUN_SFX.cyclePlay(Duration.millis(600 - Math.abs (player.getMoveData().velocity.getX() * 20)));
     }
 }

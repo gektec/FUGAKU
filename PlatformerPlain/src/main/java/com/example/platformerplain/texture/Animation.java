@@ -40,7 +40,7 @@ public class Animation {
 
 		count++;
 
-		if (count == delay) {
+		if (count >= delay) {
 			currentFrame++;
 			count = 0;
 		}

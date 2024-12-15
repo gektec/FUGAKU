@@ -91,6 +91,7 @@ public class AssetManager {
      */
     public static class GameMediaPlayer {
         private MediaPlayer mediaPlayer;
+        private long lastPlayTime = 0;
 
         public GameMediaPlayer (String mediaFile) {
             Media media = loadSound(mediaFile);
@@ -108,19 +109,15 @@ public class AssetManager {
             mediaPlayer.stop();
         }
 
-        public void cycle() {
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
-            });
+        public void cyclePlay(Duration minInterval) {
+            long now = System.currentTimeMillis();
+            if (lastPlayTime == 0 || (now - lastPlayTime) >= minInterval.toMillis()) {
+                mediaPlayer.stop();
+                mediaPlayer.play();
+                lastPlayTime = now;
+            }
         }
 
-        public void stopCycle() {
-            mediaPlayer.setOnEndOfMedia(null); // Remove the looping behavior
-        }
     }
 
     public static Media loadSound(String s) {

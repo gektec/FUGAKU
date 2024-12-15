@@ -50,6 +50,7 @@ public class Assets {
     public static final AssetManager.GameMediaPlayer BACKGROUND_MUSIC = new AssetManager.GameMediaPlayer("/sound/victory.mp3"); // todo: replace
     public static final AssetManager.GameMediaPlayer JUMP_SFX = new AssetManager.GameMediaPlayer("/sound/Jump.wav");
     public static final AssetManager.GameMediaPlayer DASH_SFX = new AssetManager.GameMediaPlayer("/sound/Dash.wav");
+    public static final AssetManager.GameMediaPlayer RUN_SFX = new AssetManager.GameMediaPlayer("/sound/Step_Wood.wav");
 
     // Fonts
     public static final Font baseFont = Font.loadFont(Assets.class.getResourceAsStream("/m6x11plus.ttf"), 20);
