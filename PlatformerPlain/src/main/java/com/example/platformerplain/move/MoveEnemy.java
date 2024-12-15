@@ -3,6 +3,7 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.move.command.*;
 import com.example.platformerplain.move.data.MoveData;
 import com.example.platformerplain.move.data.MoveState;
 
@@ -18,11 +19,13 @@ import static com.example.platformerplain.Constants.RESISTANCE;
 public class MoveEnemy {
     private Enemy enemy;
     private ArrayList<Entity> entityMap;
-    private boolean moveLeft;
+    private boolean isFacingLeft;
     private boolean isTouchingGround;
-    //private int levelWidth;
+    private boolean isTouchingWall;
     private Coord2D velocity;
     private MoveState enemyState;
+    private MoveData moveData;
+    private double waitingTime = 0;
 
 
     /**
@@ -37,14 +40,39 @@ public class MoveEnemy {
         this.velocity = new Coord2D(0, 0);
         this.isTouchingGround = true;
         this.enemyState = MoveState.IDLE;
+        moveData = new MoveData(enemyState, isFacingLeft, isTouchingGround, isTouchingWall, velocity);
     }
 //todo
 
     public void update() {
-
         if (enemy.isDead) {
             return;
         }
+
+        enemyState = moveData.getState();
+        isTouchingGround = moveData.isTouchingGround;
+        isTouchingWall = moveData.isTouchingWall;
+
+        PlayCommand jump = new JumpCommand(moveData);
+        PlayCommand moveLeft = new MoveLeftCommand(moveData);
+        PlayCommand moveRight = new MoveRightCommand(moveData);
+
+        waitingTime -= 0.1;
+
+        if (isTouchingGround && waitingTime <= 0) {
+            jump.execute();
+            isFacingLeft = !isFacingLeft;
+            waitingTime = (Math.random() * 10);
+        }
+
+        if(moveData.stateIs(MoveState.JUMPING)) {
+            if(isFacingLeft) {
+                moveLeft.execute();
+            } else {
+                moveRight.execute();
+            }
+        }
+
 
         velocity.reduce(RESISTANCE, 0);
 
@@ -52,20 +80,14 @@ public class MoveEnemy {
             velocity.add(0, Constants.GRAVITY);
         }
 
-        if(isTouchingGround){
-            velocity.add(0, -20);
-            isTouchingGround = false;
-        }
-        MoveData moveData = new MoveData(enemyState, false, isTouchingGround, false, velocity);
         Move.move(enemy, moveData);
 
-        moveLeft = moveData.isFacingLeft;
         isTouchingGround = moveData.isTouchingGround;
+        isTouchingWall = moveData.isTouchingWall;
 
-//        leftEdgeSensor.setX(enemy.hitBox().getTranslateX() - 5);
-//        leftEdgeSensor.setY(enemy.hitBox().getTranslateY() - Constants.ENEMY_SIZE/2);
+
     }
-    public MoveData getMoveStatus() {
-        return new MoveData(enemyState, moveLeft, isTouchingGround, false, velocity);
+    public MoveData getMoveData() {
+        return new MoveData(enemyState, isFacingLeft, isTouchingGround, false, velocity);
     }
 }

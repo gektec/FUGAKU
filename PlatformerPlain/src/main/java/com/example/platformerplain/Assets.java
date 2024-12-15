@@ -35,8 +35,15 @@ public class Assets {
     public static final Image GOAL = AssetManager.loadImage("/images/tile/Goal.png");
     public static final Image COIN = AssetManager.loadImage("/images/tile/Coin.png");
 
-    public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 5);
-    public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 5);
+    public static final Image[][] GHOST_IDLE = AssetManager.loadImage("/images/character/ghost/Ghost_Idle.png", 48, 48, 3);
+    public static final Image[][] GHOST_DEATH = AssetManager.loadImage("/images/character/ghost/Ghost_Death.png", 48, 48, 3);
+
+    public static final Image[][] FROG_IDLE = AssetManager.loadImage("/images/character/frog/Frog_Idle.png", 48, 48, 3);
+    public static final Image[][] FROG_DEATH = AssetManager.loadImage("/images/character/frog/Frog_Explosion.png", 48, 48, 3);
+    public static final Image[][] FROG_JUMP = AssetManager.loadImage("/images/character/frog/Frog_Hop.png", 48, 48, 3);
+
+
+
     public static final Image[][] PLAYER_IDLE = AssetManager.loadImage("/images/character/player/Player_Idle.png", 96, 96, 3);
     public static final Image[][] PLAYER_RUN = AssetManager.loadImage("/images/character/player/Player_Run.png", 96, 96, 3);
     public static final Image[][] PLAYER_DASH = AssetManager.loadImage("/images/character/player/Player_Dash.png", 96, 96, 3);
@@ -50,10 +57,12 @@ public class Assets {
     public static final AssetManager.GameMediaPlayer COMPLETE_SOUND = new AssetManager.GameMediaPlayer("/sound/completed.mp3");
     public static final AssetManager.GameMediaPlayer VICTORY_SOUND = new AssetManager.GameMediaPlayer("/sound/victory.mp3");
     public static final AssetManager.GameMediaPlayer FAIL_SOUND = new AssetManager.GameMediaPlayer("/sound/defeat.mp3");
-    public static final AssetManager.GameMediaPlayer BACKGROUND_MUSIC = new AssetManager.GameMediaPlayer("/sound/victory.mp3"); // todo: replace
+    public static final AssetManager.GameMediaPlayer BACKGROUND_MUSIC = new AssetManager.GameMediaPlayer("/sound/BackgroundMusic.mp3"); // todo: replace
     public static final AssetManager.GameMediaPlayer JUMP_SFX = new AssetManager.GameMediaPlayer("/sound/Jump.wav");
     public static final AssetManager.GameMediaPlayer DASH_SFX = new AssetManager.GameMediaPlayer("/sound/Dash.wav");
     public static final AssetManager.GameMediaPlayer RUN_SFX = new AssetManager.GameMediaPlayer("/sound/Step_Wood.wav");
+    public static final AssetManager.GameMediaPlayer LANDING_SFX = new AssetManager.GameMediaPlayer("/sound/Landing.wav");
+    public static final AssetManager.GameMediaPlayer COIN_SFX = new AssetManager.GameMediaPlayer("/sound/Coin.wav");
 
     // Fonts
     public static final Font baseFont = Font.loadFont(Assets.class.getResourceAsStream("/m6x11plus.ttf"), 20);

@@ -29,9 +29,10 @@ public class Spike extends Tile {
         if(index>=16) {
             Move.centerAlign(this, new Coord2D(0,0));
         }else {
-            this.hitBox = new Rectangle(-1000,0,0,0);
             canvas.setTranslateX(x);
-            canvas.setTranslateX(y);
+            canvas.setTranslateY(y);
+            this.hitBox = new Rectangle(-1000,0,0,0);
+
         }
 
         gc = canvas.getGraphicsContext2D();

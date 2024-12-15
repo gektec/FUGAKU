@@ -16,6 +16,8 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.platformerplain.Assets.COIN_SFX;
+import static com.example.platformerplain.Assets.JUMP_SFX;
 import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.Constants.RESISTANCE;
 
@@ -117,11 +119,13 @@ public class MovePlayer {
         } else {
             if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingGround && playerState != MoveState.DASHING) {
                 jump.execute();
+                JUMP_SFX.play();
                 haveJKeyReleased = false;
             }
             // Slide jump
             else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall && !isTouchingGround && playerState != MoveState.SLIDE_JUMPING) {
                 slideJump.execute();
+                JUMP_SFX.play();
                 haveJKeyReleased = false;
             }
             // Move left
@@ -154,7 +158,7 @@ public class MovePlayer {
                 canClimb = true;
             }
         }
-        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.setState(MoveState.IDLE);
 
         Move.move(player, moveData);
 
@@ -170,6 +174,7 @@ public class MovePlayer {
         for (Coin coin : coinMap) {
             if (player.hitBox().getBoundsInParent().intersects(coin.hitBox().getBoundsInParent())) {
                 coin.isCollected = true;
+                COIN_SFX.play();
                 return;
             }
         }

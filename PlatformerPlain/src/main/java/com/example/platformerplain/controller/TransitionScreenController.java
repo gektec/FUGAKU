@@ -11,7 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
 /**
  * This class serves as the controller for the Transition Screen in the game.
@@ -96,8 +95,7 @@ public class TransitionScreenController {
      * This method loads and plays the victory sound associated with level completion.
      */
     private void playBackgroundMusic() {
-        // Load the victory sound
-        VICTORY_SOUND.play();
+        // TODO
     }
 
     /**

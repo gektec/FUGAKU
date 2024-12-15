@@ -67,8 +67,9 @@ public class Move {
     }
 
     public static MoveData move(Entity moveable, MoveData moveData){
-        beforeMove(moveable, moveData);
+        detectCollide(moveable, moveData);
         afterMove(moveable, moveData);
+        detectCollide(moveable, moveData);
         setStatus(moveable, moveData);
         centerAlign(moveable, new Coord2D(0,0));
         return moveData;
@@ -78,7 +79,7 @@ public class Move {
      * @param moveable
      * @param moveData
      */
-    private static void beforeMove(Entity moveable, MoveData moveData){
+    private static void detectCollide(Entity moveable, MoveData moveData){
         isTouchingGround = false;
         isTouchingLeftWall = false;
         isTouchingRightWall = false;
@@ -114,6 +115,9 @@ public class Move {
      */
     private static void afterMove(Entity moveable, MoveData moveData) {
         velocity = moveData.velocity;
+        isTouchingGround = false;
+        isTouchingLeftWall = false;
+        isTouchingRightWall = false;
         if (velocity.getY() != 0 || velocity.getX() != 0) {
             moveable.hitBox().setTranslateX(moveable.hitBox().getTranslateX() + velocity.getX());
             moveable.hitBox().setTranslateY(moveable.hitBox().getTranslateY() + velocity.getY());
@@ -141,7 +145,7 @@ public class Move {
                         isTouchingLeftWall = true;
                         moveable.hitBox().setTranslateX(platform.hitBox().getTranslateX() + Constants.TILE_SIZE);
                         velocity.setX(0);
-                            if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
+                        if (velocity.getY() > Constants.SLIDE_WALL_SPEED) {
                             isFacingLeft = true;
                             moveData.setState(MoveState.SLIDING);
                             velocity.setY(Constants.SLIDE_WALL_SPEED);
@@ -154,7 +158,6 @@ public class Move {
             }
             moveData.isTouchingGround = isTouchingGround;
             moveData.isTouchingWall = isTouchingLeftWall || isTouchingRightWall;
-            if (isTouchingLeftWall || isTouchingRightWall) moveData.isFacingLeft = isFacingLeft;
         }
     }
 

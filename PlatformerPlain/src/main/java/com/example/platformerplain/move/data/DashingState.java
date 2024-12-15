@@ -5,6 +5,8 @@ import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.texture.Animation;
 
+import static com.example.platformerplain.Assets.DASH_SFX;
+
 /**
  * <h3>PlatformerPlain</h3>
  *
@@ -38,16 +40,15 @@ class DashingState implements MoveStateHandler {
             if (GameModel.getMovePlayerLogic().getMoveData().velocity.getX() != 0) {
                 animation.setFrames(Assets.PLAYER_DASH[0]);
                 animation.setDelay(3);
-                player.setLastState(MoveState.DASHING);
             } else if (GameModel.getMovePlayerLogic().getMoveData().velocity.getY() > 0) {
                 animation.setFrames(Assets.PLAYER_JUMP_FALL[0]);
                 animation.setDelay(3);
-                player.setLastState(MoveState.DASHING);
             } else {
                 animation.setFrames(Assets.PLAYER_JUMP_START[0]);
                 animation.setDelay(3);
-                player.setLastState(MoveState.DASHING);
             }
+            DASH_SFX.play();
+            player.setLastState(MoveState.DASHING);
         }
     }
 }

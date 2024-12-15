@@ -18,6 +18,9 @@ class SlidingState implements MoveStateHandler {
         if (!moveData.isTouchingWall) {
             moveData.setState(MoveState.IDLE);
         }
+        if(moveData.isTouchingGround){
+            moveData.setState(MoveState.IDLE);
+        }
     }
 
     public void updatePlayer(Player player, MoveState lastState, Animation animation) {

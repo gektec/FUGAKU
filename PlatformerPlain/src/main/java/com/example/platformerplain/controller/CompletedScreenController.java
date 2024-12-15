@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 
-import static com.example.platformerplain.Assets.COMPLETE_SOUND;
 
 /**
  * This class serves as the controller for the Completed Screen in the game.
@@ -96,8 +95,7 @@ public class CompletedScreenController {
     private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
 
-        // Play the sound effect upon initialization
-        COMPLETE_SOUND.play();
+        //todo: Play the sound effect upon initialization
     }
 
     /**

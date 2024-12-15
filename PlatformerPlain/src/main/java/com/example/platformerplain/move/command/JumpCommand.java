@@ -17,7 +17,5 @@ public class JumpCommand implements PlayCommand {
         moveData.velocity.setY(-20);
         moveData.isTouchingGround = false;
         moveData.setState(MoveState.JUMPING);
-        JUMP_SFX.play();
-
     }
 }

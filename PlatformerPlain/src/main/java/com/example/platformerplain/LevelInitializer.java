@@ -96,13 +96,12 @@ public class LevelInitializer {
                         collidableMap.add(goal);
                         break;
                     case 'E':
-                        Enemy enemy = (Enemy) createEntity(EntityType.ENEMY, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE, 70);
+                        Enemy enemy = (Enemy) createEntity(EntityType.ENEMY, j * Constants.TILE_SIZE + (Constants.TILE_SIZE - Constants.ENEMY_SIZE)/2, i * Constants.TILE_SIZE+ (Constants.TILE_SIZE - Constants.ENEMY_SIZE)/2, Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, 70);
                         enemyMap.add(enemy);
                         break;
                     case 's':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 'S');
-                        Spike spike = (Spike) createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
-                        spikeMap.add(spike);
+                        createEntity(EntityType.SPIKE, j * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, adjacencyCode);
                         break;
                     case 'S':
                         adjacencyCode = calculateAdjacencyCode(LevelData.Levels[currentLevel], i, j, 's') + 16;

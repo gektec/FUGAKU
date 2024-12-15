@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
 /**
  * This class serves as the controller for the Menu Screen in the game.
@@ -61,8 +60,7 @@ public class MenuScreenController {
      * with appropriate background music in the future.
      */
     private void playBackgroundMusic() {
-        // TODO : replace it.
-        VICTORY_SOUND.play();
+        // TODO
     }
 
     /**

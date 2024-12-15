@@ -5,6 +5,8 @@ import com.example.platformerplain.entities.moveable.Player;
 import com.example.platformerplain.move.Coord2D;
 import com.example.platformerplain.texture.Animation;
 
+import static com.example.platformerplain.Assets.JUMP_SFX;
+
 /**
  * <h3>PlatformerPlain</h3>
  *
