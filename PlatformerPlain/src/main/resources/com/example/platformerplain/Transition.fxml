@@ -7,8 +7,8 @@
 <GridPane
         fx:id="root"
         alignment="CENTER"
-        prefHeight="400.0"
-        prefWidth="600.0"
+        prefHeight="720.0"
+        prefWidth="1280.0"
         hgap="30"
         vgap="30"
         stylesheets="@styles.css"
@@ -19,56 +19,46 @@
     <!--
         The placeholder area is used to provide vertical spacing in the first row of the GridPane.
     -->
-    <Region GridPane.rowIndex="0" minHeight="50" />
-
+    <HBox GridPane.rowIndex="1">
     <!-- Enemies killed Label -->
     <Label fx:id="killedLabel"
            text="ERROR: not initialized"
-           GridPane.rowIndex="0"
-           GridPane.columnIndex="0"/>
+           styleClass="label-dark"/>
 
     <!--
 
     <- Time Label -->
     <Label fx:id="timeLabel"
            text="ERROR: not initialized"
-           GridPane.rowIndex="0"
-           GridPane.columnIndex="1"/>
+           styleClass="label-dark"/>
 
     <!--
 
     <!- Score Label -->
     <Label fx:id="scoreLabel"
            text="ERROR: not initialized"
-           GridPane.rowIndex="0"
-           GridPane.columnIndex="2"/>
+           styleClass="label-dark"/>
+    </HBox>
 
     <!--
         Buttons on the transition screen for user interaction.
         Each button, when clicked, invokes a specific
         action defined in the TransitionScreenController class.
     -->
+    <HBox GridPane.rowIndex="2" spacing="30" alignment="CENTER">
     <Button fx:id="MenuButton"
             onAction="#handleMenu"
             mnemonicParsing="false"
-            text="Menu"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="0"/>
+            text="Menu"/>
 
     <Button fx:id="NextLevelButton"
             onAction="#handleNextLevel"
-            text="Next Level"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="2"/>
-
+            text="Next Level"/>
 
     <Button
             fx:id="RestartButton"
             onAction="#handleRestart"
             mnemonicParsing="false"
-            text="Restart"
-            GridPane.rowIndex="2"
-            GridPane.columnIndex="1"
-    />
-
+            text="Restart"/>
+    </HBox>
 </GridPane>

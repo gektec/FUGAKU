@@ -16,7 +16,7 @@
     <!-- Define one column and vertically distribute rows equally -->
 
     <!-- Centralizing all buttons using VBox -->
-    <VBox alignment="CENTER" spacing="10" GridPane.rowIndex="2">
+    <VBox alignment="CENTER" spacing="20" GridPane.rowIndex="2">
         <Button
                 fx:id="ResumeButton"
                 onAction="#handleResume"

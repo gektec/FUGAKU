@@ -17,7 +17,7 @@
 .button {
     -fx-background-color: #2C3E50; /* Dark blue background for a cool aesthetic */
     -fx-text-fill: #ECF0F1; /* Light colored text */
-    -fx-font-size: 20px;
+    -fx-font-size: 24px;
     -fx-padding: 10 20; /* Padding to make buttons easier to click */
     -fx-background-radius: 5; /* Rounded corners */
     -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 1); /* Adds shadow effect */
@@ -35,7 +35,7 @@
 /* Customize label style, consistent with button style */
 .label {
     -fx-text-fill: #ECF0F1;
-    -fx-font-size: 24px;
+    -fx-font-size: 32px;
     -fx-padding: 10 20;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.2), 5, 0, 0, 1);
@@ -44,7 +44,7 @@
 
 .label-dark {
     -fx-text-fill: #332222;
-    -fx-font-size: 24px;
+    -fx-font-size: 32px;
     -fx-padding: 10 20;
     -fx-background-radius: 5;
     -fx-cursor: hand;

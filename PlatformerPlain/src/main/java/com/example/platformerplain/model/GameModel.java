@@ -49,7 +49,7 @@ public class GameModel {
     private static MovePlayer movePlayerLogic;
 
     // Debug
-    private static boolean isDebugMode = true;
+    private static boolean isDebugMode = false;
 
     private static long lastTime = 0;
     private static int frameCount = 0;
