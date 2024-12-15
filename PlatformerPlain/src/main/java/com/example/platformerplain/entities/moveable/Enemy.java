@@ -1,12 +1,13 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.moveable;
 
 import com.example.platformerplain.Assets;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.LevelData;
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MoveEnemy;
-import com.example.platformerplain.move.MoveStatus;
-import javafx.scene.Node;
+import com.example.platformerplain.move.data.MoveData;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -16,18 +17,12 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 
 
-public class Enemy extends Entity {
-    private Node hitBox;
+public class Enemy extends Moveable {
     Image[] frames;
-    private Canvas canvas;
     private GraphicsContext gc;
     public boolean isDead;
     private boolean deathAnimationSet = false;
     private MoveEnemy moveEnemyLogic;
-
-    protected boolean isAnimated(){
-        return true;
-    };
 
     public Enemy(int x, int y, int w, int h) {
         hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
@@ -80,21 +75,11 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public Node canvas() {
-        return canvas;
-    }
-
-    @Override
-    public Node hitBox() {
-        return hitBox;
-    }
-
-    @Override
     public EntityType getType() {
         return EntityType.ENEMY;
     }
 
-    public MoveStatus getMoveStatus() {
+    public MoveData getMoveStatus() {
         return moveEnemyLogic.getMoveStatus();
     }
 }

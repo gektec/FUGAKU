@@ -3,12 +3,14 @@ package com.example.platformerplain.move;
 import com.example.platformerplain.Constants;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.LevelData;
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Ladder;
+import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.move.Command.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import com.example.platformerplain.move.command.*;
+import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.data.MoveData;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +41,7 @@ public class MovePlayer {
     private Coord2D playerVelocity; // Current velocity of the player
     private boolean haveJKeyReleased = true;
     private boolean haveKKeyReleased = true;
-    private static MoveStatus moveStatus;
+    private static MoveData moveData;
 
     /**
      * Constructor to initialize the MovePlayer object.
@@ -62,7 +64,7 @@ public class MovePlayer {
         this.spikes = spikes;
         this.ladders = ladders;
         this.playerState = MoveState.IDLE;
-        moveStatus = new MoveStatus(playerState, isFacingLeft, isTouchingGround, isTouchingWall, playerVelocity);
+        moveData = new MoveData(playerState, isFacingLeft, isTouchingGround, isTouchingWall, playerVelocity);
     }
 
     /**
@@ -79,18 +81,18 @@ public class MovePlayer {
      * Updates the player movement and state based on the current inputs and interactions.
      */
     public void update() {
-        playerState = moveStatus.moveState;
-        isFacingLeft = moveStatus.isFacingLeft;
-        isTouchingGround = moveStatus.isTouchingGround;
+        playerState = moveData.getState();
+        isFacingLeft = moveData.isFacingLeft;
+        isTouchingGround = moveData.isTouchingGround;
         canClimb = false;
         canDash = canDash || isTouchingGround;
 
-        PlayCommand jump = new JumpCommand(moveStatus);
-        PlayCommand slideJump = new WallJumpCommand(moveStatus);
-        PlayCommand moveLeft = new MoveLeftCommand(moveStatus);
-        PlayCommand moveRight = new MoveRightCommand(moveStatus);
-        PlayCommand dash = new DashCommand(moveStatus);
-        PlayCommand climb = new ClimbCommand(moveStatus);
+        PlayCommand jump = new JumpCommand(moveData);
+        PlayCommand slideJump = new WallJumpCommand(moveData);
+        PlayCommand moveLeft = new MoveLeftCommand(moveData);
+        PlayCommand moveRight = new MoveRightCommand(moveData);
+        PlayCommand dash = new DashCommand(moveData);
+        PlayCommand climb = new ClimbCommand(moveData);
 
         if (!isPressed(KeyCode.J)) {
             haveJKeyReleased = true;
@@ -146,9 +148,9 @@ public class MovePlayer {
                 canClimb = true;
             }
         }
-        if(!canClimb && moveStatus.stateIs(MoveState.CLIMBING)) moveStatus.moveState = MoveState.IDLE;
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
 
-        Move.move(player, moveStatus);
+        Move.move(player, moveData);
 
         checkGoal();
         checkEnemy();
@@ -183,7 +185,7 @@ public class MovePlayer {
     private void checkEnemy() {
         for (Enemy enemy : enemies) {
             if (player.hitBox().getBoundsInParent().intersects(enemy.hitBox().getBoundsInParent()) && !enemy.isDead) {
-                if (getMoveStatus().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
+                if (getMoveData().velocity.getY() > enemy.getMoveStatus().velocity.getY()) {
                     enemy.isDead = true;
                     playerVelocity.set(0, -15);
                     System.out.println("enemy killed");
@@ -225,20 +227,11 @@ public class MovePlayer {
     }
 
     /**
-     * Gets the current state of the player.
+     * Gets the current move data of the player.
      *
-     * @return The current MoveState of the player.
+     * @return The current MoveData of the player.
      */
-    public MoveState getPlayerState() {
-        return playerState;
-    }
-
-    /**
-     * Gets the current move status of the player.
-     *
-     * @return The current MoveStatus of the player.
-     */
-    public MoveStatus getMoveStatus() {
-        return moveStatus;
+    public MoveData getMoveData() {
+        return moveData;
     }
 }

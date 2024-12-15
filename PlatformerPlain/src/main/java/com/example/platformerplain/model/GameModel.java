@@ -1,13 +1,17 @@
 package com.example.platformerplain.model;
 
 import com.example.platformerplain.*;
+import com.example.platformerplain.entities.moveable.Enemy;
+import com.example.platformerplain.entities.tile.Goal;
+import com.example.platformerplain.entities.tile.Ladder;
+import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.view.*;
 import com.example.platformerplain.entities.*;
 import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.MoveState;
+import com.example.platformerplain.move.data.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
@@ -199,7 +203,7 @@ public class GameModel {
     }
 
     private static void updateMoveState() {
-        MoveState moveState = getMovePlayerLogic().getMoveStatus().moveState;
+        MoveState moveState = getMovePlayerLogic().getMoveData().getState();
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
@@ -210,7 +214,7 @@ public class GameModel {
     }
 
     private static void updatePlayerSpeed() {
-        double[] speed = getMovePlayerLogic().getMoveStatus().velocity.get();
+        double[] speed = getMovePlayerLogic().getMoveData().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));

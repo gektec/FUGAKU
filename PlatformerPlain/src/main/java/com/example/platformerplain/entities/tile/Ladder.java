@@ -1,6 +1,8 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.tile;
 import com.example.platformerplain.Constants;
 
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.scene.Node;
@@ -10,16 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Ladder extends Entity {
-    private Node node;
-    private Node hitBox;
-    private Canvas canvas;
+public class Ladder extends Tile {
     private GraphicsContext gc;
     private int index;
-
-    protected boolean isAnimated(){
-        return false;
-    };
 
     public Ladder(int x, int y, int w, int h, int index) { //todo: remove useless parameters
         if(index == 0) {
@@ -37,26 +32,11 @@ public class Ladder extends Entity {
         sprite = ImageScaler.nearestNeighborScale(sprite,5);
         gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
 
-        this.node = canvas;
         this.hitBox = hitBox;
         this.index = index;
 
     }
 
-    @Override
-    public int[] size() {
-        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
-    }
-
-    @Override
-    public Node hitBox() {
-        return hitBox;
-    }
-
-    @Override
-    public Node canvas() {
-        return node;
-    }
 
     @Override
     public EntityType getType() {

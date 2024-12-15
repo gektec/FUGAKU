@@ -1,7 +1,9 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.tile;
 import com.example.platformerplain.AssetManager;
 import com.example.platformerplain.Constants;
 
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.texture.CutSpriteSheet;
 import com.example.platformerplain.texture.ImageScaler;
@@ -12,9 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Platform extends Entity {
-    private Node hitBox;
-    private Canvas canvas;
+public class Platform extends Tile {
     private GraphicsContext gc;
     private Image sprite;
 
@@ -38,21 +38,6 @@ public class Platform extends Entity {
 
         this.hitBox = rectangle;
 
-    }
-
-    @Override
-    public int[] size() {
-        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
-    }
-
-    @Override
-    public Node hitBox() {
-        return hitBox;
-    }
-
-    @Override
-    public Node canvas() {
-        return canvas;
     }
 
     @Override

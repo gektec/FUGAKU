@@ -1,32 +1,29 @@
-package com.example.platformerplain.move.Command;
+package com.example.platformerplain.move.command;
 
 import com.example.platformerplain.Constants;
-import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.MoveState;
-import com.example.platformerplain.move.MoveStatus;
-import com.example.platformerplain.Assets;
+import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.data.MoveData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 import static com.example.platformerplain.Assets.DASH_SFX;
-import static com.example.platformerplain.Assets.JUMP_SFX;
 import static com.example.platformerplain.model.GameModel.keys;
 
 public class DashCommand implements PlayCommand {
     private Coord2D velocity;
-    private MoveStatus moveStatus;
+    private MoveData moveData;
     private Timeline dashCooldownTimer;
     private boolean isPressed(KeyCode key) {
         return keys.getOrDefault(key, false);
     }
 
-    public DashCommand(MoveStatus moveStatus) {
-        this.velocity = moveStatus.velocity;
-        this.moveStatus = moveStatus;
-        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> moveStatus.moveState = MoveState.IDLE));
+    public DashCommand(MoveData moveData) {
+        this.velocity = moveData.velocity;
+        this.moveData = moveData;
+        dashCooldownTimer = new Timeline(new KeyFrame(Duration.seconds(Constants.DASH_DURATION), event -> moveData.setState(MoveState.IDLE)));
         dashCooldownTimer.setCycleCount(1);
     }
 
@@ -51,7 +48,7 @@ public class DashCommand implements PlayCommand {
             else
                 velocity.set(x, y);
             DASH_SFX.play();
-            moveStatus.moveState = MoveState.DASHING;
+            moveData.setState(MoveState.DASHING);
             dashCooldownTimer.playFromStart();
 
     }

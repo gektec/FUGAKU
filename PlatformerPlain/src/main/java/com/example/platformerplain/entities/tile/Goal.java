@@ -1,26 +1,19 @@
-package com.example.platformerplain.entities;
+package com.example.platformerplain.entities.tile;
 import com.example.platformerplain.Constants;
 
+import com.example.platformerplain.entities.Entity;
+import com.example.platformerplain.entities.EntityType;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Goal extends Entity {
+public class Goal extends Tile {
     private Node node;
-
-    protected boolean isAnimated(){
-        return false;
-    };
 
     public Goal(int x, int y, int w, int h) {
         node = new Rectangle(w, h, Color.GOLD);
         node.setTranslateX(x);
         node.setTranslateY(y);
-    }
-
-    @Override
-    public int[] size() {
-        return new int[]{Constants.TILE_SIZE, Constants.TILE_SIZE};
     }
 
     @Override

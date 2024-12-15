@@ -1,15 +1,11 @@
 package com.example.platformerplain;
 
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.MoveStatus;
-import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import static org.testfx.api.FxAssert.verifyThat;
