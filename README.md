@@ -152,7 +152,7 @@ In our game project, we implement the Observer Pattern through the `GameModelObs
 
 ### Singleton Pattern
 
-In our game project, we implemented the Singleton Pattern to create the `ScreenManager` class. This class is responsible for managing the different screens in the game. By using the Singleton Pattern, we ensure that only one instance of `ScreenManager` exists throughout the application, allowing other components to access it easily and consistently to create their respective UI interfaces.
+In our game project, we implemented the Singleton Pattern through create the `ScreenManager` class. This class is responsible for managing the different screens in the game. By using the Singleton Pattern, we ensure that only one instance of `ScreenManager` exists throughout the application, allowing other components to access it easily and consistently to create their respective UI interfaces.
 
 **Advantages of Using the Singleton Pattern**
 1. **Global Access Point**: The Singleton Pattern provides a global access point to the `ScreenManager` instance, enabling different UI components to access the same instance without the need to pass references around explicitly.
@@ -163,11 +163,87 @@ In our game project, we implemented the Singleton Pattern to create the `ScreenM
 
 ### State Pattern
 
+In our game project, we implemented the State Pattern through create `MoveStateHandler` interface to manage the different movement states of the player. This pattern allows the player to transition between various states (such as sprinting, climbing, falling, jumping, and running) dynamically based on input and game context, providing a richer and more flexible control experience.
+
+**Advantages of Using the State Pattern**
+1. **Clear State Management**: The State Pattern encapsulates the various movement states of the player (like sprinting, climbing, falling, jumping, running, etc.) as separate state classes. This separation ensures that the behavior and logic of each state are independent, resulting in a clear and maintainable code structure.
+
+2. **Dynamic State Transitions**: Players can seamlessly transition between different states based on conditions in the game (such as key presses or collision detection). Each state class is responsible for its specific behavior and can easily interact with other states.
+
+3. **Code Reusability and Extensibility**: The State Pattern makes it easier to reuse and extend code. If a new state needs to be added (like "swimming"), we simply create a new state class and implement its specific behavior without altering existing code, adhering to the Open-Closed Principle.
+
 ---
 
 ## Javadocs
 
-## Class diagram
+The Javadocs for the NGHMP project provide comprehensive documentation for the classes, interfaces, and methods within the source code. This section is intended to help visitors understand our implementation of JAVAdocs.
+
+### Generating Javadocs
+
+To generate the Javadocs for the project, follow these steps:
+
+1. **Ensure JDK is Installed**: Make sure you have the Java Development Kit (JDK) installed on your machine. You can download it from [Oracle’s official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or use an open-source alternative like OpenJDK.
+
+2. **Navigate to Project Directory**: Open your command line or terminal and change your directory to the `src/` folder where the source code resides.
+
+3. **Run the Javadoc Command**: Execute the following command to generate the documentation:
+    ```bash
+    javadoc -d ../docs/javadoc -sourcepath . -subpackages com.yourpackage
+    ```
+   Replace `com.yourpackage` with the appropriate package name of your source files.
+
+### Documented Features
+
+The Javadocs include documentation for the following components:
+
+- **Classes**: Detailed descriptions of all classes, including the `Entity`, `Player`, `Enemy`, and any other significant classes used throughout the project.
+- **Interfaces**: Documentation for key interfaces such as `EntityFactory`, `PlayCommand`, `Expression`, `GameModelObserver`, `MoveStateHandler`, etc.
+- **Methods**: A thorough overview of methods within each class and interface, including parameters, return types, and exceptions thrown.
+
+### Documentation Standards
+
+We adhere to best practices for Javadoc comments, including:
+
+- **Class-Level Comments**: Each class should have a comment that describes its purpose, functionality, and any important notes.
+- **Method-Level Comments**: Each method should be documented with a brief description of what it does, parameters it takes, return values, and any exceptions that may be thrown.
+- **Field-Level Comments**: Important fields should also include comments explaining their purpose within the class.
+
+## Class Diagram
+
+The class diagram is a visual representation of the main classes in the NGHMP project and their relationships. Below is the description and explanation of the class diagram:
+
+### Class Diagram Explanation
+
+- **Main Classes**: The class diagram includes the main classes in the project, including but not limited to:
+  - `Entity`: An abstract base class for all game entities, including players, enemies, decorations, and coins.
+  - `Player`: A concrete implementation of `Entity` that handles player behavior and state.
+  - `Enemy`: A concrete implementation of `Entity` that defines enemy behavior.
+  - `LevelManager`: Manages level logic, responsible for loading and switching levels.
+  - `GameModel`: Manages game state (such as score, time, etc.) and logic.
+  - `ScreenManager`: Implements the singleton pattern, responsible for managing and switching different UI screens.
+  - `InputManager`: Handles user input and passes it to the corresponding commands for execution.
+  - Various state classes (e.g., `RunningState`, `JumpingState`, `ClimbingState`, `FallingState`, etc.).
+
+### Relationships Between Classes
+
+- **Inheritance Relationships**:
+  - The `Player` and `Enemy` classes inherit from the `Entity` class, indicating that they are specific types of entities.
+
+- **Aggregation Relationships**:
+  - `GameModel` has an aggregation relationship with `ScreenManager`, indicating that it can utilize `ScreenManager` to manage different screens.
+
+- **Dependency Relationships**:
+  - `LevelManager` depends on `GameModel` to update and communicate the current game state.
+  - `InputManager` depends on the `Command` interface, allowing various movement commands to be implemented and executed.
+
+### How to View the Class Diagram
+
+The class diagram file can be found in the `Diagram` directory. You can open the `ClassDiagram.jpg` or `.vpp` file to view the complete class diagram. Additionally, you can use UML tools to generate visual representations that help understand the structure of the project.
+
+### Class Diagram Display
+
+![Class Diagram](Diagram/ClassDiagram.jpg)
+
 
 ## Appendix
 
