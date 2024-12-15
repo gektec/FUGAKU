@@ -2,5 +2,12 @@ package com.example.platformerplain.model.Interpreter;
 
 // Expression interface
 public interface Expression {
+    /**
+     * Interprets the expression within the given score context.
+     *
+     * @param context the ScoreContext used for interpretation, providing necessary data
+     *                for evaluating the expression
+     * @return the integer result of interpreting the expression based on the context
+     */
     int interpret(ScoreContext context);
 }
