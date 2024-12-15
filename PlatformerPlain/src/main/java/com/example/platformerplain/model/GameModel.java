@@ -252,10 +252,10 @@ public class GameModel {
         stopGameLoop();
         if(currentLevel <= 2) {
             calculateCurrentScore();
-            ScreenManager.showScreen(new TransitionScreen());
+            new TransitionScreen().show(Main.getPrimaryStage());
         } else{
             calculateCurrentScore();
-            ScreenManager.showScreen(new CompletedScreen());
+            new CompletedScreen().show(Main.getPrimaryStage());
         }
     }
 
@@ -267,7 +267,7 @@ public class GameModel {
 
     public static void exitGame() {
         killedEnemy = 0;
-        ScreenManager.showScreen(new FailScreen());
+        new FailScreen().show(Main.getPrimaryStage());
     }
 
     public static void resumeGame() {
@@ -387,7 +387,7 @@ public class GameModel {
         if (!isPaused) {
             isPaused = true; // Set the pause flag to true
             stopGameLoop(); // stop game loop
-            ScreenManager.showScreen(new PauseScreen());
+            new PauseScreen().show(Main.getPrimaryStage());
         }
     }
 }

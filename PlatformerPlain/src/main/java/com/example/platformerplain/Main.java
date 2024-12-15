@@ -36,7 +36,7 @@ public class Main extends Application {
         AssetManager.preloadAssets();
 
         // Show the start screen
-        ScreenManager.showScreen(new MenuScreen());
+        new MenuScreen().show(Main.getPrimaryStage());
 
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
