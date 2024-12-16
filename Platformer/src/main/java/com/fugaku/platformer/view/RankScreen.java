@@ -28,9 +28,9 @@ public class RankScreen implements Screen {
             RankingScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
             controller.setYourScore(GameModel.getFinalScore());
-            controller.setHighScore1Label(RankModel.getFirstScore());
-            controller.setHighScore2Label(RankModel.getSecondScore());
-            controller.setHighScore3Label(RankModel.getThirdScore());
+            controller.setHighScore1Label(RankModel.getScore(0));
+            controller.setHighScore2Label(RankModel.getScore(1));
+            controller.setHighScore3Label(RankModel.getScore(2));
 
 
             primaryStage.setTitle("FUGAKU: Ranking");

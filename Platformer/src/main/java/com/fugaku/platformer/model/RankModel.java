@@ -19,44 +19,46 @@ public class RankModel {
     private static final int MAX_SIZE = 3;
     private static List<Integer> scores = new ArrayList<>();  // List to store the top scores
 
-    /**
-     * Updates the score list with the current final score from the game.
-     * If the score list is not full, adds the score. If it is full,
-     * replaces the lowest score if the new score is higher.
-     */
-    public static void saveScores(int finalScore) {
-
+    public static void initializeScores() {
         try {
             BufferedReader reader = SAVE_FILE_READER;
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && scores.size() < MAX_SIZE) {
                 try {
-                    scores.add(Integer.parseInt(line.trim())); // Add existing scores
+                    scores.add(Integer.parseInt(line.trim()));
                 } catch (NumberFormatException e) {
                     System.err.println("Invalid score format: " + line);
                 }
             }
+            scores.sort(Collections.reverseOrder()); // Ensure scores are sorted
         } catch (IOException e) {
             System.err.println("Error reading score file: " + e.getMessage());
         }
+    }
 
-
-        // Add the new finalScore
+    /**
+     * Updates the score list with the current final score from the game.
+     */
+    public static void saveScores(int finalScore) {
         if (scores.size() < MAX_SIZE) {
-            scores.add(finalScore);  // Directly add the score if we have fewer than 3 scores
+            scores.add(finalScore);
         } else {
-            // There are already 3 scores, check if the new score should replace the lowest one
-            int minScore = Collections.min(scores);  // Find the minimum score
+            int minScore = Collections.min(scores);
             if (finalScore > minScore) {
-                scores.remove(Integer.valueOf(minScore));  // Remove the minimum score
-                scores.add(finalScore);  // Add the new score
+                scores.remove(Integer.valueOf(minScore));
+                scores.add(finalScore);
             }
         }
 
-        // Sort the list in descending order
         scores.sort(Collections.reverseOrder());
 
-        // Write the updated scores back to the file
+        writeScoresToFile();
+    }
+
+    /**
+     * Writes the current top scores to a file.
+     */
+    private static void writeScoresToFile() {
         try {
             BufferedWriter writer = SAVE_FILE_WRITER;
             for (Integer score : scores) {
@@ -70,47 +72,21 @@ public class RankModel {
 
     /**
      * Returns an array containing the top scores.
-     *
-     * @return An array with the top three scores.
+     * @return An array with the top scores.
      */
     public static Integer[] getScores() {
-        Integer[] topScores = new Integer[MAX_SIZE];
-
-        // Copy the top 3 scores from the list
-        for (int i = 0; i < scores.size(); i++) {
-            topScores[i] = scores.get(i);
-        }
-
-        return topScores;
+        Integer[] topScores = new Integer[scores.size()];
+        return scores.toArray(topScores);
     }
 
     /**
-     * Gets the highest score.
+     * Gets the score with index.
      *
-     * @return The highest score, or 0 if there are no scores.
      */
-    public static Integer getFirstScore() {
+    public static Integer getScore(int index) {
         Integer[] topScores = getScores();
-        return topScores[0];  // Return the highest score (first element)
+        if(topScores.length >= index + 1) return topScores[index];
+        else return 0;
     }
 
-    /**
-     * Gets the second highest score.
-     *
-     * @return The second highest score, or 0 if there are fewer than two scores.
-     */
-    public static Integer getSecondScore() {
-        Integer[] topScores = getScores();
-        return topScores[1];  // Return the second highest score (second element)
-    }
-
-    /**
-     * Gets the third highest score.
-     *
-     * @return The third highest score, or 0 if there are fewer than three scores.
-     */
-    public static Integer getThirdScore() {
-        Integer[] topScores = getScores();
-        return topScores[2];  // Return the third highest score (third element)
-    }
 }
