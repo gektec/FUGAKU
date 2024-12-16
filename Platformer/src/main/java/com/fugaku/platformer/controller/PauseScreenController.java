@@ -58,8 +58,8 @@ public class PauseScreenController {
     @FXML
     public void handleHelp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Help");
-        alert.setHeaderText("How to Play");
+        alert.setTitle("Info");
+        alert.setHeaderText("About FUGAKU");
 
         TextArea helpTextArea = new TextArea();
         helpTextArea.setText("""
@@ -72,7 +72,11 @@ public class PauseScreenController {
             Tips:
             - Wall Jump: Press 'J' while sliding on walls.
             - Step on enemies to get extra height.
-            - Finish all levels at once to get higher score.""");
+            - Finish all levels at once to get higher score.
+            
+            Copyright © 2024 Changyu Li & Zelin Xia
+            All rights reserved.
+            """);
 
         helpTextArea.setEditable(false);
         helpTextArea.setWrapText(true);

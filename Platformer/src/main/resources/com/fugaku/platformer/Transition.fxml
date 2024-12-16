@@ -49,16 +49,16 @@
     <Button fx:id="MenuButton"
             onAction="#handleMenu"
             mnemonicParsing="false"
-            text="Menu"/>
+            text="RETURN TO MENU"/>
 
     <Button fx:id="NextLevelButton"
             onAction="#handleNextLevel"
-            text="Next Level"/>
+            text="NEXT LEVEL"/>
 
     <Button
             fx:id="RestartButton"
             onAction="#handleRestart"
             mnemonicParsing="false"
-            text="Restart"/>
+            text="RESTART"/>
     </HBox>
 </GridPane>

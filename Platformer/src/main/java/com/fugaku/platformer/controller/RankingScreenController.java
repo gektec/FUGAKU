@@ -34,10 +34,10 @@ public class RankingScreenController {
         highScore1Label.setText("1st score: " + score1);
     }
     public void setHighScore2Label(int score2) {
-        highScore2Label.setText("2nd Highest score: " + score2);
+        highScore2Label.setText("2nd score: " + score2);
     }
     public void setHighScore3Label(int score3) {
-        highScore3Label.setText("3rd Highest score: " + score3);
+        highScore3Label.setText("3rd score: " + score3);
     }
     public void setYourScore(int score) {
         yourScoreLabel.setText("Latest Score: " + score);

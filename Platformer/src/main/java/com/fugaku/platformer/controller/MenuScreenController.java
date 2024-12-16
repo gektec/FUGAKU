@@ -107,10 +107,10 @@ public class MenuScreenController {
     @FXML
     private void updateDebugButtonText() {
         if (GameModel.isDebugMode()) {
-            debugButton.setText("Debug Mode: ON");
+            debugButton.setText("DEBUG MODE: ON");
             debugButton.setStyle("-fx-text-fill: red;");
         } else {
-            debugButton.setText("Debug Mode: OFF");
+            debugButton.setText("DEBUG MODE: OFF");
             debugButton.setStyle("-fx-text-fill: #ECF0F1;");
         }
     }

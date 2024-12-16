@@ -20,14 +20,14 @@
         <Button
                 fx:id="ResumeButton"
                 onAction="#handleResume"
-                text="Resume"
+                text="RESUME"
                 prefWidth="200.0"
         />
 
         <Button
                 fx:id="RestartButton"
                 onAction="#handleRestart"
-                text="Restart"
+                text="RESTART"
                 mnemonicParsing="false"
                 prefWidth="200.0"
         />
@@ -35,14 +35,14 @@
         <Button
                 fx:id="helpButton"
                 onAction="#handleHelp"
-                text="Instructions"
+                text="INSTRUCTIONS"
                 prefWidth="200.0"
         />
 
         <Button
                 fx:id="MenuButton"
                 onAction="#handleMenu"
-                text="Return to Menu"
+                text="RETURN TO MENU"
                 mnemonicParsing="false"
                 prefWidth="200.0"
         />
@@ -50,7 +50,7 @@
         <Button
                 fx:id="ExitButton"
                 onAction="#handleExitGame"
-                text="Exit to Desktop"
+                text="EXIT TO DESKTOP"
                 prefWidth="200.0"
         />
     </VBox>

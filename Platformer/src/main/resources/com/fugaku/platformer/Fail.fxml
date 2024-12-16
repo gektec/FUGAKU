@@ -31,21 +31,21 @@
             <Button
                     fx:id="RestartButton"
                     onAction="#handleRestart"
-                    text="Restart"
+                    text="RESTART"
                     prefWidth="200"
             />
 
             <Button
                     fx:id="MenuButton"
                     onAction="#handleMenu"
-                    text="Menu"
+                    text="RETURN TO MENU"
                     prefWidth="200"
             />
 
             <Button
                     fx:id="ExitButton"
                     onAction="#handleExitGame"
-                    text="Exit Game"
+                    text="EXIT TO DESKTOP"
                     prefWidth="200"
             />
         </VBox>

@@ -51,20 +51,20 @@
             fx:id="MenuButton"
             onAction="#handleMenu"
             mnemonicParsing="false"
-            text="Menu"
+            text="RETURN TO MENU"
     />
 
 
     <Button
             fx:id="ExitButton"
             onAction="#handleExitGame"
-            text="Exit to Desktop"
+            text="EXIT TO DESKTOP"
     />
 
     <Button
             fx:id="RankButton"
             onAction="#handleRank"
-            text="Ranking"
+            text="RANKING"
     />
 
 
