@@ -170,10 +170,10 @@ public class MovePlayer {
 
         checkCoin();
         checkGoal();
-        if(!GameModel.isDebugMode()) {
-            checkEnemy();
+        //if(!GameModel.isDebugMode()) {
+            //checkEnemy();
             checkSpike();
-        }
+        //}
         checkFall();
 
 }
@@ -210,8 +210,10 @@ public class MovePlayer {
      * Checks if the player has fallen below the level bounds.
      */
     private void checkFall() {
-        if (player.hitBox().getTranslateY() > LevelData.getLevelInformation.getLevelHeight() + 50)
+        if (player.hitBox().getTranslateY() > LevelData.getLevelInformation.getLevelHeight() + 50) {
+            Main.putDebugInfo("Player fell");
             Die();
+        }
     }
 
     /**
@@ -224,7 +226,10 @@ public class MovePlayer {
                     enemy.isDead = true;
                     playerVelocity.set(0, -15);
                     Main.putDebugInfo("Enemy killed");
-                } else Die();
+                } else {
+                    Main.putDebugInfo("Hit enemy");
+                    Die();
+                }
             }
         }
     }
@@ -237,6 +242,7 @@ public class MovePlayer {
             if (spike.hitBox() != null) {
                 if (player.hitBox().getBoundsInParent().intersects(spike.hitBox().getBoundsInParent())) {
                     spike.playerDead();
+                    Main.putDebugInfo("Hit spike");
                     Die();
                 }
             }

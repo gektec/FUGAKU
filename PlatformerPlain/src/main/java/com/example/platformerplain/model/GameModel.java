@@ -152,6 +152,9 @@ public class GameModel {
         keys.clear();
         collidableMap.clear();
         enemyMap.clear();
+        spikeMap.clear();
+        coinMap.clear();
+        ladderMap.clear();
         toRemove.clear();
     }
 
@@ -316,6 +319,7 @@ public class GameModel {
     public static void removeEntity(Entity entity) {
         toRemove.add(entity);
         GameScreen.getGameRoot().getChildren().remove(entity.canvas());
+        GameScreen.getGameRoot().getChildren().remove(entity.hitBox());
     }
 
     public static void killedEnemy(){

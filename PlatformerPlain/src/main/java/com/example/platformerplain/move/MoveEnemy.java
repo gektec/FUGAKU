@@ -65,8 +65,6 @@ public class MoveEnemy {
         PlayCommand moveLeft = new MoveLeftCommand(moveData);
         PlayCommand moveRight = new MoveRightCommand(moveData);
 
-        waitingTime -= 0.1;
-
         if (isTouchingGround && waitingTime <= 0) {
             jump.execute();
             isFacingLeft = !isFacingLeft;
@@ -80,6 +78,7 @@ public class MoveEnemy {
                 moveRight.execute();
             }
         }
+        else waitingTime -= 0.1;
 
         velocity.reduce(RESISTANCE, 0);
 

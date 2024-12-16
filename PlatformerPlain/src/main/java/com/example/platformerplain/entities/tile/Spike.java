@@ -45,7 +45,7 @@ public class Spike extends Tile {
         } else {
             canvas.setTranslateX(x);
             canvas.setTranslateY(y);
-            this.hitBox = new Rectangle(-1000, 0, 0, 0);
+            this.hitBox = new Rectangle(-9999, -9999, 0, 0);
         }
 
         gc = canvas.getGraphicsContext2D();
