@@ -3,6 +3,7 @@ package com.fugaku.platformer;
 import com.fugaku.platformer.data.AssetManager;
 import com.fugaku.platformer.data.Constants;
 
+import com.fugaku.platformer.model.RankModel;
 import com.fugaku.platformer.view.MenuScreen;
 import javafx.application.Application;
 import javafx.scene.media.MediaPlayer;
@@ -34,6 +35,7 @@ public class Main extends Application {
         instance = this;
 
         AssetManager.preloadAssets();
+        RankModel.initializeScores();
 
         // Show the start screen
         new MenuScreen().show(Main.getPrimaryStage());

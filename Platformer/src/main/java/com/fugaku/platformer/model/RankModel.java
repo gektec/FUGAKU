@@ -3,8 +3,7 @@ package com.fugaku.platformer.model;
 import java.io.*;
 import java.util.*;
 
-import static com.fugaku.platformer.data.Assets.SAVE_FILE_READER;
-import static com.fugaku.platformer.data.Assets.SAVE_FILE_WRITER;
+import static com.fugaku.platformer.data.Assets.*;
 
 /**
  * Manages the ranking system for the game by keeping track of the highest scores.
@@ -21,14 +20,10 @@ public class RankModel {
 
     public static void initializeScores() {
         try {
-            BufferedReader reader = SAVE_FILE_READER;
+            BufferedReader reader = new BufferedReader(new FileReader(SAVE_FILE));
             String line;
             while ((line = reader.readLine()) != null && scores.size() < MAX_SIZE) {
-                try {
-                    scores.add(Integer.parseInt(line.trim()));
-                } catch (NumberFormatException e) {
-                    System.err.println("Invalid score format: " + line);
-                }
+                scores.add(Integer.parseInt(line.trim()));
             }
             scores.sort(Collections.reverseOrder()); // Ensure scores are sorted
         } catch (IOException e) {
@@ -60,10 +55,11 @@ public class RankModel {
      */
     private static void writeScoresToFile() {
         try {
-            BufferedWriter writer = SAVE_FILE_WRITER;
+            BufferedWriter writer = new BufferedWriter(new FileWriter(SAVE_FILE));
             for (Integer score : scores) {
                 writer.write(score.toString());
                 writer.newLine();
+                writer.flush();
             }
         } catch (IOException e) {
             System.err.println("Error writing score file: " + e.getMessage());
