@@ -145,6 +145,7 @@ public class GameModel {
     public static void startGame(Stage primaryStage, int level) {
         clearData();
         elapsedTime = 0;
+        finalScore = 0;
         currentLevel = level;
         isPaused = false;
         baseScore = 1000;
