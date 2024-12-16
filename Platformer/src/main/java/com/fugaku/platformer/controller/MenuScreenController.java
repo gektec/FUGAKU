@@ -28,7 +28,7 @@ public class MenuScreenController {
     public Button startButton;
     public Button helpButton;
     public Button exitButton;
-    public Button RankButton;
+    public Button rankButton;
     public Button optionButton;
     @FXML
     private VBox root;  // VBox in the FXML file
@@ -52,86 +52,14 @@ public class MenuScreenController {
     @FXML
     private void initialize() {
         loadBackgroundImage();
-        playBackgroundMusic();
         updateDebugButtonText();
     }
 
     /**
-     * Loads and sets a pure color background for the completed screen.
+     * Loads and sets background for the menu screen.
      */
     private void loadBackgroundImage() {
-        char colorCode = GameModel.getColor();
-        switch (colorCode) {
-            case 'K':
-                root.setStyle("-fx-background-color: #000000;");
-                break;
-            case 'O':
-                root.setStyle("-fx-background-color: #FFA500;");
-                break;
-            case 'Y':
-                root.setStyle("-fx-background-color: #FFFF00;");
-                break;
-            case 'B':
-                root.setStyle("-fx-background-color: #87CEEB;");
-                break;
-            case 'P':
-                root.setStyle("-fx-background-color: #800080;");
-                break;
-            case 'G':
-                root.setStyle("-fx-background-color: #008000;");
-                break;
-            case 'R':
-                root.setStyle("-fx-background-color: #FF0000;");
-                break;
-            case 'N': // Assuming 'P' is used for both Purple and Pink, using 'N' for Pink to differentiate.
-                root.setStyle("-fx-background-color: #FFC0CB;");
-                break;
-            default:
-                root.setStyle("-fx-background-color: #FFFFFF;");
-                break;
-        }
-    }
-
-    // Make the updateBackgroundColor method public
-    public void updateBackgroundColor(char colorCode) {
-        switch (colorCode) {
-            case 'K':
-                root.setStyle("-fx-background-color: #000000;");
-                break;
-            case 'O':
-                root.setStyle("-fx-background-color: #FFA500;");
-                break;
-            case 'Y':
-                root.setStyle("-fx-background-color: #FFFF00;");
-                break;
-            case 'B':
-                root.setStyle("-fx-background-color: #87CEEB;");
-                break;
-            case 'P':
-                root.setStyle("-fx-background-color: #800080;");
-                break;
-            case 'G':
-                root.setStyle("-fx-background-color: #008000;");
-                break;
-            case 'R':
-                root.setStyle("-fx-background-color: #FF0000;");
-                break;
-            case 'N':
-                root.setStyle("-fx-background-color: #FFC0CB;");
-                break;
-            default:
-                root.setStyle("-fx-background-color: #FFFFFF;");
-                break;
-        }
-    }
-
-    /**
-     * Loads and plays the background music indefinitely.
-     * Currently set to play the victory sound, which may need to be replaced
-     * with appropriate background music in the future.
-     */
-    private void playBackgroundMusic() {
-        // TODO
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     /**
@@ -190,6 +118,11 @@ public class MenuScreenController {
         }
     }
 
+    @FXML
+    private void handleRank() {
+        RankScreen rankScreen = new RankScreen();
+        rankScreen.show(primaryStage);
+    }
 
     public void handleOption() {
         OptionScreen optionScreen = new OptionScreen();

@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -35,7 +34,6 @@ public class TransitionScreenController {
     @FXML
     private GridPane root;  // Root layout in the FXML file
     private Stage primaryStage;  // Main application stage
-    private MediaPlayer mediaPlayer; // MediaPlayer instance for sound playback
 
     /**
      * Sets the primary stage for this controller.
@@ -81,77 +79,25 @@ public class TransitionScreenController {
     @FXML
     private void initialize() {
         loadBackgroundImage();
-        playBackgroundMusic();
     }
 
     /**
      * Loads and sets a pure color background for the completed screen.
      */
     private void loadBackgroundImage() {
-        char colorCode = GameModel.getColor();
-        switch (colorCode) {
-            case 'K':
-                root.setStyle("-fx-background-color: #000000;");
-                break;
-            case 'O':
-                root.setStyle("-fx-background-color: #FFA500;");
-                break;
-            case 'Y':
-                root.setStyle("-fx-background-color: #FFFF00;");
-                break;
-            case 'B':
-                root.setStyle("-fx-background-color: #87CEEB;");
-                break;
-            case 'P':
-                root.setStyle("-fx-background-color: #800080;");
-                break;
-            case 'G':
-                root.setStyle("-fx-background-color: #008000;");
-                break;
-            case 'R':
-                root.setStyle("-fx-background-color: #FF0000;");
-                break;
-            case 'N': // Assuming 'P' is used for both Purple and Pink, using 'N' for Pink to differentiate.
-                root.setStyle("-fx-background-color: #FFC0CB;");
-                break;
-            default:
-                root.setStyle("-fx-background-color: #FFFFFF;");
-                break;
-        }
-    }
-
-    /**
-     * Plays the victory sound when the transition screen is displayed.
-     * This method loads and plays the victory sound associated with level completion.
-     */
-    private void playBackgroundMusic() {
-        // TODO
+        // Load the background image
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
     /**
      * Navigates back to the main menu when the menu button is pressed.
-     * Releases resources used by the media player to prevent memory leaks.
      */
     @FXML
     public void handleMenu() {
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.show(primaryStage);  // Show the main menu
-
-        // Release media player resources
-        releaseMediaPlayer();
     }
 
-    /**
-     * Stops the media player and releases its resources.
-     * Clears the reference to the media player to avoid memory leaks.
-     */
-    private void releaseMediaPlayer() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop(); // Stop playback
-            mediaPlayer.dispose(); // Release memory
-            mediaPlayer = null; // Clear reference
-        }
-    }
 
     /**
      * Proceeds to the next level when the "Next Level" button is clicked.

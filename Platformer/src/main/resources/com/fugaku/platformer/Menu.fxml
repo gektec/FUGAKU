@@ -25,6 +25,8 @@
 
     <Button fx:id="helpButton" onAction="#handleHelp" text="Instructions" prefWidth="200.0"/>
 
+    <Button fx:id="rankButton" onAction="#handleRank" text="Ranking" prefWidth="200.0"/>
+
     <Button fx:id="optionButton" onAction="#handleOption" text="Option" prefWidth="200.0"/>
 
     <Button fx:id="exitButton" onAction="#handleExitGame" text="Exit to Desktop" prefWidth="200.0"/>
