@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane
+        fx:id="root"
+        alignment="CENTER"
+        prefHeight="720.0"
+        prefWidth="1280.0"
+        stylesheets="@styles.css"
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/22"
+        fx:controller="com.example.platformerplain.controller.OptionScreenController">
+
+
+    <!-- Organize buttons in a GridPane with three columns -->
+    <GridPane alignment="CENTER" hgap="40" vgap="20">
+
+
+        <Button
+                fx:id="blackButton"
+                onAction="#handleblack"
+                text="Black"
+                prefWidth="200.0"
+                GridPane.rowIndex="0" GridPane.columnIndex="0"
+        />
+
+        <Button
+                fx:id="yellowButton"
+                onAction="#handleyellow"
+                text="Yellow"
+                prefWidth="200.0"
+                GridPane.rowIndex="0" GridPane.columnIndex="1"
+        />
+
+        <Button
+                fx:id="blueButton"
+                onAction="#handleblue"
+                text="Blue"
+                prefWidth="200.0"
+                GridPane.rowIndex="0" GridPane.columnIndex="2"
+        />
+
+        <Button
+                fx:id="purpleButton"
+                onAction="#handlepurple"
+                text="Purple"
+                prefWidth="200.0"
+                GridPane.rowIndex="1" GridPane.columnIndex="0"
+        />
+
+        <Button
+                fx:id="orangeButton"
+                onAction="#handleorange"
+                text="Orange"
+                prefWidth="200.0"
+                GridPane.rowIndex="1" GridPane.columnIndex="1"
+        />
+
+        <Button
+                fx:id="greenButton"
+                onAction="#handlegreen"
+                text="Green"
+                prefWidth="200.0"
+                GridPane.rowIndex="1" GridPane.columnIndex="2"
+        />
+
+        <Button
+                fx:id="redButton"
+                onAction="#handlered"
+                text="Red"
+                prefWidth="200.0"
+                GridPane.rowIndex="2" GridPane.columnIndex="0"
+        />
+
+        <Button
+                fx:id="pinkButton"
+                onAction="#handlepink"
+                text="Pink"
+                prefWidth="200.0"
+                GridPane.rowIndex="2" GridPane.columnIndex="1"
+        />
+    </GridPane>
+
+</GridPane>
