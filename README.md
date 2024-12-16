@@ -32,6 +32,8 @@ All objects are based on the `Entity` abstract class:
 - Goal
 - Decoration
 - Coin
+- Decoration
+- Coin
 
 ### Multiple Screens
 
@@ -41,10 +43,15 @@ All objects are based on the `Entity` abstract class:
 - Pause Screen
 - Ranking Screen
 - Level Completed Screen
+- Ranking Screen
+- Level Completed Screen
 
 ### Sound Effects
 
 - Background music
+- Jump Sound
+- Dash Sound
+- Step Sound
 - Jump Sound
 - Dash Sound
 - Step Sound
@@ -90,6 +97,7 @@ We synchronize all project progress in real time on GitHub following these guide
 
 - **UI Components**: Multiple FXML screens (Menu, Fail, LevelSelect, Transition, Pause, Complete) enhanced with style.css.
 
+### Object-Oriented Design Pattern
 ### Object-Oriented Design Pattern
 
 - **Factory Pattern**: Simplifies creation of game entities and tiles via EntityFactory.
