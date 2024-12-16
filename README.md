@@ -163,3 +163,7 @@ The following open-source assets were used in this project:
   - Author: [Daniel Linssen](https://managore.itch.io/)
   - Source: [https://managore.itch.io/m6x11](https://managore.itch.io/m6x11)
   - License: Free to use with attribution.
+
+- **Hybrid song 2:20 (Funky stars)** 
+  - Author: Quazar of Sanxion
+  - License: copyright-free.
