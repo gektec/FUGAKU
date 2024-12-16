@@ -1,94 +1,96 @@
 # NGHMP - Next Generation High Mobility Platformer
 
+![GameScreenshot](FUGAKU.png)
+
 ## Advanced Features
 
 ### Momentum-Based Movement System
+
 - The player gets accelerated when the move button is pressed.
 - The accelerated speed is reduced when closer to the goal speed, forming a second derivative velocity curve.
 - The player can slide and jump on walls.
 - The player can dash in 8 directions.
 
+### Auto-Switch Move State System
+
+- Both player and enemy have a `MoveState` that can be automatically switched.
+- Different behaviour is applied on each State.
+
 ### Multiple Entities
+
 All objects are based on the `Entity` abstract class:
+
+#### Different Types of Moveable Entities
+
 - Enemy
 - Player
-- Decoration
-- Coin (Shogi)
 
-### Different Types of Tiles
+#### Different Types of Tiles
+
 - Ladder
 - Spike
 - Goal
+- Decoration
+- Coin
 
 ### Multiple Screens
+
 - Start Screen
 - Fail Screen
 - Level Choosing Screen
 - Pause Screen
+- Ranking Screen
+- Level Completed Screen
 
 ### Sound Effects
+
 - Background music
-- Fail sound
-- Victory sound
-- Completed sound
+- Jump Sound
+- Dash Sound
+- Step Sound
 
 ### Textures
+
 - Texture for tiles, player, and enemy.
 - Textures can swap between states.
 - Textures can have animations.
 - Background has moveable textures.
 
 ### Others
+
 - Fixed framerate.
 - DEBUG mode allows monitoring multiple statuses.
 
+---
 
 ## Demo video
 
 ---
-# Git Usage
+
+## Git Usage
+
 We synchronize all project progress in real time on GitHub following these guidelines:
 
-## 1. Repository Structure
-
-- **Standardized Directory Structure**: Adopt a standardized structural directory for our project to enhance maintainability and readability. Recommended structure includes:
+- **Standardized Directory Structure**: Adopt a standardized structural directory for our project to enhance maintainability and readability. Our structure includes:
   - `src/` - Source code
   - `tests/` - Test code
-  - `docs/` - Documentation
-  - `README.md` - Project description
+  - `resources/` - Resources
 
-## 2. Commit Messages
+- **Flexible Branch Usage**
 
-- **Clarity and Conciseness**: Accurately describe changes in a brief manner.
+- **Efficient Issue Tracking**
 
-## 3. Branch Naming Conventions
-
-- **Descriptive Names:**: Indicate the purpose of the branch.
-  
-- **Personal Branches**: Each team member works on their own branches to protect the main branch.
-
-## 4. Issue Tracking
-
-- **Utilize GitHub Issues**: Track bugs and feature requests with clear priorities and ownership.
-
-## 5. Version Control
-
-- **Regular Releases**: Regularly release new versions to maintain the project's stability and reliability.
-
-## 7. Regular Cleanup
-
-- **Branch Maintenance**: Archive and delete inactive branches periodically to keep the repository organized.
 ---
 
-# Refactoring
+## Refactoring
 
-## JavaFX MVC GUI Design Pattern
+### JavaFX MVC GUI Design Pattern
 
 - **MVC Pattern**: Separates game logic, UI, and input handling for cleaner code.
 
 - **UI Components**: Multiple FXML screens (Menu, Fail, LevelSelect, Transition, Pause, Complete) enhanced with style.css.
 
-## 2. Object-Oriented Design Pattern
+### Object-Oriented Design Pattern
 
 - **Factory Pattern**: Simplifies creation of game entities and tiles via EntityFactory.
 
@@ -106,16 +108,7 @@ We synchronize all project progress in real time on GitHub following these guide
 
 ## Javadocs
 
-Comprehensive documentation for classes, interfaces, and methods is available. Generate Javadocs using:
-
-    ```bash
-    javadoc -d ../docs/javadoc -sourcepath . -subpackages com.yourpackage
-    ```
-   Replace `com.yourpackage` with the appropriate package name of your source files.
-
-### Documentation Standards
-
-The Javadocs include documentation for the following components:
+Our Javadoc is a comprehensive documentation for classes, interfaces, and methods.
 
 - **Classes**: Descriptions of purpose and functionality.
 - **Interfaces**: Details on functionality, parameters, and returns.

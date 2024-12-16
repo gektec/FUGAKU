@@ -154,7 +154,7 @@ public class GameScreen implements Screen, GameModelObserver {
      */
     private static void initializePauseButton() {
         pauseMenu.getStyleClass().add("button");
-        pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 100);
+        pauseMenu.setTranslateX(Constants.WINDOW_WIDTH - 150);
         pauseMenu.setTranslateY(30);
         pauseMenu.setText("Pause");
         pauseMenu.setOnAction(event -> GameModel.togglePauseMenu());
