@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"com.example.platformerplain"}];updateSearchResults();
+moduleSearchIndex = [{"l":"com.fugaku.platformer"}];updateSearchResults();
