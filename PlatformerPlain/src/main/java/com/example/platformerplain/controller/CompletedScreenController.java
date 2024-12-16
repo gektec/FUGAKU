@@ -2,7 +2,9 @@ package com.example.platformerplain.controller;
 
 import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.view.MenuScreen;
+import com.example.platformerplain.view.RankScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +29,7 @@ public class CompletedScreenController {
     public Label scoreLabel;
     public Label killedLabel;
     public Label timeLabel;
+    public Button RankingButton;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
 
@@ -137,4 +140,5 @@ public class CompletedScreenController {
             mediaPlayer = null;
         }
     }
+
 }
