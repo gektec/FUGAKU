@@ -22,7 +22,6 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,6 +87,9 @@ public class GameModel {
     public static long elapsedTime = 0;
     private static long lastUpdateTime = 0;
 
+    // Color option
+    private static char Color;
+
     // Score interpreter instance
     private static final ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
 
@@ -123,6 +125,11 @@ public class GameModel {
             observers.add(observer);
         }
     }
+
+    public static char setColor(char colorCode) {
+        return colorCode;
+    }
+
 
     /**
      * Removes an observer from the game model.
@@ -385,6 +392,52 @@ public class GameModel {
     public static List<Entity> getCollidableMap() {
         return collidableMap;
     }
+
+    public static char setBlackColor(){
+        Color = 'K';
+        return Color;
+    }
+
+    public static char setOrangeColor(){
+        Color = 'O';
+        return Color;
+    }
+
+    public static char setYellowColor(){
+        Color = 'Y';
+        return Color;
+    }
+
+    public static char setBlueColor() {
+        Color = 'B';
+        return Color;
+    }
+
+    public static char setPurpleColor() {
+        Color = 'P';
+        return Color;
+    }
+
+    public static char setGreenColor() {
+        Color = 'G';
+        return Color;
+    }
+
+    public static char setRedColor() {
+        Color = 'R';
+        return Color;
+    }
+
+    public static char setPinkColor() {
+        Color = 'P';
+        return Color;
+    }
+
+    public static char getColor(){
+        return Color;
+    }
+
+
 
 
     public static List<Enemy> getEnemyMap() {
