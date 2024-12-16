@@ -1,11 +1,11 @@
 package com.fugaku.platformer.model;
 
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.io.*;
+import java.util.*;
 
 /**
  * Manages the ranking system for the game by keeping track of the highest scores.
- * It maintains a priority queue to store the top scores and provides methods
+ * It maintains a list to store the top scores and provides methods
  * to update and retrieve these scores.
  * The maximum number of scores stored is defined by {@link #MAX_SIZE}.
  *
@@ -13,36 +13,75 @@ import java.util.PriorityQueue;
  * @date 2024/12/15
  */
 public class RankModel {
-    private static RankModel instance;
     private static final int MAX_SIZE = 3;
-    private static final PriorityQueue<Integer> scores = new PriorityQueue<>(MAX_SIZE, Collections.reverseOrder());
-    private int first, second, third;
+    private static List<Integer> scores = new ArrayList<>();  // List to store the top scores
 
     /**
      * Updates the score list with the current final score from the game.
      * If the score list is not full, adds the score. If it is full,
      * replaces the lowest score if the new score is higher.
      */
-    public static void highestScore() {
-        int score = GameModel.getFinalScore();
-        if (scores.size() < MAX_SIZE) {
-            scores.offer(score);
-        } else {
-            if (score > scores.peek()) {
-                scores.poll();
-                scores.offer(score);
+    public static void saveAndMaintainTopScores(int finalScore) {
+        String scoreFile = "C:\\Users\\86133\\DMScw1\\platformer\\Platformer\\src\\main\\resources\\high_scores.txt"; // Define the location of the score file
+        // Read the current high scores
+        try (BufferedReader reader = new BufferedReader(new FileReader(scoreFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    scores.add(Integer.parseInt(line.trim())); // Add existing scores
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid score format: " + line);
+                }
             }
+        } catch (IOException e) {
+            System.err.println("Error reading score file: " + e.getMessage());
+        }
+
+        // Add the new finalScore
+        if (scores.size() < MAX_SIZE) {
+            scores.add(finalScore);  // Directly add the score if we have fewer than 3 scores
+        } else {
+            // There are already 3 scores, check if the new score should replace the lowest one
+            int minScore = Collections.min(scores);  // Find the minimum score
+            if (finalScore > minScore) {
+                scores.remove(Integer.valueOf(minScore));  // Remove the minimum score
+                scores.add(finalScore);  // Add the new score
+            }
+        }
+
+        // Sort the list in descending order
+        scores.sort(Collections.reverseOrder());
+
+        // Write the updated scores back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))) {
+            for (Integer score : scores) {
+                writer.write(score.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing score file: " + e.getMessage());
         }
     }
 
     /**
      * Returns an array containing the top scores.
      *
-     * @return An array with the top three scores, may contain null for empty spots.
+     * @return An array with the top three scores.
      */
-    private static Integer[] getScores() {
-        PriorityQueue<Integer> scoreCopy = new PriorityQueue<>(RankModel.scores);
-        return new Integer[]{scoreCopy.poll(), scoreCopy.poll(), scoreCopy.poll()};
+    public static Integer[] getScores() {
+        Integer[] topScores = new Integer[MAX_SIZE];
+
+        // Copy the top 3 scores from the list
+        for (int i = 0; i < scores.size(); i++) {
+            topScores[i] = scores.get(i);
+        }
+
+        // Fill the remaining spots with 0 if there are less than 3 scores
+        while (scores.size() < MAX_SIZE) {
+            topScores[scores.size()] = 0;
+        }
+
+        return topScores;
     }
 
     /**
@@ -51,10 +90,8 @@ public class RankModel {
      * @return The highest score, or 0 if there are no scores.
      */
     public static Integer getFirstScore() {
-        if (getScores()[0] == null) {
-            return 0;
-        }
-        return getScores()[0];
+        Integer[] topScores = getScores();
+        return topScores[0];  // Return the highest score (first element)
     }
 
     /**
@@ -63,10 +100,8 @@ public class RankModel {
      * @return The second highest score, or 0 if there are fewer than two scores.
      */
     public static Integer getSecondScore() {
-        if (getScores()[1] == null) {
-            return 0;
-        }
-        return getScores()[1];
+        Integer[] topScores = getScores();
+        return topScores[1];  // Return the second highest score (second element)
     }
 
     /**
@@ -75,9 +110,7 @@ public class RankModel {
      * @return The third highest score, or 0 if there are fewer than three scores.
      */
     public static Integer getThirdScore() {
-        if (getScores()[2] == null) {
-            return 0;
-        }
-        return getScores()[2];
+        Integer[] topScores = getScores();
+        return topScores[2];  // Return the third highest score (third element)
     }
 }
