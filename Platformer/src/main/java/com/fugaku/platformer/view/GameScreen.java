@@ -261,7 +261,7 @@ public class GameScreen implements Screen, GameModelObserver {
      */
     private static void createGameScene() {
         gameScene = new Scene(appRoot);
-        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/styles.css")).toExternalForm());
+        gameScene.getStylesheets().add(Objects.requireNonNull(GameScreen.class.getResource("/com/fugaku/platformer/styles.css")).toExternalForm());
         GameScreenController.setKeys(gameScene);
     }
 
