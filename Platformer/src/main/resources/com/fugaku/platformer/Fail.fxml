@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.text.Text?>
+<StackPane
+        fx:id="root"
+        prefHeight="720.0"
+        prefWidth="1280.0"
+        stylesheets="@styles.css"
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/22"
+        fx:controller="com.fugaku.platformer.controller.FailScreenController">
+
+    <!-- background -->
+    <StackPane>
+        <Label style="-fx-background-image: url('/images/backgroundImage/Background.png'); -fx-background-size: cover; -fx-background-position: center;" />
+    </StackPane>
+
+
+    <VBox alignment="CENTER" spacing="30">
+        <!-- title -->
+        <Text text="YOU DIED" styleClass="title"/>
+
+        <!-- Button -->
+        <VBox alignment="CENTER" spacing="15">
+
+            <Button
+                    fx:id="RestartButton"
+                    onAction="#handleRestart"
+                    text="Restart"
+                    prefWidth="200"
+            />
+
+            <Button
+                    fx:id="MenuButton"
+                    onAction="#handleMenu"
+                    text="Menu"
+                    prefWidth="200"
+            />
+
+            <Button
+                    fx:id="ExitButton"
+                    onAction="#handleExitGame"
+                    text="Exit Game"
+                    prefWidth="200"
+            />
+        </VBox>
+    </VBox>
+</StackPane>

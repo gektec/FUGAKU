@@ -1,0 +1,45 @@
+package com.fugaku.platformer.view;
+
+import com.fugaku.platformer.data.Constants;
+import com.fugaku.platformer.controller.TransitionScreenController;
+import com.fugaku.platformer.model.GameModel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+/**
+ * This class shows the screen that transitions the player from one level to the next.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/15
+ */
+public class TransitionScreen implements Screen {
+
+    /**
+     * Loads and displays the transition screen on the specified stage.
+     *
+     * @param primaryStage The stage to display the transition screen on.
+     */
+    public void show(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fugaku/platformer/Transition.fxml"));
+            Parent transitionScreen = loader.load();
+            Scene transitionScene = new Scene(transitionScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+
+            TransitionScreenController controller = loader.getController();
+            controller.setPrimaryStage(primaryStage);
+
+            controller.setScore(GameModel.getCurrentScore());
+            controller.setKilled(GameModel.getCurrentKilled());
+            controller.setTime(GameModel.getGameTime());
+
+
+            primaryStage.setTitle("FUGAKU: Level " + GameModel.getCurrentLevel() + " Completed!");
+            primaryStage.setScene(transitionScene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

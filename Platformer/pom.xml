@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>PlatformerPlain</artifactId>
+    <groupId>com.fugaku</groupId>
+    <artifactId>Platformer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>PlatformerPlain</name>
 
@@ -101,7 +101,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.platformerplain.Main</mainClass> <!-- 修正了 mainClass 的格式 -->
+                            <mainClass>com.fugaku.platformer.Main</mainClass> <!-- 修正了 mainClass 的格式 -->
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

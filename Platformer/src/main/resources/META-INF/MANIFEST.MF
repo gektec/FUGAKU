@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.example.platformerplain.Main
+Main-Class: com.fugaku.platformer.Main
 
