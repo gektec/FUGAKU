@@ -8,29 +8,37 @@
 - The player can slide and jump on walls.
 - The player can dash in 8 directions.
 
+### Auto-Switch Move State System
+- Both player and enemy have a `MoveState` that can be automatically switched.
+- Different behaviour is applied on each State.
+
 ### Multiple Entities
 All objects are based on the `Entity` abstract class:
+
+#### Different Types of Moveable Entities
 - Enemy
 - Player
-- Decoration
-- Coin (Shogi)
 
-### Different Types of Tiles
+#### Different Types of Tiles
 - Ladder
 - Spike
 - Goal
+- Decoration
+- Coin
 
 ### Multiple Screens
 - Start Screen
 - Fail Screen
 - Level Choosing Screen
 - Pause Screen
+- Ranking Screen
+- Level Completed Screen
 
 ### Sound Effects
 - Background music
-- Fail sound
-- Victory sound
-- Completed sound
+- Jump Sound
+- Dash Sound
+- Step Sound
 
 ### Textures
 - Texture for tiles, player, and enemy.
@@ -46,10 +54,11 @@ All objects are based on the `Entity` abstract class:
 ## Demo video
 
 ---
-# Git Usage
+
+## Git Usage
 We synchronize all project progress in real time on GitHub following these guidelines:
 
-## 1. Repository Structure
+### 1. Repository Structure
 
 - **Standardized Directory Structure**: Adopt a standardized structural directory for our project to enhance maintainability and readability. Recommended structure includes:
   - `src/` - Source code
@@ -57,38 +66,38 @@ We synchronize all project progress in real time on GitHub following these guide
   - `docs/` - Documentation
   - `README.md` - Project description
 
-## 2. Commit Messages
+### 2. Commit Messages
 
 - **Clarity and Conciseness**: Accurately describe changes in a brief manner.
 
-## 3. Branch Naming Conventions
+### 3. Branch Naming Conventions
 
 - **Descriptive Names:**: Indicate the purpose of the branch.
   
 - **Personal Branches**: Each team member works on their own branches to protect the main branch.
 
-## 4. Issue Tracking
+### 4. Issue Tracking
 
 - **Utilize GitHub Issues**: Track bugs and feature requests with clear priorities and ownership.
 
-## 5. Version Control
+### 5. Version Control
 
 - **Regular Releases**: Regularly release new versions to maintain the project's stability and reliability.
 
-## 7. Regular Cleanup
+### 7. Regular Cleanup
 
 - **Branch Maintenance**: Archive and delete inactive branches periodically to keep the repository organized.
 ---
 
-# Refactoring
+## Refactoring
 
-## JavaFX MVC GUI Design Pattern
+### JavaFX MVC GUI Design Pattern
 
 - **MVC Pattern**: Separates game logic, UI, and input handling for cleaner code.
 
 - **UI Components**: Multiple FXML screens (Menu, Fail, LevelSelect, Transition, Pause, Complete) enhanced with style.css.
 
-## 2. Object-Oriented Design Pattern
+### Object-Oriented Design Pattern
 
 - **Factory Pattern**: Simplifies creation of game entities and tiles via EntityFactory.
 
