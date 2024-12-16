@@ -273,7 +273,7 @@ public class MovePlayer {
      *
      * @return The current MoveData of the player.
      */
-    public MoveData getMoveData() {
+    public static MoveData getMoveData() {
         return moveData;
     }
 }

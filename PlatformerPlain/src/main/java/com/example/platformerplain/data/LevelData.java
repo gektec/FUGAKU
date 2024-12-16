@@ -9,7 +9,20 @@ import com.example.platformerplain.model.GameModel;
  */
 public class LevelData {
     public static final String[][] Levels = new String[][]{
-            {},
+            // Test level
+            {
+                    "0000000000000000000M",
+                    "0000000000000000H00M",
+                    "0000000000000000H00M",
+                    "P000000000000000H00M",
+                    "0000000000000000HM0M",
+                    "MMMMMMMMMMMMMMMMMM0M",
+                    "0000000000000000000M",
+                    "DDDDDDDDD00G0000000M",
+                    "MMMMMMMMMMMMMMMMMMMM"
+            },
+
+            // Level 1
             {
                     "0000000000000000000000000000000",
                     "00000000000000DDCDCDCDDCD000000",
@@ -26,6 +39,8 @@ public class LevelData {
                     "0P0DDMMMMM000000000SMM00MMM000G",
                     "MMMMMMMMMMMMMM000MMMMM00MMMMMMM"
             },
+
+            // Level 2
             {
                     "000000000000000000000000000000000000000000000",
                     "00000000000000000000000000H000000000000000000",
@@ -46,6 +61,8 @@ public class LevelData {
                     "00HDD000sssssssssssssssssssMsssssssssssssssMM",
                     "MMMM0000SSSSSSSSSSSSSSSSSSSMSSSSSSSSSSSSSSSMM"
             },
+
+            // Level 3
             {
                     "0000M0000000000000000000000000000000000000000",
                     "0C0CM000000000000000000000H000000000000000000",

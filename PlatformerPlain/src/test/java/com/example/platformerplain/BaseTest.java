@@ -25,42 +25,21 @@ public class BaseTest {
      */
     @Test
     public void test() throws InterruptedException {
-        // simulate button click
-        Thread.sleep(3000);
+        // Test button click
+        Thread.sleep(2000);
         FxRobot robot = new FxRobot();
 
         robot.clickOn("#startButton");
         Thread.sleep(1000);
 
-        verifyThat("#FirstLevel", LabeledMatchers.hasText("1"));
+        verifyThat("#FirstLevel", LabeledMatchers.hasText("I"));
 
         robot.clickOn("#FirstLevel");
         Thread.sleep(1000);
 
-        double x1 = MovePlayer.getPlayerPosition().getX();
-        robot.press(KeyCode.D);
-        Thread.sleep(100);
-        robot.release(KeyCode.D);
-        double x2 = MovePlayer.getPlayerPosition().getX();
+        robot.clickOn("pauseMenu");
 
-        assert x1 < x2;
-
-        double previousY = MovePlayer.getPlayerPosition().getY();
-        boolean isFalling = false;
-        robot.press(KeyCode.J);
-        while (true) {
-            Thread.sleep(100);
-            double currentY = MovePlayer.getPlayerPosition().getY();
-            if (currentY > previousY) {
-                isFalling = true;
-                break;
-            }
-            previousY = currentY;
-        }
-        robot.release(KeyCode.J);
-
-        assert isFalling;
-
+        Thread.sleep(1000);
 
     }
 

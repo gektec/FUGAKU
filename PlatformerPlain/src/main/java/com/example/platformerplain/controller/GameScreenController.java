@@ -24,4 +24,6 @@ public class GameScreenController {
         gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
     }
 
+
+
 }
