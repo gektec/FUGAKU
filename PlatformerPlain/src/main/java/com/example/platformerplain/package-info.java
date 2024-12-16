@@ -1,6 +1,5 @@
 /**
- * <h3>PlatformerPlain</h3>
  *
- * @description <p>Hello World!</p>
+ * Hello World!
  **/
 package com.example.platformerplain;
