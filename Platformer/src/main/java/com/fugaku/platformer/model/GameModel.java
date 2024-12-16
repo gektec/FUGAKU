@@ -19,10 +19,9 @@ import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.*;
-import java.util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,7 +89,7 @@ public class GameModel {
     private static long lastUpdateTime = 0;
 
     // Color option
-    private static char Color;
+    private static Color color = Color.web("#1C5261");
 
     // Score interpreter instance
     private static final ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
@@ -127,11 +126,6 @@ public class GameModel {
             observers.add(observer);
         }
     }
-
-    public static char setColor(char colorCode) {
-        return colorCode;
-    }
-
 
     /**
      * Removes an observer from the game model.
@@ -334,7 +328,7 @@ public class GameModel {
             new TransitionScreen().show(Main.getPrimaryStage());
         } else {
             calculateCurrentScore();
-            RankModel.saveAndMaintainTopScores(finalScore);
+            RankModel.saveScores(finalScore);
             new CompletedScreen().show(Main.getPrimaryStage());
         }
     }
@@ -395,48 +389,12 @@ public class GameModel {
         return collidableMap;
     }
 
-    public static char setBlackColor() {
-        Color = 'K';
-        return Color;
+    public static void setColor(Color newColor) {
+        color = newColor;
     }
 
-    public static char setOrangeColor() {
-        Color = 'O';
-        return Color;
-    }
-
-    public static char setYellowColor() {
-        Color = 'Y';
-        return Color;
-    }
-
-    public static char setBlueColor() {
-        Color = 'B';
-        return Color;
-    }
-
-    public static char setPurpleColor() {
-        Color = 'P';
-        return Color;
-    }
-
-    public static char setGreenColor() {
-        Color = 'G';
-        return Color;
-    }
-
-    public static char setRedColor() {
-        Color = 'R';
-        return Color;
-    }
-
-    public static char setPinkColor() {
-        Color = 'P';
-        return Color;
-    }
-
-    public static char getColor() {
-        return Color;
+    public static Color getColor() {
+        return color;
     }
 
 

@@ -49,54 +49,12 @@ public class FailScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         loadBackgroundImage();
-        playBackgroundMusic();
     }
 
-    /**
-     * Loads and sets a pure color background for the completed screen.
-     */
     private void loadBackgroundImage() {
-        char colorCode = GameModel.getColor();
-        switch (colorCode) {
-            case 'K':
-                root.setStyle("-fx-background-color: #000000;");
-                break;
-            case 'O':
-                root.setStyle("-fx-background-color: #FFA500;");
-                break;
-            case 'Y':
-                root.setStyle("-fx-background-color: #FFFF00;");
-                break;
-            case 'B':
-                root.setStyle("-fx-background-color: #87CEEB;");
-                break;
-            case 'P':
-                root.setStyle("-fx-background-color: #800080;");
-                break;
-            case 'G':
-                root.setStyle("-fx-background-color: #008000;");
-                break;
-            case 'R':
-                root.setStyle("-fx-background-color: #FF0000;");
-                break;
-            case 'N': // Assuming 'P' is used for both Purple and Pink, using 'N' for Pink to differentiate.
-                root.setStyle("-fx-background-color: #FFC0CB;");
-                break;
-            default:
-                root.setStyle("-fx-background-color: #FFFFFF;");
-                break;
-        }
+        root.setBackground(Assets.MENU_BACKGROUND);
     }
 
-    /**
-     * Plays the background music associated with the fail screen.
-     * This method plays the fail sound effect, which is usually played when the player fails.
-     *
-     * @throws URISyntaxException if there is an issue retrieving the URI of the music file
-     */
-    private void playBackgroundMusic() throws URISyntaxException {
-        // TODO
-    }
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.
