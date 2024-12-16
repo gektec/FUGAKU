@@ -46,12 +46,39 @@ public class LevelSelectScreenController {
     }
 
     /**
-     * Loads and sets the background image for the Level Select screen
-     * using the Assets class. This method configures the visual appearance
-     * of the screen to enhance the user experience.
+     * Loads and sets a pure color background for the completed screen.
      */
     private void loadBackgroundImage() {
-        root.setBackground(Assets.MENU_BACKGROUND);
+        char colorCode = GameModel.getColor();
+        switch (colorCode) {
+            case 'K':
+                root.setStyle("-fx-background-color: #000000;");
+                break;
+            case 'O':
+                root.setStyle("-fx-background-color: #FFA500;");
+                break;
+            case 'Y':
+                root.setStyle("-fx-background-color: #FFFF00;");
+                break;
+            case 'B':
+                root.setStyle("-fx-background-color: #87CEEB;");
+                break;
+            case 'P':
+                root.setStyle("-fx-background-color: #800080;");
+                break;
+            case 'G':
+                root.setStyle("-fx-background-color: #008000;");
+                break;
+            case 'R':
+                root.setStyle("-fx-background-color: #FF0000;");
+                break;
+            case 'N': // Assuming 'P' is used for both Purple and Pink, using 'N' for Pink to differentiate.
+                root.setStyle("-fx-background-color: #FFC0CB;");
+                break;
+            default:
+                root.setStyle("-fx-background-color: #FFFFFF;");
+                break;
+        }
     }
 
     /**
