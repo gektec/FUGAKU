@@ -66,14 +66,6 @@ All objects are based on the `Entity` abstract class:
 - Consistent and advanced Retro art style.
 
 
-## Demo video
-
-<video width="320" height="240" controls>
-  <source src="Video/" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-
 ## Git Usage
 
 We synchronize all project progress in real time on GitHub following these guidelines:
@@ -121,9 +113,7 @@ Our Javadoc is a comprehensive documentation for classes, interfaces, and method
 
 ## Class Diagram
 
-Visual representation of main classes and their relationships is available in the Diagram directory as ClassDiagram-20513999-20513997.png or .vpp. Use UML tools for detailed views.
-
-### Class Diagram Display
+Visual representation of main classes and their relationships is available in the Diagram directory.
 
 ![Class Diagram](Diagram/ClassDiagram-20513999-20513997.png)
 
@@ -132,32 +122,11 @@ Visual representation of main classes and their relationships is available in th
 
 The following open-source assets were used in this project:
 
-- **Dagon's Fantasy All-In-One [16x16]** by Eduardo Scarpato
-  - Author: [Eduardo Scarpato](https://eduardscarpato.itch.io/)
-  - Source: [https://eduardscarpato.itch.io/dagon](https://eduardscarpato.itch.io/dagon)
-  - License: This asset pack can be used in free and commercial projects. You cannot distribute or sell those assets directly (even modified).
-
-
-- **Samurai 2D Pixel Art** by Mattz Art  
-  - Author: [Mattz Art](https://xzany.itch.io/)  
-  - Source: [https://xzany.itch.io/samurai-2d-pixel-art](https://xzany.itch.io/samurai-2d-pixel-art)  
-  - License: You can use this asset in any game project, personal or commercial. You cannot resell or redistribute it as a standalone game asset; it must be part of a larger project. Credit is not required but appreciated. You may modify the asset to suit your needs. You are not allowed to turn any of the assets into NFTs.  
-
-- **Retro Player 90 Movement SFX** by Leohpaz
-  - Author: [Leohpaz](https://leohpaz.itch.io/)
-  - Source: [https://leohpaz.itch.io/90-retro-player-movement-sfx](https://leohpaz.itch.io/90-retro-player-movement-sfx)
-  - License: Both the demo and the complete pack are free to use in your projects. You may not sell it or distribute this asset pack for free; please redirect people to this page if someone else shows interest in my work. Credits are not mandatory, but much appreciated!
-
-- **将棋駒／Shogi Pieces** by AlisAlia
-  - Author: [AlisAlia](https://alisalia.itch.io/)
-  - Source: [https://alisalia.itch.io/shogi-pieces](https://alisalia.itch.io/shogi-pieces)
-  - License: 個人または商用プロジェクトも自由に使用できます。あなたのゲームに合わせて編集または変更できます。このアセットパックを変更していない状態で再販することはできません。このアセットパックを自分のものとして主張することはできません。不明点がございましたらよりお願いします。
-
-- **m6x11** by Daniel Linssen
-  - Author: [Daniel Linssen](https://managore.itch.io/)
-  - Source: [https://managore.itch.io/m6x11](https://managore.itch.io/m6x11)
-  - License: Free to use with attribution.
-
-- **Hybrid song 2:20 (Funky stars)** 
-  - Author: Quazar of Sanxion
-  - License: copyright-free.
+| Asset Title | Author | Source | License |
+|--|--|--|----|
+| Dagon's Fantasy All-In-One [16x16] | [Eduardo Scarpato](https://eduardscarpato.itch.io/) | [Link](https://eduardscarpato.itch.io/dagon) | This asset pack can be used in free and commercial projects. You cannot distribute or sell those assets directly (even modified). |
+| Samurai 2D Pixel Art  | [Mattz Art](https://xzany.itch.io/) | [Link](https://xzany.itch.io/samurai-2d-pixel-art)  | You can use this asset in any game project, personal or commercial. You cannot resell or redistribute it as a standalone game asset; it must be part of a larger project. Credit is not required but appreciated. No NFTs allowed.  |
+| Retro Player 90 Movement SFX  | [Leohpaz](https://leohpaz.itch.io/) | [Link](https://leohpaz.itch.io/90-retro-player-movement-sfx) | Both the demo and the complete pack are free to use in your projects. You may not sell it or distribute this asset pack for free; please redirect people to this page if someone else shows interest. Credits are appreciated but not mandatory. |
+| 将棋駒／Shogi Pieces  | [AlisAlia](https://alisalia.itch.io/) | [Link](https://alisalia.itch.io/shogi-pieces)    | 個人または商用プロジェクトも自由に使用できます。あなたのゲームに合わせて編集または変更できます。このアセットパックを変更していない状態で再販することはできません。このアセットパックを自分のものとして主張することはできません。不明点がございましたらよりお願いします。 |
+| m6x11  | [Daniel Linssen](https://managore.itch.io/) | [Link](https://managore.itch.io/m6x11) | Free to use with attribution.  |
+| Hybrid song 2:20 (Funky stars)  | Quazar of Sanxion   | N/A  | copyright-free.  |
