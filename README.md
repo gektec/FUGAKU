@@ -16,63 +16,63 @@
 - Both player and enemy have a `MoveState` that can be automatically switched.
 - Different behaviour is applied on each State.
 
-### Multiple Entities
+### 1. Multiple Entities
 
 All objects are based on the `Entity` abstract class:
 
-#### Different Types of Moveable Entities
+#### 1.1 Different Types of Moveable Entities
 
 - Enemy
 - Player
 
-#### Different Types of Tiles
+#### 1.2 Different Types of Tiles
 
 - Ladder
 - Spike
 - Goal
 - Decoration
 - Coin
-- Decoration
-- Coin
 
-### Multiple Screens
+### 2. Multiple Screens
 
 - Start Screen
 - Fail Screen
 - Level Choosing Screen
 - Pause Screen
 - Ranking Screen
+- Level Transistion Screen
 - Level Completed Screen
-- Ranking Screen
-- Level Completed Screen
+- Option Screen
 
-### Sound Effects
+### 3. Sound Effects
 
 - Background music
 - Jump Sound
 - Dash Sound
 - Step Sound
-- Jump Sound
-- Dash Sound
-- Step Sound
 
-### Textures
+
+### 4. Textures
 
 - Texture for tiles, player, and enemy.
 - Textures can swap between states.
 - Textures can have animations.
-- Background has moveable textures.
+- Background has textures that can move for perspective effent.
 
-### Others
+### 5. Others
 
 - Fixed framerate.
 - DEBUG mode allows monitoring multiple statuses.
+- Consistent and advanced Retro art style.
 
----
 
 ## Demo video
 
----
+<video width="320" height="240" controls>
+  <source src="Video/" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 
 ## Git Usage
 
@@ -87,7 +87,6 @@ We synchronize all project progress in real time on GitHub following these guide
 
 - **Efficient Issue Tracking**
 
----
 
 ## Refactoring
 
@@ -99,19 +98,17 @@ We synchronize all project progress in real time on GitHub following these guide
 
 ### Object-Oriented Design Pattern
 
+- **Singleton Pattern** : Manages screens with a single ScreenManager instance.
+
 - **Factory Pattern**: Simplifies creation of game entities and tiles via EntityFactory.
 
 - **Command Pattern** : Manages player movements using PlayCommand interface.
 
 - **Interpreter Pattern** : Calculates scores with Expression interface based on time and enemies defeated.
 
-- **Observer Pattern** : Provides real-time updates on player's score and time through GameModelObserver.
-
-- **Singleton Pattern** : Manages screens with a single ScreenManager instance.
-
 - **State Pattern** : Handles player movement states with MoveStateHandler.
 
----
+- **Observer Pattern** : Provides real-time updates on player's score and time through GameModelObserver.
 
 ## Javadocs
 
@@ -121,7 +118,6 @@ Our Javadoc is a comprehensive documentation for classes, interfaces, and method
 - **Interfaces**: Details on functionality, parameters, and returns.
 - **Methods**: Explanations of important fields.
 
----
 
 ## Class Diagram
 
@@ -130,8 +126,6 @@ Visual representation of main classes and their relationships is available in th
 ### Class Diagram Display
 
 ![Class Diagram](Diagram/ClassDiagram-20513999-20513997.png)
-
----
 
 
 ## Appendix
