@@ -36,8 +36,8 @@ public class Spike extends Tile {
     public Spike(int x, int y, int w, int h, int index) {
         this.index = index;
         hitBox = new Rectangle(w, h, Color.RED);
-        hitBox.setTranslateX(x - (w - Constants.TILE_SIZE) / 2);
-        hitBox.setTranslateY(y - (h - Constants.TILE_SIZE) / 2);
+        hitBox.setTranslateX(x - (double) (w - Constants.TILE_SIZE) / 2);
+        hitBox.setTranslateY(y - (double) (h - Constants.TILE_SIZE) / 2);
         canvas = new Canvas(Constants.TILE_SIZE, Constants.TILE_SIZE);
 
         if (index >= 16) {

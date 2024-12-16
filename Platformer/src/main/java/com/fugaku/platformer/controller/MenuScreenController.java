@@ -1,16 +1,13 @@
 package com.fugaku.platformer.controller;
 
 import com.fugaku.platformer.data.Assets;
-import com.fugaku.platformer.model.RankModel;
 import com.fugaku.platformer.view.LevelSelectScreen;
 import com.fugaku.platformer.model.GameModel;
 import com.fugaku.platformer.view.OptionScreen;
 import com.fugaku.platformer.view.RankScreen;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 

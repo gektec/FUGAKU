@@ -41,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class GameModel {
 
     // Singleton instance of GameModel
-    private static GameModel instance;
+    private static volatile GameModel instance;
 
     // List of observers for the game model
     private static final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
@@ -50,12 +50,11 @@ public class GameModel {
     private static final List<Entity> toRemove = new ArrayList<>();
 
     // Map to track key states (pressed/released)
-    public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+    public static final HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
     // Lists to store game entities
     private static final ArrayList<Entity> collidableMap = new ArrayList<>();
     private static final ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static final ArrayList<Goal> goalMap = new ArrayList<>();
     private static final ArrayList<Spike> spikeMap = new ArrayList<>();
     private static final ArrayList<Ladder> ladderMap = new ArrayList<>();
     private static final ArrayList<Coin> coinMap = new ArrayList<>();
@@ -166,8 +165,6 @@ public class GameModel {
         LevelInitializer levelInitializer = new LevelInitializer(
                 keys,
                 GameScreen.getGameRoot(),
-                GameScreen.getUIRoot(),
-                GameScreen.getBackgroundRoot(),
                 collidableMap,
                 enemyMap,
                 spikeMap,
@@ -184,7 +181,6 @@ public class GameModel {
                     ladderMap,
                     spikeMap,
                     coinMap,
-                    LevelData.getLevelInformation.getLevelWidth(),
                     keys
             );
         } else {
@@ -397,12 +393,6 @@ public class GameModel {
     public static Color getColor() {
         return color;
     }
-
-
-    public static List<Enemy> getEnemyMap() {
-        return enemyMap;
-    }
-
 
     public static void removeEntity(Entity entity) {
         toRemove.add(entity);

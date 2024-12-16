@@ -96,7 +96,13 @@ public class AssetManager {
 
         public GameMediaPlayer (String mediaFile) {
             Media media = loadSound(mediaFile);
-            this.mediaPlayer = new MediaPlayer(media);
+            if (media != null) {
+                this.mediaPlayer = new MediaPlayer(media);
+            }
+            else {
+                this.mediaPlayer = null;
+                System.err.println("Error loading sound file: " + mediaFile);
+            }
         }
 
         public void play() {
@@ -205,8 +211,7 @@ public class AssetManager {
     public static Image loadImage(String s) {
         try {
             InputStream inputStream = Objects.requireNonNull(Assets.class.getResourceAsStream(s));
-            Image image = new Image(inputStream);
-            return image;
+            return new Image(inputStream);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading graphics.");

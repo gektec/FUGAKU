@@ -59,10 +59,9 @@ public class MovePlayer {
      * @param ladders    A list of ladder entities in the game.
      * @param spikes     A list of spike entities in the game.
      * @param coinMap    A list of coin entities in the game.
-     * @param levelWidth The width of the current level.
      * @param keys       A HashMap storing the state of keyboard keys.
      */
-    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders, ArrayList<Spike> spikes, ArrayList<Coin> coinMap, int levelWidth, HashMap<KeyCode, Boolean> keys) {
+    public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders, ArrayList<Spike> spikes, ArrayList<Coin> coinMap, HashMap<KeyCode, Boolean> keys) {
         MovePlayer.player = player;
         this.entityMap = platforms;
         this.keys = keys;

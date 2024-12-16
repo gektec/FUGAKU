@@ -61,7 +61,7 @@ public class GameScreen implements Screen, GameModelObserver {
     private static final Button pauseMenu = new Button();
     private static int labelNumber = 0;
 
-    static ImageView backgroundSky;
+    //static ImageView backgroundSky;
     static ImageView backgroundMountain1;
     static ImageView backgroundMountain2;
     static ImageView backgroundCloud1;

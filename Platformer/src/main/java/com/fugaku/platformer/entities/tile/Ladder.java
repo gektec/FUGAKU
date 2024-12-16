@@ -60,12 +60,4 @@ public class Ladder extends Tile {
         return EntityType.LADDER;
     }
 
-    /**
-     * Gets the index of the ladder, which can be used to detect the highest ladder.
-     *
-     * @return The index of the ladder.
-     */
-    public int getIndex() { // Used to detect the highest ladder
-        return index;
-    }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @date 2024-12-15
  **/
 abstract class Tile extends Entity {
-    private final ArrayList<Entity> children = new ArrayList<>();
+    //private final ArrayList<Entity> children = new ArrayList<>();
 
     @Override
     protected boolean isAnimated() {

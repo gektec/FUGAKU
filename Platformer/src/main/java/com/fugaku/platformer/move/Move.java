@@ -37,8 +37,8 @@ public class Move {
      *             3
      */
     private static int detectRelativeLocation(Entity moveable, Entity collidable) {
-        Coord2D moveableCoord = new Coord2D((int) moveable.hitBox().getTranslateX() + (moveable.size()[0] / 2), (int) moveable.hitBox().getTranslateY() + (moveable.size()[1] / 2));
-        Coord2D platformCoord = new Coord2D((int) collidable.hitBox().getTranslateX() + (Constants.TILE_SIZE / 2), (int) collidable.hitBox().getTranslateY() + (Constants.TILE_SIZE / 2));
+        Coord2D moveableCoord = new Coord2D(moveable.hitBox().getTranslateX() + ((double) moveable.size()[0] / 2), moveable.hitBox().getTranslateY() + ((double) moveable.size()[1] / 2));
+        Coord2D platformCoord = new Coord2D(collidable.hitBox().getTranslateX() + ((double) Constants.TILE_SIZE / 2), collidable.hitBox().getTranslateY() + ((double) Constants.TILE_SIZE / 2));
 
         double xDiff = moveableCoord.getX() - platformCoord.getX();
         double yDiff = moveableCoord.getY() - platformCoord.getY();
@@ -46,7 +46,7 @@ public class Move {
         //test
         int totalSize = moveable.size()[0] + collidable.size()[0];
 
-        if (Math.abs(xDiff) > totalSize/2 - 3 && Math.abs(yDiff) > totalSize/2 - 3) {
+        if (Math.abs(xDiff) > (double) totalSize /2 - 3 && Math.abs(yDiff) > (double) totalSize /2 - 3) {
             return -1;
         }
         //
@@ -66,13 +66,12 @@ public class Move {
 
     }
 
-    public static MoveData move(Entity moveable, MoveData moveData){
+    public static void move(Entity moveable, MoveData moveData){
         detectCollide(moveable, moveData);
         afterMove(moveable, moveData);
         detectCollide(moveable, moveData);
         setStatus(moveable, moveData);
         centerAlign(moveable, new Coord2D(0,0));
-        return moveData;
     }
 
     /**

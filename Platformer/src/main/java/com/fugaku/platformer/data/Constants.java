@@ -20,7 +20,6 @@ public class Constants {
     public static final int WINDOW_WIDTH = 1280;
     public static final int WINDOW_HEIGHT = 720;
 
-    public static final int MAX_SPEED = TILE_SIZE / 2;
     public static final int MAX_MOVE_SPEED = 10;
     public static final int MAX_FALL_SPEED = 20;  // Maximum falling speed
     public static final int MAX_CLIMB_SPEED = 6;

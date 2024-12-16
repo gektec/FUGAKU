@@ -24,8 +24,6 @@ import javafx.scene.input.KeyCode;
 public class LevelInitializer {
     private final HashMap<KeyCode, Boolean> keys;
     private final Pane gameRoot;
-    private final Pane uiRoot;
-    private final Pane backgroundRoot;
     private Entity player;
 
     private final ArrayList<Entity> collidableMap;
@@ -38,20 +36,16 @@ public class LevelInitializer {
      * Constructs a LevelInitializer with the specified parameters.
      * @param keys the hashmap to store key states.
      * @param gameRoot the pane where game entities will be rendered.
-     * @param uiRoot the pane for UI elements.
-     * @param backgroundRoot the pane for background elements.
      * @param collidableMap the list of collidable entities in the level.
      * @param enemyMap the list of enemies in the level.
      * @param spikeMap the list of spikes in the level.
      * @param ladderMap the list of ladders in the level.
      */
-    public LevelInitializer(HashMap<KeyCode, Boolean> keys, Pane gameRoot, Pane uiRoot, Pane backgroundRoot,
+    public LevelInitializer(HashMap<KeyCode, Boolean> keys, Pane gameRoot,
                             ArrayList<Entity> collidableMap, ArrayList<Enemy> enemyMap,
                             ArrayList<Spike> spikeMap, ArrayList<Ladder> ladderMap, ArrayList<Coin> coinMap) {
         this.keys = keys;
         this.gameRoot = gameRoot;
-        this.uiRoot = uiRoot;
-        this.backgroundRoot = backgroundRoot;
         this.collidableMap = collidableMap;
         this.enemyMap = enemyMap;
         this.spikeMap = spikeMap;

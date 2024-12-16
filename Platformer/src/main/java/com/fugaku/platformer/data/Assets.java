@@ -5,8 +5,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.text.Font;
 
-import java.io.*;
-
 /**
  * This class is responsible for storing all game assets.
  * @author Changyu Li
@@ -53,9 +51,6 @@ public class Assets {
 
 
     // Sounds
-    public static final AssetManager.GameMediaPlayer COMPLETE_SOUND = new AssetManager.GameMediaPlayer("/sound/completed.mp3");
-    public static final AssetManager.GameMediaPlayer VICTORY_SOUND = new AssetManager.GameMediaPlayer("/sound/victory.mp3");
-    public static final AssetManager.GameMediaPlayer FAIL_SOUND = new AssetManager.GameMediaPlayer("/sound/defeat.mp3");
     public static final AssetManager.GameMediaPlayer BACKGROUND_MUSIC = new AssetManager.GameMediaPlayer("/sound/BackgroundMusic.mp3"); // todo: replace
     public static final AssetManager.GameMediaPlayer JUMP_SFX = new AssetManager.GameMediaPlayer("/sound/Jump.wav");
     public static final AssetManager.GameMediaPlayer DASH_SFX = new AssetManager.GameMediaPlayer("/sound/Dash.wav");

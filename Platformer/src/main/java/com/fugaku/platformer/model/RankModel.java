@@ -16,7 +16,7 @@ import static com.fugaku.platformer.data.Assets.*;
  */
 public class RankModel {
     private static final int MAX_SIZE = 3;
-    private static List<Integer> scores = new ArrayList<>();  // List to store the top scores
+    private static final List<Integer> scores = new ArrayList<>();  // List to store the top scores
 
     public static void initializeScores() {
         try {

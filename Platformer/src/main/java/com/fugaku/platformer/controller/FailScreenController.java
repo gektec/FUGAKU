@@ -47,7 +47,7 @@ public class FailScreenController {
      * @throws URISyntaxException if an error occurs while retrieving the URI of the sound file
      */
     @FXML
-    private void initialize() throws URISyntaxException {
+    private void initialize(){
         loadBackgroundImage();
     }
 

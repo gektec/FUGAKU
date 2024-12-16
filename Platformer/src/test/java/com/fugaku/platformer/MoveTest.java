@@ -49,13 +49,13 @@ public class MoveTest {
 
         // Test player jumping
         double previousY = MovePlayer.getPlayerPosition().getY();
-        boolean isFalling = false;
+        boolean isFalling;
         robot.press(KeyCode.J);
         robot.press(KeyCode.D);
         while (true) {
             Thread.sleep(100);
             double currentY = MovePlayer.getPlayerPosition().getY();
-            if (currentY > previousY) {
+            if (currentY < previousY) {
                 isFalling = true;
                 break;
             }
@@ -76,6 +76,9 @@ public class MoveTest {
         assert MovePlayer.getMoveData().stateIs(MoveState.DASHING);
 
         Thread.sleep(100);
+        robot.press(KeyCode.D);
+        Thread.sleep(1000);
+        robot.release(KeyCode.D);
 
         // Test player climbing
         robot.press(KeyCode.W);

@@ -23,13 +23,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 1); /* Adds shadow effect */
 }
 
-.colorButton {
-    -fx-background-color: #2C3E50; /* Dark blue background for a cool aesthetic */
-    -fx-font-size: 24px;
-    -fx-padding: 10 20; /* Padding to make buttons easier to click */
-    -fx-background-radius: 5; /* Rounded corners */
-}
-
 /* Button styles for hover and pressed states */
 .button:hover {
     -fx-background-color: #34495E; /* Brighter color on hover to attract attention */

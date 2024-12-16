@@ -42,10 +42,10 @@ public class Enemy extends Moveable {
      * @param h the height of the enemy
      */
     public Enemy(int x, int y, int w, int h) {
-        hitBox = new Rectangle(Constants.ENEMY_SIZE, Constants.ENEMY_SIZE, Color.RED);
+        hitBox = new Rectangle(w, h, Color.RED);
         hitBox.setTranslateX(x);
         hitBox.setTranslateY(y);
-        this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getCollidableMap(), LevelData.getLevelInformation.getLevelWidth());
+        this.moveEnemyLogic = new MoveEnemy(this, (ArrayList<Entity>) GameModel.getCollidableMap());
         animation.setFrames(Assets.FROG_IDLE[0]);
         animation.setDelay(10);
 
