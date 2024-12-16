@@ -67,14 +67,6 @@ public class Assets {
     public static final Font baseFont = Font.loadFont(Assets.class.getResourceAsStream("/m6x11plus.ttf"), 20);
 
     // Saves
-    public static final BufferedReader SAVE_FILE_READER;
-    public static final BufferedWriter SAVE_FILE_WRITER;
-    static {
-        try {
-            SAVE_FILE_READER = new BufferedReader(new FileReader("src/main/resources/scores.dat"));
-            SAVE_FILE_WRITER = new BufferedWriter(new FileWriter("src/main/resources/scores.dat"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public static final String SAVE_FILE = "src/main/resources/scores.dat";
+
 }
