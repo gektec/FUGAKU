@@ -1,4 +1,4 @@
-# NGHMP - Next Generation High Mobility Platformer
+# FUGAKU - the Fast Unprecedented Gripping Arcade Kinetic Unique PLATFORMER
 
 ![GameScreenshot](FUGAKU.png)
 
