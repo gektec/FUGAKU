@@ -2,7 +2,7 @@ package com.example.platformerplain.model.Interpreter;
 
 // VariableExpression class, representing a variable
 public class VariableExpression implements Expression {
-    private VariableType type;
+    private final VariableType type;
 
     /**
      * Constructs a VariableExpression of the specified variable type.
@@ -25,18 +25,13 @@ public class VariableExpression implements Expression {
      */
     @Override
     public int interpret(ScoreContext context) {
-        switch (type) {
-            case MAX_SCORE:
-                return context.getMaxScore();
-            case PENALTY_PER_SECOND:
-                return context.getPenaltyPerSecond();
-            case ELAPSED_SECONDS:
-                return (int) (context.getElapsedTime() / 1000);
-            case KILLED_ENEMY:
-                return context.getKilledEnemy() * ScoreContext.getKillBonus();
-            default:
-                return 0;
-        }
+        return switch (type) {
+            case MAX_SCORE -> context.getMaxScore();
+            case PENALTY_PER_SECOND -> context.getPenaltyPerSecond();
+            case ELAPSED_SECONDS -> (int) (context.getElapsedTime() / 1000);
+            case KILLED_ENEMY -> context.getKilledEnemy() * ScoreContext.getKillBonus();
+            default -> 0;
+        };
     }
 
     /**

@@ -21,8 +21,8 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/12/15
  */
 public class Coin extends Tile {
-    private GraphicsContext gc;
-    private Image sprite;
+    private final GraphicsContext gc;
+    private final Image sprite;
     public boolean isCollected = false;
 
     /**

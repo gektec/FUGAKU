@@ -3,6 +3,7 @@ package com.example.platformerplain.entities.moveable;
 import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.EntityType;
+import com.example.platformerplain.move.MovePlayer;
 import com.example.platformerplain.move.state.MoveData;
 import com.example.platformerplain.view.GameScreen;
 import com.example.platformerplain.model.GameModel;
@@ -26,7 +27,7 @@ import javafx.util.Duration;
  * @date 2024/11/8
  */
 public class Player extends Moveable {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
     private MoveState lastState = MoveState.IDLE;
 
     /**
@@ -58,12 +59,12 @@ public class Player extends Moveable {
         GameModel.getMovePlayerLogic().update();
         canvas.setTranslateY(hitBox.getTranslateY() - 130);
 
-        GameModel.getMovePlayerLogic().getMoveData().drawPlayer(this, lastState, animation);
+        MovePlayer.getMoveData().drawPlayer(this, lastState, animation);
 
         animation.update();
 
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Image sprite = animation.getImage(GameModel.getMovePlayerLogic().getMoveData().isFacingLeft);
+        Image sprite = animation.getImage(MovePlayer.getMoveData().isFacingLeft);
         if (sprite != null) {
             gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
         }
@@ -73,7 +74,7 @@ public class Player extends Moveable {
      * Generates an afterimage effect for the player to enhance visual feedback.
      */
     public void generateAfterimage() {
-        ImageView afterimage = new ImageView(animation.getImage(GameModel.getMovePlayerLogic().getMoveData().isFacingLeft));
+        ImageView afterimage = new ImageView(animation.getImage(MovePlayer.getMoveData().isFacingLeft));
         afterimage.setFitWidth(192);
         afterimage.setFitHeight(192);
         afterimage.setTranslateX(canvas.getTranslateX());
@@ -116,7 +117,7 @@ public class Player extends Moveable {
      * @return the MoveData object
      */
     public MoveData getMoveData() {
-        return GameModel.getMovePlayerLogic().getMoveData();
+        return MovePlayer.getMoveData();
     }
 
     /**

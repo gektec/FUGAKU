@@ -2,8 +2,8 @@ package com.example.platformerplain.model.Interpreter;
 
 // AddExpression class, representing the addition operation
 public class AddExpression implements Expression {
-    private Expression left;
-    private Expression right;
+    private final Expression left;
+    private final Expression right;
 
     /**
      * Constructs an AddExpression with the specified left and right expressions.

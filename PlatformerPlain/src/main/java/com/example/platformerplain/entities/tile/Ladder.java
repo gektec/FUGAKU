@@ -18,8 +18,8 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/11/26
  */
 public class Ladder extends Tile {
-    private GraphicsContext gc;
-    private int index;
+    private final GraphicsContext gc;
+    private final int index;
 
     /**
      * Constructs a Ladder instance with the specified position and dimensions.

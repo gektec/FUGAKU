@@ -16,9 +16,9 @@ import static com.example.platformerplain.model.GameModel.keys;
  * @date 2024/12/15
  */
 public class DashCommand implements PlayCommand {
-    private Coord2D velocity;
-    private MoveData moveData;
-    private Timeline dashCooldownTimer;
+    private final Coord2D velocity;
+    private final MoveData moveData;
+    private final Timeline dashCooldownTimer;
     private boolean isPressed(KeyCode key) {
         return keys.getOrDefault(key, false);
     }

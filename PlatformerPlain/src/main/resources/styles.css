@@ -2,12 +2,6 @@
     -fx-font-family: "m6x11plus";
 }
 
-/* General style */
-.custom-text {
-    -fx-font-size: 28px; /* Moderate font size */
-    -fx-fill: #4A4A4A; /* Dark gray color for a cool vibe */
-}
-
 /* Button style */
 .button {
     -fx-background-color: #2C3E50; /* Dark blue background for a cool aesthetic */

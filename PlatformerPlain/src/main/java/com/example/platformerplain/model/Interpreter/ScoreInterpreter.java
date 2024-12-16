@@ -2,7 +2,7 @@ package com.example.platformerplain.model.Interpreter;
 
 // ScoreInterpreter class, used to build and interpret expression trees
 public class ScoreInterpreter {
-    private Expression expression;
+    private final Expression expression;
 
     /**
      * Constructs a ScoreInterpreter instance and initializes the expression tree.

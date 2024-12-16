@@ -32,8 +32,8 @@ public class ImageScaler {
             int inputWidth = (int) inputImage.getWidth();
             int inputHeight = (int) inputImage.getHeight();
 
-            int outputWidth = (int) (inputWidth * scale);
-            int outputHeight = (int) (inputHeight * scale);
+            int outputWidth = inputWidth * scale;
+            int outputHeight = inputHeight * scale;
 
             WritableImage outputImage = new WritableImage(outputWidth, outputHeight);
             PixelReader pixelReader = inputImage.getPixelReader();
@@ -42,8 +42,8 @@ public class ImageScaler {
             for (int y = 0; y < outputHeight; y++) {
                 for (int x = 0; x < outputWidth; x++) {
                     // Calculate the nearest neighbor's coordinates in the input image
-                    int nearestX = (int) (x / scale);
-                    int nearestY = (int) (y / scale);
+                    int nearestX = x / scale;
+                    int nearestY = y / scale;
 
                     // Get the color of the nearest neighbor
                     Color color = pixelReader.getColor(nearestX, nearestY);

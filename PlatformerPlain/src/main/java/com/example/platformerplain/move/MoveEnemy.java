@@ -20,14 +20,14 @@ import static com.example.platformerplain.data.Constants.RESISTANCE;
  * @date 2024/11/11
  */
 public class MoveEnemy {
-    private Enemy enemy;
-    private ArrayList<Entity> entityMap;
+    private final Enemy enemy;
+    private final ArrayList<Entity> entityMap;
     private boolean isFacingLeft;
     private boolean isTouchingGround;
     private boolean isTouchingWall;
-    private Coord2D velocity;
+    private final Coord2D velocity;
     private MoveState enemyState;
-    private MoveData moveData;
+    private final MoveData moveData;
     private double waitingTime = 0;
 
     /**

@@ -13,12 +13,12 @@ import java.util.List;
  * @date 2024-12-15
  **/
 abstract class Moveable extends Entity {
-    private ArrayList<Entity> children = new ArrayList<>();
+//    private final ArrayList<Entity> children = new ArrayList<>();
 
 
-    public void add(Entity child) {
-        children.add(child);
-    }
+//    public void add(Entity child) {
+//        children.add(child);
+//    }
 
     @Override
     protected boolean isAnimated() {

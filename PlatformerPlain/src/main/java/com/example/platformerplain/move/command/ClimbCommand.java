@@ -12,7 +12,7 @@ import static com.example.platformerplain.model.GameModel.keys;
  * @date 2024/12/15
  */
 public class ClimbCommand implements PlayCommand {
-    private MoveData moveData;
+    private final MoveData moveData;
     private boolean isPressed(KeyCode key) {
         return keys.getOrDefault(key, false);
     }

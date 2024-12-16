@@ -14,8 +14,8 @@ import static com.example.platformerplain.data.Assets.JUMP_SFX;
  * @date 2024/12/15
  */
 public class WallJumpCommand implements PlayCommand {
-    private MoveData moveData;
-    private Timeline slideJumpCooldownTimer;
+    private final MoveData moveData;
+    private final Timeline slideJumpCooldownTimer;
 
 
     public WallJumpCommand(MoveData moveData) {

@@ -9,14 +9,12 @@ import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.model.GameModelObserver;
 import com.example.platformerplain.texture.ImageScaler;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -44,23 +42,23 @@ public class GameScreen implements Screen, GameModelObserver {
     private static Scene gameScene;
 
     // Debug
-    private static Label framerateLabel = new Label();
-    private static Label moveStateLabel = new Label();
-    private static Label playerSpeedLabel = new Label();
-    private static Label timeLabel = new Label();
-    private static Label positionLabel = new Label();
-    private static NumberAxis xAxis = new NumberAxis();
-    private static NumberAxis yAxis = new NumberAxis();
-    private static LineChart speedChart = new LineChart<>(xAxis, yAxis);
+    private static final Label framerateLabel = new Label();
+    private static final Label moveStateLabel = new Label();
+    private static final Label playerSpeedLabel = new Label();
+    private static final Label timeLabel = new Label();
+    private static final Label positionLabel = new Label();
+    private static final NumberAxis xAxis = new NumberAxis();
+    private static final NumberAxis yAxis = new NumberAxis();
+    private static final LineChart<Number, Number> speedChart = new LineChart<>(xAxis, yAxis);
     private static XYChart.Series<Number, Number> speedX;
     private static XYChart.Series<Number, Number> speedY;
 
     // label
-    private static Label scoreLabel = new Label();
-    private static Label killedLabel = new Label();
+    private static final Label scoreLabel = new Label();
+    private static final Label killedLabel = new Label();
 
     // Main
-    private static Button pauseMenu = new Button();
+    private static final Button pauseMenu = new Button();
     private static int labelNumber = 0;
 
     static ImageView backgroundSky;
@@ -425,9 +423,7 @@ public static Pane getGameRoot() {
      */
     @Override
     public void onScoreChanged(int newScore) {
-        Platform.runLater(() -> {
-            scoreLabel.setText("Score: " + newScore);
-        });
+        Platform.runLater(() -> scoreLabel.setText("Score: " + newScore));
     }
 
     /**
@@ -438,8 +434,6 @@ public static Pane getGameRoot() {
      */
     @Override
     public void onEnemyKilled(int totalKilled) {
-        Platform.runLater(() -> {
-            killedLabel.setText("Enemies Killed: " + totalKilled);
-        });
+        Platform.runLater(() -> killedLabel.setText("Enemies Killed: " + totalKilled));
     }
 }

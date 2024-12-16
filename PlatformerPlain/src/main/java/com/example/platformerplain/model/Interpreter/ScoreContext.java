@@ -2,10 +2,10 @@ package com.example.platformerplain.model.Interpreter;
 
 // ScoreContext class, which stores the variables needed for calculation
 public class ScoreContext {
-    private int maxScore;
-    private int penaltyPerSecond;
-    private long elapsedTime;
-    private int killedEnemy;
+    private final int maxScore;
+    private final int penaltyPerSecond;
+    private final long elapsedTime;
+    private final int killedEnemy;
     private static final int KILL_BONUS = 200; // Rewards points for each enemy killed
 
     /**

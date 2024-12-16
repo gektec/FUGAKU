@@ -91,7 +91,7 @@ public class AssetManager {
      * @date 2024/12/11
      */
     public static class GameMediaPlayer {
-        private MediaPlayer mediaPlayer;
+        private final MediaPlayer mediaPlayer;
         private long lastPlayTime = 0;
 
         public GameMediaPlayer (String mediaFile) {

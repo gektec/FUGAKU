@@ -31,7 +31,7 @@ public class TransitionScreen implements Screen {
             controller.setPrimaryStage(primaryStage);
 
             controller.setScore(GameModel.getCurrentScore());
-            controller.setKilled(GameModel.getCurrentKilled());;
+            controller.setKilled(GameModel.getCurrentKilled());
             controller.setTime(GameModel.getGameTime());
 
 

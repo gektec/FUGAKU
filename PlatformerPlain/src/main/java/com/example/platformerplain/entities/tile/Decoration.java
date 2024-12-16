@@ -18,7 +18,7 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/12/10
  */
 public class Decoration extends Tile {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
     /**
      *

@@ -19,7 +19,7 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/11/7
  */
 public class Platform extends Tile {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
     private Image sprite;
 
 

@@ -6,6 +6,8 @@ import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.Entity;
 import com.example.platformerplain.entities.EntityType;
 import com.example.platformerplain.model.GameModel;
+import com.example.platformerplain.move.Coord2D;
+import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MoveEnemy;
 import com.example.platformerplain.move.state.MoveData;
 import com.example.platformerplain.move.state.MoveState;
@@ -25,10 +27,10 @@ import java.util.ArrayList;
  * @date 2024/11/11
  */
 public class Enemy extends Moveable {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
     public boolean isDead;
     private boolean deathAnimationSet = false;
-    private MoveEnemy moveEnemyLogic;
+    private final MoveEnemy moveEnemyLogic;
     private MoveState lastState;
 
     /**
@@ -88,6 +90,7 @@ public class Enemy extends Moveable {
                 gc.drawImage(sprite, 0, 0, canvas.getWidth(), canvas.getHeight());
             }
             moveEnemyLogic.update();
+            Move.centerAlign(this, new Coord2D(0,-8));
         }
     }
 

@@ -31,11 +31,11 @@ import static com.example.platformerplain.data.Constants.RESISTANCE;
  */
 public class MovePlayer {
     private static Entity player;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Entity> entityMap; // List to store all platform and goal entities
-    private ArrayList<Ladder> ladders;
-    private ArrayList<Spike> spikes;
-    private ArrayList<Coin> coinMap;
+    private final ArrayList<Enemy> enemies;
+    private final ArrayList<Entity> entityMap; // List to store all platform and goal entities
+    private final ArrayList<Ladder> ladders;
+    private final ArrayList<Spike> spikes;
+    private final ArrayList<Coin> coinMap;
     private boolean isTouchingGround;  // Flag indicating whether the player can jump
     private boolean isFacingLeft;
     private boolean canDash = true;
@@ -43,8 +43,8 @@ public class MovePlayer {
     private boolean isTouchingWall;
     private MoveState playerState;
 
-    private HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
-    private Coord2D playerVelocity; // Current velocity of the player
+    private final HashMap<KeyCode, Boolean> keys;  // Map to store the state of keyboard keys
+    private final Coord2D playerVelocity; // Current velocity of the player
     private boolean haveJKeyReleased = true;
     private boolean haveKKeyReleased = true;
     private static MoveData moveData;
@@ -62,7 +62,7 @@ public class MovePlayer {
      * @param keys       A HashMap storing the state of keyboard keys.
      */
     public MovePlayer(Entity player, ArrayList<Entity> platforms, ArrayList<Enemy> enemies, ArrayList<Ladder> ladders, ArrayList<Spike> spikes, ArrayList<Coin> coinMap, int levelWidth, HashMap<KeyCode, Boolean> keys) {
-        this.player = player;
+        MovePlayer.player = player;
         this.entityMap = platforms;
         this.keys = keys;
         this.playerVelocity = new Coord2D(0, 0);

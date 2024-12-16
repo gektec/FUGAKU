@@ -20,17 +20,17 @@ import javafx.scene.input.KeyCode;
  * @date 2024/11/23
  */
 public class LevelInitializer {
-    private HashMap<KeyCode, Boolean> keys;
-    private Pane gameRoot;
-    private Pane uiRoot;
-    private Pane backgroundRoot;
+    private final HashMap<KeyCode, Boolean> keys;
+    private final Pane gameRoot;
+    private final Pane uiRoot;
+    private final Pane backgroundRoot;
     private Entity player;
 
-    private ArrayList<Entity> collidableMap;
-    private ArrayList<Enemy> enemyMap;
-    private ArrayList<Spike> spikeMap;
-    private ArrayList<Ladder> ladderMap;
-    private ArrayList<Coin> coinMap;
+    private final ArrayList<Entity> collidableMap;
+    private final ArrayList<Enemy> enemyMap;
+    private final ArrayList<Spike> spikeMap;
+    private final ArrayList<Ladder> ladderMap;
+    private final ArrayList<Coin> coinMap;
 
     /**
      * Constructs a LevelInitializer with the specified parameters.
@@ -134,12 +134,8 @@ public class LevelInitializer {
      */
     private Entity createEntity(EntityType type, int x, int y, int w, int h, int index) {
         Entity entity = EntityFactory.createEntity(type, x, y, w, h, index);
-        if (entity != null) {
-            if (GameModel.isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
-            else gameRoot.getChildren().add(entity.canvas());
-        } else {
-            System.err.println("Entity creation failed");
-        }
+        if (GameModel.isDebugMode()) gameRoot.getChildren().add(entity.hitBox());
+        else gameRoot.getChildren().add(entity.canvas());
         return entity;
     }
 

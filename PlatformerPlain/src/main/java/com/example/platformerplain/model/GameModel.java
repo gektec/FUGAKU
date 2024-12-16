@@ -44,21 +44,21 @@ public class GameModel {
     private static GameModel instance;
 
     // List of observers for the game model
-    private static List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
+    private static final List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
     // List of entities scheduled for removal
-    private static List<Entity> toRemove = new ArrayList<>();
+    private static final List<Entity> toRemove = new ArrayList<>();
 
     // Map to track key states (pressed/released)
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
     // Lists to store game entities
-    private static ArrayList<Entity> collidableMap = new ArrayList<>();
-    private static ArrayList<Enemy> enemyMap = new ArrayList<>();
-    private static ArrayList<Goal> goalMap = new ArrayList<>();
-    private static ArrayList<Spike> spikeMap = new ArrayList<>();
-    private static ArrayList<Ladder> ladderMap = new ArrayList<>();
-    private static ArrayList<Coin> coinMap = new ArrayList<>();
+    private static final ArrayList<Entity> collidableMap = new ArrayList<>();
+    private static final ArrayList<Enemy> enemyMap = new ArrayList<>();
+    private static final ArrayList<Goal> goalMap = new ArrayList<>();
+    private static final ArrayList<Spike> spikeMap = new ArrayList<>();
+    private static final ArrayList<Ladder> ladderMap = new ArrayList<>();
+    private static final ArrayList<Coin> coinMap = new ArrayList<>();
 
     // Player entity
     public static Entity player;
@@ -89,7 +89,7 @@ public class GameModel {
     private static long lastUpdateTime = 0;
 
     // Score interpreter instance
-    private static ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
+    private static final ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
 
     /**
      * Private constructor to prevent instantiation.
@@ -150,7 +150,7 @@ public class GameModel {
         GameScreen.startLevel();
         primaryStage.setScene(GameScreen.getGameScene());
 
-        Move move = new Move(collidableMap);
+        new Move(collidableMap);
         primaryStage.setTitle("FUGAKU: Level " + level);
         startGameLoop();
     }
@@ -278,7 +278,7 @@ public class GameModel {
      * Updates the move state label based on player movement.
      */
     private static void updateMoveState() {
-        MoveState moveState = getMovePlayerLogic().getMoveData().getState();
+        MoveState moveState = MovePlayer.getMoveData().getState();
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
@@ -295,14 +295,14 @@ public class GameModel {
      * Updates the player speed label in the game UI.
      */
     private static void updatePlayerSpeed() {
-        double[] speed = getMovePlayerLogic().getMoveData().velocity.get();
+        double[] speed = MovePlayer.getMoveData().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
         if (GameScreen.getSpeedX().getData().size() > 60) {
-            GameScreen.getSpeedX().getData().remove(0);
-            GameScreen.getSpeedY().getData().remove(0);
+            GameScreen.getSpeedX().getData().removeFirst();
+            GameScreen.getSpeedY().getData().removeFirst();
         }
 
         NumberAxis xAxis = (NumberAxis) GameScreen.getSpeedChart().getXAxis();

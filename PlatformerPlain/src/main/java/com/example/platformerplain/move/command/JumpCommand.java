@@ -8,7 +8,7 @@ import com.example.platformerplain.move.state.MoveState;
  * @date 2024/12/2
  */
 public class JumpCommand implements PlayCommand {
-    private MoveData moveData;
+    private final MoveData moveData;
 
     public JumpCommand(MoveData moveData) {
         this.moveData = moveData;

@@ -2,8 +2,8 @@ package com.example.platformerplain.model.Interpreter;
 
 // SubtractExpression class, representing the subtraction operation
 public class SubtractExpression implements Expression {
-    private Expression left;
-    private Expression right;
+    private final Expression left;
+    private final Expression right;
 
     /**
      * Constructs a SubtractExpression with the specified left and right expressions.

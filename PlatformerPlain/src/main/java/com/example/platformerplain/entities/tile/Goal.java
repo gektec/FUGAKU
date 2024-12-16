@@ -19,8 +19,8 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/11/7
  */
 public class Goal extends Tile {
-    private GraphicsContext gc;
-    private Image sprite;
+    private final GraphicsContext gc;
+    private final Image sprite;
 
     /**
      *

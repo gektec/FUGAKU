@@ -22,8 +22,8 @@ import javafx.scene.shape.Rectangle;
  * @date 2024/12/4
  */
 public class Spike extends Tile {
-    private GraphicsContext gc;
-    private int index;
+    private final GraphicsContext gc;
+    private final int index;
 
     /**
      *
