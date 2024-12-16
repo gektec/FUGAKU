@@ -1,7 +1,7 @@
-package com.example.platformerplain.controller;
+package com.fugaku.platformer.controller;
 
-import com.example.platformerplain.model.GameModel;
-import com.example.platformerplain.view.MenuScreen;
+import com.fugaku.platformer.model.GameModel;
+import com.fugaku.platformer.view.MenuScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

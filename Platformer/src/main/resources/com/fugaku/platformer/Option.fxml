@@ -11,7 +11,7 @@
         stylesheets="@styles.css"
         xmlns:fx="http://javafx.com/fxml/1"
         xmlns="http://javafx.com/javafx/22"
-        fx:controller="com.example.platformerplain.controller.OptionScreenController">
+        fx:controller="com.fugaku.platformer.controller.OptionScreenController">
 
 
     <!-- Organize buttons in a GridPane with three columns -->

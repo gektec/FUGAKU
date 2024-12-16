@@ -4,6 +4,7 @@ import com.fugaku.platformer.data.Assets;
 import com.fugaku.platformer.model.RankModel;
 import com.fugaku.platformer.view.LevelSelectScreen;
 import com.fugaku.platformer.model.GameModel;
+import com.fugaku.platformer.view.OptionScreen;
 import com.fugaku.platformer.view.RankScreen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

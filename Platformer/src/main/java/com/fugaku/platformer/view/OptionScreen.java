@@ -1,6 +1,6 @@
-package com.example.platformerplain.view;
+package com.fugaku.platformer.view;
 
-import com.example.platformerplain.controller.OptionScreenController;
+import com.fugaku.platformer.controller.OptionScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -21,7 +21,7 @@ public class OptionScreen implements Screen {
     @Override
     public void show(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/platformerplain/Option.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fugaku/platformer/Option.fxml"));
             Parent optionScreen = loader.load();
 
             OptionScreenController controller = loader.getController();

@@ -4,7 +4,7 @@
     <module name="Platformer" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.platformer.data.*" />
+        <option name="PATTERN" value="com.fugaku.platformer.data.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
