@@ -190,16 +190,6 @@ public class MenuScreenController {
         }
     }
 
-    /**
-     * Handles the event for the rank button when clicked.
-     * This method creates a new instance of RankScreen and displays it,
-     */
-    @FXML
-    private void handleRanking() {
-        RankModel.highestScore();
-        RankScreen rankScreen = new RankScreen();
-        rankScreen.show(primaryStage);  // Forward the current stage
-    }
 
     public void handleOption() {
         OptionScreen optionScreen = new OptionScreen();

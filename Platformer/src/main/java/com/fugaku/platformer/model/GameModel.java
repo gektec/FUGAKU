@@ -21,6 +21,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.io.*;
+import java.util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,7 +146,7 @@ public class GameModel {
      * Starts the game at the specified level and initializes game state.
      *
      * @param primaryStage the primary stage for the game
-     * @param level the level to start the game at
+     * @param level        the level to start the game at
      */
     public static void startGame(Stage primaryStage, int level) {
         clearData();
@@ -332,6 +334,7 @@ public class GameModel {
             new TransitionScreen().show(Main.getPrimaryStage());
         } else {
             calculateCurrentScore();
+            RankModel.saveAndMaintainTopScores(finalScore);
             new CompletedScreen().show(Main.getPrimaryStage());
         }
     }
@@ -388,22 +391,21 @@ public class GameModel {
     }
 
 
-
     public static List<Entity> getCollidableMap() {
         return collidableMap;
     }
 
-    public static char setBlackColor(){
+    public static char setBlackColor() {
         Color = 'K';
         return Color;
     }
 
-    public static char setOrangeColor(){
+    public static char setOrangeColor() {
         Color = 'O';
         return Color;
     }
 
-    public static char setYellowColor(){
+    public static char setYellowColor() {
         Color = 'Y';
         return Color;
     }
@@ -433,11 +435,9 @@ public class GameModel {
         return Color;
     }
 
-    public static char getColor(){
+    public static char getColor() {
         return Color;
     }
-
-
 
 
     public static List<Enemy> getEnemyMap() {
@@ -451,7 +451,7 @@ public class GameModel {
         GameScreen.getGameRoot().getChildren().remove(entity.hitBox());
     }
 
-    public static void killedEnemy(){
+    public static void killedEnemy() {
         killedEnemy++;
         baseScore += 200;
         notifyScoreChanged(baseScore);
@@ -459,7 +459,7 @@ public class GameModel {
         notifyEnemyKilled(killedEnemy);
     }
 
-    public static void collectedCoin(){
+    public static void collectedCoin() {
         baseScore += 300;
         notifyScoreChanged(baseScore);
     }
@@ -468,7 +468,7 @@ public class GameModel {
         return movePlayerLogic;
     }
 
-    public static long getTotalTime(){
+    public static long getTotalTime() {
         return totalTime;
     }
 
@@ -488,7 +488,7 @@ public class GameModel {
     }
 
 
-    public static int getCurrentLevel(){
+    public static int getCurrentLevel() {
         return currentLevel;
     }
 
@@ -503,8 +503,8 @@ public class GameModel {
     }
 
 
-    public static long getGameTime(){
-        return (int)(elapsedTime/1000);
+    public static long getGameTime() {
+        return (int) (elapsedTime / 1000);
     }
 
 
@@ -527,4 +527,5 @@ public class GameModel {
             new PauseScreen().show(Main.getPrimaryStage());
         }
     }
+
 }

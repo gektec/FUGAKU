@@ -22,7 +22,6 @@ public class RankingScreenController {
 
     private Stage primaryStage;
 
-
     /**
      * Sets the primary stage for this controller.
      * @param primaryStage the main stage to be associated with this controller

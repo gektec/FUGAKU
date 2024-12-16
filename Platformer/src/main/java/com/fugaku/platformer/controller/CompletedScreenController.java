@@ -1,8 +1,12 @@
 package com.fugaku.platformer.controller;
 
 import com.fugaku.platformer.data.Assets;
+import com.fugaku.platformer.model.GameModel;
+import com.fugaku.platformer.model.RankModel;
 import com.fugaku.platformer.view.MenuScreen;
+import com.fugaku.platformer.view.RankScreen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,6 +32,9 @@ public class CompletedScreenController {
     public Label killedLabel;
     public Label timeLabel;
     public Button RankingButton;
+    public Button SocreButton;
+    public Button ScoreButton;
+    public Button RankButton;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
 
@@ -139,4 +146,9 @@ public class CompletedScreenController {
         }
     }
 
+    @FXML
+    private void handleRank() {
+        RankScreen rankScreen = new RankScreen();
+        rankScreen.show(primaryStage);  // Forward the current stage
+    }
 }
