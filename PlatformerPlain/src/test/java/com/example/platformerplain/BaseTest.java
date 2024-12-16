@@ -1,6 +1,9 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.MovePlayer;
+import com.example.platformerplain.view.GameScreen;
+import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +29,7 @@ public class BaseTest {
     @Test
     public void test() throws InterruptedException {
         // Test button click
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         FxRobot robot = new FxRobot();
 
         robot.clickOn("#startButton");
@@ -37,9 +40,21 @@ public class BaseTest {
         robot.clickOn("#FirstLevel");
         Thread.sleep(1000);
 
-        robot.clickOn("pauseMenu");
+        Platform.runLater(() -> {
+            try {
+                GameModel.togglePauseMenu();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         Thread.sleep(1000);
+
+        robot.clickOn("#MenuButton");
+
+        Thread.sleep(1000);
+
+        verifyThat("#startButton", LabeledMatchers.hasText("Start Game"));
 
     }
 
