@@ -23,11 +23,8 @@ import static com.example.platformerplain.data.Constants.MAX_FALL_SPEED;
 import static com.example.platformerplain.data.Constants.RESISTANCE;
 
 /**
- * <h3>PlatformerPlain</h3>
  *
- * <p>
  * The class includes functionalities for jumping, moving left and right, dashing, climbing, and interacting with game entities like coins, enemies, and spikes.
- * </p>
  *
  * @author Changyu Li
  * @date 2024/12/15

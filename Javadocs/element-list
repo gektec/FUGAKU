@@ -1,6 +1,7 @@
 module:com.example.platformerplain
 com.example.platformerplain
 com.example.platformerplain.controller
+com.example.platformerplain.data
 com.example.platformerplain.entities
 com.example.platformerplain.entities.moveable
 com.example.platformerplain.entities.tile
@@ -8,6 +9,6 @@ com.example.platformerplain.model
 com.example.platformerplain.model.Interpreter
 com.example.platformerplain.move
 com.example.platformerplain.move.command
-com.example.platformerplain.move.data
+com.example.platformerplain.move.state
 com.example.platformerplain.texture
 com.example.platformerplain.view

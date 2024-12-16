@@ -20,13 +20,12 @@ public class ImageScaler {
      * <p>
      * If the scale factor is greater than 1, the method creates a new image that
      * is larger than the input image, maintaining the original pixel colors
-     * without interpolation. If the scale factor is 1 or less, the input image
-     * is returned unchanged.
+     * without interpolation.
      * </p>
      *
      * @param inputImage The image to be scaled.
      * @param scale The scaling factor. Must be greater than 0.
-     * @return A new scaled image if scale is greater than 1; otherwise, the original input image.
+     * @return A new scaled image if scale is greater than 1;
      */
     public static Image nearestNeighborScale(Image inputImage, int scale) {
         if (scale > 1) {

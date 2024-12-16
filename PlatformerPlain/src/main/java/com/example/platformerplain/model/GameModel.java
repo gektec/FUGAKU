@@ -30,14 +30,29 @@ import java.util.List;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The GameModel class represents the core logic of the game, managing game state,
+ * player actions, and interactions within the game environment. It follows the
+ * singleton pattern to ensure only one instance is used throughout the game.
+ *
+ * @author Changyu Li
+ * @date 2024/12/11
+ */
 public class GameModel {
+
+    // Singleton instance of GameModel
     private static GameModel instance;
 
+    // List of observers for the game model
     private static List<GameModelObserver> observers = new CopyOnWriteArrayList<>();
 
+    // List of entities scheduled for removal
     private static List<Entity> toRemove = new ArrayList<>();
 
+    // Map to track key states (pressed/released)
     public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+
+    // Lists to store game entities
     private static ArrayList<Entity> collidableMap = new ArrayList<>();
     private static ArrayList<Enemy> enemyMap = new ArrayList<>();
     private static ArrayList<Goal> goalMap = new ArrayList<>();
@@ -45,17 +60,19 @@ public class GameModel {
     private static ArrayList<Ladder> ladderMap = new ArrayList<>();
     private static ArrayList<Coin> coinMap = new ArrayList<>();
 
+    // Player entity
     public static Entity player;
+
+    // Logic for moving the player
     private static MovePlayer movePlayerLogic;
 
-    // Debug
+    // Debug mode flag
     private static boolean isDebugMode = false;
 
+    // Timing and scoring variables
     private static long lastTime = 0;
     private static int frameCount = 0;
     private static int timeStep = 0;
-
-    // Main
     private static int currentLevel = 0;
     private static int currentScore = 0;
     private static int finalScore = 0;
@@ -63,19 +80,28 @@ public class GameModel {
     private static long totalTime = 0;
     private static int baseScore = 1000;
 
-
+    // Game loop timeline
     private static Timeline gameLoop;
     private static boolean isPaused = false;
 
-    public static long elapsedTime = 0; // Used to store accumulated time
-    private static long lastUpdateTime = 0; // To keep track of the last update time
+    // Time tracking variables
+    public static long elapsedTime = 0;
+    private static long lastUpdateTime = 0;
 
-    // Adding an Interpreter
+    // Score interpreter instance
     private static ScoreInterpreter scoreInterpreter = new ScoreInterpreter();
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private GameModel() {
     }
 
+    /**
+     * Retrieves the singleton instance of GameModel.
+     *
+     * @return the singleton instance of GameModel
+     */
     public static GameModel getInstance() {
         if (instance == null) {
             synchronized (GameModel.class) {
@@ -87,18 +113,32 @@ public class GameModel {
         return instance;
     }
 
-    // Registering Observers
+    /**
+     * Adds an observer to the game model to listen for updates.
+     *
+     * @param observer the observer to add
+     */
     public static void addObserver(GameModelObserver observer) {
         if (observer != null && !observers.contains(observer)) {
             observers.add(observer);
         }
     }
 
-    // Unregistering Observers
+    /**
+     * Removes an observer from the game model.
+     *
+     * @param observer the observer to remove
+     */
     public void removeObserver(GameModelObserver observer) {
         observers.remove(observer);
     }
 
+    /**
+     * Starts the game at the specified level and initializes game state.
+     *
+     * @param primaryStage the primary stage for the game
+     * @param level the level to start the game at
+     */
     public static void startGame(Stage primaryStage, int level) {
         clearData();
         elapsedTime = 0;
@@ -115,9 +155,10 @@ public class GameModel {
         startGameLoop();
     }
 
+    /**
+     * Initializes the current level by setting up game entities and the player.
+     */
     private static void initLevel() {
-
-        // Use LevelInitializer to set up the level
         LevelInitializer levelInitializer = new LevelInitializer(
                 keys,
                 GameScreen.getGameRoot(),
@@ -131,8 +172,6 @@ public class GameModel {
         );
         player = levelInitializer.generateLevel(currentLevel);
 
-
-        // If player is not null, continue setup
         if (player != null) {
             movePlayerLogic = new MovePlayer(
                     player,
@@ -144,11 +183,15 @@ public class GameModel {
                     LevelData.getLevelInformation.getLevelWidth(),
                     keys
             );
+        } else {
+            System.err.println("Cannot generate player!");
         }
-        else System.err.println("Cannot generate player!");
     }
 
-    public static void clearData(){
+    /**
+     * Clears all game data and resets relevant lists and maps.
+     */
+    public static void clearData() {
         keys.clear();
         collidableMap.clear();
         enemyMap.clear();
@@ -158,12 +201,15 @@ public class GameModel {
         toRemove.clear();
     }
 
+    /**
+     * Starts the game loop for continuous updates and rendering.
+     */
     private static void startGameLoop() {
-        lastUpdateTime = System.currentTimeMillis(); // Initialize last update time
+        lastUpdateTime = System.currentTimeMillis();
         KeyFrame frame = new KeyFrame(Duration.seconds(1.0 / 60), event -> {
             long currentTime = System.currentTimeMillis();
-            elapsedTime += currentTime - lastUpdateTime; // Update elapsed time based on current frame
-            lastUpdateTime = currentTime; // Update last update time
+            elapsedTime += currentTime - lastUpdateTime;
+            lastUpdateTime = currentTime;
 
             update();
 
@@ -172,7 +218,7 @@ public class GameModel {
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
             coinMap.removeAll(toRemove);
-            toRemove.clear(); // Clear the pending removal list to avoid duplicate removals
+            toRemove.clear();
         });
 
         gameLoop = new Timeline(frame);
@@ -180,20 +226,22 @@ public class GameModel {
         gameLoop.play();
     }
 
+    /**
+     * Updates the game state, including player and enemy movements.
+     */
     private static void update() {
         player.update();
-        if (enemyMap != null) {
-            for (Enemy enemy : enemyMap) {
-                enemy.update();
-            }
+        for (Enemy enemy : enemyMap) {
+            enemy.update();
         }
-        if(coinMap != null){
-            for(Coin coin : coinMap){
-                coin.update();
-            }
+        for (Coin coin : coinMap) {
+            coin.update();
         }
     }
 
+    /**
+     * Updates debug labels to display game state information.
+     */
     private static void updateLabels() {
         updateFramerate();
         updateMoveState();
@@ -202,6 +250,9 @@ public class GameModel {
         updatePlayerSpeed();
     }
 
+    /**
+     * Updates the framerate label in the game UI.
+     */
     private static void updateFramerate() {
         long currentTime = System.nanoTime();
         if (currentTime - lastTime >= 1_000_000_000) {
@@ -212,38 +263,48 @@ public class GameModel {
         frameCount++;
     }
 
+    /**
+     * Updates the time label in the game UI based on elapsed time.
+     */
     private static void updateTime() {
         if (!isPaused) {
-            long seconds = (elapsedTime / 1000) % 60; // Convert milliseconds to seconds
-            long minutes = (elapsedTime / 1000) / 60; // Calculate minutes
-            GameScreen.getTimeLabel().setText(String.format("Time: %02d:%02d", minutes, seconds)); // Update Label
+            long seconds = (elapsedTime / 1000) % 60;
+            long minutes = (elapsedTime / 1000) / 60;
+            GameScreen.getTimeLabel().setText(String.format("Time: %02d:%02d", minutes, seconds));
         }
     }
 
+    /**
+     * Updates the move state label based on player movement.
+     */
     private static void updateMoveState() {
         MoveState moveState = getMovePlayerLogic().getMoveData().getState();
         GameScreen.getMoveStateLabel().setText("Move State: " + moveState);
     }
 
+    /**
+     * Updates the player position label in the game UI.
+     */
     private static void updatePosition() {
         double x = player.hitBox().getTranslateX();
         double y = player.hitBox().getTranslateY();
         GameScreen.getPositionLabel().setText("Position: (" + x + ", " + y + ")");
     }
 
+    /**
+     * Updates the player speed label in the game UI.
+     */
     private static void updatePlayerSpeed() {
         double[] speed = getMovePlayerLogic().getMoveData().velocity.get();
         GameScreen.getPlayerSpeedLabel().setText("Speed: " + Arrays.toString(speed));
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
-        // Keep only the last 60 state points
         if (GameScreen.getSpeedX().getData().size() > 60) {
             GameScreen.getSpeedX().getData().remove(0);
             GameScreen.getSpeedY().getData().remove(0);
         }
 
-        // Update x-axis bounds
         NumberAxis xAxis = (NumberAxis) GameScreen.getSpeedChart().getXAxis();
         NumberAxis yAxis = (NumberAxis) GameScreen.getSpeedChart().getYAxis();
         xAxis.setAutoRanging(false);
@@ -253,47 +314,61 @@ public class GameModel {
         yAxis.setUpperBound(20);
     }
 
+    /**
+     * Transitions to the next level or completes the game based on the current level.
+     */
     public static void transitionToNextLevel() {
         stopGameLoop();
 
-    if(currentLevel <= 2) {
+        if (currentLevel <= 2) {
             calculateCurrentScore();
             new TransitionScreen().show(Main.getPrimaryStage());
-        } else{
+        } else {
             calculateCurrentScore();
             new CompletedScreen().show(Main.getPrimaryStage());
         }
     }
 
+    /**
+     * Stops the game loop.
+     */
     public static void stopGameLoop() {
         if (gameLoop != null) {
             gameLoop.stop();
         }
     }
 
+    /**
+     * Exits the game and shows the failure screen.
+     */
     public static void exitGame() {
         killedEnemy = 0;
         new FailScreen().show(Main.getPrimaryStage());
     }
 
+    /**
+     * Resumes the game from a paused state.
+     */
     public static void resumeGame() {
         isPaused = false;
         startGameLoop();
     }
 
-    // Rewrite the currentScore method and use the interpreter mode
+    /**
+     * Calculates the current score based on elapsed time and enemies killed.
+     */
     public static void calculateCurrentScore() {
         int maxScore = 1000;
         int penaltyPerSecond = 10;
         long elapsedTimeSeconds = elapsedTime / 1000;
 
-        // create context
+        // Create context for score calculation
         ScoreContext context = new ScoreContext(maxScore, penaltyPerSecond, elapsedTime, killedEnemy);
 
         // Interpret and calculate scores
         currentScore = scoreInterpreter.interpret(context);
 
-        // Make sure currentScore is not less than 0
+        // Ensure currentScore does not fall below zero
         if (currentScore < 0) {
             currentScore = 0;
         }
@@ -301,9 +376,10 @@ public class GameModel {
         finalScore += currentScore;
         totalTime += elapsedTimeSeconds;
 
-        // Notification of score changes
+        // Notify observers of score changes
         notifyScoreChanged(currentScore);
     }
+
 
 
     public static List<Entity> getCollidableMap() {
