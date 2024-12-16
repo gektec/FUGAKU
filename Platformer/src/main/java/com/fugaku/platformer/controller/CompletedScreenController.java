@@ -63,12 +63,10 @@ public class CompletedScreenController {
      * @param killed the number of enemies killed
      */
     public void setKilled(int killed) {
-        if (killed == 0) {
-            killedLabel.setText("No bloodshed! You are truly a harmless pursuer");
-        } else if (killed == 1) {
-            killedLabel.setText("You only killed one person. You are such a merciful Lord!");
-        } else if (killed >= 1) {
-            killedLabel.setText("You have killed" + " " + killed + " " + "enemies!");
+        if (killed <= 1) {
+            killedLabel.setText("You have killed" + " " + killed + " " + "enemy");
+        } else {
+            killedLabel.setText("You have killed" + " " + killed + " " + "enemies");
         }
     }
 

@@ -189,9 +189,9 @@ public class GameScreen implements Screen, GameModelObserver {
      * Initializes the background images and adds them to the background root pane.
      */
     private static void initBackground(){
-        backgroundSky = new ImageView(Assets.BACKGROUND_SKY);
-        backgroundSky.setFitWidth(Constants.WINDOW_WIDTH * 5);
-        backgroundSky.setFitHeight(Constants.WINDOW_HEIGHT * 5);
+//        backgroundSky = new ImageView(Assets.BACKGROUND_SKY);
+//        backgroundSky.setFitWidth(Constants.WINDOW_WIDTH * 5);
+//        backgroundSky.setFitHeight(Constants.WINDOW_HEIGHT * 5);
 
         backgroundMountain1 = new ImageView(ImageScaler.nearestNeighborScale(Assets.BACKGROUND_MOUNTAIN_1, 3));
         backgroundMountain1.setFitWidth(Constants.WINDOW_WIDTH * 1.8);
@@ -218,7 +218,9 @@ public class GameScreen implements Screen, GameModelObserver {
         backgroundMoon.setFitWidth(Constants.WINDOW_WIDTH);
         backgroundMoon.setFitHeight(Constants.WINDOW_HEIGHT);
 
-        backgroundRoot.getChildren().addAll(backgroundSky, backgroundMoon, backgroundCloud3, backgroundCloud2, backgroundCloud1, backgroundMountain2, backgroundMountain1);
+        //backgroundRoot.getChildren().addAll(backgroundSky, backgroundMoon, backgroundCloud3, backgroundCloud2, backgroundCloud1, backgroundMountain2, backgroundMountain1);
+        backgroundRoot.getChildren().addAll(backgroundMoon, backgroundCloud3, backgroundCloud2, backgroundCloud1, backgroundMountain2, backgroundMountain1);
+
     }
 
     /**
@@ -269,6 +271,13 @@ public class GameScreen implements Screen, GameModelObserver {
     public static void startLevel() {
         // Set up the background
         initBackground();
+
+        // Set background color based on Option
+        String colorStr = String.format("#%02X%02X%02X",
+                (int) (GameModel.getColor().getRed() * 255),
+                (int) (GameModel.getColor().getGreen() * 255),
+                (int) (GameModel.getColor().getBlue() * 255));
+        appRoot.setStyle("-fx-background-color: " + colorStr + ";");
 
         levelWidth = LevelData.getLevelInformation.getLevelWidth();
         levelHeight = LevelData.getLevelInformation.getLevelHeight();

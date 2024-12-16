@@ -60,11 +60,12 @@
             onAction="#handleExitGame"
             text="Exit to Desktop"
     />
-        <Button
-                fx:id="RankButton"
-                onAction="#handleRank"
-                text="Ranking"
-        />
+
+    <Button
+            fx:id="RankButton"
+            onAction="#handleRank"
+            text="Ranking"
+    />
 
 
     </HBox>

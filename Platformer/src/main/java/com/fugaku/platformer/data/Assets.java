@@ -5,6 +5,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.text.Font;
 
+import java.io.*;
+
 /**
  * This class is responsible for storing all game assets.
  * @author Changyu Li
@@ -17,7 +19,7 @@ public class Assets {
     public static final Image BACKGROUND = AssetManager.loadImage("/images/backgroundImage/Background.png");
 
     // Textures
-    public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");
+    //public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");
     public static final Image BACKGROUND_MOUNTAIN_1 = AssetManager.loadImage("/images/backgroundTexture/Mountain 1.png");
     public static final Image BACKGROUND_MOUNTAIN_2 = AssetManager.loadImage("/images/backgroundTexture/Mountain 2.png");
     public static final Image BACKGROUND_CLOUD_1 = AssetManager.loadImage("/images/backgroundTexture/Cloud 1.png");
@@ -63,4 +65,16 @@ public class Assets {
 
     // Fonts
     public static final Font baseFont = Font.loadFont(Assets.class.getResourceAsStream("/m6x11plus.ttf"), 20);
+
+    // Saves
+    public static final BufferedReader SAVE_FILE_READER;
+    public static final BufferedWriter SAVE_FILE_WRITER;
+    static {
+        try {
+            SAVE_FILE_READER = new BufferedReader(new FileReader("src/main/resources/scores.dat"));
+            SAVE_FILE_WRITER = new BufferedWriter(new FileWriter("src/main/resources/scores.dat"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
