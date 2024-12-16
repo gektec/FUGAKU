@@ -1,12 +1,9 @@
 package com.fugaku.platformer.controller;
 
 import com.fugaku.platformer.data.Assets;
-import com.fugaku.platformer.model.GameModel;
-import com.fugaku.platformer.model.RankModel;
 import com.fugaku.platformer.view.MenuScreen;
 import com.fugaku.platformer.view.RankScreen;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,9 +28,6 @@ public class CompletedScreenController {
     public Label scoreLabel;
     public Label killedLabel;
     public Label timeLabel;
-    public Button RankingButton;
-    public Button SocreButton;
-    public Button ScoreButton;
     public Button RankButton;
     @FXML
     private GridPane root;  // The root layout for the Fail Screen
@@ -86,7 +80,6 @@ public class CompletedScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         loadBackgroundImage();
-        playBackgroundMusic();
     }
 
     /**
@@ -97,15 +90,7 @@ public class CompletedScreenController {
         root.setBackground(Assets.MENU_BACKGROUND);
     }
 
-    /**
-     * Plays the background music associated with the completed screen.
-     * @throws URISyntaxException if an error occurs while retrieving the URI of the sound file
-     */
-    private void playBackgroundMusic() throws URISyntaxException {
-        // Load the fail sound effect
 
-        //todo: Play the sound effect upon initialization
-    }
 
     /**
      * Handles the event for exiting the game when the exit button is clicked.

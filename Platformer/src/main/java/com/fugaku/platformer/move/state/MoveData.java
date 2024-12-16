@@ -17,7 +17,7 @@ public class MoveData {
     public boolean isFacingLeft;
     public boolean isTouchingGround;
     public boolean isTouchingWall;
-    public Coord2D velocity;
+    public final Coord2D velocity;
     private MoveStateHandler stateHandler;
 
     /**

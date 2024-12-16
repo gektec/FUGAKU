@@ -24,7 +24,6 @@ import static com.fugaku.platformer.data.Constants.RESISTANCE;
  */
 public class MoveEnemy {
     private final Enemy enemy;
-    private final ArrayList<Entity> entityMap;
     private boolean isFacingLeft;
     private boolean isTouchingGround;
     private boolean isTouchingWall;
@@ -38,11 +37,9 @@ public class MoveEnemy {
      *
      * @param enemy the enemy entity to be controlled
      * @param platforms the list of platform entities in the game
-     * @param levelWidth the width of the game level (not currently used)
      */
-    public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms, int levelWidth) {
+    public MoveEnemy(Enemy enemy, ArrayList<Entity> platforms) {
         this.enemy = enemy;
-        this.entityMap = platforms;
         this.velocity = new Coord2D(0, 0);
         this.isTouchingGround = true;
         this.enemyState = MoveState.IDLE;

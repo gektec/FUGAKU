@@ -32,7 +32,6 @@ public class TextureMapping {
         else if (type == EntityType.DECORATION) spriteSheet = Assets.DECORATION;
         else throw new IllegalArgumentException("Unknown entity type: " + type);
         PixelReader reader = spriteSheet.getPixelReader();
-        WritableImage sprite = new WritableImage(reader, row * spriteWidth, col * spriteHeight, spriteWidth, spriteHeight);
-        return sprite;
+        return new WritableImage(reader, row * spriteWidth, col * spriteHeight, spriteWidth, spriteHeight);
     }
 }
