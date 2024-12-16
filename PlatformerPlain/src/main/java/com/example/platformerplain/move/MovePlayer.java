@@ -1,26 +1,32 @@
 package com.example.platformerplain.move;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.entities.*;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Ladder;
 import com.example.platformerplain.entities.tile.Spike;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.move.command.*;
-import com.example.platformerplain.move.data.MoveState;
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveState;
+import com.example.platformerplain.move.state.MoveData;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.platformerplain.Constants.MAX_FALL_SPEED;
-import static com.example.platformerplain.Constants.RESISTANCE;
+import static com.example.platformerplain.data.Assets.COIN_SFX;
+import static com.example.platformerplain.data.Assets.JUMP_SFX;
+import static com.example.platformerplain.data.Constants.MAX_FALL_SPEED;
+import static com.example.platformerplain.data.Constants.RESISTANCE;
 
 /**
- * This class handles the movement logic and state management for the player character in the platformer game.
+ * <h3>PlatformerPlain</h3>
+ *
+ * <p>
+ * The class includes functionalities for jumping, moving left and right, dashing, climbing, and interacting with game entities like coins, enemies, and spikes.
+ * </p>
  *
  * @author Changyu Li
  * @date 2024/12/15
@@ -53,7 +59,7 @@ public class MovePlayer {
      * @param enemies    A list of enemy entities in the game.
      * @param ladders    A list of ladder entities in the game.
      * @param spikes     A list of spike entities in the game.
-     * @param coinMap
+     * @param coinMap    A list of coin entities in the game.
      * @param levelWidth The width of the current level.
      * @param keys       A HashMap storing the state of keyboard keys.
      */
@@ -83,6 +89,7 @@ public class MovePlayer {
 
     /**
      * Updates the player movement and state based on the current inputs and interactions.
+     * This method processes input for movement, jumping, dashing, and climbing.
      */
     public void update() {
         playerState = moveData.getState();
@@ -117,11 +124,13 @@ public class MovePlayer {
         } else {
             if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingGround && playerState != MoveState.DASHING) {
                 jump.execute();
+                JUMP_SFX.play();
                 haveJKeyReleased = false;
             }
             // Slide jump
             else if (isPressed(KeyCode.J) && haveJKeyReleased && isTouchingWall && !isTouchingGround && playerState != MoveState.SLIDE_JUMPING) {
                 slideJump.execute();
+                JUMP_SFX.play();
                 haveJKeyReleased = false;
             }
             // Move left
@@ -137,6 +146,7 @@ public class MovePlayer {
             if (canDash && isPressed(KeyCode.K) && haveKKeyReleased) {
                 dash.execute();
                 canDash = false;
+                haveKKeyReleased = false;
             }
             // Resistance
             if (isPressed(KeyCode.A) == isPressed(KeyCode.D)) playerVelocity.smoothReduce(RESISTANCE,0,10,0);
@@ -153,7 +163,7 @@ public class MovePlayer {
                 canClimb = true;
             }
         }
-        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.stateIs(MoveState.IDLE);
+        if(!canClimb && moveData.stateIs(MoveState.CLIMBING)) moveData.setState(MoveState.IDLE);
 
         Move.move(player, moveData);
 
@@ -162,19 +172,22 @@ public class MovePlayer {
         checkEnemy();
         checkSpike();
         checkFall();
-    }
 
+}
+
+    /**
+     * Checks if the player has collected any coins.
+     */
     private void checkCoin() {
-        if(coinMap == null) return;
+        if (coinMap == null) return;
         for (Coin coin : coinMap) {
             if (player.hitBox().getBoundsInParent().intersects(coin.hitBox().getBoundsInParent())) {
                 coin.isCollected = true;
+                COIN_SFX.play();
                 return;
             }
         }
     }
-
-
 
     /**
      * Checks if the player has reached the goal.
@@ -215,9 +228,9 @@ public class MovePlayer {
     /**
      * Checks if the player has collided with a spike.
      */
-    private void checkSpike(){
+    private void checkSpike() {
         for (Spike spike : spikes) {
-            if(spike.hitBox() != null){
+            if (spike.hitBox() != null) {
                 if (player.hitBox().getBoundsInParent().intersects(spike.hitBox().getBoundsInParent())) {
                     spike.playerDead();
                     Die();
@@ -228,6 +241,7 @@ public class MovePlayer {
 
     /**
      * Handles the player's death.
+     * Stops the game loop and exits the game.
      */
     private void Die() {
         System.out.println("You lose!");
@@ -245,7 +259,7 @@ public class MovePlayer {
     }
 
     /**
-     * Gets the current move data of the player.
+     * Gets the current move state of the player.
      *
      * @return The current MoveData of the player.
      */

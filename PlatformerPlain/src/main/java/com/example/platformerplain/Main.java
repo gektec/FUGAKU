@@ -1,13 +1,19 @@
 package com.example.platformerplain;
 
+import com.example.platformerplain.data.AssetManager;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.view.*;
 
 import javafx.application.Application;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import static com.example.platformerplain.data.Assets.BACKGROUND_MUSIC;
+
 /**
+ * <h3>PlatformerPlain</h3>
  * @author Changyu Li, Zelin Xia
- * @date 2024/12/11
+ * @date 2024/11/5
  */
 public class Main extends Application {
 
@@ -30,11 +36,14 @@ public class Main extends Application {
         AssetManager.preloadAssets();
 
         // Show the start screen
-        ScreenManager.showScreen(new MenuScreen());
+        new MenuScreen().show(Main.getPrimaryStage());
 
         primaryStage.setWidth(Constants.WINDOW_WIDTH);
         primaryStage.setHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
+
+        BACKGROUND_MUSIC.play();
+        BACKGROUND_MUSIC.getMediaPlayer().setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     /**

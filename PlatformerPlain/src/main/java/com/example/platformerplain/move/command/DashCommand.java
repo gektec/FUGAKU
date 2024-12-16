@@ -1,17 +1,20 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.move.Coord2D;
-import com.example.platformerplain.move.data.MoveState;
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveState;
+import com.example.platformerplain.move.state.MoveData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
-import static com.example.platformerplain.Assets.DASH_SFX;
 import static com.example.platformerplain.model.GameModel.keys;
 
+/**
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class DashCommand implements PlayCommand {
     private Coord2D velocity;
     private MoveData moveData;
@@ -47,7 +50,6 @@ public class DashCommand implements PlayCommand {
                 velocity.set((float) (x / 1.6), (float) (y / 1.6));
             else
                 velocity.set(x, y);
-            DASH_SFX.play();
             moveData.setState(MoveState.DASHING);
             dashCooldownTimer.playFromStart();
 

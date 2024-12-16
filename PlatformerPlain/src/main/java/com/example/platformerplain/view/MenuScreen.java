@@ -1,6 +1,6 @@
 package com.example.platformerplain.view;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.controller.MenuScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 /**
  * This class manages the main menu screen of the game.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class MenuScreen implements Screen {
 

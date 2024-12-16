@@ -6,9 +6,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
+/**
+ * This class manages a sequence of images (frames) to create an animation effect.
+ * It handles frame updates based on a specified delay and allows for flipping image.
+ *
+ * @author Changyu Li
+ * @date 2024/12/15
+ */
 public class Animation {
 
-	private Image[] frames;  // 使用 JavaFX 的 Image 类型
+	private Image[] frames;
 	private int currentFrame;
 	private int numFrames;
 
@@ -17,10 +24,19 @@ public class Animation {
 
 	private int timesPlayed;
 
+	/**
+	 * Constructs an Animation instance.
+	 * Initializes the timesPlayed to 0.
+	 */
 	public Animation() {
 		timesPlayed = 0;
 	}
 
+	/**
+	 * Sets the frames for the animation.
+	 *
+	 * @param frames an array of Image objects representing the frames of the animation
+	 */
 	public void setFrames(Image[] frames) {
 		this.frames = frames;
 		currentFrame = 0;
@@ -30,12 +46,19 @@ public class Animation {
 		numFrames = frames.length;
 	}
 
-	public void setDelay(int i) { delay = i; }
-	public void setFrame(int i) { currentFrame = i; }
-	public void setNumFrames(int i) { numFrames = i; }
+	/**
+	 * Sets the delay between frame updates.
+	 *
+	 * @param i the delay in frames
+	 */
+	public void setDelay(int i) {
+		delay = i;
+	}
 
+	/**
+	 * Updates the animation state by advancing to the next frame if the delay has been reached.
+	 */
 	public void update() {
-
 		if (delay == -1) return;
 
 		count++;
@@ -48,14 +71,23 @@ public class Animation {
 			currentFrame = 0;
 			timesPlayed++;
 		}
-
 	}
 
-	public int getFrame() { return currentFrame; }
-	public int getCount() { return count; }
+	/**
+	 * Returns the current frame as an Image.
+	 *
+	 * @return the current Image frame
+	 */
+	public Image getImage() {
+		return frames[currentFrame];
+	}
 
-	public Image getImage() { return frames[currentFrame]; }
-	//overload
+	/**
+	 * Returns the current frame as an Image, optionally flipping it horizontally.
+	 *
+	 * @param faceLeft if true, the image will be flipped to face left
+	 * @return the current Image frame, possibly flipped
+	 */
 	public Image getImage(boolean faceLeft) {
 		Image image = frames[currentFrame];
 		if (faceLeft) {
@@ -68,6 +100,12 @@ public class Animation {
 		return image;
 	}
 
-	public boolean hasPlayedOnce() { return timesPlayed > 0; }
-	public boolean hasPlayed(int i) { return timesPlayed == i; }
+	/**
+	 * Checks if the animation has played at least once.
+	 *
+	 * @return true if the animation has played at least once, false otherwise
+	 */
+	public boolean hasPlayedOnce() {
+		return timesPlayed > 0;
+	}
 }

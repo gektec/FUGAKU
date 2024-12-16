@@ -1,6 +1,6 @@
 package com.example.platformerplain.view;
 
-import com.example.platformerplain.Constants;
+import com.example.platformerplain.data.Constants;
 import com.example.platformerplain.controller.CompletedScreenController;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 /**
  * This class represents the screen that is shown to the players when they have completed all levels of the game.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class CompletedScreen implements Screen {
 

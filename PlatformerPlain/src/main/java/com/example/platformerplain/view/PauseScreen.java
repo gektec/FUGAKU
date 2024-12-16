@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 /**
  * This class controls the pause screen, allowing the game to be paused and resumed.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class PauseScreen implements Screen {
 

@@ -1,6 +1,7 @@
 package com.example.platformerplain.model;
 
 import com.example.platformerplain.*;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.entities.moveable.Enemy;
 import com.example.platformerplain.entities.tile.Coin;
 import com.example.platformerplain.entities.tile.Goal;
@@ -12,7 +13,7 @@ import com.example.platformerplain.model.Interpreter.ScoreContext;
 import com.example.platformerplain.model.Interpreter.ScoreInterpreter;
 import com.example.platformerplain.move.Move;
 import com.example.platformerplain.move.MovePlayer;
-import com.example.platformerplain.move.data.MoveState;
+import com.example.platformerplain.move.state.MoveState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.chart.NumberAxis;
@@ -167,6 +168,7 @@ public class GameModel {
 
             enemyMap.removeAll(toRemove);
             collidableMap.removeAll(toRemove);
+            coinMap.removeAll(toRemove);
             toRemove.clear(); // Clear the pending removal list to avoid duplicate removals
         });
 
@@ -232,7 +234,7 @@ public class GameModel {
         GameScreen.getSpeedX().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[0])));
         GameScreen.getSpeedY().getData().add(new XYChart.Data<>(timeStep++, Math.abs(speed[1])));
 
-        // Keep only the last 60 data points
+        // Keep only the last 60 state points
         if (GameScreen.getSpeedX().getData().size() > 60) {
             GameScreen.getSpeedX().getData().remove(0);
             GameScreen.getSpeedY().getData().remove(0);
@@ -253,10 +255,10 @@ public class GameModel {
 
     if(currentLevel <= 2) {
             calculateCurrentScore();
-            ScreenManager.showScreen(new TransitionScreen());
+            new TransitionScreen().show(Main.getPrimaryStage());
         } else{
             calculateCurrentScore();
-            ScreenManager.showScreen(new CompletedScreen());
+            new CompletedScreen().show(Main.getPrimaryStage());
         }
     }
 
@@ -268,7 +270,7 @@ public class GameModel {
 
     public static void exitGame() {
         killedEnemy = 0;
-        ScreenManager.showScreen(new FailScreen());
+        new FailScreen().show(Main.getPrimaryStage());
     }
 
     public static void resumeGame() {
@@ -396,7 +398,7 @@ public class GameModel {
         if (!isPaused) {
             isPaused = true; // Set the pause flag to true
             stopGameLoop(); // stop game loop
-            ScreenManager.showScreen(new PauseScreen());
+            new PauseScreen().show(Main.getPrimaryStage());
         }
     }
 }

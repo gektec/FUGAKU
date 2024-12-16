@@ -1,7 +1,10 @@
 package com.example.platformerplain.view;
 
-import com.example.platformerplain.*;
 import com.example.platformerplain.controller.GameScreenController;
+import com.example.platformerplain.data.AssetManager;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.Constants;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.model.GameModelObserver;
 import com.example.platformerplain.texture.ImageScaler;
@@ -379,18 +382,18 @@ public static Pane getGameRoot() {
     }
 
     /**
-     * Retrieves the X-axis data series for the speed chart.
+     * Retrieves the X-axis state series for the speed chart.
      *
-     * @return the X-axis data series
+     * @return the X-axis state series
      */
     public static XYChart.Series<Number, Number> getSpeedX() {
         return speedX;
     }
 
     /**
-     * Retrieves the Y-axis data series for the speed chart.
+     * Retrieves the Y-axis state series for the speed chart.
      *
-     * @return the Y-axis data series
+     * @return the Y-axis state series
      */
     public static XYChart.Series<Number, Number> getSpeedY() {
         return speedY;

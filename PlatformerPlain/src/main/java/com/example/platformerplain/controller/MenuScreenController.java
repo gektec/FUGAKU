@@ -1,7 +1,6 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.model.RankModel;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.view.LevelSelectScreen;
 import com.example.platformerplain.model.GameModel;
 import com.example.platformerplain.view.RankScreen;
@@ -12,12 +11,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
 /**
  * This class serves as the controller for the Menu Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and handling different buttons.
+ *
+ * @author Zelin Xia
+ * @date 2024/11/13
  */
 public class MenuScreenController {
 
@@ -65,8 +66,7 @@ public class MenuScreenController {
      * with appropriate background music in the future.
      */
     private void playBackgroundMusic() {
-        // TODO : replace it.
-        VICTORY_SOUND.play();
+        // TODO
     }
 
     /**

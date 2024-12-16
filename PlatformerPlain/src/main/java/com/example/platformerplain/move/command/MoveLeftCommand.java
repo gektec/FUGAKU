@@ -1,9 +1,13 @@
 package com.example.platformerplain.move.command;
 
-import com.example.platformerplain.move.data.MoveData;
+import com.example.platformerplain.move.state.MoveData;
 
-import static com.example.platformerplain.Constants.MAX_MOVE_SPEED;
+import static com.example.platformerplain.data.Constants.MAX_MOVE_SPEED;
 
+/**
+ * @author Zelin Xia
+ * @date 2024/12/2
+ */
 public class MoveLeftCommand implements PlayCommand {
     private MoveData moveData;
 

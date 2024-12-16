@@ -1,7 +1,6 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.model.GameModel;
+import com.example.platformerplain.data.Assets;
 import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.view.RankScreen;
 import javafx.application.Platform;
@@ -14,12 +13,14 @@ import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 
-import static com.example.platformerplain.Assets.COMPLETE_SOUND;
 
 /**
  * This class serves as the controller for the Completed Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and handling sound effects when the player completed all levels.
+ *
+ * @author Zelin Xia
+ * @date 2024/12/9
  */
 public class CompletedScreenController {
 
@@ -100,8 +101,7 @@ public class CompletedScreenController {
     private void playBackgroundMusic() throws URISyntaxException {
         // Load the fail sound effect
 
-        // Play the sound effect upon initialization
-        COMPLETE_SOUND.play();
+        //todo: Play the sound effect upon initialization
     }
 
     /**

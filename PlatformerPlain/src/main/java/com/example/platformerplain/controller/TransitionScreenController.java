@@ -1,7 +1,7 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.fxml.FXML;
@@ -11,13 +11,15 @@ import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-import static com.example.platformerplain.Assets.VICTORY_SOUND;
 
 /**
  * This class serves as the controller for the Transition Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including options that appear when the player completes the current level:
  * Menu, Next Level, and Restart.
+ *
+ * @author Changyu Li
+ * @date 2024/12/3
  */
 public class TransitionScreenController {
 
@@ -96,8 +98,7 @@ public class TransitionScreenController {
      * This method loads and plays the victory sound associated with level completion.
      */
     private void playBackgroundMusic() {
-        // Load the victory sound
-        VICTORY_SOUND.play();
+        // TODO
     }
 
     /**

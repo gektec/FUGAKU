@@ -1,7 +1,7 @@
 package com.example.platformerplain.controller;
 
-import com.example.platformerplain.Assets;
-import com.example.platformerplain.LevelData;
+import com.example.platformerplain.data.Assets;
+import com.example.platformerplain.data.LevelData;
 import com.example.platformerplain.view.MenuScreen;
 import com.example.platformerplain.model.GameModel;
 import javafx.application.Platform;
@@ -12,12 +12,14 @@ import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import java.net.URISyntaxException;
 
-import static com.example.platformerplain.Assets.FAIL_SOUND;
 
 /**
  * This class serves as the controller for the Fail Screen in the game.
  * It manages the initialization and configuration of UI components,
  * including setting the background image and handling sound effects when the player fails.
+ *
+ * @author Zelin Xia
+ * @date 2024/11/13
  */
 public class FailScreenController {
 
@@ -65,8 +67,7 @@ public class FailScreenController {
      * @throws URISyntaxException if there is an issue retrieving the URI of the music file
      */
     private void playBackgroundMusic() throws URISyntaxException {
-        // Play the sound effect upon initialization
-        FAIL_SOUND.play();
+        // TODO
     }
 
     /**
