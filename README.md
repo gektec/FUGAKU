@@ -83,7 +83,7 @@ We synchronize all project progress in real time on GitHub following these guide
   - `tests/` - Test code
   - `resources/` - Resources
 
-- **Flexible Branch Usage**
+- **Flexible Branch Usage** We feel sorry that we deleted merged branch. Please do check our [repository graph](https://csprojects.nottingham.edu.cn/scycl11/platformer/-/network/main?ref_type=heads) to evaluate our Branch usage.
 
 - **Efficient Issue Tracking**
 
@@ -97,7 +97,6 @@ We synchronize all project progress in real time on GitHub following these guide
 
 - **UI Components**: Multiple FXML screens (Menu, Fail, LevelSelect, Transition, Pause, Complete) enhanced with style.css.
 
-### Object-Oriented Design Pattern
 ### Object-Oriented Design Pattern
 
 - **Factory Pattern**: Simplifies creation of game entities and tiles via EntityFactory.
