@@ -149,17 +149,17 @@ The following open-source assets were used in this project:
   - Source: [https://xzany.itch.io/samurai-2d-pixel-art](https://xzany.itch.io/samurai-2d-pixel-art)  
   - License: You can use this asset in any game project, personal or commercial. You cannot resell or redistribute it as a standalone game asset; it must be part of a larger project. Credit is not required but appreciated. You may modify the asset to suit your needs. You are not allowed to turn any of the assets into NFTs.  
 
-  - **Retro Player 90 Movement SFX** by Leohpaz
+- **Retro Player 90 Movement SFX** by Leohpaz
   - Author: [Leohpaz](https://leohpaz.itch.io/)
   - Source: [https://leohpaz.itch.io/90-retro-player-movement-sfx](https://leohpaz.itch.io/90-retro-player-movement-sfx)
   - License: Both the demo and the complete pack are free to use in your projects. You may not sell it or distribute this asset pack for free; please redirect people to this page if someone else shows interest in my work. Credits are not mandatory, but much appreciated!
 
-  - **将棋駒／Shogi Pieces** by AlisAlia
+- **将棋駒／Shogi Pieces** by AlisAlia
   - Author: [AlisAlia](https://alisalia.itch.io/)
   - Source: [https://alisalia.itch.io/shogi-pieces](https://alisalia.itch.io/shogi-pieces)
   - License: 個人または商用プロジェクトも自由に使用できます。あなたのゲームに合わせて編集または変更できます。このアセットパックを変更していない状態で再販することはできません。このアセットパックを自分のものとして主張することはできません。不明点がございましたらよりお願いします。
 
-  - **m6x11** by Daniel Linssen
+- **m6x11** by Daniel Linssen
   - Author: [Daniel Linssen](https://managore.itch.io/)
   - Source: [https://managore.itch.io/m6x11](https://managore.itch.io/m6x11)
   - License: Free to use with attribution.
