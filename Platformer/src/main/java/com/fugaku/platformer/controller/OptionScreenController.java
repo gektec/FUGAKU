@@ -1,6 +1,7 @@
 package com.fugaku.platformer.controller;
 
 import com.fugaku.platformer.model.GameModel;
+import com.fugaku.platformer.view.MenuScreen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -16,13 +17,14 @@ public class OptionScreenController {
     public Button greenButton;
     public Button redButton;
     public Button pinkButton;
+    public Button menuButton;
     @FXML
     private GridPane root;  // Root layout for the option menu
     private Stage primaryStage;
 
     @FXML
     private void initialize() {
-        loadBackgroundImage();
+        loadBackground();
 
         // Set up event handlers for each button
         defaultButton.setOnAction(e -> handleColorChange(Color.web("#1C5261")));
@@ -39,7 +41,7 @@ public class OptionScreenController {
     /**
      * Loads and sets a pure color background for the completed screen.
      */
-    private void loadBackgroundImage() {
+    private void loadBackground() {
         Color color = GameModel.getColor();
         root.setStyle(String.valueOf(color));
     }
@@ -67,6 +69,7 @@ public class OptionScreenController {
                 (int) (color.getGreen() * 255),
                 (int) (color.getBlue() * 255));
         root.setStyle("-fx-background-color: " + colorStr + ";");
+        GameModel.setColor(color);
     }
 
 
@@ -78,36 +81,13 @@ public class OptionScreenController {
         this.primaryStage = primaryStage;
     }
 
-    public void handleDefault() {
-        GameModel.setColor(Color.web("#1C5261"));
-
+    /**
+     * Navigates back to the main menu when the menu button is pressed.
+     */
+    @FXML
+    public void handleMenu() {
+        MenuScreen menuScreen = new MenuScreen();
+        menuScreen.show(primaryStage);
     }
-
-    public void handleYellow() {
-        GameModel.setColor(Color.YELLOW);
-    }
-
-    public void handleBlue() {
-        GameModel.setColor(Color.BLUE);
-    }
-
-    public void handlePurple() {
-        GameModel.setColor(Color.PURPLE);
-    }
-
-    public void handleOrange() {
-        GameModel.setColor(Color.ORANGE);
-    }
-
-    public void handleGreen() {
-        GameModel.setColor(Color.GREEN);
-    }
-
-    public void handleRed() {GameModel.setColor(Color.RED);}
-
-    public void handlePink() {
-        GameModel.setColor(Color.PINK);
-    }
-
 
 }

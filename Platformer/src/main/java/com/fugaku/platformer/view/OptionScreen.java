@@ -1,8 +1,10 @@
 package com.fugaku.platformer.view;
 
 import com.fugaku.platformer.controller.OptionScreenController;
+import com.fugaku.platformer.data.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -23,12 +25,14 @@ public class OptionScreen implements Screen {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fugaku/platformer/Option.fxml"));
             Parent optionScreen = loader.load();
+            Scene optionScene = new Scene(optionScreen, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
             OptionScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
 
-            Pane root = (Pane) primaryStage.getScene().getRoot();
-            root.getChildren().add(optionScreen);
+            primaryStage.setTitle("FUGAKU: Option");
+            primaryStage.setScene(optionScene);
+            primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }

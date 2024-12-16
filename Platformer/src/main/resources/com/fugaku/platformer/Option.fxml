@@ -20,73 +20,82 @@
 
         <Button
                 fx:id="defaultButton"
-                onAction="#handleDefault"
                 text="Default"
-                prefWidth="200.0"
+                styleClass="colorButton"
+                prefWidth="160.0"
                 GridPane.rowIndex="0" GridPane.columnIndex="0"
         />
 
         <Button
                 fx:id="yellowButton"
-                onAction="#handleYellow"
                 text="Yellow"
+                styleClass="colorButton"
                 textFill="yellow"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="0" GridPane.columnIndex="1"
         />
 
         <Button
                 fx:id="blueButton"
-                onAction="#handleBlue"
                 text="Blue"
+                styleClass="colorButton"
                 textFill="blue"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="0" GridPane.columnIndex="2"
         />
 
         <Button
                 fx:id="purpleButton"
-                onAction="#handlePurple"
                 text="Purple"
+                styleClass="colorButton"
                 textFill="purple"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="1" GridPane.columnIndex="0"
         />
 
         <Button
                 fx:id="orangeButton"
-                onAction="#handleOrange"
                 text="Orange"
+                styleClass="colorButton"
                 textFill="orange"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="1" GridPane.columnIndex="1"
         />
 
         <Button
                 fx:id="greenButton"
-                onAction="#handleGreen"
                 text="Green"
+                styleClass="colorButton"
                 textFill="green"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="1" GridPane.columnIndex="2"
         />
 
         <Button
                 fx:id="redButton"
-                onAction="#handleRed"
                 text="Red"
+                styleClass="colorButton"
                 textFill="red"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="2" GridPane.columnIndex="0"
         />
 
         <Button
                 fx:id="pinkButton"
-                onAction="#handlePink"
                 text="Pink"
+                styleClass="colorButton"
                 textFill="pink"
-                prefWidth="200.0"
+                prefWidth="160.0"
                 GridPane.rowIndex="2" GridPane.columnIndex="1"
+        />
+
+        <Button
+                fx:id="menuButton"
+                onAction="#handleMenu"
+                text="Back to menu"
+                styleClass="colorButton"
+                prefWidth="160.0"
+                GridPane.rowIndex="3" GridPane.columnIndex="1"
         />
     </GridPane>
 

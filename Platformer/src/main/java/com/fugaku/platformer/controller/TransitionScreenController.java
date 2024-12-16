@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -35,7 +34,6 @@ public class TransitionScreenController {
     @FXML
     private GridPane root;  // Root layout in the FXML file
     private Stage primaryStage;  // Main application stage
-    private MediaPlayer mediaPlayer; // MediaPlayer instance for sound playback
 
     /**
      * Sets the primary stage for this controller.
@@ -93,28 +91,13 @@ public class TransitionScreenController {
 
     /**
      * Navigates back to the main menu when the menu button is pressed.
-     * Releases resources used by the media player to prevent memory leaks.
      */
     @FXML
     public void handleMenu() {
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.show(primaryStage);  // Show the main menu
-
-        // Release media player resources
-        releaseMediaPlayer();
     }
 
-    /**
-     * Stops the media player and releases its resources.
-     * Clears the reference to the media player to avoid memory leaks.
-     */
-    private void releaseMediaPlayer() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop(); // Stop playback
-            mediaPlayer.dispose(); // Release memory
-            mediaPlayer = null; // Clear reference
-        }
-    }
 
     /**
      * Proceeds to the next level when the "Next Level" button is clicked.

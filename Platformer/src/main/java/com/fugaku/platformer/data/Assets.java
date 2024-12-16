@@ -20,12 +20,12 @@ public class Assets {
 
     // Textures
     //public static final Image BACKGROUND_SKY = AssetManager.loadImage("/images/backgroundTexture/Sky.png");
-    public static final Image BACKGROUND_MOUNTAIN_1 = AssetManager.loadImage("/images/backgroundTexture/Mountain 1.png");
-    public static final Image BACKGROUND_MOUNTAIN_2 = AssetManager.loadImage("/images/backgroundTexture/Mountain 2.png");
-    public static final Image BACKGROUND_CLOUD_1 = AssetManager.loadImage("/images/backgroundTexture/Cloud 1.png");
-    public static final Image BACKGROUND_CLOUD_2 = AssetManager.loadImage("/images/backgroundTexture/Cloud 2.png");
-    public static final Image BACKGROUND_CLOUD_3 = AssetManager.loadImage("/images/backgroundTexture/Cloud 3.png");
-    public static final Image BACKGROUND_MOON = AssetManager.loadImage("/images/backgroundTexture/Moon.png");
+    public static final Image BACKGROUND_MOUNTAIN_1 = AssetManager.loadImage("/images/backgroundTexture/Mountain 1.png", 2);
+    public static final Image BACKGROUND_MOUNTAIN_2 = AssetManager.loadImage("/images/backgroundTexture/Mountain 2.png", 2);
+    public static final Image BACKGROUND_CLOUD_1 = AssetManager.loadImage("/images/backgroundTexture/Cloud 1.png", 2);
+    public static final Image BACKGROUND_CLOUD_2 = AssetManager.loadImage("/images/backgroundTexture/Cloud 2.png", 2);
+    public static final Image BACKGROUND_CLOUD_3 = AssetManager.loadImage("/images/backgroundTexture/Cloud 3.png", 2);
+    public static final Image BACKGROUND_MOON = AssetManager.loadImage("/images/backgroundTexture/Moon.png", 2);
 
     public static final Image PLATFORM = AssetManager.loadImage("/images/tile/Ground_Tiles.png");
     public static final Image LADDER = AssetManager.loadImage("/images/tile/Ladder.png");
