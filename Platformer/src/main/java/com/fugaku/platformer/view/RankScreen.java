@@ -33,7 +33,7 @@ public class RankScreen implements Screen {
             controller.setHighScore3Label(RankModel.getThirdScore());
 
 
-            primaryStage.setTitle("RANKING");
+            primaryStage.setTitle("FUGAKU: Ranking");
             primaryStage.setScene(rankScene);
             primaryStage.show();
         } catch (Exception e) {

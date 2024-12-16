@@ -3,6 +3,9 @@ package com.fugaku.platformer.model;
 import java.io.*;
 import java.util.*;
 
+import static com.fugaku.platformer.data.Assets.SAVE_FILE_READER;
+import static com.fugaku.platformer.data.Assets.SAVE_FILE_WRITER;
+
 /**
  * Manages the ranking system for the game by keeping track of the highest scores.
  * It maintains a list to store the top scores and provides methods
@@ -21,10 +24,10 @@ public class RankModel {
      * If the score list is not full, adds the score. If it is full,
      * replaces the lowest score if the new score is higher.
      */
-    public static void saveAndMaintainTopScores(int finalScore) {
-        String scoreFile = "C:\\Users\\86133\\DMScw1\\platformer\\Platformer\\src\\main\\resources\\high_scores.txt"; // Define the location of the score file
-        // Read the current high scores
-        try (BufferedReader reader = new BufferedReader(new FileReader(scoreFile))) {
+    public static void saveScores(int finalScore) {
+
+        try {
+            BufferedReader reader = SAVE_FILE_READER;
             String line;
             while ((line = reader.readLine()) != null) {
                 try {
@@ -36,6 +39,7 @@ public class RankModel {
         } catch (IOException e) {
             System.err.println("Error reading score file: " + e.getMessage());
         }
+
 
         // Add the new finalScore
         if (scores.size() < MAX_SIZE) {
@@ -53,7 +57,8 @@ public class RankModel {
         scores.sort(Collections.reverseOrder());
 
         // Write the updated scores back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))) {
+        try {
+            BufferedWriter writer = SAVE_FILE_WRITER;
             for (Integer score : scores) {
                 writer.write(score.toString());
                 writer.newLine();
@@ -74,11 +79,6 @@ public class RankModel {
         // Copy the top 3 scores from the list
         for (int i = 0; i < scores.size(); i++) {
             topScores[i] = scores.get(i);
-        }
-
-        // Fill the remaining spots with 0 if there are less than 3 scores
-        while (scores.size() < MAX_SIZE) {
-            topScores[scores.size()] = 0;
         }
 
         return topScores;

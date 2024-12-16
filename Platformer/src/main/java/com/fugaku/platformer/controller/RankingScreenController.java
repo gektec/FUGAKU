@@ -51,12 +51,7 @@ public class RankingScreenController {
     @FXML
     private void initialize() throws URISyntaxException {
         loadBackgroundImage();
-        playBackgroundMusic();
 
-    }
-
-    private void playBackgroundMusic() throws URISyntaxException {
-        // TODO
     }
 
     /**
