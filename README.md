@@ -4,28 +4,28 @@
 
 ## Advanced Features
 
-### Momentum-Based Movement System
+### 1. Momentum-Based Movement System
 
 - The player gets accelerated when the move button is pressed.
 - The accelerated speed is reduced when closer to the goal speed, forming a second derivative velocity curve.
 - The player can slide and jump on walls.
 - The player can dash in 8 directions.
 
-### Auto-Switch Move State System
+#### 1.1 Auto-Switch Move State System
 
 - Both player and enemy have a `MoveState` that can be automatically switched.
 - Different behaviour is applied on each State.
 
-### 1. Multiple Entities
+### 2. Multiple Entities
 
 All objects are based on the `Entity` abstract class:
 
-#### 1.1 Different Types of Moveable Entities
+#### 2.1 Different Types of Moveable Entities
 
 - Enemy
 - Player
 
-#### 1.2 Different Types of Tiles
+#### 2.2 Different Types of Tiles
 
 - Ladder
 - Spike
@@ -33,7 +33,7 @@ All objects are based on the `Entity` abstract class:
 - Decoration
 - Coin
 
-### 2. Multiple Screens
+### 3. Multiple Screens
 
 - Start Screen
 - Fail Screen
@@ -44,7 +44,7 @@ All objects are based on the `Entity` abstract class:
 - Level Completed Screen
 - Option Screen
 
-### 3. Sound Effects
+### 4. Sound Effects
 
 - Background music
 - Jump Sound
@@ -52,14 +52,14 @@ All objects are based on the `Entity` abstract class:
 - Step Sound
 
 
-### 4. Textures
+### 5. Textures
 
 - Texture for tiles, player, and enemy.
 - Textures can swap between states.
 - Textures can have animations.
 - Background has textures that can move for perspective effent.
 
-### 5. Others
+### 6. Others
 
 - Fixed framerate.
 - DEBUG mode allows monitoring multiple statuses.
