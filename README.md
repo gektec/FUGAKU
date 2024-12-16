@@ -125,11 +125,11 @@ Our Javadoc is a comprehensive documentation for classes, interfaces, and method
 
 ## Class Diagram
 
-Visual representation of main classes and their relationships is available in the Diagram directory as ClassDiagram.jpg or .vpp. Use UML tools for detailed views.
+Visual representation of main classes and their relationships is available in the Diagram directory as ClassDiagram-20513999-20513997.png or .vpp. Use UML tools for detailed views.
 
 ### Class Diagram Display
 
-![Class Diagram](Diagram/ClassDiagram.jpg)
+![Class Diagram](Diagram/ClassDiagram-20513999-20513997.png)
 
 ---
 
