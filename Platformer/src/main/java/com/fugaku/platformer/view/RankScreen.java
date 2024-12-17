@@ -27,7 +27,7 @@ public class RankScreen implements Screen {
 
             RankingScreenController controller = loader.getController();
             controller.setPrimaryStage(primaryStage);
-            controller.setYourScore(GameModel.getFinalScore());
+            controller.setYourScore(GameModel.getRankingScore());
             controller.setHighScore1Label(RankModel.getScore(0));
             controller.setHighScore2Label(RankModel.getScore(1));
             controller.setHighScore3Label(RankModel.getScore(2));
