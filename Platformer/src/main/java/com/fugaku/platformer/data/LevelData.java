@@ -36,7 +36,7 @@ public class LevelData {
                     "00000000H0000000000000000000000",
                     "00000C00HMM00000000000000000000",
                     "0000CMC0H0000MMM000s0E000D00000",
-                    "0P0GCMMMMM000000000SMM00MMM000G",
+                    "0P00CMMMMM000000000SMM00MMM000G",
                     "MMMMMMMMMMMMMM000MMMMM00MMMMMMM"
             },
 
@@ -58,7 +58,7 @@ public class LevelData {
                     "00000000M000M0MMM0000E0H000M000MMM00000000MMM",
                     "000000E0M0MMM00000000MMM000M0000000DDD0000000",
                     "P0000MMMM000000000000000000M000000MMMMMM00000",
-                    "00GDDMsssssssssssMsssssssssMsssssssssssssssMM",
+                    "00DDDMsssssssssssMsssssssssMsssssssssssssssMM",
                     "MMMMMMSSSSSSSSSSSMSSSSSSSSSMSSSSSSSSSSSSSSSMM"
             },
 
@@ -84,7 +84,7 @@ public class LevelData {
                     "0000MM0H00E0M0DDMME00000000MC00MMM00000000000",
                     "0000M00HMMMMMMMMMMMMMMM0000MC00000000DDDE0000",
                     "0P00M00H00000000000000000000000MM000MMMMM000G",
-                    "000GM0EHssssssMsssssssss0000000ssssssssssssMM",
+                    "000DM0EHssssssMsssssssss0000000ssssssssssssMM",
                     "MMMMNMMMSSSSSSMSSSSSSSSS0000000SSSSSSSSSSSSMM"
             }
     };
