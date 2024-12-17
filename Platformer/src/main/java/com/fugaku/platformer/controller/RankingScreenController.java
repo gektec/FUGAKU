@@ -31,16 +31,16 @@ public class RankingScreenController {
     }
 
     public void setHighScore1Label(int score1) {
-        highScore1Label.setText("1st score: " + score1);
+        highScore1Label.setText("1st single level score: " + score1);
     }
     public void setHighScore2Label(int score2) {
-        highScore2Label.setText("2nd score: " + score2);
+        highScore2Label.setText("2nd single level score: " + score2);
     }
     public void setHighScore3Label(int score3) {
-        highScore3Label.setText("3rd score: " + score3);
+        highScore3Label.setText("3rd single level score: " + score3);
     }
     public void setYourScore(int score) {
-        yourScoreLabel.setText("Latest Score: " + score);
+        yourScoreLabel.setText("Latest final Score: " + score);
     }
 
     /**

@@ -368,13 +368,12 @@ public class GameModel {
 
         // Interpret and calculate scores
         currentScore = scoreInterpreter.interpret(context);
-
+        getFinalScore();
         // Ensure currentScore does not fall below zero
         if (currentScore < 0) {
             currentScore = 0;
         }
 
-        finalScore += currentScore;
         totalTime += elapsedTimeSeconds;
 
         // Notify observers of score changes
@@ -433,6 +432,11 @@ public class GameModel {
 
 
     public static int getFinalScore() {
+        finalScore += currentScore;
+        return finalScore;
+    }
+
+    public static int getRankingScore(){
         return finalScore;
     }
 
