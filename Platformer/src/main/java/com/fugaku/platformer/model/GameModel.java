@@ -78,6 +78,9 @@ public class GameModel {
     public static int killedEnemy = 0;
     private static long totalTime = 0;
     private static int baseScore = 1000;
+    private static int Level1Score = 0;
+    private static int Level2Score = 0;
+    private static int Level3Score = 0;
 
     // Game loop timeline
     private static Timeline gameLoop;
@@ -319,12 +322,19 @@ public class GameModel {
      */
     public static void transitionToNextLevel() {
         stopGameLoop();
-
-        if (currentLevel <= 2) {
+        if(currentLevel == 1) {
             calculateCurrentScore();
+            Level1Score += currentScore;
             new TransitionScreen().show(Main.getPrimaryStage());
-        } else {
+        }
+        if (currentLevel == 2) {
             calculateCurrentScore();
+            Level2Score += currentScore;
+            new TransitionScreen().show(Main.getPrimaryStage());
+        }
+        if (currentLevel == 3){
+            calculateCurrentScore();
+            Level3Score += currentScore;
             RankModel.saveScores(finalScore);
             new CompletedScreen().show(Main.getPrimaryStage());
         }
@@ -368,7 +378,6 @@ public class GameModel {
 
         // Interpret and calculate scores
         currentScore = scoreInterpreter.interpret(context);
-        getFinalScore();
         // Ensure currentScore does not fall below zero
         if (currentScore < 0) {
             currentScore = 0;
@@ -432,7 +441,7 @@ public class GameModel {
 
 
     public static int getFinalScore() {
-        finalScore += currentScore;
+        finalScore = Level1Score + Level2Score + Level3Score;
         return finalScore;
     }
 
