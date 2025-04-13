@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exe4j version="9.0" transformSequenceNumber="3">
+  <directoryPresets config="C:/Users/lcy/Desktop" />
+  <application name="FUGAKU" distributionSourceDir="C:/Users/lcy/Desktop" />
+  <executable name="FUGAKU" wrapperType="embed" iconSet="true" iconFile="C:/Users/lcy/Desktop/FUGAKU.ico" executableMode="gui" />
+  <java mainClass="com.fugaku.platformer.Main" minVersion="8" maxVersion="22" allowBetaVM="true">
+    <searchSequence>
+      <registry />
+      <directory location="./jdk-22" />
+    </searchSequence>
+    <classPath>
+      <archive location="E:/Work/platformer/Platformer/target/Platformer-1.0-SNAPSHOT.jar" failOnError="false" />
+    </classPath>
+  </java>
+</exe4j>

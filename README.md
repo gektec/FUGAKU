@@ -2,6 +2,14 @@
 
 ![GameScreenshot](FUGAKU.png)
 
+**gameplay**
+
+![GameScreenshot](./Video/Demo1.gif)
+
+**debug mode**
+
+![GameScreenshot](./Video/Demo2.gif)
+
 ## Advanced Features
 
 ### 1. Momentum-Based Movement System
